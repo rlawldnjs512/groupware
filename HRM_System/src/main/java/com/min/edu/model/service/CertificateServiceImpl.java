@@ -32,8 +32,13 @@ public class CertificateServiceImpl implements ICertificateService {
 	}
 
 	@Override
-	public List<CertificateDto> selectCertDown() {
-		return dao.selectCertDown();
+	public List<CertificateDto> selectCertDown(String certnum) {
+		return dao.selectCertDown(certnum);
+	}
+	
+	@Override
+	public int updateDownload(CertificateDto dto) {
+		return dao.updateDownload(dto);
 	}
 
 	@Override

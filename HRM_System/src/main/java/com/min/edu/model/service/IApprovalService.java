@@ -1,6 +1,7 @@
 package com.min.edu.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.min.edu.dto.ApprovalDto;
 import com.min.edu.dto.DocumentDto;
@@ -12,8 +13,10 @@ public interface IApprovalService {
 	
 	public int deleteSign(SignDto name);
 	
+	public int insertSaveDoc(DocumentDto dto);
+	
 	public int deleteSaveDoc(DocumentDto dto);
 	
-	public List<DocumentDto> selectPreviewDoc(DocumentDto dto);
+	public List<ApprovalDto> selectPreviewDoc(Map<String, Object> map);
 	
 }

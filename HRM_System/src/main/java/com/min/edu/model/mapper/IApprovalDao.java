@@ -1,6 +1,7 @@
 package com.min.edu.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -18,13 +19,13 @@ public interface IApprovalDao {
 	public int deleteSign(SignDto name);
 	
 //	사용자는 작성중인 결재문서를 임시저장할 수 있다.
-	public void selectSaveDoc();
+	public int insertSaveDoc(DocumentDto dto);
 	
 //	사용자는 임시저장한 문서를 삭제할 수 있다.
 	public int deleteSaveDoc(DocumentDto dto);
 	
 //	사용자는 작성한 결재문서를 결재하기 전에 미리보기를 할 수 있다.
-	public List<DocumentDto> selectPreviewDoc(DocumentDto dto);
+	public List<ApprovalDto> selectPreviewDoc(Map<String, Object> map);
 
 
 }

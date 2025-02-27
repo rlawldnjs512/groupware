@@ -17,6 +17,7 @@ import com.min.edu.dto.DocumentDto;
 import com.min.edu.dto.EmployeeDto;
 import com.min.edu.dto.SignDto;
 import com.min.edu.model.mapper.IApprovalDao;
+import com.min.edu.model.mapper.IBoardDao;
 import com.min.edu.model.mapper.ICertificateDao;
 
 @SpringBootTest
@@ -27,6 +28,9 @@ class QueryTest_JUnitTest {
 	
 	@Autowired
 	private IApprovalDao dao2;
+	
+	@Autowired
+	private IBoardDao dao3;
 	
 // 증명서 관리 쿼리 테스트 ------------------------------------------------
 	
@@ -39,12 +43,12 @@ class QueryTest_JUnitTest {
 		assertNotNull(dto);
 	}
 	
-//	@Test
+	@Test
 	public void insertCert_test() {
 		CertificateDto dto = new CertificateDto().builder()
 							.name("홍길동")
-							.type("경력")
-							.reason("경력증명서입니다.")
+							.type("재직")
+							.reason("재직증명서입니다.")
 							.build();
 
 		int n = dao.insertCert(dto);
@@ -64,10 +68,20 @@ class QueryTest_JUnitTest {
 	
 //	@Test
 	public void selectCertDown() {
-		List<CertificateDto> lists = dao.selectCertDown();
+		List<CertificateDto> lists = dao.selectCertDown("CERT_2025_21");
+		System.out.println(lists);
 		assertNotNull(lists);
 	}
 	 
+//	@Test
+	public void updateDownload() {
+		CertificateDto dto = new CertificateDto().builder()
+							.cert_num("CERT_2025_21")
+							.build();
+		int n = dao.updateDownload(dto);
+		assertEquals(1, n);
+	}
+	
 //	@Test
 	public void deleteCert() {
 		CertificateDto dto = new CertificateDto().builder()
@@ -133,7 +147,14 @@ class QueryTest_JUnitTest {
 	
 //	@Test
 	public void insertSaveDoc() {
-		
+		DocumentDto dto = new DocumentDto().builder()
+							.name("홍길동")
+							.doc_type("보고서")
+							.title("하반기매출보고서")
+							.content("작년도 하반기 매출에 관해서 내용 작성하려고 합니다.~~")
+							.build();
+		int n = dao2.insertSaveDoc(dto);
+		assertEquals(1, n);
 	}
 	
 //	@Test
@@ -146,15 +167,20 @@ class QueryTest_JUnitTest {
 		assertEquals(1, n);
 	}
 	
-	@Test
+//	@Test
 	public void selectPreviewDoc() {
-		DocumentDto dto = new DocumentDto().builder()
-						.name("홍길동")
-						.doc_num("VACA_2025_2")
-						.build();
-		List<DocumentDto> lists = dao2.selectPreviewDoc(dto);
-		assertNotNull(lists);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", "홍길동");
+		map.put("doc_num", "VACA_2025_1");
+		
+		List<ApprovalDto> dto = dao2.selectPreviewDoc(map);
+		System.out.println(dto);
+		assertNotNull(dto);
 	}
+	
+// 공지사항게시판/자유게시판 쿼리 테스트 ------------------------------------------------
+	
+	
 	
 	
 
