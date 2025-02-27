@@ -15,6 +15,9 @@
   <li class="nav-item">
     <a class="nav-link" href="#">사원조회</a>
   </li>
+   <li class="nav-item">
+    <a class="nav-link" href="./logout.do">로그아웃</a>
+  </li>
   ${loginVo}
 </ul>
 </body>
