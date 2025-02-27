@@ -17,9 +17,13 @@ import com.min.edu.dto.EmployeeDto;
 import com.min.edu.model.mapper.IApprovalDao;
 import com.min.edu.model.mapper.ICertificateDao;
 
+
 @SpringBootTest
 @ContextConfiguration
 class QueryTest_JUnitTest {
+
+	
+
 	
 	@Autowired
 	private ICertificateDao dao;
