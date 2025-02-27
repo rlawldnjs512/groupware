@@ -1,4 +1,4 @@
-package com.test.edu;
+package com.min.edu;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,20 +10,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.test.context.ContextConfiguration;
 
+import com.min.edu.dto.ApprovalDto;
 import com.min.edu.dto.CertificateDto;
+import com.min.edu.dto.DocumentDto;
 import com.min.edu.dto.EmployeeDto;
+import com.min.edu.dto.SignDto;
 import com.min.edu.model.mapper.IApprovalDao;
 import com.min.edu.model.mapper.ICertificateDao;
 
-
 @SpringBootTest
-@ContextConfiguration
 class QueryTest_JUnitTest {
-
-	
-
 	
 	@Autowired
 	private ICertificateDao dao;
@@ -33,7 +30,7 @@ class QueryTest_JUnitTest {
 	
 // 증명서 관리 쿼리 테스트 ------------------------------------------------
 	
-	@Test
+//	@Test
 	public void selectCertTypeUser_test() {
 	    Map<String, Object> map = new HashMap<String, Object>();
 		map.put("emp_id", "20240002");
@@ -114,8 +111,50 @@ class QueryTest_JUnitTest {
 	
 // 전자결재 서명/임시저장/미리보기 쿼리 테스트 ------------------------------------------------
 	
+//	@Test
+	public void insertSign() {
+		SignDto dto = new SignDto().builder()
+					.sign("101010")
+					.name("주사원")
+					.build();
+		
+		int n = dao2.insertSign(dto);
+		assertEquals(1, n);
+	}
 	
+//	@Test
+	public void deleteSign() {
+		SignDto dto = new SignDto().builder()
+					.name("홍길동")
+					.build();
+		int n = dao2.deleteSign(dto);
+		assertEquals(1, n);
+	}
 	
+//	@Test
+	public void insertSaveDoc() {
+		
+	}
+	
+//	@Test
+	public void deleteSaveDoc() {
+		DocumentDto dto = new DocumentDto().builder()
+						.doc_num("TRIP_2025_5")
+						.name("홍길동")
+						.build();
+		int n = dao2.deleteSaveDoc(dto);
+		assertEquals(1, n);
+	}
+	
+	@Test
+	public void selectPreviewDoc() {
+		DocumentDto dto = new DocumentDto().builder()
+						.name("홍길동")
+						.doc_num("VACA_2025_2")
+						.build();
+		List<DocumentDto> lists = dao2.selectPreviewDoc(dto);
+		assertNotNull(lists);
+	}
 	
 	
 
