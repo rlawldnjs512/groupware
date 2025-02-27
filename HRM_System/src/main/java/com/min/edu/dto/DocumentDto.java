@@ -25,5 +25,7 @@ public class DocumentDto {
 	private String doc_date;
 	private int file_id;
 	private String doc_num;
+	
+	private String name;
 
 }

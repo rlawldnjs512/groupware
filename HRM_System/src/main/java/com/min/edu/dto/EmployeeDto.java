@@ -33,7 +33,5 @@ public class EmployeeDto {
 	
 	// 추가
 	private List<CertificateDto> certificateDto;
-	
-	
 
 }

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.min.edu.model.mapper.IApprovalDao">
+
+<resultMap type="ApprovalDto" id="ApprovalDtoMap">
+	<result property="apprv_level" column="APPRV_LEVEL"/>
+	<result property="apprv_status" column="APPRV_STATUS"/>
+	<result property="sign" column="SIGN"/>
+	
+	<collection property="DocumentDto" resultMap="DocumentDtoMap"/>
+</resultMap>
+
+<resultMap type="DocumentDto" id="DocumentDtoMap">
+	<result property="emp_id" column="EMP_ID"/>
+	<result property="doc_type" column="DOC_TYPE"/>
+	<result property="title" column="TITLE"/>
+	<result property="content" column="CONTENT"/>
+	<result property="create_date" column="CREATE_DATE"/>
+	<result property="doc_status" column="DOC_STATUS"/>
+	<result property="doc_num" column="DOC_NUM"/>
+</resultMap>
+
+<!-- 사용자별로 한개의 서명만 등록할 수 있다.	insertSign -->
+<insert id="insertSign">
+	INSERT INTO SIGN (SIGN_ID, EMP_ID, SIGN)
+	SELECT SIGN_SEQ.NEXTVAL, EMP_ID, #{sign}
+		FROM EMPLOYEE e
+		WHERE NAME = #{name}
+	  	AND NOT EXISTS (SELECT 1 FROM SIGN s WHERE s.EMP_ID = e.EMP_ID)
+</insert>
+
+<!-- 사용자는 자신의 서명을 삭제할 수 있다.	deleteSign -->
+<delete id="deleteSign">
+	DELETE FROM SIGN
+	WHERE EMP_ID IN (SELECT EMP_ID FROM EMPLOYEE e WHERE NAME = #{name})
+</delete>
+
+<!-- 사용자는 작성중인 결재문서를 임시저장할 수 있다.	insertSaveDoc -->
+<insert id="insertSaveDoc">
+	INSERT INTO DOCUMENT
+		(DOC_ID, EMP_ID,
+		DOC_TYPE, TITLE,
+		CONTENT, CREATE_DATE,
+		DOC_STATUS, DOC_DATE, FILE_ID,
+		DOC_NUM)
+	VALUES
+		(DOCUMENT_SEQ.NEXTVAL,
+		(SELECT EMP_ID FROM EMPLOYEE e WHERE NAME = #{name}),
+		#{doc_type}, #{title},
+		#{content}, SYSDATE ,
+		'T', '#{doc_date}', 0, 
+		'VACA' || '_' || (SELECT TO_CHAR(SYSDATE,'YYYY') FROM DUAL) || '_' || DOCUMENT_SEQ.NEXTVAL)
+</insert>
+
+<!-- 사용자는 임시저장한 문서를 삭제할 수 있다.	deleteSaveDoc -->
+<delete id="deleteSaveDoc">
+	DELETE FROM DOCUMENT d 
+	WHERE DOC_ID IN (SELECT SUBSTR(DOC_NUM,-1) FROM DOCUMENT d WHERE DOC_NUM = #{doc_num})
+	AND EMP_ID IN (SELECT EMP_ID FROM EMPLOYEE e WHERE NAME = #{name})
+</delete>
+
+<!-- 사용자는 작성한 결재문서를 결재하기 전에 미리보기를 할 수 있다.	selectPreviewDoc -->
+<select id="selectPreviewDoc" resultMap="ApprovalDtoMap">
+	SELECT s.EMP_ID , a.APPRV_LEVEL , a.APPRV_STATUS , a.SIGN ,
+			s.DOC_TYPE , s.TITLE , s.CONTENT, s.CREATE_DATE , s.DOC_STATUS , s.DOC_NUM
+		FROM 
+		    (SELECT *
+		     FROM DOCUMENT d
+		     WHERE EMP_ID IN (SELECT EMP_ID FROM EMPLOYEE e WHERE NAME = #{name})
+		     AND DOC_NUM = #{doc_num}) s
+		LEFT OUTER JOIN APPROVAL a 
+		    ON s.EMP_ID = a.EMP_ID
+</select>
+
+</mapper>
