@@ -24,6 +24,8 @@ public class CertificateDto {
 	private String cert_date;
 	private String reason;
 	private String cert_num;
+	private String cert_path;
+	private String is_download;
 	
 	// 추가
 	private String name;

@@ -19,4 +19,7 @@ public class SignDto {
 	private String emp_id;
 	private String sign;
 	
+	// 추가
+	private String name;
+	
 }

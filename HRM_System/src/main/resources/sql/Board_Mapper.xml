@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.min.edu.model.IBoardDao">
+
+<!-- 관리자는 공지사항 게시글을 등록할 수 있다.	insertNotice -->
+<insert id="insertNotice">
+	INSERT INTO NOTICEBOARD
+		(NOT_ID, EMP_ID, TITLE, 
+		CONTENT, REGDATE, DELFLAG,
+		FILE_ID, EXPIRED)
+	VALUES(NOTICEBOARD_SEQ.NEXTVAL, 
+			(SELECT EMP_ID FROM EMPLOYEE e WHERE ROLE = 'A'), #{title},
+			#{content}, #{regdate}, 'N',
+			'' , '')
+</insert>
+
+<!-- 공지사항 게시글은 관리자만 수정할 수 있다. updateNotice -->
+<update id="updateNotice">
+	UPDATE NOTICEBOARD SET CONTENT = #{content}
+	WHERE NOT_ID = #{not_id}
+	AND EMP_ID IN (SELECT EMP_ID FROM EMPLOYEE e WHERE ROLE = 'A')
+</update>
+
+<!-- 관리자는 공지사항 게시글을 삭제할 수 있다.	deleteNotice -->
+<delete id="deleteNotice">
+	DELETE FROM NOTICEBOARD
+	WHERE NOT_ID = #{not_id}
+	AND EMP_ID IN (SELECT EMP_ID FROM EMPLOYEE WHERE ROLE = 'A')
+</delete>
+
+<!-- 기한이 지난 게시글은 자동으로 삭제된다.	deleteNoticeDead -->
+<delete id="deleteNoticeDead">
+	DELETE FROM NOTICEBOARD n
+	WHERE EXPIRED <![CDATA[<]]> CAST(CURRENT_TIMESTAMP AS TIMESTAMP)
+</delete>
+
+<!-- 사용자와 관리자는 자유게시글을 등록할 수 있다.	insertFree -->
+<insert id="insertFree">
+	INSERT INTO FREEBOARD
+		(FREE_ID, EMP_ID, TITLE,
+		CONTENT, REGDATE, REPLY_ID,
+		"REF", STEP, "DEPTH",
+		DELFLAG, FILE_ID)
+	VALUES(FREEBOARD_SEQ.NEXTVAL, 
+			(SELECT EMP_ID FROM EMPLOYEE e WHERE NAME = #{name}), #{title},
+		#{content}, #{regdate}, '',
+		(SELECT NVL(MAX("REF"),0)+1 FROM FREEBOARD f), 0, 0,
+		'N', '')
+</insert>
+
+<!-- 사용자와 관리자는 자신이 등록한 자유게시글만 수정할 수 있다.	updateFree -->
+<update id="updateFree">
+
+</update>
+
+<!-- 사용자와 관리자는 자신이 등록한 자유게시글만 삭제할 수 있다.	deleteFree -->
+<delete id="deleteFree">
+
+</delete>
+
+<!-- 사용자와 관리자는 등록된 자유게시글에 답글을 달 수 있다.	insertFreeReply / updateReply -->
+<insert id="insertFreeReply">
+
+</insert>
+<update id="updateReply">
+
+</update>
+
+<!-- 사용자와 관리자는 자신이 등록한 답글을 수정할 수 있다.	updateFreeReply -->
+<update id="updateFreeReply">
+
+</update>
+
+<!-- 사용자와 관리자는 자신이 등록한 답글을 삭제할 수 있다.	deleteFreeReply -->
+<delete id="deleteFreeReply">
+
+</delete>
+
+<!-- 사용자는 공지사항 게시글에 등록된 첨부파일을 여러 번 다운로드할 수 있다.	selectNoticeFile -->
+<select id="selectNoticeFile">
+
+</select>
+
+<!-- 사용자와 관리자는 자유게시글에 등록된 첨부파일을 여러 번 다운로드할 수 있다.	selectFreeFile -->
+<select id="selectFreeFile">
+
+</select>
+
+</mapper>

@@ -1,5 +1,7 @@
 package com.min.edu.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,5 +27,10 @@ public class DocumentDto {
 	private String doc_date;
 	private int file_id;
 	private String doc_num;
+	
+	// 추가
+	private String name;
+	private List<ApprovalDto> approvalDtos;
+	
 
 }

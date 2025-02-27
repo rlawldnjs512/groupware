@@ -29,13 +29,13 @@ public class EmployeeDto {
 	private String hire_date;
 	private String retire_date;
 	private String login_Auth;
+
 	private String r_state;
 	private String dept_name;
+
 	private String role;
 	
 	// 추가
 	private List<CertificateDto> certificateDto;
-	
-	
 
 }

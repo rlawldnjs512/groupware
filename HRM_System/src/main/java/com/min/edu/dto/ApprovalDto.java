@@ -1,5 +1,7 @@
 package com.min.edu.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,5 +24,5 @@ public class ApprovalDto {
 	private String apprv_status;
 	private String apprv_date;
 	private String sign;
-
+	
 }
