@@ -8,14 +8,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" >
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" ></script>
 <script type="text/javascript" src="./js/reservation.js"></script>
 <link rel="stylesheet" href="./css/reservation.css">
 
 </head>
+ <%@ include file="sidebar.jsp" %>
 <body>
-	<div class="container">
+	<div class="content" id="content">
+	<%@ include file="header.jsp" %>
+	<div class="main-content">
 		<div id="dateFrom">
 			<input type="date" id="rev_date"  >
 		</div>
@@ -30,6 +31,8 @@
 				    </div>
 			    </div>
 			</c:forEach>
+		</div>
+		
 		</div>
 	</div>
 		
