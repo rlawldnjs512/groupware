@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.min.edu.model.mapper.IAttendanceDao">
+
+	<!-- 전체 사원의 출퇴근 목록 조회 -->
+	<select id="attendanceList" resultType="AttendanceDto">
+		SELECT ATTEND_ID, EMP_ID, TO_CHAR(ATTEND_DATE, 'YYYY-MM-DD') ATTEND_DATE, CLOCKIN, CLOCKOUT, TOTAL_TIME, ATTEND_TYPE, USE_EXTRA_TIME
+			FROM ATTENDANCE
+			ORDER BY ATTEND_ID ASC
+	</select>
+	
+	<!-- 특정 사원의 출퇴근 목록 조회 -->
+	<select id="attendanceListByEmpId" resultType="AttendanceDto">
+		SELECT ATTEND_ID, EMP_ID, TO_CHAR(ATTEND_DATE, 'YYYY-MM-DD') ATTEND_DATE, CLOCKIN, CLOCKOUT, TOTAL_TIME, ATTEND_TYPE, USE_EXTRA_TIME
+	        FROM ATTENDANCE
+	        WHERE TRIM(EMP_ID) = TRIM(#{empId})
+	        ORDER BY ATTEND_ID ASC
+	</select>
+	
+	<!-- 출근 -->
+	<insert id="insertAttendance">
+		INSERT INTO ATTENDANCE (ATTEND_ID, EMP_ID, ATTEND_DATE, CLOCKIN)
+			VALUES (ATTENDANCE_SEQ.NEXTVAL, #{empId}, TO_CHAR(CURRENT_TIMESTAMP, 'YYYY-MM-DD'), CURRENT_TIMESTAMP)
+	</insert>
+	
+	<!-- 퇴근 -->
+	<update id="updateAttendance">
+		UPDATE ATTENDANCE SET CLOCKOUT = CURRENT_TIMESTAMP
+			WHERE TRIM(EMP_ID) = TRIM(#{empId})
+			AND ATTEND_DATE = TRUNC(CURRENT_TIMESTAMP)
+			AND CLOCKOUT IS NULL
+	</update>
+	
+	<!-- 총 근무시간 계산 (1분단위로 내림) -->
+	<update id="calAttendance">
+		UPDATE ATTENDANCE SET TOTAL_TIME = FLOOR((CLOCKOUT - CLOCKIN) * 1440)
+			WHERE TRIM(EMP_ID) = TRIM(#{empId}) AND ATTEND_DATE = TRUNC(CURRENT_TIMESTAMP)
+	</update>
+	
+	<!-- 근무형태 업데이트 (정상근무, 지각, 조퇴) -->
+	<update id="updateAttendtype">
+		UPDATE ATTENDANCE SET ATTEND_TYPE = #{attendType}
+			WHERE TRIM(EMP_ID) = TRIM(#{empId}) AND ATTEND_DATE = TRUNC(CURRENT_TIMESTAMP)
+	</update>
+	
+
+</mapper>

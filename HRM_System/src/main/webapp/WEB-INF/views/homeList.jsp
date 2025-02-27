@@ -11,17 +11,7 @@
 <body>
 
 	<ul class="nav flex-column">
-  <li class="nav-item">
-    <a class="nav-link" href="#">마이페이지</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">사원조회</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="./cert.do">증명서관리</a>
-  </li>
-  ${loginVo}
-</ul>
+
   		<li class="nav-item">
     		<a class="nav-link" href="#">마이페이지</a>
   		</li>
