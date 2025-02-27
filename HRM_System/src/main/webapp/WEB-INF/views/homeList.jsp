@@ -10,16 +10,6 @@
 </head>
 <body>
 
-	<ul class="nav flex-column">
-
-  		<li class="nav-item">
-    		<a class="nav-link" href="#">마이페이지</a>
-  		</li>
-  		<li class="nav-item">
-    		<a class="nav-link" href="#">사원조회</a>
-  		</li>
-  		<!-- <h3>${loginVo}</h3> -->
-	</ul>
 	
 	<div class="container">
 	
@@ -67,7 +57,6 @@
 	
 	
 	
-
 
 </body>
 </html>

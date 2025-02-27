@@ -19,8 +19,8 @@ public interface IEmployeeService {
     public List<EmployeeDto> userSelectAll();
     //사원상세조회
     public EmployeeDto getOneUser(String empId);
-    //이름|부서 별 사원조회
-    public List<EmployeeDto> getEmployeeByNameOrDept(Map<String, Object>map);
+    //부서 별 사원조회
+    public List<EmployeeDto> getEmployeeByDept(int deptId);
    
     //사원등록-관리자
     public int insertEmployee(EmployeeDto dto);

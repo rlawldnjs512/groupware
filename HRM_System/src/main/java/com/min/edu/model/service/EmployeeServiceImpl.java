@@ -55,9 +55,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public List<EmployeeDto> getEmployeeByNameOrDept(Map<String, Object> map) {
-		log.info("EmployeeServiceImpl {}","getOneUser");
-		return dao.getEmployeeByNameOrDept(map);
+	public List<EmployeeDto> getEmployeeByDept(int deptId) {
+		log.info("EmployeeServiceImpl {}","getEmployeeByNameOrDept");
+		return dao.getEmployeeByDept(deptId);
 	}
 
 	@Override

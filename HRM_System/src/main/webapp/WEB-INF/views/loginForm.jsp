@@ -81,7 +81,7 @@
     <div class="login-container">
         <h2>LOGIN</h2>
         <form action="/login.do" method="post">
-            <input type="text" name="empId" placeholder="사원번호" required>
+            <input type="text" name="emp_id" placeholder="사원번호" required>
             <input type="password" name="password" placeholder="비밀번호" required>
             <button type="submit">login</button>
         </form>
