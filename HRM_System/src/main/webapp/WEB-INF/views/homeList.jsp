@@ -11,6 +11,7 @@
 <body>
 
 	<ul class="nav flex-column">
+
   		<li class="nav-item">
     		<a class="nav-link" href="#">마이페이지</a>
   		</li>

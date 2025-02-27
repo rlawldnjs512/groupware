@@ -20,9 +20,10 @@ public interface ICertificateDao {
 	public int updateCertAccept(CertificateDto dto);
 	
 //	사용자는 관리자의 승인을 받은 증명서에 대해서만 다운로드를 할 수 있다.
-	public List<CertificateDto> selectCertDown();
+	public List<CertificateDto> selectCertDown(String certnum);
 	
 //	사용자는 단 한번만 증명서 다운로드를 할 수 있다.
+	public int updateDownload(CertificateDto dto);
 	
 //	사용자는 본인의 증명서 신청이력을 삭제할 수 있다.
 	public int deleteCert(CertificateDto dto);

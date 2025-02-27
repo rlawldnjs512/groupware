@@ -1,6 +1,7 @@
 package com.min.edu.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,11 @@ public class ApprovalServiceImpl implements IApprovalService {
 	public int deleteSign(SignDto name) {
 		return dao.deleteSign(name);
 	}
+	
+	@Override
+	public int insertSaveDoc(DocumentDto dto) {
+		return dao.insertSaveDoc(dto);
+	}
 
 	@Override
 	public int deleteSaveDoc(DocumentDto dto) {
@@ -33,8 +39,9 @@ public class ApprovalServiceImpl implements IApprovalService {
 	}
 
 	@Override
-	public List<DocumentDto> selectPreviewDoc(DocumentDto dto) {
-		return dao.selectPreviewDoc(dto);
+	public List<ApprovalDto> selectPreviewDoc(Map<String, Object> map) {
+		return dao.selectPreviewDoc(map);
 	}
+
 
 }

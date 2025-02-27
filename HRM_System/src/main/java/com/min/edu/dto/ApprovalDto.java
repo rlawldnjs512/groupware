@@ -25,7 +25,4 @@ public class ApprovalDto {
 	private String apprv_date;
 	private String sign;
 	
-	// 추가
-	private List<DocumentDto> documentDtos;
-
 }

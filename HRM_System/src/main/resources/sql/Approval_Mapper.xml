@@ -2,14 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.min.edu.model.mapper.IApprovalDao">
 
-<resultMap type="ApprovalDto" id="ApprovalDtoMap">
-	<result property="apprv_level" column="APPRV_LEVEL"/>
-	<result property="apprv_status" column="APPRV_STATUS"/>
-	<result property="sign" column="SIGN"/>
-	
-	<collection property="DocumentDto" resultMap="DocumentDtoMap"/>
-</resultMap>
-
 <resultMap type="DocumentDto" id="DocumentDtoMap">
 	<result property="emp_id" column="EMP_ID"/>
 	<result property="doc_type" column="DOC_TYPE"/>
@@ -18,7 +10,15 @@
 	<result property="create_date" column="CREATE_DATE"/>
 	<result property="doc_status" column="DOC_STATUS"/>
 	<result property="doc_num" column="DOC_NUM"/>
+	
+	<collection property="approvalDtos" ofType="ApprovalDto" column="EMP_ID">
+        <result property="apprv_level" column="APPRV_LEVEL"/>
+        <result property="apprv_status" column="APPRV_STATUS"/>
+        <result property="sign" column="SIGN"/>
+    </collection>
+	
 </resultMap>
+
 
 <!-- 사용자별로 한개의 서명만 등록할 수 있다.	insertSign -->
 <insert id="insertSign">
@@ -38,18 +38,22 @@
 <!-- 사용자는 작성중인 결재문서를 임시저장할 수 있다.	insertSaveDoc -->
 <insert id="insertSaveDoc">
 	INSERT INTO DOCUMENT
-		(DOC_ID, EMP_ID,
-		DOC_TYPE, TITLE,
-		CONTENT, CREATE_DATE,
-		DOC_STATUS, DOC_DATE, FILE_ID,
-		DOC_NUM)
+	    (DOC_ID, EMP_ID,
+	     DOC_TYPE, TITLE,
+	     CONTENT, CREATE_DATE,
+	     DOC_STATUS, DOC_DATE, 
+	     FILE_ID, DOC_NUM)
 	VALUES
-		(DOCUMENT_SEQ.NEXTVAL,
-		(SELECT EMP_ID FROM EMPLOYEE e WHERE NAME = #{name}),
+	    (DOCUMENT_SEQ.NEXTVAL, 
+	    (SELECT EMP_ID FROM EMPLOYEE e WHERE NAME = #{name}),
 		#{doc_type}, #{title},
-		#{content}, SYSDATE ,
-		'T', '#{doc_date}', 0, 
-		'VACA' || '_' || (SELECT TO_CHAR(SYSDATE,'YYYY') FROM DUAL) || '_' || DOCUMENT_SEQ.NEXTVAL)
+		#{content}, SYSDATE,
+		'T', NULL, 0, 
+		CASE 
+			WHEN #{doc_type} = '휴가' THEN 'VACA'
+			WHEN #{doc_type} = '출장' THEN 'TRIP'
+			WHEN #{doc_type} = '보고서' THEN 'REPORT'
+		END || '_' || TO_CHAR(SYSDATE, 'YYYY') || '_' || DOCUMENT_SEQ.NEXTVAL)
 </insert>
 
 <!-- 사용자는 임시저장한 문서를 삭제할 수 있다.	deleteSaveDoc -->
@@ -60,7 +64,7 @@
 </delete>
 
 <!-- 사용자는 작성한 결재문서를 결재하기 전에 미리보기를 할 수 있다.	selectPreviewDoc -->
-<select id="selectPreviewDoc" resultMap="ApprovalDtoMap">
+<select id="selectPreviewDoc" resultMap="DocumentDtoMap">
 	SELECT s.EMP_ID , a.APPRV_LEVEL , a.APPRV_STATUS , a.SIGN ,
 			s.DOC_TYPE , s.TITLE , s.CONTENT, s.CREATE_DATE , s.DOC_STATUS , s.DOC_NUM
 		FROM 
@@ -71,5 +75,6 @@
 		LEFT OUTER JOIN APPROVAL a 
 		    ON s.EMP_ID = a.EMP_ID
 </select>
+
 
 </mapper>
