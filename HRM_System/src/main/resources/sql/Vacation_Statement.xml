@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.min.edu.model.mapper.IVacationDao">
+
+	<select id="vacationList" resultType="VacationDto">
+		SELECT LEAVE_ID, EMP_ID, START_DATE, END_DATE, LEAVE_TOTAL, LEAVE_USE, LEAVE_REMAIN, EXTRA_TIME
+			FROM VACATION
+	</select>
+
+	<insert id="insertVacation" parameterType="Map">
+		INSERT INTO VACATION (LEAVE_ID, EMP_ID, START_DATE, END_DATE, LEAVE_TOTAL, LEAVE_USE, LEAVE_REMAIN)
+			VALUES (#{leaveId}, #{empId}, #{startDate}, #{endDate}, #{leaveTotal}, #{leaveUse}, #{leaveRemain})
+	</insert>
+	
+	<!-- 보상시간 조회 -->
+	<select id="selectExtraTime" resultType="Integer">
+		SELECT EXTRA_TIME 
+			FROM VACATION
+			WHERE TRIM(EMP_ID) = TRIM(#{empId})
+	</select>
+	
+	<!-- 보상시간 업데이트 -->
+	<update id="updateExtraTime" parameterType="Map">
+		UPDATE VACATION SET EXTRA_TIME = EXTRA_TIME + #{extraTime}
+			WHERE TRIM(EMP_ID) = TRIM(#{empId})
+	</update>
+
+</mapper>

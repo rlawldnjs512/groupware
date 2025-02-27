@@ -19,8 +19,8 @@ public class VacationDto {
 	private String emp_id;
 	private String start_date;
 	private String end_date;
-	private int leave_total;
-	private int leave_use;
-	private int leave_remain;
-
+	private double leave_total;
+	private double leave_use;
+	private double leave_remain;
+	private int extra_time;
 }
