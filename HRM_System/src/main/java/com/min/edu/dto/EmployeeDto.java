@@ -31,6 +31,7 @@ public class EmployeeDto {
 	private String login_Auth;
 	private String rState;
 	private String deptName;
+	private String role;
 	
 	// 추가
 	private List<CertificateDto> certificateDto;

@@ -18,8 +18,10 @@ public class AttendanceDto {
 	private int attend_id;
 	private String emp_id;
 	private String attend_date;
-	private int clockin;
-	private int clockout;
+	private String clockin;
+	private String clockout;
 	private int total_time;
+	private String attend_type;
+	private int use_extra_time;
 
 }
