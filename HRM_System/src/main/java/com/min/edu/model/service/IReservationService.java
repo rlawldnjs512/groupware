@@ -1,15 +1,11 @@
-package com.min.edu.model.mapper;
-
+package com.min.edu.model.service;
 
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Mapper;
-
 import com.min.edu.dto.RoomDto;
 
-@Mapper
-public interface IReservationDao {
+public interface IReservationService {
 
 	public List<RoomDto> selectReservation(String currDay);
 	
@@ -18,6 +14,5 @@ public interface IReservationDao {
 	public int deleteReservation(Map<String, Object> map);
 	
 	public int insertReservation(Map<String, Object> map);
-	
 	
 }

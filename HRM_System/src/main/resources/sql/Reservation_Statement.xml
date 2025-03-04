@@ -91,7 +91,7 @@ EMP_ID = '20240002'
 
 INSERT INTO RESERVATION
 (RESERV_ID, ROOM_ID, EMP_ID, REV_DATE, SLOT)
-VALUES(RESERVATION_SEQ.NEXTVAL, #{room_id} , '20220001' , #{rev_date}, #{slot})
+VALUES(RESERVATION_SEQ.NEXTVAL, #{room_id} , #{emp_id} , #{rev_date}, #{slot})
 
 </insert>
 
