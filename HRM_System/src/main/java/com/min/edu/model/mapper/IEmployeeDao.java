@@ -23,9 +23,8 @@ public interface IEmployeeDao {
     //사원상세조회
     public EmployeeDto getOneUser(String emp_id);
     //이름|부서 별 사원조회
-    public List<EmployeeDto> sortDept(String dept_name);
-    public List<EmployeeDto> sortName(String name);
-   
+    public List<EmployeeDto> sortDept(Map<String, Object> map);
+    public List<EmployeeDto> sortName(Map<String, Object> map);
     //사원등록-관리자
     public int insertEmployee(EmployeeDto dto);
     //사원수정-관리자
@@ -40,6 +39,10 @@ public interface IEmployeeDao {
     public List<EmployeeDto> selectAllUser(Map<String, Object> map);
     //전체글의 갯수를 조회하면 페이지 연산에 사용
     public int countUser();
+    
+    public int countEmployeesByName(String keyword);
+    
+    public int countEmployeesByDeptName(String keyword);
     
     
 

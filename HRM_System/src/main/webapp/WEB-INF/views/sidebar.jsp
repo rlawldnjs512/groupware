@@ -25,17 +25,21 @@
         <button class="menu-btn" id="toggleBtn">⋮</button>
 
         <div class="text-center mb-4">
-            <img src="images/menu.svg" alt="Logo" width="50">
+        
         </div>
         <ul id="menuList">
+            
             <li class="active"><i class="fas fa-user"></i><a href="/homeList.do">
             Home
-             <img src="images/home.svg" alt="홈" style="width: 30px; height: 30px; margin-right: 8px;">
-            </a></li>
+
+            </a>
+            </li>
+          
             <li><i class="fas fa-th"></i> <a href="./reservation.do">
             예약
-              <img src="images/reserv.svg" alt="예약" style="width: 30px; height: 30px; margin-right: 8px;">
-            </a></li>
+            </a>
+            </li> 
+
 
             <!-- 사원조회 또는 사원관리 -->
             <li>
@@ -45,23 +49,25 @@
                         <c:when test="${sessionScope.loginVo.role eq 'A'}">사원관리</c:when>
                         <c:otherwise>사원조회</c:otherwise>
                     </c:choose>
-                      <img src="images/emp.svg" alt="사원관리" style="width: 30px; height: 30px; margin-right: 8px;">
                 </a>
             </li>
-
+            
             <li><i class="fas fa-building"></i><a href="./attendanceListByEmpId">근태관리
-              <img src="images/cal.svg" alt="홈" style="width: 30px; height: 30px; margin-right: 8px;">
+            
             </a></li>
-            <li><i class="fas fa-building"></i> <a>전자결재
-            <img src="images/ee.svg" alt="홈" style="width: 30px; height: 30px; margin-right: 8px;">
+
+            <li><i class="fas fa-building"></i> <a href="./approval.do">전자결재
+            
             </a></li>
             <li><i class="fas fa-building"></i><a href="./mypage.do">마이페이지
-             <img src="images/us.svg" alt="홈" style="width: 30px; height: 30px; margin-right: 8px;">
+            
             </a></li>
-            <li><i class="fas fa-building"></i> <a>게시판
-            <img src="images/board.svg" alt="홈" style="width: 30px; height: 30px; margin-right: 8px;">
+
+            <li><i class="fas fa-building"></i> <a href="./notice.do">게시판
+           
             </a></li>
         </ul>
     </div>
+
 </body>
 </html>
