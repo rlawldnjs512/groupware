@@ -9,7 +9,11 @@
 <meta charset="UTF-8">
 <title>예약관리</title>
 <script type="text/javascript" src="./js/reservation.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="./js/reservation_date.js"></script>
 <link rel="stylesheet" href="./css/reservation.css">
+
 
 </head>
  <%@ include file="sidebar.jsp" %>
@@ -26,27 +30,30 @@
 		<div id="dateFrom">
 			<input type="date" id="rev_date" value="${nowDate}" >
 		</div>
-			<div id="revContent">
-				<c:forEach var="room" items="${lists}">
-					<div id="${room.room_id}">
-						<div class="py-3">
-							<div class="card shadow-sm card-rounded border border-0">
-								<div class="card-header" style="background-color: white;">
-									<h4 class="card-title">${room.room_name}</h4>
-								</div>
-								<div class="card-body">
-									<div class="reservation-container">
-										<c:forEach var="rev" items="${room.reservation}">
-											<span class="btn_bg ${rev.emp_id eq '예약가능' ? 'nocheck': 'check'}"
-												name="${rev.slot}">${rev.range}</span>
-										</c:forEach>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</c:forEach>
-			</div>
+		<div id="revContent">
+			
+		</div>
+<!-- 			<div id="revContent"> -->
+<%-- 				<c:forEach var="room" items="${lists}"> --%>
+<%-- 					<div id="${room.room_id}"> --%>
+<!-- 						<div class="py-3"> -->
+<!-- 							<div class="card shadow-sm card-rounded border border-0"> -->
+<!-- 								<div class="card-header" style="background-color: white;"> -->
+<%-- 									<h4 class="card-title">${room.room_name}</h4> --%>
+<!-- 								</div> -->
+<!-- 								<div class="card-body"> -->
+<!-- 									<div class="reservation-container"> -->
+<%-- 										<c:forEach var="rev" items="${room.reservation}"> --%>
+<%-- 											<span class="btn_bg ${rev.emp_id eq '예약가능' ? 'nocheck': 'check'}" --%>
+<%-- 												name="${rev.slot}">${rev.range}</span> --%>
+<%-- 										</c:forEach> --%>
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<%-- 				</c:forEach> --%>
+<!-- 			</div> -->
 		</div>
 	</div>
 	
@@ -83,5 +90,31 @@
     </div>
   </div>
 </div>
+
+<script id="room-template" type="template">
+{{#each lists}}
+<div id="{{room_id}}">
+    <div class="py-3">
+        <div class="card shadow-sm card-rounded border border-0">
+            <div class="card-header" style="background-color: white;">
+                <h4 class="card-title">{{room_name}}</h4>
+            </div>
+            <div class="card-body">
+                <div class="reservation-container">
+                    {{#each reservation}}
+                        <span class="btn_bg {{#if (eq emp_id '예약가능')}}nocheck{{else}}check{{/if}}"
+                              name="{{slot}}">{{range}}</span>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{/each}}
+</script>
+
+
+
+
 </body>
 </html>
