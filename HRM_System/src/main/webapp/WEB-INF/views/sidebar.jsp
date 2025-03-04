@@ -30,11 +30,9 @@
         <ul id="menuList">
             <li class="active"><i class="fas fa-user"></i><a href="/homeList.do">
             Home
-            
             </a></li>
             <li><i class="fas fa-th"></i> <a href="./reservation.do">
             예약
-             
             </a></li>
 
             <!-- 사원조회 또는 사원관리 -->
@@ -45,7 +43,6 @@
                         <c:when test="${sessionScope.loginVo.role eq 'A'}">사원관리</c:when>
                         <c:otherwise>사원조회</c:otherwise>
                     </c:choose>
-                     
                 </a>
             </li>
 
