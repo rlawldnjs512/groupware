@@ -13,7 +13,9 @@ public interface ICertificateService {
 	
 	public int updateCertAccept(CertificateDto dto);
 	
-	public List<CertificateDto> selectCertDown();
+	public List<CertificateDto> selectCertDown(String certnum);
+	
+	public int updateDownload(CertificateDto dto);
 	
 	public int deleteCert(CertificateDto dto);
 	

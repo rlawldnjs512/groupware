@@ -26,11 +26,16 @@ public class EmployeeDto {
 	private String phone;
 	private String tel;
 	private String email;
-	private String hireDate;
-	private String retireDate;
+	private String hire_date;
+	private String retire_date;
 	private String login_Auth;
-	private String rState;
-	private String deptName;
+
+	private String profile_image;
+	private String seq;
+
+	private String r_state;
+	private String dept_name;
+
 	private String role;
 	
 	// 추가

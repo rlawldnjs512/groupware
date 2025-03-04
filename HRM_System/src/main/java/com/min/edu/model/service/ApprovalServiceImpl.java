@@ -1,7 +1,9 @@
 package com.min.edu.model.service;
 
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.min.edu.dto.ApprovalDto;
@@ -15,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ApprovalServiceImpl implements IApprovalService {
 	
+	@Autowired
 	private IApprovalDao dao;
 	
 	@Override
@@ -26,6 +29,11 @@ public class ApprovalServiceImpl implements IApprovalService {
 	public int deleteSign(SignDto name) {
 		return dao.deleteSign(name);
 	}
+	
+	@Override
+	public int insertSaveDoc(DocumentDto dto) {
+		return dao.insertSaveDoc(dto);
+	}
 
 	@Override
 	public int deleteSaveDoc(DocumentDto dto) {
@@ -33,8 +41,9 @@ public class ApprovalServiceImpl implements IApprovalService {
 	}
 
 	@Override
-	public List<DocumentDto> selectPreviewDoc(DocumentDto dto) {
-		return dao.selectPreviewDoc(dto);
+	public List<ApprovalDto> selectPreviewDoc(Map<String, Object> map) {
+		return dao.selectPreviewDoc(map);
 	}
+
 
 }
