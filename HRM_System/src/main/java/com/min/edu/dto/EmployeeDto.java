@@ -30,7 +30,7 @@ public class EmployeeDto {
 	private String retireDate;
 	private String login_Auth;
 	private String rState;
-	private String deptName;
+	private String dept_name;
 	private String role;
 	
 	// 추가

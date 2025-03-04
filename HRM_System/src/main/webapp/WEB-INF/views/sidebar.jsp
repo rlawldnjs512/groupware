@@ -20,9 +20,9 @@
         <li class="active"><i class="fas fa-user"></i> User Profile</li>
         <li><i class="fas fa-th"></i> <a href="./reservation.do">예약관리</a></li>
         <li><i class="fas fa-user-shield"></i> Authentication</li>
-        <li><i class="fas fa-building"></i> Corporate</li>
-        <li><i class="fas fa-fingerprint"></i> Social</li>
-        <li><i class="fas fa-blog"></i> Blog</li>
+        <li><i class="fas fa-building"></i><a href="./mypage.do">마이페이지</a></li>
+        <li><i class="fas fa-fingerprint"></i><a href="./approval.do">전자결재</a></li>
+        <li><i class="fas fa-blog"></i><a href="./blog.do">게시판</a></li>
         <li><i class="fas fa-briefcase"></i> Careers</li>
         <li><i class="fas fa-toolbox"></i> Utilities</li>
     </ul>
