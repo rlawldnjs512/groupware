@@ -13,16 +13,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.min.edu.dto.RoomDto;
 import com.min.edu.model.mapper.IReservationDao;
+import com.min.edu.model.service.IReservationService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
-
+@RequiredArgsConstructor
 public class ReservationController {
 	
 	@Autowired
-	private IReservationDao dao;
+	private final IReservationService service;
 	
 	@GetMapping(value = "/reservation.do")
 	public String searchReservation(Model model, @RequestParam(required = false) String nowDate) {
@@ -35,8 +37,9 @@ public class ReservationController {
 		}
 
 		
-		List<RoomDto> lists = dao.selectReservation(nowDate);
+		List<RoomDto> lists = service.selectReservation(nowDate);
 		model.addAttribute("lists",lists);
+		model.addAttribute("nowDate", nowDate);
 		return "reservation";
 	}
 	

@@ -26,7 +26,7 @@ public class ReservationRestController {
 	public ResponseEntity<Map<String, Boolean>> insertReservation(@RequestBody Map<String, Object> requestReq) {
 		System.out.println(requestReq);
         
-         dao.insertReservation(requestReq);
+        dao.insertReservation(requestReq);
 		Map<String, Boolean> map = new HashMap<String, Boolean>();
 		map.put("isc", Boolean.TRUE);
         return ResponseEntity.ok(map);

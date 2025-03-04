@@ -3,3 +3,4 @@
 <div class="header">
    <h1><img src="images/insa.svg" alt="User" class="user-icon"> HR Management System <img src="images/insa.svg" alt="User" class="user-icon"></h1>
 </div>
+

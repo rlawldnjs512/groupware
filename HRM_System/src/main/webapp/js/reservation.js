@@ -1,4 +1,4 @@
-/*
+
 var reservationData;
 var revSpan;
 var modal;
@@ -8,21 +8,30 @@ var modal;
     	function handleClick() {
             // 1. 클릭된 span 요소의 텍스트를 콘솔에 출력
             revSpan =  this;
+            
             var range =  this.textContent
             console.log("클릭한 예약 시간: " + range);
+            
             var slot = this.getAttribute("name")
             console.log("클릭한 slot : " + slot);
+            
             var rev_date = document.getElementById("rev_date").value;
             console.log("예약 날짜: " + rev_date);
+            
 			var roomName = this.parentNode.parentNode.children[0].textContent;
             console.log("예약 회의실: " + roomName);
+            
 			var room_id = this.parentNode.parentNode.id
             console.log("예약 회의실 ID: " + room_id);
+            
+            var emp_name = document.getElementById("emp_name").value;
+            
+            var emp_id = document.getElementById("emp_id").value;
+
 			document.getElementById("time").value = range;
 			document.getElementById("date").value = rev_date;
-			document.getElementById("name").value = "테스트"
-			document.getElementById("room").value= roomName
-
+			document.getElementById("name").value = emp_name;
+			document.getElementById("room").value= roomName;
 			
 // 2. 전송 데이터 생성
 // 				FormData 객체 생성
@@ -40,7 +49,9 @@ var modal;
 			    slot: slot,
 			    rev_date: rev_date,
 			    roomName: roomName,
-			    room_id: room_id
+			    room_id: room_id,
+			    emp_name: emp_name,
+			    emp_id: emp_id
 			};
 			// JSON 문자열로 변환
 			var jsonData = JSON.stringify(reservationData);
@@ -73,7 +84,6 @@ var modal;
     				console.log("this 클래스 후: " + className3);
                     
                     this.removeEventListener('click', handleClick);
-                    alert('예약되었습니다');
                     modal.hide();  // 모달을 닫음
 				}
                 
@@ -140,4 +150,3 @@ var modal;
     }
     
     
-*/
