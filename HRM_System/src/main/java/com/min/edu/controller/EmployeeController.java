@@ -90,7 +90,7 @@ public class EmployeeController {
 	    return "empList";
 	}
 	
-	
+
 	@GetMapping("/empList.do")
 	public String empList(HttpSession session, Model model) {
 	    String emp_id = (String) session.getAttribute("emp_id");
@@ -102,12 +102,14 @@ public class EmployeeController {
 	    EmployeeDto empList = service.getOneUser(emp_id);
 
 	    model.addAttribute("empList", empList);
-	    model.addAttribute("isAdmin", isAdmin); 
+	
+      //	수정폼 GET
 
-	    return "empList";  
+	    model.addAttribute("isAdmin", isAdmin); // 관리자 여부를 JSP에 전달
+
+	    return "empList";  // 관리자가 아닌 경우에도 같은 페이지로 이동
 	}
 	
-//	수정폼 GET
 	 @GetMapping("/empupload.do")
 	    public String editEmployee(@RequestParam("emp_id") String emp_id, Model model) {
 	        log.info("수정사원 : {}",emp_id);
@@ -119,8 +121,6 @@ public class EmployeeController {
 	        return "editEmployee"; 
 	    }
 	 
-	 
-//	등록 POST	 
 	 @PostMapping("/updateEmployee.do")
 	 public String updateEmp(@RequestParam String emp_id,@RequestParam String name,
 			 @RequestParam String tel, @RequestParam String birth,
@@ -208,16 +208,15 @@ public class EmployeeController {
 	        }
 	        int selectPage = Integer.parseInt(pageParam);
 
-	       
+	        // EmpPageDto 생성하여 페이징 정보 설정
 	        EmpPageDto d = new EmpPageDto();
-	        d.setTotalCount(service.countUser());  // 전체 글의 갯수 (사원 수)
-	        d.setCountList(10);  // 한 페이지에 표시될 글 갯수 (10명씩)
-	        d.setCountPage(5);   // 화면에 표시될 페이지 그룹 갯수 (5페이지씩)
+	        d.setTotalCount(service.countUser());  // 전체 글의 갯수 (예: 사원 수)
+	        d.setCountList(10);  // 한 페이지에 표시될 글 갯수 (예: 10명씩)
+	        d.setCountPage(5);   // 화면에 표시될 페이지 그룹 갯수 (예: 5페이지씩)
 	        d.setTotalPage(d.getTotalCount());  // 전체 페이지 수 계산
-	        d.setPage(selectPage); // 현재 페이지 설정 
+	        d.setPage(selectPage); // 현재 페이지 설정 (여기서 setPage 내부에서 1 이상, totalPage 이하로 보정)
 	        d.setStagePage(d.getPage()); // 현재 페이지 그룹의 시작 번호 계산
 	        d.setEndPage();   // 현재 페이지 그룹의 끝 번호 계산
-
 
 	        Map<String, Object> map = new HashMap<>();
 	        int first = (d.getPage() - 1) * d.getCountList() + 1;  // 시작 번호
@@ -230,7 +229,8 @@ public class EmployeeController {
 	        model.addAttribute("empList", lists);
 	        model.addAttribute("page", d);  // EmpPageDto 객체 전달
 
-	        return "empList"; 
+	        return "empList";  // JSP 파일명: empList.jsp
+
 	    }
 	}
 

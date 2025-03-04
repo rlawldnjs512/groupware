@@ -28,12 +28,18 @@
         
         </div>
         <ul id="menuList">
+            
             <li class="active"><i class="fas fa-user"></i><a href="/homeList.do">
             Home
-            </a></li>
+
+            </a>
+            </li>
+          
             <li><i class="fas fa-th"></i> <a href="./reservation.do">
             예약
-            </a></li>
+            </a>
+            </li> 
+
 
             <!-- 사원조회 또는 사원관리 -->
             <li>
@@ -45,20 +51,23 @@
                     </c:choose>
                 </a>
             </li>
-
+            
             <li><i class="fas fa-building"></i><a href="./attendanceListByEmpId">근태관리
             
             </a></li>
-            <li><i class="fas fa-building"></i> <a>전자결재
-           
+
+            <li><i class="fas fa-building"></i> <a href="./approval.do">전자결재
+            
             </a></li>
             <li><i class="fas fa-building"></i><a href="./mypage.do">마이페이지
             
             </a></li>
-            <li><i class="fas fa-building"></i> <a>게시판
-            
+
+            <li><i class="fas fa-building"></i> <a href="./blog.do">게시판
+           
             </a></li>
         </ul>
     </div>
+
 </body>
 </html>

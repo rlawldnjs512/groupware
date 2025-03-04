@@ -26,6 +26,7 @@
         <select name="type" id="type">
             <option value="dept" ${type == 'dept' ? 'selected' : ''}>부서</option>
         <option value="name" ${type == 'name' ? 'selected' : ''}>성명</option>
+
         </select> 
         <input type="text" name="keyword" placeholder="검색어를 입력해주세요.">
         <button type="submit" class="button-common search-btn">

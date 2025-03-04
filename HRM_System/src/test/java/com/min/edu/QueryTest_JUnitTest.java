@@ -15,10 +15,14 @@ import com.min.edu.dto.ApprovalDto;
 import com.min.edu.dto.CertificateDto;
 import com.min.edu.dto.DocumentDto;
 import com.min.edu.dto.EmployeeDto;
+import com.min.edu.dto.FileUpDto;
+import com.min.edu.dto.FreeboardDto;
+import com.min.edu.dto.NoticeboardDto;
 import com.min.edu.dto.SignDto;
 import com.min.edu.model.mapper.IApprovalDao;
 import com.min.edu.model.mapper.IBoardDao;
 import com.min.edu.model.mapper.ICertificateDao;
+import com.min.edu.model.service.IBoardService;
 
 @SpringBootTest
 class QueryTest_JUnitTest {
@@ -31,6 +35,9 @@ class QueryTest_JUnitTest {
 	
 	@Autowired
 	private IBoardDao dao3;
+	
+	@Autowired
+	private IBoardService dao4;
 	
 // 증명서 관리 쿼리 테스트 ------------------------------------------------
 	
@@ -180,6 +187,147 @@ class QueryTest_JUnitTest {
 	
 // 공지사항게시판/자유게시판 쿼리 테스트 ------------------------------------------------
 	
+	
+//	@Test
+	public void insertNotice() {
+		NoticeboardDto dto = new NoticeboardDto().builder()
+						.title("테스트제목")
+						.content("오늘의 공지사항입니다.")
+						.regdate("2025-02-28")
+						.build();
+		int n = dao3.insertNotice(dto);
+		System.out.println(dto);
+		assertEquals(1, n);
+	}
+	
+//	@Test
+	public void updateNotice() {
+		NoticeboardDto dto = new NoticeboardDto().builder()
+						.content("공지내용일부가 변경되었습니다.")
+						.not_id(5)
+						.build();
+		int n = dao3.updateNotice(dto);
+		System.out.println(dto);
+		assertEquals(1, n);
+	}
+	
+//	@Test
+	public void deleteNotice() {
+		int n = dao3.deleteNotice(4);
+		assertEquals(1, n);
+	}
+	
+//	@Test
+	public void deleteNoticeDead() {
+		int n = dao3.deleteNoticeDead();
+		assertNotNull(n);
+	}
+	
+//	@Test
+	public void selectNotice() {
+		List<NoticeboardDto> lists = dao3.selectNotice();
+		System.out.println(lists);
+		assertNotNull(lists);
+	}
+	
+//	@Test
+	public void insertFree() {
+		FreeboardDto dto = new FreeboardDto().builder()
+						.name("이영희")
+						.title("오늘의 날씨")
+						.content("봄비가 내리내요. 우산들 챙기세요.")
+						.regdate("2025-03-02")
+						.build();
+		int n = dao3.insertFree(dto);
+		System.out.println("dto");
+		assertEquals(1, n);
+	}
+	
+//	@Test
+	public void updateFree() {
+		FreeboardDto dto = new FreeboardDto().builder()
+						.content("오타수정했어요.")
+						.free_id(2)
+						.name("홍길동")
+						.build();
+		int n = dao3.updateFree(dto);
+		System.out.println(dto);
+		assertEquals(1, n);
+	}
+	
+//	@Test
+	public void deleteFree() {
+		FreeboardDto dto = new FreeboardDto().builder()
+						.free_id(23)
+						.name("홍길동")
+						.build();
+		int n = dao3.deleteFree(dto);
+		System.out.println(dto);
+		assertEquals(1, n);
+	}
+	
+//	@Test
+	public void reply() {
+		FreeboardDto dto = new FreeboardDto().builder()
+						.name("홍길동")
+						.title("봄비")
+						.content("그렇게 춥진 않네요.")
+						.regdate("2025-03-02")
+						.free_id(22)
+						.build();
+		boolean isc = dao4.reply(dto);
+		assertTrue(isc,"답글이 입력되었습니다.");
+	}
+	
+//	@Test
+	public void updateFreeReply() {
+		FreeboardDto dto = new FreeboardDto().builder()
+						.content("곧 벚꽃이 피겠죠?")
+						.free_id(24)
+						.name("홍길동")
+						.build();
+		int n = dao3.updateFreeReply(dto);
+		System.out.println(dto);
+		assertEquals(1, n);
+	}
+	
+//	@Test
+	public void deleteFreeReply() {
+		FreeboardDto dto = new FreeboardDto().builder()
+						.free_id(25)
+						.name("홍길동")
+						.build();
+		int n = dao3.deleteFreeReply(dto);
+		System.out.println(dto);
+		assertEquals(1, n);
+	}
+	
+//	@Test
+	public void selectFree() {
+		List<FreeboardDto> lists = dao3.selectFree();
+		for (FreeboardDto d : lists) {
+			System.out.println(d);
+		}
+		assertNotNull(lists);
+	}
+	
+//	@Test
+	public void selectNoticeFile() {
+		List<FileUpDto> lists = dao3.selectNoticeFile();
+		for (FileUpDto d : lists) {
+			System.out.println(d);
+		}
+		assertNotNull(lists);
+	}
+	
+//	@Test
+	public void selectFreeFile() {
+		List<FileUpDto> lists = dao3.selectFreeFile();
+		for (FileUpDto d : lists) {
+			System.out.println(d);
+		}
+		assertNotNull(lists);
+	}
 	
 	
 	

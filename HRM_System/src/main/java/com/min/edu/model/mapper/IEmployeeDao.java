@@ -25,7 +25,6 @@ public interface IEmployeeDao {
     //이름|부서 별 사원조회
     public List<EmployeeDto> sortDept(Map<String, Object> map);
     public List<EmployeeDto> sortName(Map<String, Object> map);
-   
     //사원등록-관리자
     public int insertEmployee(EmployeeDto dto);
     //사원수정-관리자
