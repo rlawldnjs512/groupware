@@ -51,6 +51,7 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+		
 
 		<!-- Lombok 사용을 위한 라이브러리 -->
 		<dependency>
@@ -111,7 +112,11 @@
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 			<version>3.0.4</version>
 		</dependency>
-
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.5</version>
+		</dependency>
 	</dependencies>
 
 	<build>

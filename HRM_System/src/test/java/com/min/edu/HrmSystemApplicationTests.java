@@ -62,8 +62,7 @@ class HrmSystemApplicationTests {
 //		EmployeeDto dto = service.getOneUser("20240002");
 //		System.out.println(dto);
 		
-		List<EmployeeDto> list = service.getEmployeeByDept(2);	
-		System.out.println(list);
+	
 		
 		
 		EmployeeDto dto = EmployeeDto.builder()

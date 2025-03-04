@@ -48,7 +48,7 @@ public class LoginController {
 	            log.info("{} 님 반갑습니다.", loginVo.getName());
 	            response.getWriter().print("<script>alert('" + loginVo.getName() + "님 반갑습니다'); location.href='./homeList.do';</script>");
 	        } else {
-	            response.getWriter().print("<script>alert('로그인 정보가 없습니다.'); location.href='./loginform.do';</script>");
+	            response.getWriter().print("<script>alert('로그인 정보가 없습니다.'); location.href='/';</script>");
 	        }
 	        return null;
 	    }
