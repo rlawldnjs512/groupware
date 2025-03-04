@@ -2,14 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.min.edu.model.mapper.IEmployeeDao">
 
+
+
+
+
 	<!-- 로그인 getLogin -->
 	<select id="getLogin" resultType="EmployeeDto">
 		SELECT EMP_ID,NAME,
 			   POSITION, 
 			   EMAIL,
-			   LOGIN_AUTH,ROLE
-		FROM EMPLOYEE
-		WHERE trim(EMP_ID) = trim(#{empId})
+			   LOGIN_AUTH,ROLE,
+			   TO_CHAR(HIRE_DATE, 'YYYY-MM-DD') AS HIRE_DATE,
+			   BIRTH,
+			   TEL,
+			   DEPT_NAME
+		FROM EMPLOYEE e
+		JOIN DEPT d ON e.DEPT_ID=d.DEPT_ID
+		WHERE trim(EMP_ID) = trim(#{emp_id})
 		AND
 		trim(PASSWORD) = trim(#{password})
 
@@ -30,120 +39,198 @@
 	</update>
 
 
-	<!--사용자가 관리자인지 확인 checkAd -->
+	<!-- 사용자가 관리자인지 확인하는 쿼리 -->
 	<select id="checkAd" resultType="java.lang.String">
 		SELECT EMP_ID
 		FROM EMPLOYEE
-		WHERE trim(ROLE) = trim(#{role})
+		WHERE ROLE ='A' AND trim(EMP_ID)=trim(#{emp_id})
 	</select>
 
 
-	<!--사용자는 전체 사원을 조회할 수 있다 getAllUserStatus -->
+	<!--사용자는 전체 사원을 조회할 수 있다 getAllUserStatus --> 
+	<!--현재 사용 안함-->
 	<select id="userSelectAll" resultType="EmployeeDto">
-		SELECT NAME,POSITION,EMAIL,DEPT_NAME
+		SELECT EMP_ID,NAME,POSITION,EMAIL,PHONE,DEPT_NAME,
+			   PROFILE_IMAGE,BIRTH,TEL
 		FROM EMPLOYEE e
 		JOIN DEPT d ON e.DEPT_ID =d.DEPT_ID
 	</select>
 
 
-	<!-- 사원 조회 (이름 또는 부서 조건 사용) -->
-	<select id="getEmployeeByNameOrDept" resultType="EmployeeDto">
-	SELECT
-		E.NAME
-		E.POSITION,
-		D.DEPT_NAME,
-		E.EMAIL
-		FROM
-		EMPLOYEE E
-	JOIN
-	DEPT D ON E.DEPT_ID = D.DEPT_ID
-	WHERE
-	<if test="name != null or deptId != null">
-		<!-- name 조건이 있을 때 -->
-		<if test="name != null">
-			trim(E.NAME) LIKE '%' || trim(#{name}) || '%'
-		</if>
 
-		<!-- deptId 조건이 있을 때 -->
-		<if test="deptId != null">
-			<if test="deptId != null">AND</if>
-			trim(D.DEPT_ID) = trim(#{deptId})
-		</if>
-	</if>
-	</select>
+<!--사원 조회 (부서별)-->
+	<select id="sortDept" resultType="EmployeeDto" parameterType="java.util.Map">
+    SELECT SEQ, PROFILE_IMAGE, NAME, 
+           POSITION, EMAIL, PHONE, DEPT_NAME,
+           BIRTH, HIRE_DATE, TEL, EMP_ID
+    FROM (
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY E.EMP_ID) AS SEQ, -- 순차 번호 생성
+            E.PROFILE_IMAGE, E.NAME, E.POSITION, E.EMAIL, E.PHONE, D.DEPT_NAME,
+            E.BIRTH, E.HIRE_DATE, E.TEL, E.EMP_ID
+        FROM EMPLOYEE E
+        JOIN DEPT D ON E.DEPT_ID = D.DEPT_ID
+        WHERE 
+            <choose>
+                <when test="dept_name != null and dept_name != ''">
+                    TRIM(D.DEPT_NAME) LIKE '%' || TRIM(#{dept_name}) || '%'
+                </when>
+                <otherwise>
+                    1 = 1  <!-- 부서명이 없으면 전체 출력 -->
+                </otherwise>
+            </choose>
+    ) sub
+    WHERE SEQ BETWEEN #{first} AND #{last}
+    ORDER BY SEQ
+</select>
 
-
-
+	
+	<!--사원 조회 (이름별)  -->
+	<select id="sortName" resultType="EmployeeDto" parameterType="java.util.Map">
+    SELECT SEQ, PROFILE_IMAGE, NAME, 
+           POSITION, EMAIL, PHONE, DEPT_NAME,
+           BIRTH, HIRE_DATE, TEL, EMP_ID
+    FROM (
+        SELECT 
+            ROW_NUMBER() OVER (ORDER BY E.EMP_ID) AS SEQ, -- 순차 번호 생성
+            E.PROFILE_IMAGE, E.NAME, E.POSITION, E.EMAIL, E.PHONE, D.DEPT_NAME,
+            E.BIRTH, E.HIRE_DATE, E.TEL, E.EMP_ID
+        FROM EMPLOYEE E
+        JOIN DEPT D ON E.DEPT_ID = D.DEPT_ID
+        WHERE 
+            <choose>
+                <when test="name != null and name != ''">
+                    TRIM(E.NAME) LIKE '%' || TRIM(#{name}) || '%'
+                </when>
+                <otherwise>
+                    1 = 1  <!-- 검색어가 없으면 전체 출력 -->
+                </otherwise>
+            </choose>
+    ) sub
+    WHERE SEQ BETWEEN #{first} AND #{last}
+    ORDER BY SEQ
+</select>
 
 	<!--사원 한명에 대한 상세정보 getOneUser -->
 	<select id="getOneUser" resultType="EmployeeDto">
-	SELECT EMP_ID, NAME,POSITION,EMAIL,
-	DEPT_NAME, PHONE,TEL,HIRE_DATE
+	SELECT EMP_ID, NAME,
+		   POSITION,EMAIL,
+		   DEPT_NAME, PHONE,
+		   BIRTH,PROFILE_IMAGE,TEL
+		   
+		   TEL,HIRE_DATE
 	FROM EMPLOYEE e
 	JOIN DEPT d ON e.DEPT_ID =d.DEPT_ID
 	WHERE trim(EMP_ID) = trim(#{emp_id})
 	</select>
 	
 	<!--관리자는 사원을 등록 insertUser  -->
-    <insert id="insertEmployee" parameterType="EmployeeDto">
-        INSERT INTO EMPLOYEE (
-            EMP_ID, DEPT_ID, NAME, PASSWORD, POSITION, BIRTH, 
-            PHONE, TEL, EMAIL, HIRE_DATE, LOGIN_AUTH, R_STATE
-        ) 
-        VALUES (
-            TO_CHAR(TO_DATE(#{hireDate}, 'YYYY-MM-DD'), 'YYYY') || 
-            LPAD(EMP_SEQ.NEXTVAL, 4, '0'), 
-            #{deptId}, 
-            #{name}, 
-            #{password}, 
-            #{position}, 
-            #{birth}, 
-            #{phone}, 
-            #{tel}, 
-            #{email}, 
-            TO_DATE(#{hireDate}, 'YYYY-MM-DD'), 
-            #{loginAuth}, 
-            #{rState}
-        )
-    </insert>
+   <insert id="insertEmployee" parameterType="EmployeeDto">
+    INSERT INTO EMPLOYEE (
+        EMP_ID, DEPT_ID, NAME, PASSWORD, POSITION, BIRTH, 
+        PHONE, TEL, EMAIL, HIRE_DATE
+    ) 
+    VALUES (
+        TO_CHAR(TO_DATE(#{hire_date}, 'YYYY-MM-DD'), 'YYYY') || 
+        LPAD(EMP_SEQ.NEXTVAL, 4, '0'), 
+        #{dept_id}, 
+        #{name}, 
+        'a12345678',  <!-- 초기 비밀번호 고정 -->
+        #{position}, 
+        #{birth}, 
+        #{phone}, 
+        #{tel}, 
+        #{email}, 
+        TO_DATE(#{hire_date}, 'YYYY-MM-DD HH24:MI:SS')
+    )
+</insert>
+
+
 
 	<!--관리자는 사원을 수정 updateUserInfo  -->
-	<update id="updateUser"
-		parameterType="EmployeeDto">
-		UPDATE EMPLOYEE
-		SET
-		DEPT_ID = #{deptId},
-		trim(NAME) = trim(#{name}),
-		trim(POSITION) = trim(#{position}),
-		trim(PHONE) = trim(#{phone}),
-		trim(TEL) = trim(#{tel}),
-		trim(EMAIL) = trim(#{email}),
-		trim(BIRTH) = trim(#{birth})
-		WHERE trim(EMP_ID) = trim(#{emp_id})
-	</update>
+	<update id="updateUser" parameterType="EmployeeDto">
+    UPDATE EMPLOYEE
+    SET
+        DEPT_ID =#{dept_id},
+        NAME = #{name},
+        POSITION =#{position},
+        PHONE =#{phone},
+        TEL = #{tel},
+        EMAIL = #{email},
+        BIRTH = #{birth}
+    WHERE trim(EMP_ID) = trim(#{emp_id})
+</update>
 
 
-	<!--마이페이지에서 자신의 정보를 수정  modifyUserInfo -->
-	<update id="modifyUserInfo">
-		UPDATE EMPLOYEE
-		SET
-		trim(PHONE) = trim(#{phone}),
-		trim(TEL) = trim(#{tel}),
-		trim(EMAIL) = trim(#{email}),
-		trim(BIRTH) = trim(#{birth})
-		WHERE trim(EMP_ID) = trim(#{emp_id});
-	</update>
+
+	<!--마이페이지에서 자신의 정보를 수정 modifyUserInfo -->
+<update id="modifyUserInfo" parameterType="EmployeeDto">
+    UPDATE EMPLOYEE
+    SET
+        NAME = #{name},
+        PHONE = #{phone},
+        TEL = #{tel},
+        EMAIL = #{email},
+        BIRTH = #{birth}
+    WHERE trim(EMP_ID) = trim(#{emp_id})
+</update>
+
+
 	
 	<!--마이페이지에서 자신의 정보를 조회 getOne-->
 	<select id="getOne" resultType="EmployeeDto">
 	SELECT e.EMP_ID, e.NAME, e.POSITION,
-	e.BIRTH, e.PHONE,
-	e.TEL, e.EMAIL, e.HIRE_DATE,
-	d.DEPT_NAME
+		   e.BIRTH, e.PHONE,
+		   e.TEL, e.EMAIL, TO_CHAR(e.HIRE_DATE, 'YYYY-MM-DD') AS HIRE_DATE, e.PROFILE_IMAGE,
+	       d.DEPT_NAME
 	FROM EMPLOYEE e
-	JOIN DEPT d ON e.DEPT_ID = d.DEPT_ID
-	WHERE trim(e.EMP_ID) = trim(#{emp_id});
+	JOIN DEPT d 
+	ON e.DEPT_ID = d.DEPT_ID
+	WHERE trim(e.EMP_ID) = trim(#{emp_id})
 	</select>
+	
+	<!--마이페이지에서 자신의 프로필 업로드 uploadProfile  -->
+<update id="updateProfile">
+	UPDATE EMPLOYEE
+	SET PROFILE_IMAGE = #{profile_image}
+	WHERE trim(EMP_ID) = trim(#{emp_id})
+</update>
+
+
+<!--여기서 부터는 페이징 처리 SQL  -->
+<!-- 페이징 처리된 범위의 사원들 selectAllUser  -->
+<select id="selectAllUser" resultType="EmployeeDto"
+ 						    parameterType="java.util.Map">
+	SELECT SEQ,  
+        PROFILE_IMAGE, 
+        NAME, 
+        POSITION, 
+        EMAIL, 
+        PHONE, 
+        DEPT_NAME,
+        BIRTH,
+        HIRE_DATE,TEL,EMP_ID
+    FROM 
+    (SELECT 
+        ROW_NUMBER() OVER (ORDER BY EMP_ID) AS SEQ, 
+        PROFILE_IMAGE, 
+        NAME, 
+        POSITION, 
+        EMAIL, 
+        PHONE, 
+        DEPT_NAME,
+        BIRTH,
+        HIRE_DATE,TEL,EMP_ID
+   FROM EMPLOYEE e
+   JOIN DEPT d ON e.DEPT_ID = d.DEPT_ID) sub
+   WHERE SEQ BETWEEN #{first} AND #{last}
+</select>
+
+<!--사원조회의 전체 갯수 countUser  -->
+<select id="countUser" resultType="Integer">
+	SELECT COUNT(*) 
+	  FROM EMPLOYEE e
+</select>
 
 </mapper>
 
