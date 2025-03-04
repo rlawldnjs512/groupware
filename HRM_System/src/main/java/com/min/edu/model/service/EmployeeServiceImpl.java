@@ -56,7 +56,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public List<EmployeeDto> sortDept(Map<String, Object> map) {
+	public List<EmployeeDto> sortDept(Map<String, Object >map) {
 		log.info("EmployeeServiceImpl {}", "getEmployeeByNameOrDept");
 		return dao.sortDept(map);
 	}

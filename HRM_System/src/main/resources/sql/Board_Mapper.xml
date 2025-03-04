@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.min.edu.model.IBoardDao">
+<mapper namespace="com.min.edu.model.mapper.IBoardDao">
 
 <!-- 관리자는 공지사항 게시글을 등록할 수 있다.	insertNotice -->
 <insert id="insertNotice">
@@ -34,6 +34,14 @@
 	WHERE EXPIRED <![CDATA[<]]> CAST(CURRENT_TIMESTAMP AS TIMESTAMP)
 </delete>
 
+<!-- 공지사항 게시글을 조회할 수 있다. selectNotice -->
+<select id="selectNotice" resultType="NoticeboardDto">
+	SELECT NOT_ID , TITLE , CONTENT , REGDATE , EXPIRED ,
+        (SELECT NAME FROM EMPLOYEE e WHERE ROLE = 'A')
+        FROM NOTICEBOARD n
+</select>
+
+
 <!-- 사용자와 관리자는 자유게시글을 등록할 수 있다.	insertFree -->
 <insert id="insertFree">
 	INSERT INTO FREEBOARD
@@ -50,40 +58,76 @@
 
 <!-- 사용자와 관리자는 자신이 등록한 자유게시글만 수정할 수 있다.	updateFree -->
 <update id="updateFree">
-
+	UPDATE FREEBOARD SET CONTENT = #{content}
+        WHERE FREE_ID = #{free_id}
+        AND EMP_ID IN (SELECT EMP_ID FROM EMPLOYEE e WHERE NAME = #{name})
 </update>
 
 <!-- 사용자와 관리자는 자신이 등록한 자유게시글만 삭제할 수 있다.	deleteFree -->
 <delete id="deleteFree">
-
+	DELETE FROM FREEBOARD f 
+        WHERE FREE_ID = #{free_id}
+        AND EMP_ID IN (SELECT EMP_ID FROM EMPLOYEE e WHERE NAME = #{name})
 </delete>
 
 <!-- 사용자와 관리자는 등록된 자유게시글에 답글을 달 수 있다.	insertFreeReply / updateReply -->
 <insert id="insertFreeReply">
-
+	INSERT INTO FREEBOARD
+                (FREE_ID, EMP_ID, TITLE,
+                CONTENT, REGDATE, REPLY_ID,
+                "REF", STEP, "DEPTH",
+                DELFLAG, FILE_ID)
+	VALUES(FREEBOARD_SEQ.NEXTVAL, 
+	                (SELECT EMP_ID FROM EMPLOYEE e WHERE NAME = #{name}), #{title},
+	                #{content}, #{regdate},
+	                'RP' || LPAD(FREEBOARD_SEQ.NEXTVAL,4,'0'),
+	                (SELECT "REF" FROM FREEBOARD f WHERE FREE_ID = #{free_id}),
+	                (SELECT STEP FROM FREEBOARD f2 WHERE FREE_ID = #{free_id})+1,
+	                (SELECT "DEPTH" FROM FREEBOARD f3 WHERE FREE_ID = #{free_id})+1,
+	                'N', '')
 </insert>
 <update id="updateReply">
-
+	UPDATE FREEBOARD SET STEP = STEP + 1
+        WHERE "REF" = (SELECT "REF" FROM FREEBOARD f WHERE FREE_ID = #{free_id})
+        AND STEP > (SELECT STEP FROM FREEBOARD f2 WHERE FREE_ID = #{free_id})
 </update>
 
 <!-- 사용자와 관리자는 자신이 등록한 답글을 수정할 수 있다.	updateFreeReply -->
 <update id="updateFreeReply">
-
+	UPDATE FREEBOARD SET CONTENT = #{content}
+        WHERE FREE_ID = #{free_id}
+        AND EMP_ID IN (SELECT EMP_ID FROM EMPLOYEE e WHERE NAME = #{name})
 </update>
 
 <!-- 사용자와 관리자는 자신이 등록한 답글을 삭제할 수 있다.	deleteFreeReply -->
 <delete id="deleteFreeReply">
-
+	DELETE FROM FREEBOARD f 
+        WHERE FREE_ID = #{free_id}
+        AND EMP_ID IN (SELECT EMP_ID FROM EMPLOYEE e WHERE NAME = #{name})
 </delete>
 
-<!-- 사용자는 공지사항 게시글에 등록된 첨부파일을 여러 번 다운로드할 수 있다.	selectNoticeFile -->
-<select id="selectNoticeFile">
+<!-- 자유게시판을 조회할 수 있다. selectFree-->
+<select id="selectFree" resultType="FreeboardDto">
+	SELECT FREE_ID , TITLE , CONTENT , REGDATE , EMP_ID , NAME 
+        FROM FREEBOARD f 
+        JOIN EMPLOYEE e USING(EMP_ID)
+</select>
 
+
+<!-- 사용자는 공지사항 게시글에 등록된 첨부파일을 여러 번 다운로드할 수 있다.	selectNoticeFile -->
+<select id="selectNoticeFile" resultType="FileUpDto">
+	SELECT FILE_ID, DOC_ID, ORIGIN_NAME, STORE_NAME, "SIZE", FILE_PATH 
+        FROM FILEUP f 
+        JOIN NOTICEBOARD n USING(FILE_ID)
+        WHERE TABLE_NAME = 'NOTICEBOARD'
 </select>
 
 <!-- 사용자와 관리자는 자유게시글에 등록된 첨부파일을 여러 번 다운로드할 수 있다.	selectFreeFile -->
-<select id="selectFreeFile">
-
+<select id="selectFreeFile" resultType="FileUpDto">
+	SELECT FILE_ID, DOC_ID, ORIGIN_NAME, STORE_NAME, "SIZE", FILE_PATH 
+        FROM FILEUP f 
+        JOIN FREEBOARD f2 USING(FILE_ID)
+        WHERE TABLE_NAME = 'FREEBOARD'
 </select>
 
 </mapper>

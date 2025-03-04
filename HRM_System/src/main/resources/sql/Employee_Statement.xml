@@ -57,7 +57,6 @@
 	</select>
 
 
-
 <!--사원 조회 (부서별)-->
 	<select id="sortDept" resultType="EmployeeDto" parameterType="java.util.Map">
     SELECT SEQ, PROFILE_IMAGE, NAME, 
@@ -118,14 +117,6 @@
     JOIN DEPT d ON e.DEPT_ID = d.DEPT_ID
     WHERE d.DEPT_NAME LIKE '%' || #{keyword} || '%'
 </select>
-
-
-<select id="countEmployeesByName" resultType="int">
-    SELECT COUNT(*) FROM EMPLOYEE WHERE NAME LIKE CONCAT('%', #{keyword}, '%')
-</select>
-
-
-
 
 
 	<!--사원 한명에 대한 상세정보 getOneUser -->

@@ -29,6 +29,7 @@ public class EmployeeDto {
 	private String hire_date;
 	private String retire_date;
 	private String login_Auth;
+
 	private String profile_image;
 	private String seq;
 

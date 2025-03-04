@@ -2,3 +2,4 @@
 <div class="header">
    <h1>게시판</h1>
 </div>
+

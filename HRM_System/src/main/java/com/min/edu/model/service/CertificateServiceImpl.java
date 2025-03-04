@@ -3,6 +3,7 @@ package com.min.edu.model.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.min.edu.dto.CertificateDto;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CertificateServiceImpl implements ICertificateService {
 
+	@Autowired
 	private ICertificateDao dao;
 
 	@Override
@@ -59,6 +61,11 @@ public class CertificateServiceImpl implements ICertificateService {
 	@Override
 	public List<CertificateDto> selectCertTypeAdmin(String type) {
 		return dao.selectCertTypeAdmin(type);
+	}
+
+	@Override
+	public String getCertNum(String name) {
+		 return dao.getCertNum(name);
 	}
 	
 }
