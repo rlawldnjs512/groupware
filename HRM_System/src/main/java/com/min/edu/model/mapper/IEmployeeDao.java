@@ -40,6 +40,10 @@ public interface IEmployeeDao {
     //전체글의 갯수를 조회하면 페이지 연산에 사용
     public int countUser();
     
+    public int countEmployeesByName(String keyword);
+    
+    public int countEmployeesByDeptName(String keyword);
+    
     
 
 

@@ -45,5 +45,8 @@ public interface IEmployeeService {
     //이름별로 사원 조회
     public List<EmployeeDto> getEmployeesByName(String name, int first, int last);
 
+    public int countEmployeesByName(String keyword);
+
+    public int countEmployeesByDeptName(String keyword);
     
 }

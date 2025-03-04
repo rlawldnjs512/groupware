@@ -24,11 +24,11 @@
         <fieldset class="btn-container">
     <form name="search-frm" method="get" action="./searchEmployee.do">
         <select name="type" id="type">
-            <option value="dept" ${type == 'dept' ? 'selected' : ''}>부서</option>
-        <option value="name" ${type == 'name' ? 'selected' : ''}>성명</option>
-
+            <option value="dept" ${(param.type == "dept")?"selected":""}>부서</option>
+        	<option value="name" ${(param.type == "name")?"selected":""}>성명</option>
         </select> 
-        <input type="text" name="keyword" placeholder="검색어를 입력해주세요.">
+        
+        <input type="text" name="keyword" value="${param.keyword}" placeholder="검색어를 입력해주세요.">
         <button type="submit" class="button-common search-btn">
             <img src="images/search.svg" alt="검색 아이콘" style="width: 30px; height: 30px;">
         </button>
@@ -105,25 +105,26 @@
                 </tbody>
             </table>
         </div>
-       <div class="pagination-container text-center">
+        
+        <div class="pagination-container text-center">
     <ul class="pagination pagination-lg">
         <!-- 맨 처음 및 이전 버튼 (왼쪽) -->
         <c:if test="${page.page > 1}">
-            <li><a href="./emp.do?page=1">&laquo;&laquo;</a></li>
-            <li><a href="./emp.do?page=${page.page - 1}">&laquo;</a></li>
+            <li><a href="./searchEmployee.do?page=1&type=${type}&keyword=${keyword}">&laquo;&laquo;</a></li>
+            <li><a href="./searchEmployee.do?page=${page.page - 1}&type=${type}&keyword=${keyword}">&laquo;</a></li>
         </c:if>
-        
+
         <!-- 페이지 번호 (가운데) -->
         <c:forEach var="i" begin="${page.stagePage}" end="${page.endPage}" step="1">
             <li class="${i == page.page ? 'active' : ''}">
-                <a href="./emp.do?page=${i}">${i}</a>
+                <a href="./searchEmployee.do?page=${i}&type=${type}&keyword=${keyword}">${i}</a>
             </li>
         </c:forEach>
-        
+
         <!-- 다음 및 맨 끝 버튼 (오른쪽) -->
         <c:if test="${page.page < page.totalPage}">
-            <li><a href="./emp.do?page=${page.page + 1}">&raquo;</a></li>
-            <li><a href="./emp.do?page=${page.totalPage}">&raquo;&raquo;</a></li>
+            <li><a href="./searchEmployee.do?page=${page.page + 1}&type=${type}&keyword=${keyword}">&raquo;</a></li>
+            <li><a href="./searchEmployee.do?page=${page.totalPage}&type=${type}&keyword=${keyword}">&raquo;&raquo;</a></li>
         </c:if>
     </ul>
 </div>
@@ -131,7 +132,9 @@
 
 
 
-        <c:if test="${empty empList}">
+
+
+			<c:if test="${empty empList}">
             <p>현재 사원 목록이 없습니다.</p>
         </c:if>
     </div>

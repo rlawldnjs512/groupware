@@ -17,7 +17,8 @@
     <form action="./login.do" method="POST">
       <div class="form-field">
         <label for="login-mail"><i class="fa fa-user"></i></label>
-        <input id="emp_id" type="text" name="emp_id" placeholder="사원번호" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+        <input id="emp_id" type="text" name="emp_id" placeholder="사원번호" pattern="\d{8}" required>
+
         <svg>
           <use href="#svg-check" />
         </svg>
