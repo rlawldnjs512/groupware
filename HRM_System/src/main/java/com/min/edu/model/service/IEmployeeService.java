@@ -22,7 +22,6 @@ public interface IEmployeeService {
     //부서 별 사원조회
     public List<EmployeeDto> sortDept(Map<String, Object> map);
     public List<EmployeeDto> sortName(Map<String, Object> map);
-   
     //사원등록-관리자
     public int insertEmployee(EmployeeDto dto);
     //사원수정-관리자
@@ -41,24 +40,10 @@ public interface IEmployeeService {
     public List<EmployeeDto> selectAllUser(Map<String, Object> map);
     //전체글의 갯수를 조회하면 페이지 연산에 사용
     public int countUser();
-    
     //부서별로 사원 조회
     public List<EmployeeDto> getEmployeesByDept(String dept_name, int first, int last);
-    
-    
     //이름별로 사원 조회
-    public List<EmployeeDto> getEmployeesByName(String dept_name, int first, int last);
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    public List<EmployeeDto> getEmployeesByName(String name, int first, int last);
+
     
 }

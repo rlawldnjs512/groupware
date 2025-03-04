@@ -120,7 +120,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 			log.info("게시글 전체 글 갯수");
 			return dao.countUser();
 		}
-		
+
 		   // 부서별로 사원 조회
 		@Override
 	    public List<EmployeeDto> getEmployeesByDept(String dept_name, int first, int last) {
@@ -145,14 +145,5 @@ public class EmployeeServiceImpl implements IEmployeeService {
 			return dao.sortName(params);
 					
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 }
