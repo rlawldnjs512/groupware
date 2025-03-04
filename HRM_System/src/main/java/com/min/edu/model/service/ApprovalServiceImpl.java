@@ -3,6 +3,7 @@ package com.min.edu.model.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.min.edu.dto.ApprovalDto;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ApprovalServiceImpl implements IApprovalService {
 	
+	@Autowired
 	private IApprovalDao dao;
 	
 	@Override
