@@ -38,7 +38,7 @@ public class AttendanceController {
 		
 		model.addAttribute("lists", lists);
 		
-		return "homeList";
+		return "attendanceListByEmpId";
 	}
 	
 	@PostMapping(value = "/insertAttendance")

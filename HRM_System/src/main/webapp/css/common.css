@@ -1,117 +1,132 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Delius+Unicase:wght@400;700&family=Orbit&family=Varela+Round&display=swap');
+/* 기본 스타일 */
+body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
 
-   /* 기본 스타일 */
-        body {
-            overflow-x: hidden;
-        }
+/* 사이드바 스타일 */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: linear-gradient(180deg, rgba(70, 130, 180, 0.8), rgba(245, 245, 220, 0.8)); /* 하늘색과 베이지색 그라디언트 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+    color: white;
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column; /* 세로로 메뉴 항목 정렬 */
+    justify-content: space-between; /* 메뉴 항목들 사이의 간격을 균등하게 분배 */
+    
+   font-family: "Orbit", serif;
+  font-weight: 400;
+  font-style: normal;
+  
+}
 
-        /* 사이드바 스타일 */
-        .sidebar {
-        width: 250px;
-        height: 100vh;
-        background-color: #1E2A40;
-        position: fixed;
-        top: 0;
-        left: 0;
-        padding-top: 20px;
-        color: white;
-        transition: transform 0.3s ease-in-out;
-    }
+/* 메뉴 스타일 */
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1; /* 사이드바를 꽉 채우도록 설정 */
+    display: flex;
+    flex-direction: column; /* 메뉴 항목들을 세로로 배치 */
+    justify-content: space-between; /* 항목 간 간격을 균등하게 분배 */
+}
 
-    /* 메뉴 스타일 */
-    .sidebar ul {
-        list-style: none;
-        padding: 0;
-    }
+.sidebar ul li {
+    padding: 20px 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    color: black !important; /* 글자색을 검정으로 설정, !important로 강제 적용 */
+    margin-bottom: 10px;
+    flex-grow: 1; /* 각 항목들이 세로로 고르게 분배되도록 설정 */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* 아주 연한 선 추가 */
+}
 
-    .sidebar ul li {
-        padding: 10px 20px;
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        transition: background 0.3s;
-        color: #d3d3d3;
-    }
+/* 메뉴 항목의 링크 색상 변경 */
+.sidebar ul li a {
+    text-decoration: none;
+    color: black !important; /* 링크의 색상도 검정으로 변경, !important로 우선 적용 */
+    width: 100%;
+    font-weight: 900 !important; /* 글자 두께를 더 진하게 */
+    font-size: 20px;
+}
 
-    .sidebar ul li:hover {
-        background: #3A4B66;
-        color: white;
-    }
+/* 메뉴 항목에 hover 시 배경색 및 글자색 변경 */
+.sidebar ul li:hover {
+    background: #3A4B66;  /* 배경색을 변경 */
+    color: white; /* 글자색을 흰색으로 변경 */
+}
 
-    .sidebar ul li i {
-        margin-right: 10px;
-        font-size: 18px;
-    }
-	.sidebar ul li a{
-		text-decoration: none;
-		color: white;
-	}
-    /* 3점 버튼 스타일 */
-    .menu-btn {
-        background: none;
-        border: none;
-        font-size: 24px;
-        color: white;
-        cursor: pointer;
-        position: absolute;
-        top: 15px;
-        right: 15px;
-    }
+.sidebar ul li a:hover {
+    color: white !important; /* 링크 글자 색도 흰색으로 변경 */
+}
 
-        /* 사이드바 숨김 상태 */
-        .sidebar.hidden {
-            transform: translateX(-80%);
-        }
+/* 3점 버튼 스타일 */
+.menu-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
 
-        /* 컨텐츠 영역 */
-        .content {
-            margin-left: 250px;
-            padding: 20px;
-            background-color: #F5F5F5;
-            min-height: 100vh;
-            transition: margin-left 0.3s ease-in-out;
-            display: flex;
-            flex-direction: column;
-        }
+/* 사이드바 숨김 상태 */
+.sidebar.hidden {
+    transform: translateX(-80%);
+}
 
-        /* 사이드바 숨김 상태일 때 컨텐츠 확장 */
-        .content.expanded {
-            margin-left: 50px;
-        }
+/* 컨텐츠 영역 */
+.content {
+    margin-left: 250px;
+    padding: 20px;
+    background-color: #F5F5F5;
+    min-height: 100vh;
+    transition: margin-left 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
 
-        /* 헤더 (15%) */
-        .header {
-            background-color: white;
-            padding: 10px 20px;
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex: 0 0 15%;
-        }
+/* 사이드바 숨김 상태일 때 컨텐츠 확장 */
+.content.expanded {
+    margin-left: 50px;
+}
 
-        /* 유저 아이콘 */
-        .user-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-        }
+/* 헤더 (15%) */
+.header {
+    background-color: white;
+    padding: 10px 20px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 0 0 15%;
+}
 
-        /* 3점 버튼 스타일 */
-        .menu-btn {
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: white;
-            cursor: pointer;
-            position: absolute;
-            top: 15px;
-            right: 15px;
-        }
+/* 유저 아이콘 */
+.user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
 
-        /* 메인 콘텐츠 (85%) */
-        .main-content {
-            margin-top: 15px;
-            border: 1px solid #ccc;
-            flex: 1;
-        }
+/* 메인 콘텐츠 (85%) */
+.main-content {
+    margin-top: 15px;
+    border: 1px solid #ccc;
+    flex: 1;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+}
