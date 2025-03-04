@@ -15,44 +15,33 @@
 <%@ include file="sidebar.jsp" %>
 <body>
     <div class="content" id="content">
-        <%@ include file="header.jsp" %>
-			<ul class="nav flex-wrap border-transparent">
-				<li class="nav-item my-1">
-					<a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
-							active" href="/keen/demo1/account/overview.html">
-						내 정보
-					</a>
-				</li>
-				<li class="nav-item my-1">
-					<a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
-						    active" href="/keen/demo1/account/overview.html">
-						일정 관리
-					</a>
-				</li>
-				<li class="nav-item my-1">
-					<a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
-						    active" href="./certification.do">
-						증명서 관리
-					</a>
-				</li>
-			</ul>
+	    <div class="header">
+				<ul class="nav flex-wrap border-transparent">
+					<li class="nav-item my-1"><a
+						class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
+								active"
+						href="/keen/demo1/account/overview.html"> 내 정보 </a></li>
+					<li class="nav-item my-1"><a
+						class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
+							    active"
+						href="/keen/demo1/account/overview.html"> 일정 관리 </a></li>
+					<li class="nav-item my-1"><a
+						class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
+							    active"
+						href="./certification.do"> 증명서 관리 </a></li>
+				</ul>
+			</div>
         <div class="main-content">
 	<div>
 		<button id="savePdf">PDF 저장</button>
 	</div>
 	<div id="saveZone">
-		<!-- Page Wrapping (start) : Style retention -->
 		<div id="divCustomWrapper"
 			style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-			<!-- Embededd Style이 적용받는 범위 입니다. 상단의 스타일은 이 요소 안에서만 동작합니다. -->
-			<!-- 1. Title Section (start) : 문서제목이 작성되는 영역입니다.-->
 			<div id="titleSection"
 				style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 19pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">재직증명서</div>
-			<!-- 1. Title Section (end) -->
-			<!-- 2. Draft Section (Start) : 결재정보가 작성되는 영역입니다. -->
 			<div class="partition" id="draftSection"
 				style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-				<!-- 2.1 Drafter Information (Start) -->
 				<div class="left"
 					style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
 					<table style="width: 250px; height: 120px;">
@@ -65,7 +54,7 @@
 								<td
 									class="subjectColumn dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
 
-									기 안 자</td>
+									신 청 자</td>
 								<td
 									class="detailColumn dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
 									<span class="comp_wrap" contenteditable="false" data-value=""
@@ -73,7 +62,9 @@
 									data-dsl="{{label:draftUser}}" data-cid="0"
 									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
 										class="comp_item"
-										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">기안자</span><span
+										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
+										${loginVo.name}
+									</span><span
 										class="comp_hover" contenteditable="false"
 										data-content-protect-cover="true" data-origin="0"
 										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
@@ -87,7 +78,7 @@
 								<td
 									class="subjectColumn dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
 
-									소 속</td>
+									소 속 부 서</td>
 								<td
 									class="detailColumn dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
 									<span class="comp_wrap" contenteditable="false" data-value=""
@@ -95,7 +86,9 @@
 									data-dsl="{{label:draftDept}}" data-cid="1"
 									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
 										class="comp_item"
-										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">기안부서</span><span
+										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
+										${loginVo.dept_name}
+									</span><span
 										class="comp_hover" contenteditable="false"
 										data-content-protect-cover="true" data-origin="1"
 										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
@@ -109,7 +102,7 @@
 								<td
 									class="subjectColumn dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
 
-									기 안 일</td>
+									신 청 일</td>
 								<td
 									class="detailColumn dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
 									<span class="comp_wrap" contenteditable="false" data-value=""
@@ -117,7 +110,9 @@
 									data-dsl="{{label:draftDate}}" data-cid="2"
 									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
 										class="comp_item"
-										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">기안일</span><span
+										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
+										<span id="requestDate"></span>
+									</span><span
 										class="comp_hover" contenteditable="false"
 										data-content-protect-cover="true" data-origin="2"
 										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
@@ -139,7 +134,9 @@
 									data-dsl="{{label:docNo}}" data-cid="3"
 									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
 										class="comp_item"
-										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">문서번호</span><span
+										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
+										${cert_num}
+									</span><span
 										class="comp_hover" contenteditable="false"
 										data-content-protect-cover="true" data-origin="3"
 										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><a
@@ -151,129 +148,17 @@
 						</tbody>
 					</table>
 				</div>
-				<!-- 2.1 Drafter Information (end) -->
-				<!-- 2.2 Draft Line (start) -->
-				<div class="inaRowRight"
-					style="width: 800px; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-					<!-- 결재선 1 Start-->
-					<span unselectable="on" contenteditable="false" class="comp_wrap"
-						data-wrapper=""
-						style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-						<!-- 결재선 타입, 결재자 수 -->
-						<span class="sign_type1_inline" data-group-seq="0"
-						data-group-name="기안" data-group-max-count="1"
-						data-group-type="type1" data-is-reception=""
-						style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-							<!-- 결재선 이름 -->
-							<span class="sign_tit_wrap"
-							style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
-								class="sign_tit"
-								style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><strong>기안</strong></span></span>
-						<!-- 결재방 1EA Start -->
-							<span class="sign_member_wrap"
-							style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
-								class="sign_member"
-								style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
-									class="sign_rank_wrap test2"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
-										class="sign_rank"
-										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">&nbsp;</span></span><span
-									class="sign_wrap"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">&nbsp;</span><span
-									class="sign_date_wrap"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
-										class="sign_date"
-										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">&nbsp;</span></span></span></span>
-						<!-- 결재방 1EA End-->
-							<!-- 휴지통 컴포넌트 Start-->
-					</span><span contenteditable="false" class="comp_hover"
-						data-content-protect-cover="true"
-						style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><a
-							contenteditable="false" class="ic_prototype ic_prototype_trash"
-							data-content-protect-cover="true"
-							data-component-delete-button="true"></a></span>
-					</span>
-					<!-- 휴지통 컴포넌트 End-->
-					<!-- 결재선 1 End-->
-					<!-- 결재선 2 Start-->
-					<span unselectable="on" contenteditable="false" class="comp_wrap"
-						data-wrapper=""
-						style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-						<!-- 결재선 타입, 결재자 수 -->
-						<span class="sign_type1_inline" data-group-seq="1"
-						data-group-name="승인" data-group-max-count="3"
-						data-group-type="type1" data-is-reception=""
-						style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-							<!-- 결재선 이름 -->
-							<span class="sign_tit_wrap"
-							style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
-								class="sign_tit"
-								style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><strong>승인</strong></span></span>
-						<!-- 결재방 Start-->
-							<!-- 결재방 1EA Start -->
-							<span class="sign_member_wrap"
-							style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
-								class="sign_member"
-								style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
-									class="sign_rank_wrap test2"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
-										class="sign_rank"
-										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">&nbsp;</span></span><span
-									class="sign_wrap"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">&nbsp;</span><span
-									class="sign_date_wrap"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
-										class="sign_date"
-										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">&nbsp;</span></span></span></span>
-						<!-- 결재방 1EA End-->
-							<!-- 결재방 1EA Start -->
-							<span class="sign_member_wrap"
-							style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
-								class="sign_member"
-								style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
-									class="sign_rank_wrap test2"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
-										class="sign_rank"
-										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">&nbsp;</span></span><span
-									class="sign_wrap"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">&nbsp;</span><span
-									class="sign_date_wrap"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
-										class="sign_date"
-										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">&nbsp;</span></span></span></span>
-						<!-- 결재방 1EA End-->
-							<!-- 결재방 1EA Start -->
-							<span class="sign_member_wrap"
-							style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
-								class="sign_member"
-								style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
-									class="sign_rank_wrap test2"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
-										class="sign_rank"
-										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">&nbsp;</span></span><span
-									class="sign_wrap"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">&nbsp;</span><span
-									class="sign_date_wrap"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span
-										class="sign_date"
-										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">&nbsp;</span></span></span></span>
-						<!-- 결재방 1EA End-->
-							<!-- 결재방 End-->
-							<!-- 휴지통 컴포넌트 Start-->
-					</span><span contenteditable="false" class="comp_hover"
-						data-content-protect-cover="true"
-						style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><a
-							contenteditable="false" class="ic_prototype ic_prototype_trash"
-							data-content-protect-cover="true"
-							data-component-delete-button="true"></a></span>
-					</span>
-					<!-- 휴지통 컴포넌트 End-->
-					<!-- 결재선 2 End-->
-				</div>
-				<!-- 2.2 Draft Line (end) -->
 			</div>
-			<!-- 2. Draft Section (end) -->
-			<!-- 3. Detail Section (start) : 내용이 작성되는 영역입니다. -->
+			<script>
+			    document.addEventListener("DOMContentLoaded", function () {
+			        let today = new Date();
+			        let formattedDate = today.getFullYear() + '-' +
+			                            ('0' + (today.getMonth() + 1)).slice(-2) + '-' +
+			                            ('0' + today.getDate()).slice(-2);
+			
+			        document.getElementById("requestDate").innerText = formattedDate;
+			    });
+			</script>		
 			<table class="detailSection">
 				<colgroup>
 					<!-- ### 테이블의 컬럼 너비는 colGroup을 통해 지정합니다. td에 지정 X ### -->
@@ -299,8 +184,9 @@
 							<span unselectable="on" contenteditable="false" class="comp_wrap"
 							data-cid="4" data-dsl="{{text}}" data-wrapper=""
 							style="width: 100%; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"
-							data-value="" data-autotype=""><input class="ipt_editor"
-								type="text"><span contenteditable="false"
+							data-value="" data-autotype="">
+							${loginVo.name}
+							<span contenteditable="false"
 								class="comp_active"
 								style="display: none; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
 									<span class="Active_dot1"
@@ -323,7 +209,7 @@
 						<td
 							class="subjectColumn dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
 
-							주민등록번호</td>
+							주민등록번호 </td>
 						<td
 							class="detailColumn dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
 							<p
@@ -332,8 +218,9 @@
 									class="comp_wrap" data-cid="6" data-dsl="{{text}}"
 									data-wrapper=""
 									style="width: 100%; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: 18px; margin-top: 0px; margin-bottom: 0px;"
-									data-value="" data-autotype=""><input class="ipt_editor"
-									type="text"><span contenteditable="false"
+									data-value="" data-autotype="">
+									${loginVo.birth}
+								<span contenteditable="false"
 									class="comp_active"
 									style="display: none; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: 18px; margin-top: 0px; margin-bottom: 0px;">
 										<span class="Active_dot1"
@@ -359,7 +246,7 @@
 						<td
 							class="subjectColumn dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
 
-							주 소</td>
+							이 메 일</td>
 						<td colspan="3"
 							class="detailColumn dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
 							<p
@@ -368,8 +255,9 @@
 									class="comp_wrap" data-cid="5" data-dsl="{{text}}"
 									data-wrapper=""
 									style="width: 100%; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: 18px; margin-top: 0px; margin-bottom: 0px;"
-									data-value="" data-autotype=""><input class="ipt_editor"
-									type="text"><span contenteditable="false"
+									data-value="" data-autotype="">
+								${loginVo.email}
+								<span contenteditable="false"
 									class="comp_active"
 									style="display: none; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: 18px; margin-top: 0px; margin-bottom: 0px;">
 										<span class="Active_dot1"
@@ -399,7 +287,7 @@
 						<td
 							class="subjectColumn dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
 
-							소 속</td>
+							소 속 부 서</td>
 						<td colspan="3"
 							class="detailColumn dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
 							<p
@@ -408,8 +296,9 @@
 									class="comp_wrap" data-cid="7" data-dsl="{{text}}"
 									data-wrapper=""
 									style="width: 100%; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: 18px; margin-top: 0px; margin-bottom: 0px;"
-									data-value="" data-autotype=""><input class="ipt_editor"
-									type="text"><span contenteditable="false"
+									data-value="" data-autotype="">
+									${loginVo.dept_name}
+								<span contenteditable="false"
 									class="comp_active"
 									style="display: none; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: 18px; margin-top: 0px; margin-bottom: 0px;">
 										<span class="Active_dot1"
@@ -435,7 +324,7 @@
 						<td
 							class="subjectColumn dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
 
-							직 위</td>
+							직 급</td>
 						<td colspan="3"
 							class="detailColumn dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
 							<p
@@ -444,8 +333,9 @@
 									class="comp_wrap" data-cid="8" data-dsl="{{text}}"
 									data-wrapper=""
 									style="width: 100%; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: 18px; margin-top: 0px; margin-bottom: 0px;"
-									data-value="" data-autotype=""><input class="ipt_editor"
-									type="text"><span contenteditable="false"
+									data-value="" data-autotype="">
+									${loginVo.position}
+								<span contenteditable="false"
 									class="comp_active"
 									style="display: none; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: 18px; margin-top: 0px; margin-bottom: 0px;">
 										<span class="Active_dot1"
@@ -480,9 +370,11 @@
 									class="comp_wrap" data-cid="9" data-dsl="{{period}}"
 									data-wrapper=""
 									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: 18px; margin-top: 0px; margin-bottom: 0px;"
-									data-value="" data-autotype=""><input
-									class="ipt_editor ipt_editor_date" type="text"> ~ <input
-									class="ipt_editor ipt_editor_date" type="text"><span
+									data-value="" data-autotype="">
+									${loginVo.hire_date}
+									 ~ 
+									<span id="requestDate2"></span>
+								<span
 									contenteditable="false" class="comp_active"
 									style="display: none; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: 18px; margin-top: 0px; margin-bottom: 0px;">
 										<span class="Active_dot1"
@@ -517,8 +409,9 @@
 									class="comp_wrap" data-cid="10" data-dsl="{{text}}"
 									data-wrapper=""
 									style="width: 100%; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: 18px; margin-top: 0px; margin-bottom: 0px;"
-									data-value="" data-autotype=""><input class="ipt_editor"
-									type="text"><span contenteditable="false"
+									data-value="" data-autotype="">
+									${certificateVo.reason}
+								<span contenteditable="false"
 									class="comp_active"
 									style="display: none; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: 18px; margin-top: 0px; margin-bottom: 0px;">
 										<span class="Active_dot1"
@@ -541,99 +434,33 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan="5"
-							class="detailColumn dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
-
-							위와 같이 재직하고 있음을 증명합니다.<br>
-						<br>
-						<br>
-						<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-							&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-							&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-							&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-							&nbsp; &nbsp; &nbsp; &nbsp;20<span unselectable="on"
-							contenteditable="false" class="comp_wrap" data-cid="11"
-							data-dsl="{{text$width:20$}}" data-wrapper=""
-							style="width: 20px; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"
-							data-value="" data-autotype=""><input class="ipt_editor"
-								type="text"><span contenteditable="false"
-								class="comp_active"
-								"="" style="display: none; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-									<span class="Active_dot1"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span
-									class="Active_dot2"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-									<span class="Active_dot3"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span
-									class="Active_dot4"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-							</span> <span contenteditable="false" class="comp_hover"
-								data-content-protect-cover="true" data-origin="11"
-								style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-									<a contenteditable="false"
-									class="ic_prototype ic_prototype_trash"
-									data-content-protect-cover="true"
-									data-component-delete-button="true"></a>
-							</span> </span>년 <span unselectable="on" contenteditable="false"
-							class="comp_wrap" data-cid="12" data-dsl="{{text$width:20$}}"
-							data-wrapper=""
-							style="width: 20px; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"
-							data-value="" data-autotype=""><input class="ipt_editor"
-								type="text"><span contenteditable="false"
-								class="comp_active"
-								"="" style="display: none; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-									<span class="Active_dot1"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span
-									class="Active_dot2"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-									<span class="Active_dot3"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span
-									class="Active_dot4"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-							</span> <span contenteditable="false" class="comp_hover"
-								data-content-protect-cover="true" data-origin="12"
-								style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-									<a contenteditable="false"
-									class="ic_prototype ic_prototype_trash"
-									data-content-protect-cover="true"
-									data-component-delete-button="true"></a>
-							</span> </span>월 <span unselectable="on" contenteditable="false"
-							class="comp_wrap" data-cid="13" data-dsl="{{text$width:20$}}"
-							data-wrapper=""
-							style="width: 20px; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"
-							data-value="" data-autotype=""><input class="ipt_editor"
-								type="text"><span contenteditable="false"
-								class="comp_active"
-								"="" style="display: none; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-									<span class="Active_dot1"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span
-									class="Active_dot2"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-									<span class="Active_dot3"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span
-									class="Active_dot4"
-									style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-							</span> <span contenteditable="false" class="comp_hover"
-								data-content-protect-cover="true" data-origin="13"
-								style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-									<a contenteditable="false"
-									class="ic_prototype ic_prototype_trash"
-									data-content-protect-cover="true"
-									data-component-delete-button="true"></a>
-							</span> </span>일<br>
-						<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-							&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-							&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-							&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-							&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-							&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-							&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br>
-						<br>
-						<br>
-						</td>
+					    <td colspan="5" class="detailColumn dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
+					        위와 같이 재직하고 있음을 증명합니다.<br><br><br>
+					        <span id="todayDate" style="text-align: center; display: block;"></span> <br><br><br>
+					    </td>
 					</tr>
 				</tbody>
 			</table>
+			<script>
+			    const today = new Date(); // 현재 날짜 정보 가져오기
+			    const year = today.getFullYear(); // 연도 (예: 2024)
+			    const month = today.getMonth() + 1; // 월 (0부터 시작하므로 +1)
+			    const day = today.getDate(); // 일
+			
+			    const formattedDate = year + "년 " + month + "월 " + day + "일";
+			
+			    document.getElementById('todayDate').textContent = formattedDate;
+			</script>
+			<script>
+			    document.addEventListener("DOMContentLoaded", function () {
+			        let today = new Date();
+			        let formattedDate = today.getFullYear() + '-' +
+			                            ('0' + (today.getMonth() + 1)).slice(-2) + '-' +
+			                            ('0' + today.getDate()).slice(-2);
+			
+			        document.getElementById("requestDate2").innerText = formattedDate;
+			    });
+			</script>
 			<!-- 3. Detail Section (end) -->
 		</div>
 		<!-- Page Wrapping (end) -->

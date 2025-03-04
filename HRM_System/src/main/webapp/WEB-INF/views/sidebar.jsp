@@ -63,7 +63,7 @@
             
             </a></li>
 
-            <li><i class="fas fa-building"></i> <a href="./blog.do">게시판
+            <li><i class="fas fa-building"></i> <a href="./notice.do">게시판
            
             </a></li>
         </ul>

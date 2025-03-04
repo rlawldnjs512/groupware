@@ -69,42 +69,11 @@ th {
         </div>
         
         <div class="main-content">
-            <div class="table-responsive">
-                <table class="table table-hover table-rounded table-striped border gy-7 gs-7">
-                    <thead>
-                        <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
-                            <th>ID</th>
-                            <th>제목</th>
-                            <th>작성자</th>
-                            <th>작성일</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:choose>
-                            <c:when test="${empty lists}">
-                                <tr>
-                                    <td colspan="4" class="text-center text-muted">등록된 공지사항이 없습니다.</td>
-                                </tr>
-                            </c:when>
-                            <c:otherwise>
-                                <c:forEach var="vo" items="${lists}">
-                                    <tr>
-                                        <td>${vo.not_id}</td>
-                                        <td>${vo.title}</td>
-                                        <td>${vo.name}</td>
-                                        <td>${vo.regdate}</td>
-                                    </tr>
-                                </c:forEach>
-                            </c:otherwise>
-                        </c:choose>
-                    </tbody>
-                </table>
-                
-                <input type="button" class="btn btn-light-primary ms-2" value="등록하기" 
-                		onclick="location.href='./newNotice.do'">
-                
-            </div>            
-        </div>
+        	<form id="select-form" action="./newNotice.do" method="POST">
+		        <button type="submit" class="btn btn-light-primary ms-2" id="newNotice">등록하기</button>
+		        <button class="btn btn-light-primary ms-2" onclick="history.back(-1)">취소</button>
+			</form>
+		</div>
     </div>
 </body>
 </html>
