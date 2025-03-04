@@ -27,21 +27,45 @@
 </select>
 
 <!-- 사용자는 신청할 증명서 종류, 신청 사유를 입력해서 증명서 신청을 할 수 있다.	insertCert -->
-<insert id="insertCert">
-	INSERT INTO CERTIFICATE
-				(REQ_ID, EMP_ID, "TYPE",
-				REQ_DATE, CERT_DATE,
-				CERT_NUM , REASON)
-	VALUES(REQ_SEQ.NEXTVAL,
-			(SELECT EMP_ID FROM EMPLOYEE e WHERE NAME = #{name}), #{type},
-			SYSDATE, SYSDATE,
-			CASE 
-				WHEN #{type} = '재직' THEN 'EMP'
-				WHEN #{type} = '경력' THEN 'CERT'
-				WHEN #{type} = '퇴직' THEN 'REJECT'
-			END || '_' || TO_CHAR(SYSDATE,'YYYY') || '_' || REQ_SEQ.NEXTVAL 
-			, #{reason})
+<insert id="insertCert" useGeneratedKeys="true" keyProperty="cert_num">
+    INSERT INTO CERTIFICATE
+                (REQ_ID, EMP_ID, "TYPE",
+                REQ_DATE, CERT_DATE,
+                CERT_NUM, REASON, CERT_PATH)
+    VALUES(
+            REQ_SEQ.NEXTVAL,
+            (SELECT EMP_ID FROM EMPLOYEE e WHERE NAME = #{name}),
+            #{type},
+            SYSDATE,
+            SYSDATE,
+            (
+                CASE 
+                    WHEN #{type} = '재직' THEN 'EMP'
+                    WHEN #{type} = '경력' THEN 'CERT'
+                    WHEN #{type} = '퇴직' THEN 'REJECT'
+                END || '_' || TO_CHAR(SYSDATE, 'YYYY') || '_' || REQ_SEQ.NEXTVAL
+            ),
+            #{reason},
+            '~/DATA/CERT/' || LOWER(#{type}) || '/' ||
+            (
+                CASE 
+                    WHEN #{type} = '재직' THEN 'EMP'
+                    WHEN #{type} = '경력' THEN 'CERT'
+                    WHEN #{type} = '퇴직' THEN 'REJECT'
+                END || '_' || TO_CHAR(SYSDATE, 'YYYY') || '_' || REQ_SEQ.CURRVAL || '.pdf'
+            )
+    )
 </insert>
+
+
+
+<select id="getCertNum" resultType="String">
+    SELECT CERT_NUM FROM CERTIFICATE 
+    WHERE EMP_ID = (SELECT EMP_ID FROM EMPLOYEE WHERE NAME = #{name}) 
+    ORDER BY REQ_DATE DESC 
+    FETCH FIRST 1 ROWS ONLY
+</select>
+
 
 <!-- 관리자는 사용자가 신청한 증명서를 승인할 수 있다.	updateCertAccept -->
 <update id="updateCertAccept"> 

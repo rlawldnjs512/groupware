@@ -3,6 +3,8 @@ package com.min.edu.model.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.min.edu.dto.CertificateDto;
 
 public interface ICertificateService {
@@ -24,5 +26,7 @@ public interface ICertificateService {
 	public List<CertificateDto> selectCertEmpAdmin(String empid);
 	
 	public List<CertificateDto> selectCertTypeAdmin(String type);
+	
+	String getCertNum(@Param("name") String name);
 	
 }

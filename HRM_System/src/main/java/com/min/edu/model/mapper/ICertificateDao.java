@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.min.edu.dto.CertificateDto;
 
@@ -36,6 +37,9 @@ public interface ICertificateDao {
 	
 //	관리자는 증명서별로 증명서 신청이력을 조회할 수 있다.
 	public List<CertificateDto> selectCertTypeAdmin(String type);
+	
+	String getCertNum(@Param("name") String name);
+	
 	
 	
 }

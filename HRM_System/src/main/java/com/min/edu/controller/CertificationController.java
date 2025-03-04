@@ -23,10 +23,10 @@ public class CertificationController {
 
 	private final ICertificateService service;
 	
-	@GetMapping(value = "/mypage.do")
-	public String mypage_cert_move() {
-		return "mypage";
-	}
+//	@GetMapping(value = "/mypage.do")
+//	public String mypage_cert_move() {
+//		return "mypage";
+//	}
 	
 	@GetMapping(value = "/certification.do")
 	public String cert_move() {
@@ -57,10 +57,36 @@ public class CertificationController {
 	    return "certification";
 	}
 	
-	@GetMapping(value = "/pdf.do")
-	public String pdf() {
-		return "pdf_Home";
+	@PostMapping(value = "/pdf.do")
+	public String pdf(@RequestParam("certificateType") String certificateType, 
+	                  @RequestParam("reason") String reason,
+	                  Model model, HttpSession session) {
+	    
+	    EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
+	    
+	    if (loginVo != null) {
+	        String ename = loginVo.getName();
+	        
+	        CertificateDto certificateVo = CertificateDto.builder()
+	                .name(ename)
+	                .type(certificateType) // 사용자가 선택한 증명서 타입 저장
+	                .reason(reason)
+	                .build();
+
+	        int oneIn = service.insertCert(certificateVo);
+	        String cert_num = service.getCertNum(ename);
+	        certificateVo.setCert_num(cert_num);
+	        
+	        model.addAttribute("certificateVo", certificateVo);
+	        model.addAttribute("loginVo", loginVo);
+	        model.addAttribute("cert_num",cert_num);
+	    }
+	    
+	    return "pdf_Home";
 	}
+
+	
+	
 
 	
 	
