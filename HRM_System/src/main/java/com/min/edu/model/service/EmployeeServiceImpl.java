@@ -1,5 +1,6 @@
 package com.min.edu.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,15 +56,15 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public List<EmployeeDto> sortDept(String dept_name) {
+	public List<EmployeeDto> sortDept(Map<String, Object >map) {
 		log.info("EmployeeServiceImpl {}", "getEmployeeByNameOrDept");
-		return dao.sortDept(dept_name);
+		return dao.sortDept(map);
 	}
 
 	@Override
-	public List<EmployeeDto> sortName(String name) {
+	public List<EmployeeDto> sortName(Map<String, Object> map) {
 		log.info("EmployeeServiceImpl {}", "sortName");
-		return dao.sortName(name);
+		return dao.sortName(map);
 	}
 
 	@Override
@@ -119,4 +120,30 @@ public class EmployeeServiceImpl implements IEmployeeService {
 			log.info("게시글 전체 글 갯수");
 			return dao.countUser();
 		}
+
+		   // 부서별로 사원 조회
+		@Override
+	    public List<EmployeeDto> getEmployeesByDept(String dept_name, int first, int last) {
+	        Map<String, Object> params = new HashMap<String, Object>();
+	        params.put("dept_name", dept_name);  // 부서명
+	        params.put("first", first);         // 시작 페이지 번호
+	        params.put("last", last);           // 끝 페이지 번호
+
+	        // sortDept 쿼리 호출
+	        return dao.sortDept(params);
+	    }	
+		
+		
+		//이름별로 사원조회
+		@Override
+		public List<EmployeeDto> getEmployeesByName(String name, int first, int last) {
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("name", name);  // 부서명
+	        params.put("first", first);         // 시작 페이지 번호
+	        params.put("last", last);           // 끝 페이지 번호
+			
+			return dao.sortName(params);
+					
+		}
+		
 }
