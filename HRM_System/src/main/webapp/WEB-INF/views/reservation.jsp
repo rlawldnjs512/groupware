@@ -23,13 +23,16 @@
 	<div class="main-content">
 	<input type="hidden" id="emp_name" value="${sessionScope.loginVo.name}">
 	<input type="hidden" id="emp_id" value="${sessionScope.loginVo.emp_id}">
-	<div>
-		<h6>${sessionScope.loginVo.name}</h6>
-		<h6>${sessionScope.loginVo.emp_id}</h6>
-	</div>
-		<div id="dateFrom">
-			<input type="date" id="rev_date" value="${nowDate}" >
-		</div>
+		<div class="date-nav-container">
+        <span class="today-btn" id="today-btn">오늘</span>
+        <button class="date-nav-btn" id="prev-day">&lt;</button>
+        <span class="date-display" id="date-display">
+            <span id="date-text">${nowDate}</span>
+            <input type="date" id="rev_date">
+        </span>
+        <button class="date-nav-btn" id="next-day">&gt;</button>
+    </div>
+    <a href="./myReservation.do">예약조회</a>
 		<div id="revContent">
 			
 		</div>

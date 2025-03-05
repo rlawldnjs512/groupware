@@ -21,6 +21,7 @@ public class ReservationDto {
 	private String rev_date;
 	private String slot;
 	private String range;
+	private String name;
 	
 	
 }
