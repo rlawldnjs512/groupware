@@ -15,7 +15,13 @@ public interface IAttendanceService {
 	
 	public int updateAttendance(String empId);
 	
+	public String selectClockIn(String empId);
+	
+	public String selectClockOut(String empId);	
+	
 	public int calAttendance(String empId);
 	
 	public int updateAttendtype(Map<String, Object> map);
+	
+	public int updateUseExtraTime(Map<String, Object> map);
 }

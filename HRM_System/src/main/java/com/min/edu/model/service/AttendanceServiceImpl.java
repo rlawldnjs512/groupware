@@ -40,7 +40,19 @@ public class AttendanceServiceImpl implements IAttendanceService {
 		log.info("AttendanceServiceImpl {}", "updateAttendance");
 		return dao.updateAttendance(empId);
 	}
-
+	
+	@Override
+	public String selectClockIn(String empId) {
+		log.info("AttendanceServiceImpl {}", "selectClockIn");
+		return dao.selectClockIn(empId);
+	}
+	
+	@Override
+	public String selectClockOut(String empId) {
+		log.info("AttendanceServiceImpl {}", "selectClockIn");
+		return dao.selectClockOut(empId);
+	}
+	
 	@Override
 	public int calAttendance(String empId) {
 		log.info("AttendanceServiceImpl {}", "calAttendance");
@@ -51,6 +63,12 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	public int updateAttendtype(Map<String, Object> map) {
 		log.info("AttendanceServiceImpl {}", "updateAttendtype");
 		return dao.updateAttendtype(map);
+	}
+	
+	@Override
+	public int updateUseExtraTime(Map<String, Object> map) {
+		log.info("AttendanceServiceImpl {}", "updateExtratime");
+		return dao.updateUseExtraTime(map);
 	}
 
 }

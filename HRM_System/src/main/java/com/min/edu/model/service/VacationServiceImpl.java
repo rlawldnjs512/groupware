@@ -37,7 +37,7 @@ public class VacationServiceImpl implements IVacationService {
 	}
 
 	@Override
-	public int updateExtraTime(Map<String, Integer> map) {
+	public int updateExtraTime(Map<String, Object> map) {
 		log.info("VacationServiceImpl {}", "updateExtraTime");
 		return dao.updateExtraTime(map);
 	}
