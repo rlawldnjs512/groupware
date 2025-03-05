@@ -62,5 +62,20 @@ public class CertificateServiceImpl implements ICertificateService {
 	public List<CertificateDto> selectCertTypeAdmin(String type) {
 		return dao.selectCertTypeAdmin(type);
 	}
+
+	@Override
+	public String getCertNum(String name) {
+		 return dao.getCertNum(name);
+	}
+
+	@Override
+	public int countCert(Map<String, Object> map) {
+		return dao.countCert(map);
+	}
+
+	@Override
+	public List<CertificateDto> selectCertTypeUserPage(Map<String, Object> map) {
+		return dao.selectCertTypeUserPage(map);
+	}
 	
 }

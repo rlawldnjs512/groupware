@@ -15,7 +15,10 @@ import com.min.edu.dto.EmployeeDto;
 import com.min.edu.model.mapper.IEmployeeDao;
 import com.min.edu.model.service.IEmployeeService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @SpringBootTest
+@Slf4j
 class HrmSystemApplicationTests {
 
 	
@@ -99,7 +102,10 @@ class HrmSystemApplicationTests {
 //
 //        assertEquals(1, result); 
         
-
+		
+		EmployeeDto emp = service.findById("20250029");
+		log.info("emp : {}", emp);
+		
     }
 		
 		

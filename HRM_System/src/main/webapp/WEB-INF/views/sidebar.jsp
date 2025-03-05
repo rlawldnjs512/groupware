@@ -17,56 +17,40 @@
 }
     </style>
 </head>
-
-
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll("#menuList li").forEach(function(li) {
+        li.addEventListener("click", function() {
+            const link = li.querySelector("a");
+            if (link) {
+                window.location.href = link.href;
+            }
+        });
+    });
+});
+</script>
 <body>
     <div class="sidebar" id="sidebar">
         <!-- 3점 버튼 -->
         <button class="menu-btn" id="toggleBtn">⋮</button>
-
-        <div class="text-center mb-4">
-        
-        </div>
+			<br>
+			<br>
         <ul id="menuList">
-            
-            <li class="active"><i class="fas fa-user"></i><a href="/homeList.do">
-            Home
+			<li class="active"><a href="/homeList.do"> Home </a></li>
+			<li><a href="./mypage.do">마이페이지 </a></li>
+			<li><a href="./attendanceListByEmpId">근태관리</a></li>
+			<!-- 사원조회 또는 사원관리 -->
+			<li><a href="./emp.do"> 
+				<c:choose>
+					<c:when test="${sessionScope.loginVo.role eq 'A'}">사원관리</c:when>
+					<c:otherwise>사원조회</c:otherwise>
+				</c:choose>
+			</a></li>
 
-            </a>
-            </li>
-          
-            <li><i class="fas fa-th"></i> <a href="./reservation.do">
-            예약
-            </a>
-            </li> 
-
-
-            <!-- 사원조회 또는 사원관리 -->
-            <li>
-                <i class="fas fa-user-shield"></i>
-                <a href="./emp.do">
-                    <c:choose>
-                        <c:when test="${sessionScope.loginVo.role eq 'A'}">사원관리</c:when>
-                        <c:otherwise>사원조회</c:otherwise>
-                    </c:choose>
-                </a>
-            </li>
-            
-            <li><i class="fas fa-building"></i><a href="./attendanceListByEmpId">근태관리
-            
-            </a></li>
-
-            <li><i class="fas fa-building"></i> <a href="./approval.do">전자결재
-            
-            </a></li>
-            <li><i class="fas fa-building"></i><a href="./mypage.do">마이페이지
-            
-            </a></li>
-
-            <li><i class="fas fa-building"></i> <a href="./blog.do">게시판
-           
-            </a></li>
-        </ul>
+			<li><a href="./reservation.do"> 회의실예약 </a></li>
+			<li><a href="./approval.do">전자결재 </a></li>
+			<li><a href="./notice.do">게시판 </a></li>
+		</ul>
     </div>
 
 </body>

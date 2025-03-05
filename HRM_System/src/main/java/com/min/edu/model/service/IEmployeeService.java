@@ -10,7 +10,7 @@ public interface IEmployeeService {
     // 로그인 처리
     public EmployeeDto getLogin(Map<String, Object> map);
     //사원번호로 사원확인
-    public String findById(String emp_id);
+    public EmployeeDto findById(String emp_id);
     //비밀번호 재설정
     public int modifyPw(Map<String, Object>map);
     //관리자 확인
@@ -45,5 +45,8 @@ public interface IEmployeeService {
     //이름별로 사원 조회
     public List<EmployeeDto> getEmployeesByName(String name, int first, int last);
 
+    public int countEmployeesByName(String keyword);
+
+    public int countEmployeesByDeptName(String keyword);
     
 }

@@ -24,4 +24,6 @@ public class NoticeboardDto {
 	private String file_id;
 	private String expired;
 	
+	private String name;
+	
 }

@@ -26,7 +26,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public String findById(String emp_id) {
+	public EmployeeDto findById(String emp_id) {
 		log.info("EmployeeServiceImpl {}", "findById");
 		return dao.findById(emp_id);
 	}
@@ -105,8 +105,6 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		return result != null; // 결과가 null이 아니면 관리자임
 	}
 
-	
-
 	@Override
 	public List<EmployeeDto> selectAllUser(Map<String, Object> map) {
 		log.info("EmployeeServiceImpl {}", "selectAllUser");
@@ -114,36 +112,46 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		return dao.selectAllUser(map);
 	}
 
-		@Override
-		public int countUser()
-		{
-			log.info("게시글 전체 글 갯수");
-			return dao.countUser();
-		}
+	@Override
+	public int countUser() {
+		log.info("게시글 전체 글 갯수");
+		return dao.countUser();
+	}
 
-		   // 부서별로 사원 조회
-		@Override
-	    public List<EmployeeDto> getEmployeesByDept(String dept_name, int first, int last) {
-	        Map<String, Object> params = new HashMap<String, Object>();
-	        params.put("dept_name", dept_name);  // 부서명
-	        params.put("first", first);         // 시작 페이지 번호
-	        params.put("last", last);           // 끝 페이지 번호
+	@Override
+	public List<EmployeeDto> getEmployeesByDept(String dept_name, int selectPage, int countList) {
+		int first = (selectPage - 1) * countList + 1; // 시작 인덱스
+		int last = first + countList - 1; // 끝 인덱스
 
-	        // sortDept 쿼리 호출
-	        return dao.sortDept(params);
-	    }	
-		
-		
-		//이름별로 사원조회
-		@Override
-		public List<EmployeeDto> getEmployeesByName(String name, int first, int last) {
-			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("name", name);  // 부서명
-	        params.put("first", first);         // 시작 페이지 번호
-	        params.put("last", last);           // 끝 페이지 번호
-			
-			return dao.sortName(params);
-					
-		}
-		
+		Map<String, Object> params = new HashMap<>();
+		params.put("dept_name", dept_name);
+		params.put("first", first);
+		params.put("last", last);
+
+		return dao.sortDept(params);
+	}
+
+	@Override
+	public List<EmployeeDto> getEmployeesByName(String name, int selectPage, int countList) {
+		int first = (selectPage - 1) * countList + 1;
+		int last = first + countList - 1;
+
+		Map<String, Object> params = new HashMap<>();
+		params.put("name", name);
+		params.put("first", first);
+		params.put("last", last);
+
+		return dao.sortName(params);
+	}
+
+	@Override
+	public int countEmployeesByDeptName(String keyword) {
+		return dao.countEmployeesByDeptName(keyword);
+	}
+
+	@Override
+	public int countEmployeesByName(String keyword) {
+		return dao.countEmployeesByName(keyword);
+	}
+
 }

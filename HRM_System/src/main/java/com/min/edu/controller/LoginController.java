@@ -1,6 +1,7 @@
 package com.min.edu.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -54,29 +55,85 @@ public class LoginController {
 	    }
 	    
 	    
-	    @GetMapping(value = "/logout.do")
-		public String logout(HttpSession session, Model model) {
+//	    @GetMapping(value = "/logout.do")
+//		public String logout(HttpSession session, Model model) {
+//	    	
+//	    	  log.info("LoginController logout.do 요청");
+//	    	 EmployeeDto sessionVo = (EmployeeDto)session.getAttribute("loginVo");
+//	    	    
+//	    	    if(sessionVo != null) {
+//	    	        log.info("HttpSession은 삭제되기 전까지 유지된다. : {}", sessionVo);
+//	    	    } else {
+//	    	        log.info("세션에서 loginVo를 찾을 수 없습니다.");
+//	    	    }
+//
+//	    	    session.removeAttribute("loginVo");
+//	    	    
+//	    	    // 세션에서 loginVo를 제거한 후 다시 가져옴 (null 확인)
+//	    	    EmployeeDto removedVo = (EmployeeDto)session.getAttribute("loginVo");
+//	    	    log.info("HttpSession에서 loginVo 제거 후 확인: {}", removedVo);  // null
+//			
+//			
+//			//return "redirect:/homeList.do"; //** 세션 지워지는 것 확인
+//			return "redirect:/";
+//	    }
+	    
+
+	    @GetMapping(value = "/forgot.do")
+	    public String forgotPassword() {
 	    	
-	    	  log.info("LoginController logout.do 요청");
-	    	 EmployeeDto sessionVo = (EmployeeDto)session.getAttribute("loginVo");
-	    	    
-	    	    if(sessionVo != null) {
-	    	        log.info("HttpSession은 삭제되기 전까지 유지된다. : {}", sessionVo);
-	    	    } else {
-	    	        log.info("세션에서 loginVo를 찾을 수 없습니다.");
-	    	    }
-
-	    	    session.removeAttribute("loginVo");
-	    	    
-	    	    // 세션에서 loginVo를 제거한 후 다시 가져옴 (null 확인)
-	    	    EmployeeDto removedVo = (EmployeeDto)session.getAttribute("loginVo");
-	    	    log.info("HttpSession에서 loginVo 제거 후 확인: {}", removedVo);  // null
-			
-			
-			//return "redirect:/homeList.do"; //** 세션 지워지는 것 확인
-			return "redirect:/";
-			
-			
-
+	    	//비밀번호 재설정 화면으로 이동
+	    	return "forgot";
 	    }
+	    
+	    //인증
+	    @GetMapping("/check.do")
+	    public Map<String, Object> checkEmpId(@RequestParam String emp_id) {
+	        Map<String, Object> response = new HashMap<>();
+
+	        // 사원번호로 사원 조회
+	        EmployeeDto dto  = service.findById(emp_id);
+	       
+	        log.info("요청받은 emp_id: {}", emp_id);
+	        log.info("emp_id: {}", dto);  // 조회된 아이디를 로그로 확인
+
+	        // 결과에 따라 응답
+	        if (dto != null) {
+	            response.put("exists", true);  // 사원번호가 존재하면 true
+	        } else {
+	            response.put("exists", false);  // 사원번호가 없으면 false
+	        }
+	        
+
+
+	        return response;
+	    }
+
+
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 }
