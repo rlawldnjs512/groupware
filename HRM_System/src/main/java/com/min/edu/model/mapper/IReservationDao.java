@@ -13,7 +13,7 @@ public interface IReservationDao {
 
 	public List<RoomDto> selectReservation(String currDay);
 	
-	public List<RoomDto> myReservation();
+	public List<RoomDto> myReservation(String emp);
 	
 	public int deleteReservation(Map<String, Object> map);
 	
