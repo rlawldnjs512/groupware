@@ -38,6 +38,12 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
+		<!--메일관련 라이브러리(SMTP)-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
 		<!-- Spring Web을 위한 라이브러리 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -51,7 +57,7 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
-		
+
 
 		<!-- Lombok 사용을 위한 라이브러리 -->
 		<dependency>
