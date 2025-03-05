@@ -2,6 +2,7 @@ package com.min.edu.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.min.edu.model.service.IApprovalService;
 
@@ -26,6 +27,17 @@ public class ApprovalController {
 	@GetMapping(value = "/approval_store.do")
 	public String approval_store() {
 		return "approval_store";
+	}
+	
+	@GetMapping(value = "/signature_manage.do")
+	public String signature_manage() {
+		return "signature_manage";
+	}
+	
+	
+	@PostMapping(value = "/signature.do")
+	public String signature() {
+		return "signature";
 	}
 	
 }

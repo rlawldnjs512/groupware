@@ -80,6 +80,12 @@ public class ReservationController {
 		return "redirect:/myReservation.do";
 	}
 	
+	@PostMapping(value = "/insertRoom.do")
+	public String insertRoom(Map<String, Object> map) {
+		
+		return "insertRoom";
+	}
+	
 	
 
 

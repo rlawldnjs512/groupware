@@ -20,43 +20,40 @@
 <body>
 	<div class="content" id="content">
 	<%@ include file="header.jsp" %>
-	<div class="main-content">
-	<input type="hidden" id="emp_name" value="${sessionScope.loginVo.name}">
+		<div class="main-content">
+		<input type="hidden" id="emp_name" value="${sessionScope.loginVo.name}">
 	<input type="hidden" id="emp_id" value="${sessionScope.loginVo.emp_id}">
-		<div class="date-nav-container">
-        <span class="today-btn" id="today-btn">오늘</span>
-        <button class="date-nav-btn" id="prev-day">&lt;</button>
-        <span class="date-display" id="date-display">
-            <span id="date-text">${nowDate}</span>
-            <input type="date" id="rev_date">
-        </span>
-        <button class="date-nav-btn" id="next-day">&gt;</button>
-    </div>
-    <a href="./myReservation.do">예약조회</a>
-		<div id="revContent">
-			
-		</div>
-<!-- 			<div id="revContent"> -->
-<%-- 				<c:forEach var="room" items="${lists}"> --%>
-<%-- 					<div id="${room.room_id}"> --%>
-<!-- 						<div class="py-3"> -->
-<!-- 							<div class="card shadow-sm card-rounded border border-0"> -->
-<!-- 								<div class="card-header" style="background-color: white;"> -->
-<%-- 									<h4 class="card-title">${room.room_name}</h4> --%>
-<!-- 								</div> -->
-<!-- 								<div class="card-body"> -->
-<!-- 									<div class="reservation-container"> -->
-<%-- 										<c:forEach var="rev" items="${room.reservation}"> --%>
-<%-- 											<span class="btn_bg ${rev.emp_id eq '예약가능' ? 'nocheck': 'check'}" --%>
-<%-- 												name="${rev.slot}">${rev.range}</span> --%>
-<%-- 										</c:forEach> --%>
-<!-- 									</div> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<%-- 				</c:forEach> --%>
-<!-- 			</div> -->
+			<div class="date-nav-container">
+				<span class="today-btn" id="today-btn">오늘</span>
+				<button class="date-nav-btn" id="prev-day">&lt;</button>
+				<span class="date-display" id="date-display"> 
+				<span id="date-text">${nowDate}</span> 
+				<input type="date" id="rev_date">
+				</span>
+				<button class="date-nav-btn" id="next-day">&gt;</button>
+			</div>
+			<div id="revContent"></div>
+			<!-- 			<div id="revContent"> -->
+			<%-- 				<c:forEach var="room" items="${lists}"> --%>
+			<%-- 					<div id="${room.room_id}"> --%>
+			<!-- 						<div class="py-3"> -->
+			<!-- 							<div class="card shadow-sm card-rounded border border-0"> -->
+			<!-- 								<div class="card-header" style="background-color: white;"> -->
+			<%-- 									<h4 class="card-title">${room.room_name}</h4> --%>
+			<!-- 								</div> -->
+			<!-- 								<div class="card-body"> -->
+			<!-- 									<div class="reservation-container"> -->
+			<%-- 										<c:forEach var="rev" items="${room.reservation}"> --%>
+			<%-- 											<span class="btn_bg ${rev.emp_id eq '예약가능' ? 'nocheck': 'check'}" --%>
+			<%-- 												name="${rev.slot}">${rev.range}</span> --%>
+			<%-- 										</c:forEach> --%>
+			<!-- 									</div> -->
+			<!-- 								</div> -->
+			<!-- 							</div> -->
+			<!-- 						</div> -->
+			<!-- 					</div> -->
+			<%-- 				</c:forEach> --%>
+			<!-- 			</div> -->
 		</div>
 	</div>
 	

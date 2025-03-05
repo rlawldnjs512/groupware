@@ -39,7 +39,7 @@ public class CertificateServiceImpl implements ICertificateService {
 	}
 	
 	@Override
-	public int updateDownload(CertificateDto dto) {
+	public boolean updateDownload(String dto) {
 		return dao.updateDownload(dto);
 	}
 

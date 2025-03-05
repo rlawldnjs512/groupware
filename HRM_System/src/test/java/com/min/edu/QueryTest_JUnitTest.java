@@ -82,10 +82,7 @@ class QueryTest_JUnitTest {
 	 
 //	@Test
 	public void updateDownload() {
-		CertificateDto dto = new CertificateDto().builder()
-							.cert_num("CERT_2025_21")
-							.build();
-		int n = dao.updateDownload(dto);
+		Boolean n = dao.updateDownload("CERT_2025_21");
 		assertEquals(1, n);
 	}
 	

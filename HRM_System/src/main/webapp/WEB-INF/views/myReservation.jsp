@@ -10,14 +10,12 @@
 <title>예약관리</title>
 <link rel="stylesheet" href="./css/emplist.css">
 </head>
-
-
  <%@ include file="sidebar.jsp" %>
 <body>
 	<input type="hidden" id="emp_name" value="${sessionScope.loginVo.name}">
 	<input type="hidden" id="emp_id" value="${sessionScope.loginVo.emp_id}">
-	<%@ include file="header.jsp" %>
 	<div class="content" id="content">
+	<%@ include file="header.jsp" %>
 		<div class="main-content">
 			<table class="table table-hover">
 				<thead>

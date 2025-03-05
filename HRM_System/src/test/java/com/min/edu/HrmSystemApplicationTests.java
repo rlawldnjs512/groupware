@@ -10,10 +10,13 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 
 import com.min.edu.dto.EmployeeDto;
 import com.min.edu.model.mapper.IEmployeeDao;
 import com.min.edu.model.service.IEmployeeService;
+import com.min.edu.model.service.SimpleMailMessageService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +27,11 @@ class HrmSystemApplicationTests {
 	
 //	@Autowired
 //	private IEmployeeDao dao;
+	
+	@Autowired
+	private SimpleMailMessageService mailService;
+	
+
 	
 	@Autowired
 	private IEmployeeService service;
@@ -103,8 +111,17 @@ class HrmSystemApplicationTests {
 //        assertEquals(1, result); 
         
 		
-		EmployeeDto emp = service.findById("20250029");
-		log.info("emp : {}", emp);
+//		EmployeeDto emp = service.findById("20250029");
+//		log.info("emp : {}", emp);
+//		
+//		
+//		//실제 이메일 주소 테스트
+//		String testEmail = "mw7813@naver.com";
+//		
+//		//메일보내기
+//		mailService.sendEmail(testEmail);
+		
+		//이메일이 전송되면 콘솔에 출력됨
 		
     }
 		

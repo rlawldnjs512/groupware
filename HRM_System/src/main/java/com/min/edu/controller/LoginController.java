@@ -45,7 +45,7 @@ public class LoginController {
 
 	        if (loginVo != null) {
 	            session.setAttribute("loginVo", loginVo);
-	            session.setMaxInactiveInterval(60 * 10 * 5); // session 유효기간 설정 (5분)
+	            session.setMaxInactiveInterval(60 * 10 * 8); // session 유효기간 설정 (5분)
 	            log.info("{} 님 반갑습니다.", loginVo.getName());
 	            response.getWriter().print("<script>alert('" + loginVo.getName() + "님 반갑습니다'); location.href='./homeList.do';</script>");
 	        } else {
@@ -86,28 +86,35 @@ public class LoginController {
 	    	return "forgot";
 	    }
 	    
-	    //인증
+	    //비밀번호 재설정(사원조회)
 	    @GetMapping("/check.do")
-	    public Map<String, Object> checkEmpId(@RequestParam String emp_id) {
-	        Map<String, Object> response = new HashMap<>();
+	    public String checkEmpId(@RequestParam String emp_id, 
+	    		                 @RequestParam String name, Model model) {
 
 	        // 사원번호로 사원 조회
-	        EmployeeDto dto  = service.findById(emp_id);
-	       
-	        log.info("요청받은 emp_id: {}", emp_id);
-	        log.info("emp_id: {}", dto);  // 조회된 아이디를 로그로 확인
+	        EmployeeDto dto = service.findById(emp_id); // emp_id로 사원 조회
 
-	        // 결과에 따라 응답
-	        if (dto != null) {
-	            response.put("exists", true);  // 사원번호가 존재하면 true
+	        log.info("조회된 사원: {}", dto); // 조회된 사원 확인
+
+	        // 사원 정보가 존재하는지 확인
+	        if (dto != null && dto.getName().equals(name)) {
+	            // 사원 이름이 일치할 경우
+	            model.addAttribute("empIdExists", true);  // 이메일 필드 보이도록 설정
+	            model.addAttribute("empName", dto.getName());  // 사원 이름 전달
+	            model.addAttribute("alertMessage", "확인");
+	            model.addAttribute("alertType","success"); //알림의 타입
 	        } else {
-	            response.put("exists", false);  // 사원번호가 없으면 false
+	            // 사원번호나 이름이 일치하지 않으면
+	            model.addAttribute("empIdExists", false);
+	            model.addAttribute("alertMessage", "조회 불가");
+	            model.addAttribute("alertType","error"); //알림의 타입
 	        }
 	        
-
-
-	        return response;
+	        return "forgot";  // 비밀번호 재설정 화면으로 이동
+	   
 	    }
+
+
 
 
 	    

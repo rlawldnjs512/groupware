@@ -58,7 +58,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 this.classList.remove("nocheck");
                 this.classList.add("check");
                 modal.hide();
-
             }
         };
     }

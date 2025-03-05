@@ -69,6 +69,30 @@ th {
         </div>
         
         <div class="main-content">
+        	<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
+				증명서 신청 이력
+			</h1>
+        	<div>
+        		<table border="1">
+       				<tr>
+       					<td>게시글ID</td>
+       					<td><input type="text"></td>
+       				</tr>
+       				<tr>
+       					<td>제목</td>
+       					<td><input type="text"></td>
+       				</tr>
+       				<tr>
+       					<td colspan="3">첨부파일</td>
+       					<td><input type="text"></td>
+       				</tr>
+       				<tr>
+       					<td>내용</td>
+       					<td><textarea></textarea></td>
+       				</tr>
+        		</table>
+        	</div>
+        
         	<form id="select-form" action="./newNotice.do" method="POST">
 		        <button type="submit" class="btn btn-light-primary ms-2" id="newNotice">등록하기</button>
 		        <button class="btn btn-light-primary ms-2" onclick="history.back(-1)">취소</button>

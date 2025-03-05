@@ -47,7 +47,18 @@
 		}
 		.gray {
 			background-color: #ddd;
-		}		
+		}	
+		.text-length {
+			max-width: 20ch;  /* 최대 10글자 (ch는 글자 단위) */
+			min-width: 20ch;
+		    white-space: nowrap;  /* 줄바꿈 방지 */
+		    overflow: hidden;  /* 넘치는 내용 숨김 */
+		    text-overflow: ellipsis;  /* 넘칠 경우 '...'으로 표시 */
+		}	
+		.empty-row {
+		    height: 52px; /* 2개 행 높이만큼 설정 */
+		    background-color: #f8f9fa; /* 연한 색으로 구분 (선택 사항) */
+		}
     </style>
     <meta charset="UTF-8">
     <title>증명서 신청</title>
@@ -138,33 +149,36 @@
 					<table class="table table-hover table-rounded table-striped border gy-7 gs-7">
 					    <thead>
 					        <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
-					            <th>발급번호</th>
-					            <th>증명서 종류</th>
-					            <th>신청 날짜</th>
-					            <th>신청 사유</th>
-					            <th>승인 날짜</th>
-					            <th>승인 상태</th>
-					            <th>다운로드</th>
+					            <th class="text-length">발급번호</th>
+					            <th class="text-length">증명서 종류</th>
+					            <th class="text-length">신청 날짜</th>
+					            <th class="text-length">신청 사유</th>
+					            <th class="text-length">승인 날짜</th>
+					            <th class="text-length">승인 상태</th>
+					            <th class="text-length">다운로드</th>
 					        </tr>
 					    </thead>
 					    <tbody>
 					        <c:if test="${empty lists}">
-					            <tr>
-					                <td colspan="6">결과가 없습니다.</td>
+					            <tr class="empty-row">
+					                <td colspan="7">결과가 없습니다.</td>
+					            </tr>
+					            <tr class="empty-row">
+					                <td colspan="7"></td>
 					            </tr>
 					        </c:if>
 					        <c:forEach var="vo" items="${lists}" varStatus="vs">
 					            <tr>
-					                <td>${vo.cert_num}</td>
-					                <td>${vo.type}</td>
-					                <td>${vo.req_date}</td>
-					                <td>${vo.reason}</td>
-					                <td>${vo.cert_date}</td>
-					                <td>${vo.cert_status}</td>
+					                <td class="text-length">${vo.cert_num}</td>
+					                <td class="text-length">${vo.type}</td>
+					                <td class="text-length">${vo.req_date}</td>
+					                <td class="text-length">${vo.reason}</td>
+					                <td class="text-length">${vo.cert_date}</td>
+					                <td class="text-length">${vo.cert_status}</td>
 					                <td>
 					                    <c:choose>
 					                        <c:when test="${vo.cert_status == 'Y'}">
-					                            <button type="button" class="btn btn-primary btn-sm" 
+					                            <button id="popupPdf" type="button" class="btn btn-primary btn-sm" 
 					                                    onclick="openPreviewPopup('${vo.cert_num}', '${vo.type}', '${fn:escapeXml(vo.reason)}')">
 					                                미리보기
 					                            </button>
@@ -176,11 +190,15 @@
 					                </td>
 					            </tr>
 					        </c:forEach>
-					    </tbody>
+						    <c:if test="${fn:length(lists) == 1}">
+						        <tr class="empty-row">
+						            <td colspan="7"></td>
+						        </tr>
+						    </c:if>
+						</tbody>
 					</table>
-					<script>
+					<script type="text/javascript">
 					    function openPreviewPopup(certNum, certType, reason) {
-					    	
 					        var encodedReason = encodeURIComponent(reason);
 					        var targetPage = '';
 					        if (certType === '재직') {
@@ -193,14 +211,38 @@
 					            alert('잘못된 요청입니다.');
 					            return;
 					        }
-					        // 팝업 창 열기 (크기, 위치 설정 가능)
+					        
 					        var popup = window.open(targetPage + '?cert_num=' + certNum + '&reason=' + encodedReason, 
 					                                'popupWindow', 
 					                                'width=1000,height=800,scrollbars=yes,resizable=yes');
-					
-					        // 팝업 창이 열린 후 다른 작업을 처리할 수 있습니다.
+					        
 					        if (popup) {
 					            popup.focus();
+					            
+					            var checkPopupClosedInterval = setInterval(function() {
+					                if (popup.closed) {
+					                    clearInterval(checkPopupClosedInterval);
+					                    
+					                    $.ajax({
+					                        url: '/updateDownload',
+					                        method: 'POST',
+					                        data: { certNum: certNum },
+					                        success: function(response) {
+					                            alert("PDF 저장 완료");
+
+					                            // 버튼의 텍스트와 disabled 상태를 업데이트
+					                            $('#popupPdf')
+					                                .attr('disabled', true)          // 버튼 비활성화
+					                                .text('다운로드 완료')            // 텍스트 변경
+					                                .removeClass('btn-primary')      // 기존 버튼 스타일 제거
+					                                .addClass('btn-secondary');      // '다운로드 완료' 버튼 스타일로 변경
+					                        },
+					                        error: function() {
+					                            alert("서버 오류가 발생했습니다.");
+					                        }
+					                    });
+					                }
+					            }, 1000);
 					        }
 					    }
 					</script>
@@ -234,7 +276,7 @@
 					class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
 					증명서 신청</h1>
 				<div>
-					<form action="./pdf.do" method="post">
+					<form action="./pdf.do" method="post" name="pdfInsert">
 						<table>
 							<tr>
 								<th class="gray">신청ID</th>
@@ -309,15 +351,32 @@
 								id="select-btn">취소</a>
 						</div>
 					</form>
-					<script>
+					<script type="text/javascript">
+					
 					    document.addEventListener("DOMContentLoaded", function() {
 					        let today = new Date();
 					        let formattedDate = today.toISOString().split('T')[0]; 
 					        document.getElementById("requestDate").value = formattedDate;
 					    });
-					    document.getElementsByName("success")[0].addEventListener("click", function() {
-					        alert("신청이 완료되었습니다");
+					    
+					    document.getElementsByName("success")[0].addEventListener("click", function(event) {
+					        
+					    	event.preventDefault();
+
+					        var certificateType = document.querySelector("select[name='certificateType']").value;
+					        var reason = document.querySelector("textarea[name='reason']").value.trim();
+
+					        if (certificateType === "") {
+					            alert("증명서를 선택해 주세요.");
+					        } else if (reason === "") {
+					            alert("신청 사유를 입력해 주세요.");
+					        } else {
+					            alert("신청이 완료되었습니다");
+
+					            document.querySelector("form[name='pdfInsert']").submit();
+					        }
 					    });
+
 					</script>
 				</div>
 			</div>

@@ -103,4 +103,21 @@ WHERE RESERV_ID=#{reserv_id} AND EMP_ID=#{emp_id}
 
 </delete>
 
+
+
+
+<insert id="insertRoom">
+INSERT INTO ROOM
+(ROOM_ID, ROOM_NAME)
+VALUES(#{room_id}, #{room_name})
+
+</insert>
+
+<delete id="deleteRoom">
+DELETE FROM ROOM
+WHERE ROOM_ID = #{room_id}
+
+</delete>
+
+
 </mapper>
