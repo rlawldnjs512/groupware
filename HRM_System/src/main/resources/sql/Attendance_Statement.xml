@@ -53,6 +53,14 @@
 			WHERE TRIM(EMP_ID) = TRIM(#{empId}) AND ATTEND_DATE = TRUNC(CURRENT_TIMESTAMP)
 	</update>
 	
+	<!-- 근무형태 조회 (정상근무, 지각, 조퇴) -->
+	<select id="selectAttendtype" resultType="String">
+		SELECT ATTEND_TYPE 
+			FROM ATTENDANCE
+			WHERE TRIM(EMP_ID) = TRIM(#{empId})
+			AND ATTEND_DATE = TRUNC(CURRENT_TIMESTAMP)
+	</select>
+	
 	<!-- 근무형태 업데이트 (정상근무, 지각, 조퇴) -->
 	<update id="updateAttendtype">
 		UPDATE ATTENDANCE SET ATTEND_TYPE = #{attendType}

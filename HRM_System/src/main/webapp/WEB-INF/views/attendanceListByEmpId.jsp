@@ -4,26 +4,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>근태관리</title>
-<script type="text/javascript" src="./js/reservation.js"></script>
+	<meta charset="UTF-8">
+	<title>근태관리</title>
+	<script type="text/javascript" src="./js/attendance.js"></script>
 </head>
 <%@ include file="sidebar.jsp" %>
 <body>
 	
 	<div class="content" id="content">
 		<%@ include file="header.jsp" %>
-		<!-- <h3>현재 로그인한 사원(input value="사원번호")의 출/퇴근 버튼 및 근무 시간 계산</h3> -->
-		<div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+		<div>
+			<input type="hidden" id="extraTime" value="${extraTime}">
+		</div>
+		<div>
 			<form id="clockIn" action="/insertAttendance" method="post">
 				<button class="btn btn-light-primary" type="button" onclick="confirmClockIn()">출근</button>
 			</form>
-			<form id="clockOut" action="/updateAttendance" method="post">
-				<button class="btn btn-light-danger" type="button" onclick="confirmClockOut()">퇴근</button>
-			</form>
-<!-- 			<form action="/calAttendance" method="post"> -->
-<!-- 				<button class="btn btn-lignt-info" type="submit">근무 시간 계산</button> -->
-<!-- 			</form> -->
+			<button class="btn btn-light-danger" id="clockOut" type="button">퇴근</button>
 		</div>
 		
 		<table class="table table-hover">
@@ -57,12 +54,7 @@
 	
 	<script type="text/javascript">
 	
-		// 출근버튼
-		function confirmClockIn(){
-			if(confirm("출근하시겠습니까?")){
-				document.getElementById("clockIn").submit();
-			}
-		}
+		
 
 	</script>
 	

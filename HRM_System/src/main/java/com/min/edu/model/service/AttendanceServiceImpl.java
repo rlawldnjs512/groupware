@@ -58,6 +58,12 @@ public class AttendanceServiceImpl implements IAttendanceService {
 		log.info("AttendanceServiceImpl {}", "calAttendance");
 		return dao.calAttendance(empId);
 	}
+	
+	@Override
+	public String selectAttendtype(String empId) {
+		log.info("AttendanceServiceImpl {}", "selectAttendtype");
+		return dao.selectAttendtype(empId);
+	}
 
 	@Override
 	public int updateAttendtype(Map<String, Object> map) {

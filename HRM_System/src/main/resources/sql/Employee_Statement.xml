@@ -3,9 +3,6 @@
 <mapper namespace="com.min.edu.model.mapper.IEmployeeDao">
 
 
-
-
-
 	<!-- 로그인 getLogin -->
 	<select id="getLogin" resultType="EmployeeDto">
 		SELECT EMP_ID,NAME,
@@ -111,12 +108,12 @@
 </select>
 
 
-<select id="countEmployeesByDeptName" resultType="int">
-    SELECT COUNT(*)
-    FROM EMPLOYEE e
-    JOIN DEPT d ON e.DEPT_ID = d.DEPT_ID
-    WHERE d.DEPT_NAME LIKE '%' || #{keyword} || '%'
-</select>
+	<select id="countEmployeesByDeptName" resultType="int">
+	    SELECT COUNT(*)
+	    FROM EMPLOYEE e
+	    JOIN DEPT d ON e.DEPT_ID = d.DEPT_ID
+	    WHERE d.DEPT_NAME LIKE '%' || #{keyword} || '%'
+	</select>
 
 
 	<!--사원 한명에 대한 상세정보 getOneUser -->
@@ -151,58 +148,58 @@
         #{email}, 
         TO_DATE(#{hire_date}, 'YYYY-MM-DD HH24:MI:SS')
     )
-</insert>
+	</insert>
 
 
 
 	<!--관리자는 사원을 수정 updateUserInfo  -->
 	<update id="updateUser" parameterType="EmployeeDto">
-    UPDATE EMPLOYEE
-    SET
-        DEPT_ID =#{dept_id},
-        NAME = #{name},
-        POSITION =#{position},
-        PHONE =#{phone},
-        TEL = #{tel},
-        EMAIL = #{email},
-        BIRTH = #{birth}
-    WHERE trim(EMP_ID) = trim(#{emp_id})
-</update>
+	    UPDATE EMPLOYEE
+	    SET
+	        DEPT_ID =#{dept_id},
+	        NAME = #{name},
+	        POSITION =#{position},
+	        PHONE =#{phone},
+	        TEL = #{tel},
+	        EMAIL = #{email},
+	        BIRTH = #{birth}
+	    WHERE trim(EMP_ID) = trim(#{emp_id})
+	</update>
 
 
 
 	<!--마이페이지에서 자신의 정보를 수정 modifyUserInfo -->
-<update id="modifyUserInfo" parameterType="EmployeeDto">
-    UPDATE EMPLOYEE
-    SET
-        NAME = #{name},
-        PHONE = #{phone},
-        TEL = #{tel},
-        EMAIL = #{email},
-        BIRTH = #{birth}
-    WHERE trim(EMP_ID) = trim(#{emp_id})
-</update>
+	<update id="modifyUserInfo" parameterType="EmployeeDto">
+	    UPDATE EMPLOYEE
+	    SET
+	        NAME = #{name},
+	        PHONE = #{phone},
+	        TEL = #{tel},
+	        EMAIL = #{email},
+	        BIRTH = #{birth}
+	    WHERE trim(EMP_ID) = trim(#{emp_id})
+	</update>
 
 
 	
 	<!--마이페이지에서 자신의 정보를 조회 getOne-->
 	<select id="getOne" resultType="EmployeeDto">
-	SELECT e.EMP_ID, e.NAME, e.POSITION,
-		   e.BIRTH, e.PHONE,
-		   e.TEL, e.EMAIL, TO_CHAR(e.HIRE_DATE, 'YYYY-MM-DD') AS HIRE_DATE, e.PROFILE_IMAGE,
-	       d.DEPT_NAME
-	FROM EMPLOYEE e
-	JOIN DEPT d 
-	ON e.DEPT_ID = d.DEPT_ID
-	WHERE trim(e.EMP_ID) = trim(#{emp_id})
+		SELECT e.EMP_ID, e.NAME, e.POSITION,
+			   e.BIRTH, e.PHONE,
+			   e.TEL, e.EMAIL, TO_CHAR(e.HIRE_DATE, 'YYYY-MM-DD') AS HIRE_DATE, e.PROFILE_IMAGE,
+		       d.DEPT_NAME
+		FROM EMPLOYEE e
+		JOIN DEPT d 
+		ON e.DEPT_ID = d.DEPT_ID
+		WHERE trim(e.EMP_ID) = trim(#{emp_id})
 	</select>
 	
 	<!--마이페이지에서 자신의 프로필 업로드 uploadProfile  -->
-<update id="updateProfile">
-	UPDATE EMPLOYEE
-	SET PROFILE_IMAGE = #{profile_image}
-	WHERE trim(EMP_ID) = trim(#{emp_id})
-</update>
+	<update id="updateProfile">
+		UPDATE EMPLOYEE
+		SET PROFILE_IMAGE = #{profile_image}
+		WHERE trim(EMP_ID) = trim(#{emp_id})
+	</update>
 
 
 <!--여기서 부터는 페이징 처리 SQL  -->
@@ -234,10 +231,15 @@
    WHERE SEQ BETWEEN #{first} AND #{last}
 </select>
 
-<!--사원조회의 전체 갯수 countUser  -->
-<select id="countUser" resultType="Integer">
-	SELECT COUNT(*) 
-	  FROM EMPLOYEE e
-</select>
+	<!--사원조회의 전체 갯수 countUser  -->
+	<select id="countUser" resultType="Integer">
+		SELECT COUNT(*) 
+		  FROM EMPLOYEE e
+	</select>
+	
+	
+	
+	
+	
 
 </mapper>
