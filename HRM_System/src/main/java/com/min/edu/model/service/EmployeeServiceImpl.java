@@ -26,7 +26,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	}
 
 	@Override
-	public String findById(String emp_id) {
+	public EmployeeDto findById(String emp_id) {
 		log.info("EmployeeServiceImpl {}", "findById");
 		return dao.findById(emp_id);
 	}
