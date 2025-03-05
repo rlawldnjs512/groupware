@@ -31,6 +31,22 @@
 			AND CLOCKOUT IS NULL
 	</update>
 	
+	<!-- 출근시간 조회 -->
+	<select id="selectClockIn" resultType="String">
+		SELECT CLOCKIN 
+			FROM ATTENDANCE
+			WHERE TRIM(EMP_ID) = TRIM(#{empId})
+			AND ATTEND_DATE = TRUNC(CURRENT_TIMESTAMP)
+	</select>
+	
+	<!-- 퇴근시간 조회 -->
+	<select id="selectClockOut" resultType="String">
+		SELECT CLOCKOUT 
+			FROM ATTENDANCE
+			WHERE TRIM(EMP_ID) = TRIM(#{empId})
+			AND ATTEND_DATE = TRUNC(CURRENT_TIMESTAMP)
+	</select>
+	
 	<!-- 총 근무시간 계산 (1분단위로 내림) -->
 	<update id="calAttendance">
 		UPDATE ATTENDANCE SET TOTAL_TIME = FLOOR((CLOCKOUT - CLOCKIN) * 1440)
@@ -40,6 +56,12 @@
 	<!-- 근무형태 업데이트 (정상근무, 지각, 조퇴) -->
 	<update id="updateAttendtype">
 		UPDATE ATTENDANCE SET ATTEND_TYPE = #{attendType}
+			WHERE TRIM(EMP_ID) = TRIM(#{empId}) AND ATTEND_DATE = TRUNC(CURRENT_TIMESTAMP)
+	</update>
+	
+	<!-- 사용한 보상시간 업데이트 -->
+	<update id="updateUseExtraTime">
+		UPDATE ATTENDANCE SET USE_EXTRA_TIME = #{useExtraTime}
 			WHERE TRIM(EMP_ID) = TRIM(#{empId}) AND ATTEND_DATE = TRUNC(CURRENT_TIMESTAMP)
 	</update>
 	

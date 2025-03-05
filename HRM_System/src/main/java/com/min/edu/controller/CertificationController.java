@@ -23,10 +23,10 @@ public class CertificationController {
 
 	private final ICertificateService service;
 	
-	@GetMapping(value = "/mypage.do")
-	public String mypage_cert_move() {
-		return "mypage";
-	}
+//	@GetMapping(value = "/mypage.do")
+//	public String mypage_cert_move() {
+//		return "mypage";
+//	}
 	
 	@GetMapping(value = "/certification.do")
 	public String cert_move() {

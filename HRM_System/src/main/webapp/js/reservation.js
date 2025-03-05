@@ -1,4 +1,4 @@
-
+/*
 var reservationData;
 var revSpan;
 var modal;
@@ -149,4 +149,4 @@ var modal;
             
     }
     
-    
+*/ 

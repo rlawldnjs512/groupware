@@ -13,5 +13,5 @@ public interface IVacationService {
 	
 	public int selectExtraTime(String empId);
 	
-	public int updateExtraTime(Map<String, Integer> map);
+	public int updateExtraTime(Map<String, Object> map);
 }
