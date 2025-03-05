@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
@@ -7,88 +6,74 @@
 <head>
 <meta charset="UTF-8">
 <link rel="text/css" href="./css/forgot.css">
-<title>비밀번호 재설정 화면</title>
+<!-- SweetAlert CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<title>비밀번호 재설정 화면</title>
 </head>
 
 <body>
-    <div class="login">
-       <div class="form">
-    <h2>비밀번호 재설정</h2>
-    
-    <div class="form-field">
-        <label for="name"><i class="fa fa-user"></i></label>
-        <input id="name" type="text" name="name" placeholder="이름" required>
-    </div>
-    
-    <div class="form-field">
-        <label for="emp_id">
-            <i class="fa fa-id-card"></i>
-        </label>
-        <input id="emp_id" type="text" name="emp_id" placeholder="사원번호" pattern="\d{8}" required>
-    </div>
 
-    <button type="button" class="button" onclick="checkEmpId()" >
-        <div class="arrow-wrapper">
-            <span class="arrow"></span>
-        </div>
-        <p class="button-text">인증</p>
-    </button>
-</div>
+    <table>
+        <tr>
+            <td><h2>비밀번호 재설정</h2></td>
+        </tr>
+        <form action="/check.do" method="GET">
+            <tr>
+            <td>이름</td>
+            </tr>
+            <tr>
+            <td><input id="name" type="text" name="name" placeholder="이름" required></td>
+            </tr>
 
-    </div>
-    
-    
-    
-    
-    
-    <script type="text/javascript">
-    function checkEmpId() {
-        // 사원번호를 input에서 가져옵니다.
-        const empId = document.getElementById('emp_id').value;
+            <tr>
+            <td>사원번호</td>
+            </tr>
+            <tr>
+            <td><input id="emp_id" type="text" name="emp_id" placeholder="사원번호" required></td>
+            </tr>
+            <tr>
+                <td>
+                  <tr>
+                  <td><input type="submit" value="인증" class="btn"></td>
+                  </tr>
+                </td>
+            </tr>
+        </form>
 
-        // 사원번호가 비어있는 경우
-        if (empId === '') {
-            alert('사원번호를 입력해주세요.');
-            return;
-        }
+        <!-- 이메일 필드: 사원번호가 일치할 경우에만 보여짐 -->
+        <c:if test="${empIdExists}">
+            <tr><td>이메일</td></tr>
+            <tr>
+                <td><input type="text" class="email"> @ 
+                    <select>
+                        <option>naver.com</option>
+                        <option>gmail.com</option>
+                        <option>daum.net</option>
+                        <option>nate.com</option>
+                    </select>
+                </td>
+            </tr>
+            <tr><td><input type="submit" value="인증" class="btn" onclick="alert('확인해주세요')"></td></tr>
+        </c:if>
+        
+        </table>
 
-        // URLSearchParams를 사용하여 쿼리 파라미터를 만듭니다.
-        const params = new URLSearchParams();
-        params.append("emp_id", empId); // emp_id를 파라미터로 추가
-
-        // GET 요청으로 사원번호를 URL 파라미터로 전송
-        fetch(`/check.do?${params.toString()}`, {
-            method: "GET"
-        })
-        .then((response) => response.json())
-        .then(data => {
-            if (data.exists) {
-                alert('사원번호가 확인되었습니다.');
-            } else {
-                alert('사원번호가 없습니다.');
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            alert('서버 오류가 발생했습니다.');
+	<script type="text/javascript">
+    <!--// 페이지 로드 후에 alert 메시지가 있을 경우 SweetAlert으로 띄우기  -->
+    <c:if test="${not empty alertMessage}">
+        Swal.fire({
+            
+            text: '${alertMessage}', // Controller에서 전달된 alertMessage
+            icon: '${alertType}',  // 'success' or 'error'를 받아서 알림의 타입을 설정
+            
+            confirmButtonColor: '#4CAF50'  // 버튼 색상 변경
         });
-    }
-
-
-
-
-    
-    
+    </c:if>
     </script>
+
+
 </body>
-
-
-
-
-
-
-
-
-
 </html>
+
+
