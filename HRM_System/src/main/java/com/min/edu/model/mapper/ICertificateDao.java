@@ -40,6 +40,8 @@ public interface ICertificateDao {
 	
 	String getCertNum(@Param("name") String name);
 	
+    public int countCert(Map<String, Object> map);
 	
+    public List<CertificateDto> selectCertTypeUserPage(Map<String, Object> map);
 	
 }
