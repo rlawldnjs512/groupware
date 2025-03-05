@@ -24,7 +24,7 @@ public interface ICertificateDao {
 	public List<CertificateDto> selectCertDown(String certnum);
 	
 //	사용자는 단 한번만 증명서 다운로드를 할 수 있다.
-	public int updateDownload(CertificateDto dto);
+	public boolean updateDownload(String dto);
 	
 //	사용자는 본인의 증명서 신청이력을 삭제할 수 있다.
 	public int deleteCert(CertificateDto dto);

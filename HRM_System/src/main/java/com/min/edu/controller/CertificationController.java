@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.min.edu.dto.CertificateDto;
@@ -77,7 +80,7 @@ public class CertificationController {
 	        d.setCountPage(5);  // 화면에 표시될 페이지 그룹 갯수
 
 	        // 전체 페이지 수 계산 (전체 데이터 수 / 페이지 크기)
-	        d.setTotalPage((int) Math.ceil((double) totalCount / d.getCountList()));  
+	        d.setTotalPage(d.getTotalCount());  
 
 	        d.setPage(selectPage);  // 현재 페이지 설정
 	        d.setStagePage(d.getPage());  // 현재 페이지 그룹의 시작 번호 계산
@@ -106,9 +109,6 @@ public class CertificationController {
 	    return "certification";
 	}
 
-
-
-	
 	@PostMapping(value = "/pdf.do")
 	public String pdf(@RequestParam("certificateType") String certificateType, 
 	                  @RequestParam("reason") String reason,
@@ -149,6 +149,17 @@ public class CertificationController {
 
 	    return "redirect:/certification.do";
 	}
+	
+	@PostMapping("/updateDownload")
+	public ResponseEntity<String> updateDownloadStatus(@RequestParam("certNum") String cert_num) {
+	    try {
+	        service.updateDownload(cert_num);
+	        return ResponseEntity.ok("다운로드 상태가 업데이트되었습니다.");
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류");
+	    }
+	}
+
 	
 	
 }
