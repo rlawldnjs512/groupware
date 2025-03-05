@@ -20,7 +20,7 @@
  
 <!-- 사용자는 본인의 증명서 신청이력을 증명서별로 조회할 수 있다.	selectCertTypeUser -->
 <select id="selectCertTypeUser" resultType="CertificateDto">
-	SELECT REQ_ID, EMP_ID, "TYPE", REQ_DATE, CERT_STATUS , CERT_DATE , CERT_NUM , REASON, CERT_NUM 
+	SELECT REQ_ID, EMP_ID, "TYPE", REQ_DATE, CERT_STATUS , CERT_DATE , CERT_NUM , REASON
         FROM CERTIFICATE c 
         WHERE EMP_ID = #{emp_id}
         AND "TYPE" = #{type}
@@ -91,7 +91,7 @@
         SET IS_DOWNLOAD = 'Y'
         WHERE CERT_STATUS = 'Y'
         AND IS_DOWNLOAD = 'N' 
-        AND REQ_ID = SUBSTR(#{cert_num},-2)
+        AND CERT_NUM = #{cert_num}
 </update>
 
 <!-- 사용자는 본인의 증명서 신청이력을 삭제할 수 있다.	deleteCert -->
@@ -139,13 +139,14 @@
 </select>
 
 <select id="selectCertTypeUserPage" resultType="CertificateDto">
-	SELECT SEQ, REQ_ID, EMP_ID, "TYPE", REQ_DATE, CERT_STATUS, CERT_DATE, CERT_NUM, REASON
+	SELECT SEQ, REQ_ID, EMP_ID, "TYPE", REQ_DATE, CERT_STATUS, CERT_DATE, CERT_NUM, REASON, IS_DOWNLOAD
 	FROM (
 	    SELECT ROW_NUMBER() OVER (ORDER BY REQ_ID) AS SEQ
-	           ,REQ_ID, EMP_ID, "TYPE", REQ_DATE, CERT_STATUS, CERT_DATE, CERT_NUM, REASON
+	           ,REQ_ID, EMP_ID, "TYPE", REQ_DATE, CERT_STATUS, CERT_DATE, CERT_NUM, REASON, IS_DOWNLOAD
 	    FROM CERTIFICATE c
 	    WHERE EMP_ID = #{emp_id}
 	    AND "TYPE" = #{type}
+	    AND IS_DOWNLOAD = 'N'
 		)
 	WHERE SEQ BETWEEN #{first} AND #{last}
 	ORDER BY REQ_ID ASC

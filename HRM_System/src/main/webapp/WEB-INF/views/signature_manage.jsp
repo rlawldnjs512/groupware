@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <meta charset="UTF-8">
-    <title>전자결재</title>
+    <title>서명관리</title>
 	<style>
 	        :root {
 	            --bs-white: #fff;
@@ -146,15 +146,21 @@
 			</ul>
 		</div>
 		<div class="main-content">
-		  <div class="button-container">
-		    <button type="button" class="btn btn-light-success">휴가 결재하기</button>
-		    <button type="button" class="btn btn-light-secondary">출장 결재하기</button>
-		    <button type="button" class="btn btn-light-warning">보고서 결재하기</button>
-		  </div>
 		  <div>
 		  
 		  </div>
+		  <div>
+		  	<form action="./signature.do" method="POST" target="signaturePopupWindow">
+				<button type="submit" class="btn btn-light-primary ms-2" onclick="signaturePopup()">내 서명 보기</button>
+			    <button type="submit" class="btn btn-light-primary ms-2" onclick="signaturePopup()">내 서명 관리</button>
+			</form>
+		  </div>
 		</div>
     </div>
+    <script type="text/javascript">
+	  function signaturePopup() {
+	    window.open("", "signaturePopupWindow", "width=800,height=600,scrollbars=yes");
+	  }
+	</script>
 </body>
 </html>
