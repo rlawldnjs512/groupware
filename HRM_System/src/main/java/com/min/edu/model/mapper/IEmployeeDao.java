@@ -13,7 +13,7 @@ public interface IEmployeeDao {
 	// 로그인 처리
     public EmployeeDto getLogin(Map<String, Object> map);
     //사원번호로 사원확인
-    public String findById(String emp_id);
+    public EmployeeDto findById(String emp_id);
     //비밀번호 재설정
     public int modifyPw(Map<String, Object>map);
     //관리자 확인

@@ -18,13 +18,13 @@
 		   <ul class="nav flex-wrap border-transparent">
 				<li class="nav-item my-1">
 					<a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
-							active" href="/keen/demo1/account/overview.html">
+							active" href="./mypage.do">
 						내 정보
 					</a>
 				</li>
 				<li class="nav-item my-1">
 					<a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
-						    active" href="/keen/demo1/account/overview.html">
+						    active" href="#">
 						일정 관리
 					</a>
 				</li>
