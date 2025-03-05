@@ -24,6 +24,7 @@
         FROM CERTIFICATE c 
         WHERE EMP_ID = #{emp_id}
         AND "TYPE" = #{type}
+        ORDER BY REQ_ID ASC
 </select>
 
 <!-- 사용자는 신청할 증명서 종류, 신청 사유를 입력해서 증명서 신청을 할 수 있다.	insertCert -->
@@ -56,8 +57,6 @@
             )
     )
 </insert>
-
-
 
 <select id="getCertNum" resultType="String">
     SELECT CERT_NUM FROM CERTIFICATE 
@@ -132,6 +131,24 @@
         FROM CERTIFICATE c  
         WHERE "TYPE" = #{type}
 </select>
+
+<select id="countCert" resultType="Integer">
+	SELECT COUNT(*) 
+	  FROM CERTIFICATE c
+	  WHERE "TYPE" = #{type}
+</select>
+
+<select id="selectCertTypeUserPage" resultType="CertificateDto">
+	SELECT SEQ, REQ_ID, EMP_ID, "TYPE", REQ_DATE, CERT_STATUS, CERT_DATE, CERT_NUM, REASON
+	FROM (
+	    SELECT ROW_NUMBER() OVER (ORDER BY REQ_ID) AS SEQ
+	           ,REQ_ID, EMP_ID, "TYPE", REQ_DATE, CERT_STATUS, CERT_DATE, CERT_NUM, REASON
+	    FROM CERTIFICATE c
+	    WHERE EMP_ID = #{emp_id}
+	    AND "TYPE" = #{type}
+		)
+	WHERE SEQ BETWEEN #{first} AND #{last}
+	ORDER BY REQ_ID ASC
+</select>
   
-    
 </mapper>
