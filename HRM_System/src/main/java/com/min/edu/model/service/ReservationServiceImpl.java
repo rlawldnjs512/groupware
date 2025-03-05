@@ -35,4 +35,9 @@ public class ReservationServiceImpl implements IReservationService {
 		return dao.insertReservation(map);
 	}
 
+	@Override
+	public int insertRoom(Map<String, Object> map) {
+		return dao.insertRoom(map);
+	}
+
 }

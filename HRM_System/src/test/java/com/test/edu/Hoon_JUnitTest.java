@@ -22,7 +22,7 @@ class Hoon_JUnitTest {
 	@Autowired
 	IReservationDao dao;
 	
-	@Test
+//	@Test
 	public void selectReservation() {
 		List<RoomDto> list = dao.selectReservation("2025-02-27");
 		System.out.println(list);
@@ -54,6 +54,17 @@ class Hoon_JUnitTest {
 		int cnt = dao.insertReservation(map);
 		System.out.println(cnt);
 		
+	}
+	
+	@Test
+	public void insertRoom() {
+		Map<String, Object> map = new HashMap<String, Object>(){{
+			put("room_id", "R05");
+			put("room_name", "회의실E");
+		}};
+		
+		int cnt = dao.insertRoom(map);
+		System.out.println(cnt);
 	}
 
 }

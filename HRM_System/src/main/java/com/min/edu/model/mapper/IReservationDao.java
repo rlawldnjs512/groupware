@@ -19,5 +19,5 @@ public interface IReservationDao {
 	
 	public int insertReservation(Map<String, Object> map);
 	
-	
+	public int insertRoom(Map<String, Object> map);
 }
