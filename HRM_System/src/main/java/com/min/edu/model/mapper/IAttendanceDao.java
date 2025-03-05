@@ -24,6 +24,8 @@ public interface IAttendanceDao {
 	
 	public int calAttendance(String empId);
 	
+	public String selectAttendtype(String empId);
+	
 	public int updateAttendtype(Map<String, Object> map);
 	
 	public int updateUseExtraTime(Map<String, Object> map);

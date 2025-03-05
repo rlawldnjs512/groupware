@@ -94,7 +94,4 @@ document.addEventListener("DOMContentLoaded", function () {
     var graveEx = `${year}-${month}-${day}`;
     document.getElementById("rev_date").value = graveEx;
     
-    
-    
-    
 });

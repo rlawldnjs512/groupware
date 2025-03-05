@@ -9,13 +9,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.min.edu.dto.AttendanceDto;
 import com.min.edu.dto.EmployeeDto;
+import com.min.edu.dto.VacationDto;
 import com.min.edu.model.service.IAttendanceService;
 import com.min.edu.model.service.IVacationService;
 
@@ -43,9 +47,11 @@ public class AttendanceController {
 		String empId = loginVo.getEmp_id();
 		List<AttendanceDto> lists = attendanceService.attendanceListByEmpId(empId);
 		
-		log.info("조회된 데이터 : {}", lists);
+		// 보상시간 조회
+		int extraTime = vacationService.selectExtraTime(empId);
 		
 		model.addAttribute("lists", lists);
+		model.addAttribute("extraTime", extraTime); // 조회된 보상시간 값
 		
 		return "attendanceListByEmpId";
 	}
@@ -63,6 +69,7 @@ public class AttendanceController {
 		
 		String empId = loginVo.getEmp_id();
 		
+		// 출근시간 입력
 		int result = attendanceService.insertAttendance(empId);
 		
 		if(result > 0) {
@@ -71,21 +78,52 @@ public class AttendanceController {
 			log.info("출근 기록 저장 실패");
 		}
 		
+		// 방금 저장한 출근시간 가져오기
+		String checkInDateStr = attendanceService.selectClockIn(empId);
+		
+		// 기준 출근 시간 (09시)
+		Calendar cal = new GregorianCalendar();
+		String checkOutDateStr = String.format("%d%02d%02d090000",
+			cal.get(Calendar.YEAR),
+			cal.get(Calendar.MONTH) + 1,
+			cal.get(Calendar.DATE)
+		);
+		
+		// Date로 변환할 Format
+		SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat customFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		
+		try {
+			Date checkInDate = dbFormat.parse(checkInDateStr);
+			Date checkOutDate = customFormat.parse(checkOutDateStr);
+			
+			if(checkInDate.after(checkOutDate)) { // 지각
+				Map<String, Object> AttendtypeMap = new HashMap<>();
+				AttendtypeMap.put("attendType", "지각");
+				AttendtypeMap.put("empId", empId);
+				
+				attendanceService.updateAttendtype(AttendtypeMap);
+			}
+			
+		} catch (ParseException e) {
+			log.error("날짜 변환 오류", e);
+		}
+		
 		return "redirect:attendanceListByEmpId";
 	}
 	
 	@PostMapping(value = "/updateAttendance")
-	public String updateAttendance(HttpSession session, Model model) {
+	public ResponseEntity<Map<String, Object>> updateAttendance(HttpSession session,
+															    @RequestBody Map<String, String> infoAtten) {
 		log.info("퇴근 버튼 클릭");
+		log.info("퇴근 정보 확인 {}", infoAtten);
 		
 		EmployeeDto loginVo = (EmployeeDto)session.getAttribute("loginVo");
-		
-		if (loginVo == null) {
-			log.info("로그인 정보 없음.");
-			return "redirect:/loginForm";
-		}
-		
 		String empId = loginVo.getEmp_id();
+		
+		// infoAtten 에서 exitHour와 useBonusTime 값을 가져오기
+		String exitHour = infoAtten.get("exitHour");
+		String useBonusTime = infoAtten.get("useBonusTime");
 		
 		// 퇴근시간 저장 (현재시간)
 		int result = attendanceService.updateAttendance(empId);
@@ -98,17 +136,35 @@ public class AttendanceController {
 		// 방금 저장한 퇴근 시간 가져오기
 		String checkInDateStr = attendanceService.selectClockOut(empId);
 		
-		// 근무시간 계산 메소드 실행
-		calAttendance(empId);
+		// 근무형태 가져오기 (지각인지 판단여부)
+		String checkLate = attendanceService.selectAttendtype(empId);
 		
-		// 보상시간 계산 메소드 실행
-		calculateExtraTime(empId, checkInDateStr);
+		if(checkLate == null) {
+			if(exitHour == "N") {
+				if(useBonusTime == "Y") { // 보상시간 사용하여 퇴근
+					calAttendance(empId);
+					calculateExtraTime(empId, checkInDateStr);
+				} else { // 조퇴
+					calAttendance(empId);
+					
+					Map<String, Object> attendtypeMap = new HashMap<>();
+					attendtypeMap.put("attendType", "조퇴");
+					attendtypeMap.put("empId", empId);
+					
+					attendanceService.updateAttendtype(attendtypeMap);
+				}
+			} else { // 정상퇴근
+				calAttendance(empId);
+				calculateExtraTime(empId, checkInDateStr);
+			}
+		} else {
+			calAttendance(empId);
+		}
 		
-		// 보상시간 조회 & model에 전달하여 JSP에서 사용할 수 있도록 함
-		int extraTime = vacationService.selectExtraTime(empId);
-		model.addAttribute("extraTime", extraTime);
+		Map<String, Object> response = new HashMap<String, Object>();
+		response.put("isc", Boolean.TRUE);
 		
-		return "redirect:attendanceListByEmpId";
+		return ResponseEntity.ok(response);
 	}
 	
 	// 근무시간 계산 메소드
@@ -202,6 +258,4 @@ public class AttendanceController {
 			log.error("날짜 변환 오류", e);
 		}
 	}
-	
-	
 }
