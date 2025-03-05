@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 날짜 입력 필드 탐색
     var dateInput = document.querySelector("#rev_date");
+    
 
     if (dateInput) {
         // 처음 로드될 때 한 번 실행
@@ -41,4 +42,46 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
         console.error("날짜 입력 필드를 찾을 수 없습니다.");
     }
+    
+    $(document).ready(function() {
+            let currentDate = new Date();
+
+            function updateDateDisplay() {
+                const year = currentDate.getFullYear();
+                const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+                const day = String(currentDate.getDate()).padStart(2, "0");
+                $("#date-text").text(`${year}년 ${month}월 ${day}일`);
+                $("#date-input").val(`${year}-${month}-${day}`);
+            }
+
+            updateDateDisplay();
+
+            $("#today-btn").on("click", function() {
+                currentDate = new Date();
+                updateDateDisplay();
+            });
+
+            $("#prev-day").on("click", function() {
+                currentDate.setDate(currentDate.getDate() - 1);
+                updateDateDisplay();
+            });
+
+            $("#next-day").on("click", function() {
+                currentDate.setDate(currentDate.getDate() + 1);
+                updateDateDisplay();
+            });
+
+            $("#date-display").on("click", function() {
+                $("#date-input")[0].showPicker();
+            });
+
+            $("#date-input").on("change", function() {
+                currentDate = new Date(this.value);
+                updateDateDisplay();
+            });
+        });
+    
 });
+
+
+

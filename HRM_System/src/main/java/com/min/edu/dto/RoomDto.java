@@ -15,6 +15,6 @@ import lombok.ToString;
 @ToString
 public class RoomDto {
 
-	private String room_id, room_name, person;
+	private String room_id, room_name;
 	private List<ReservationDto> reservation;
 }

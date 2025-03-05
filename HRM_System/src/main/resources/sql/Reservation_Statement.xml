@@ -16,6 +16,7 @@
 	<result property="slot" column="SLOT"/>
 	<result property="emp_id" column="EMP_ID"/>
 	<result property="rev_date" column="REV_DATE"/>
+	<result property="name" column="NAME"/>
 </resultMap>
 
 
@@ -60,7 +61,7 @@ SELECT RESERV_ID                         as RESERV_ID
      , ROOM_NAME                         as ROOM_NAME
      , EMP_ID                            as EMP_ID   
      , NAME                              as NAME
-     , REV_DATE 
+     , TO_CHAR(REV_DATE,'YYYY-MM-DD')	 as REV_DATE
      , SLOT 
      , TO_CHAR(
         CASE SLOT
@@ -80,7 +81,8 @@ SELECT RESERV_ID                         as RESERV_ID
   JOIN EMPLOYEE e 
  USING (EMP_ID)
  WHERE 1=1 AND 
-EMP_ID = '20240002'
+EMP_ID = #{emp_id}
+ORDER BY REV_DATE DESC
 
 
 </select>

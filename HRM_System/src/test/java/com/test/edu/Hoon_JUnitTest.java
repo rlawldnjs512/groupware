@@ -29,11 +29,6 @@ class Hoon_JUnitTest {
 		
 	}
 	
-//	@Test
-	public void myReservation() {
-		List<RoomDto> list = dao.myReservation();
-		System.out.println(list);
-	}
 	
 //	@Test
 	public void deleteReservation() {

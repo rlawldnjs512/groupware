@@ -21,8 +21,8 @@ public class ReservationServiceImpl implements IReservationService {
 	}
 
 	@Override
-	public List<RoomDto> myReservation() {
-		return dao.myReservation();
+	public List<RoomDto> myReservation(String emp) {
+		return dao.myReservation(emp);
 	}
 
 	@Override
