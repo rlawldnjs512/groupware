@@ -48,7 +48,7 @@
 
 
 #rev_date{
-	width: 200px;
+	width: 100px;
 }
 
 #revContent, #dateFrom{
@@ -96,6 +96,7 @@
 .date-nav-container {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
             font-size: 16px;
             font-weight: bold;

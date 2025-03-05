@@ -14,11 +14,11 @@ document.addEventListener("DOMContentLoaded", function () {
             success: function(response) {
                 console.log("응답 타입:", typeof response);
                 console.log("응답 데이터:", response);
-                
+
                 var source = document.getElementById("room-template").innerHTML;
                 var template = Handlebars.compile(source);
                 var html = template(response);
-                
+
                 $("#revContent").html(html);
             },
             error: function(xhr, status, error) {
@@ -51,7 +51,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 const month = String(currentDate.getMonth() + 1).padStart(2, "0");
                 const day = String(currentDate.getDate()).padStart(2, "0");
                 $("#date-text").text(`${year}년 ${month}월 ${day}일`);
-                $("#date-input").val(`${year}-${month}-${day}`);
+                $("#rev_date").val(`${year}-${month}-${day}`);
+                
+                fetchReservations($("#rev_date").val());
             }
 
             updateDateDisplay();
@@ -72,16 +74,13 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             $("#date-display").on("click", function() {
-                $("#date-input")[0].showPicker();
+                $("#rev_date")[0].showPicker();
             });
 
-            $("#date-input").on("change", function() {
+            $("#rev_date").on("change", function() {
                 currentDate = new Date(this.value);
                 updateDateDisplay();
             });
         });
     
 });
-
-
-
