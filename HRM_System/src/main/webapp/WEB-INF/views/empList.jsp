@@ -107,35 +107,32 @@
         </div>
 
 			<!-- 페이징 처리: searchEmployee.do 요청일 때 -->
-			<c:if test="${not empty type && not empty keyword}">
-				<div class="pagination-container text-center">
-					<ul class="pagination pagination-lg">
-						<!-- 맨 처음 및 이전 버튼 (왼쪽) -->
-						<c:if test="${page.page > 1}">
-							<li><a
-								href="./searchEmployee.do?page=1&type=${type}&keyword=${keyword}">&laquo;&laquo;</a></li>
-							<li><a
-								href="./searchEmployee.do?page=${page.page - 1}&type=${type}&keyword=${keyword}">&laquo;</a></li>
-						</c:if>
+			<!-- 페이징 처리: 검색 결과가 있고, 최소 1페이지 이상일 때 -->
+<c:if test="${not empty type && not empty keyword && page.totalPage >= 1}">
+    <div class="pagination-container text-center">
+        <ul class="pagination pagination-lg">
+            <!-- 맨 처음 및 이전 버튼 -->
+            <c:if test="${page.page > 1}">
+                <li><a href="./searchEmployee.do?page=1&type=${type}&keyword=${keyword}" aria-label="First">&laquo;&laquo;</a></li>
+                <li><a href="./searchEmployee.do?page=${page.page - 1}&type=${type}&keyword=${keyword}" aria-label="Previous">&laquo;</a></li>
+            </c:if>
 
-						<!-- 페이지 번호 (가운데) -->
-						<c:forEach var="i" begin="${page.stagePage}" end="${page.endPage}"
-							step="1">
-							<li class="${i == page.page ? 'active' : ''}"><a
-								href="./searchEmployee.do?page=${i}&type=${type}&keyword=${keyword}">${i}</a>
-							</li>
-						</c:forEach>
+            <!-- 페이지 번호 -->
+            <c:forEach var="i" begin="${page.stagePage}" end="${page.endPage}" step="1">
+                <li class="${i == page.page ? 'active' : ''}">
+                    <a href="./searchEmployee.do?page=${i}&type=${type}&keyword=${keyword}" aria-label="Page ${i}">${i}</a>
+                </li>
+            </c:forEach>
 
-						<!-- 다음 및 맨 끝 버튼 (오른쪽) -->
-						<c:if test="${page.page < page.totalPage}">
-							<li><a
-								href="./searchEmployee.do?page=${page.page + 1}&type=${type}&keyword=${keyword}">&raquo;</a></li>
-							<li><a
-								href="./searchEmployee.do?page=${page.totalPage}&type=${type}&keyword=${keyword}">&raquo;&raquo;</a></li>
-						</c:if>
-					</ul>
-				</div>
-			</c:if>
+            <!-- 다음 및 맨 끝 버튼 -->
+            <c:if test="${page.page < page.totalPage}">
+                <li><a href="./searchEmployee.do?page=${page.page + 1}&type=${type}&keyword=${keyword}" aria-label="Next">&raquo;</a></li>
+                <li><a href="./searchEmployee.do?page=${page.totalPage}&type=${type}&keyword=${keyword}" aria-label="Last">&raquo;&raquo;</a></li>
+            </c:if>
+        </ul>
+    </div>
+</c:if>
+
 
 			<!-- 페이징 처리: emp.do 요청일 때 -->
 			<c:if test="${empty type && empty keyword}">

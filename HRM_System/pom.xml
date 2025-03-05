@@ -44,6 +44,7 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
+
 		<!-- Spring Web을 위한 라이브러리 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

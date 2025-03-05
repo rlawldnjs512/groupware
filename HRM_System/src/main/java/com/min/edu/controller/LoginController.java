@@ -89,7 +89,7 @@ public class LoginController {
 	    //비밀번호 재설정(사원조회)
 	    @GetMapping("/check.do")
 	    public String checkEmpId(@RequestParam String emp_id, 
-	    		                 @RequestParam String name, Model model) {
+	                             @RequestParam String name, Model model) {
 
 	        // 사원번호로 사원 조회
 	        EmployeeDto dto = service.findById(emp_id); // emp_id로 사원 조회
@@ -102,17 +102,19 @@ public class LoginController {
 	            model.addAttribute("empIdExists", true);  // 이메일 필드 보이도록 설정
 	            model.addAttribute("empName", dto.getName());  // 사원 이름 전달
 	            model.addAttribute("alertMessage", "확인");
-	            model.addAttribute("alertType","success"); //알림의 타입
+	            model.addAttribute("alertType", "success"); // 알림의 타입
+	            model.addAttribute("emp_id", emp_id);  // 사원번호 파라미터 전달
+	            model.addAttribute("name", name);  // 이름 파라미터 전달
 	        } else {
 	            // 사원번호나 이름이 일치하지 않으면
 	            model.addAttribute("empIdExists", false);
 	            model.addAttribute("alertMessage", "조회 불가");
-	            model.addAttribute("alertType","error"); //알림의 타입
+	            model.addAttribute("alertType", "error"); // 알림의 타입
 	        }
-	        
+
 	        return "forgot";  // 비밀번호 재설정 화면으로 이동
-	   
 	    }
+
 
 
 

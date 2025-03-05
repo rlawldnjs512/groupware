@@ -63,18 +63,27 @@ public class EmployeeController {
 
 
 		if (type == null || keyword == null || keyword.trim().isEmpty()) {
-			//	        empList = service.userSelectAll();  // 전체 사원 목록 조회
-			return "redirect:/emp.do";
+		    return "redirect:/emp.do";
 		} else {
-			// 부서별 검색
-			if ("dept".equals(type)) {
-				empList = service.getEmployeesByDept(keyword, selectPage, d.getCountList());  // 부서별 검색 (페이징 포함)
-				log.info("empList : {}" ,empList);
-				// 이름별 검색
-			} else if ("name".equals(type)) {
-				empList = service.getEmployeesByName(keyword, selectPage, d.getCountList());  // 이름별 검색
-			}
+		    int totalCount = 0;
+		    if ("dept".equals(type)) {
+		        empList = service.getEmployeesByDept(keyword, selectPage, d.getCountList());
+		        totalCount = service.countEmployeesByDeptName(keyword); // 검색 결과 수
+		    } else if ("name".equals(type)) {
+		        empList = service.getEmployeesByName(keyword, selectPage, d.getCountList());
+		        totalCount = service.countEmployeesByName(keyword); // 검색 결과 수
+		    }
+
+		    // 기존 EmpPageDto 메서드 활용
+		    d.setTotalCount(totalCount);  
+		    d.setCountList(10);  
+		    d.setCountPage(5);   
+		    d.setTotalPage(totalCount); // ← 여기!
+		    d.setPage(selectPage); 
+		    d.setStagePage(d.getPage());
+		    d.setEndPage();
 		}
+
 
 
 
