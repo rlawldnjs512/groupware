@@ -586,55 +586,58 @@
 			</script>
 		</div>
 		<script>
-		        document.addEventListener("DOMContentLoaded", function() {
-		            var saveBtn = document.querySelector("#savePdf");
-
-		            if (!saveBtn) {
-		                console.error("❌ 버튼을 찾을 수 없습니다.");
-		                return;
-		            }
-
-		            saveBtn.addEventListener("click", function() {
-		                console.log("✅ 버튼 클릭됨");
-		                pdfPrint();
-		            });
-		        });
-
-		        function pdfPrint() {
-		            console.log("📄 PDF 저장 시작");
-
-		            var element = document.getElementById("saveZone");
-		            if (!element) { 
-		                console.error("❌ 저장할 영역이 없습니다.");
-		                return;
-		            }
-
-		            html2canvas(element).then(canvas => {
-		                var imgData = canvas.toDataURL("image/png");
-		                var imgWidth = 210; // A4 가로 (mm)
-		                var pageHeight = imgWidth * 1.414; // A4 세로 (mm)
-		                var imgHeight = (canvas.height * imgWidth) / canvas.width;
-		                var heightLeft = imgHeight;
-
-		                var doc = new jsPDF("p", "mm", "a4");
-		                var position = 0;
-
-		                doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-		                heightLeft -= pageHeight;
-
-		                while (heightLeft > 0) {
-		                    position = heightLeft - imgHeight;
-		                    doc.addPage();
-		                    doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-		                    heightLeft -= pageHeight;
-		                }
-
-		                doc.save("sample.pdf");
-		                console.log("📄 PDF 저장 완료");
-		            }).catch(error => {
-		                console.error("❌ PDF 생성 중 오류 발생:", error);
-		            });
-		        }
+				document.addEventListener("DOMContentLoaded", function() {
+				    var saveBtn = document.querySelector("#savePdf");
+		
+				    if (!saveBtn) {
+				        console.error("❌ 버튼을 찾을 수 없습니다.");
+				        return;
+				    }
+		
+				    saveBtn.addEventListener("click", function() {
+				        console.log("✅ 버튼 클릭됨");
+				        pdfPrint();
+				    });
+				});
+		
+				function pdfPrint() {
+				    console.log("📄 PDF 저장 시작");
+		
+				    var element = document.getElementById("saveZone");
+				    if (!element) {
+				        console.error("❌ 저장할 영역이 없습니다.");
+				        return;
+				    }
+		
+				    html2canvas(element).then(canvas => {
+				        var imgData = canvas.toDataURL("image/png");
+				        var imgWidth = 210; // A4 가로 (mm)
+				        var pageHeight = imgWidth * 1.414; // A4 세로 (mm)
+				        var imgHeight = (canvas.height * imgWidth) / canvas.width;
+				        var heightLeft = imgHeight;
+		
+				        var doc = new jsPDF("p", "mm", "a4");
+				        var position = 0;
+		
+				        doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+				        heightLeft -= pageHeight;
+		
+				        while (heightLeft > 0) {
+				            position = heightLeft - imgHeight;
+				            doc.addPage();
+				            doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+				            heightLeft -= pageHeight;
+				        }
+		
+				        doc.save("sample.pdf");
+				        console.log("📄 PDF 저장 완료");
+		
+				        // PDF 다운로드 후 팝업창 닫기
+				        window.close();  // 팝업 창을 닫음
+				    }).catch(error => {
+				        console.error("❌ PDF 생성 중 오류 발생:", error);
+				    });
+				}
 		    </script>
 	</div>
 	<div style="text-align: center;">

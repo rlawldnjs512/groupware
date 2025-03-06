@@ -30,7 +30,11 @@ public interface ICertificateService {
 	String getCertNum(@Param("name") String name);
 	
     public int countCert(Map<String, Object> map);
+    public int countCertAdminId(Map<String, Object> map);
+    public int countCertAdminType(Map<String, Object> map);
     
     public List<CertificateDto> selectCertTypeUserPage(Map<String, Object> map);
-	
+    public List<CertificateDto> selectCertIdAdminPage(Map<String, Object> map);
+    public List<CertificateDto> selectCertTypeAdminPage(Map<String, Object> map);
+    
 }

@@ -77,5 +77,25 @@ public class CertificateServiceImpl implements ICertificateService {
 	public List<CertificateDto> selectCertTypeUserPage(Map<String, Object> map) {
 		return dao.selectCertTypeUserPage(map);
 	}
+
+	@Override
+	public int countCertAdminId(Map<String, Object> map) {
+		return dao.countCertAdminId(map);
+	}
+
+	@Override
+	public int countCertAdminType(Map<String, Object> map) {
+		return dao.countCertAdminType(map);
+	}
+
+	@Override
+	public List<CertificateDto> selectCertIdAdminPage(Map<String, Object> map) {
+		return dao.selectCertIdAdminPage(map);
+	}
+
+	@Override
+	public List<CertificateDto> selectCertTypeAdminPage(Map<String, Object> map) {
+		return dao.selectCertTypeAdminPage(map);
+	}
 	
 }
