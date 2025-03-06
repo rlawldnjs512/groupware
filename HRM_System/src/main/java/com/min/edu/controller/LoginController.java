@@ -55,6 +55,8 @@ public class LoginController {
 	    }
 	    
 	    
+	    
+	    
 //	    @GetMapping(value = "/logout.do")
 //		public String logout(HttpSession session, Model model) {
 //	    	
@@ -89,7 +91,8 @@ public class LoginController {
 	    //비밀번호 재설정(사원조회)
 	    @GetMapping("/check.do")
 	    public String checkEmpId(@RequestParam String emp_id, 
-	                             @RequestParam String name, Model model) {
+	                             @RequestParam String name, Model model,
+	                             HttpSession session) {
 
 	        // 사원번호로 사원 조회
 	        EmployeeDto dto = service.findById(emp_id); // emp_id로 사원 조회
@@ -98,12 +101,15 @@ public class LoginController {
 
 	        // 사원 정보가 존재하는지 확인
 	        if (dto != null && dto.getName().equals(name)) {
-	            // 사원 이름이 일치할 경우
+	           
 	            model.addAttribute("empIdExists", true);  // 이메일 필드 보이도록 설정
 	            model.addAttribute("empName", dto.getName());  // 사원 이름 전달
 	            model.addAttribute("alertMessage", "확인");
 	            model.addAttribute("alertType", "success"); // 알림의 타입
-	            model.addAttribute("emp_id", emp_id);  // 사원번호 파라미터 전달
+	            
+	            
+	            session.setAttribute("emp_id", emp_id);
+	            
 	            model.addAttribute("name", name);  // 이름 파라미터 전달
 	        } else {
 	            // 사원번호나 이름이 일치하지 않으면
@@ -116,10 +122,27 @@ public class LoginController {
 	    }
 
 
+	    @PostMapping(value = "/resetPassword.do")
+	    public String resetPassword(@RequestParam Map<String, Object> map,
+	                                 HttpServletResponse response) throws IOException {
+	    	
+	       
+	        response.setContentType("text/html; charset=UTF-8;");
+
+	        int n = service.modifyPw(map);
+	        System.out.print(map);
+	        
+	        if (n == 1) {
+	            response.getWriter().print("<script>alert('수정완료'); location.href='/';</script>");
+	            
+	        } else {
+	            response.getWriter().print("<script>alert('수정실패'); window.history.back();</script>");
+	        }
+	        
+	        return null;
+	    }
 
 
-
-	    
 	    
 	    
 	    
