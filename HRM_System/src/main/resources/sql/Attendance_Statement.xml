@@ -31,6 +31,17 @@
 			AND CLOCKOUT IS NULL
 	</update>
 	
+	<!-- 출근여부확인 -->
+	<select id="checkAttendance" resultType="Integer">
+	SELECT CASE 
+           WHEN EXISTS (SELECT 1 
+                        FROM ATTENDANCE 
+                        WHERE TRIM(EMP_ID) = TRIM(#{empId})
+                        AND ATTEND_DATE = TRUNC(CURRENT_TIMESTAMP)) 
+           THEN 1 ELSE 0 END AS isClockedIn
+		FROM DUAL
+	</select>
+	
 	<!-- 출근시간 조회 -->
 	<select id="selectClockIn" resultType="String">
 		SELECT CLOCKIN 
