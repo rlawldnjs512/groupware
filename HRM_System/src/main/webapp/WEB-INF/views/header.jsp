@@ -16,7 +16,7 @@
                        href="./myReservation.do"> 나의 예약조회 </a>
                 </li>
             </ul>
-        <% } else if (currentURI.contains("notice") || currentURI.contains("free")){%>
+        <% } else if (currentURI.contains("notice") || currentURI.contains("free") || currentURI.contains("newNotice")){%>
         	<ul class="nav flex-wrap border-transparent">
                 <li class="nav-item my-1">
                     <a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 active"

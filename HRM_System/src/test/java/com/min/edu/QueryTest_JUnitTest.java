@@ -113,7 +113,7 @@ class QueryTest_JUnitTest {
 	
 //	@Test
 	public void selectCertEmpAdmin() {
-		List<CertificateDto> dto = dao.selectCertEmpAdmin("20250021");
+		List<CertificateDto> dto = dao.selectCertEmpAdmin("20240002");
 		
 		System.out.println(dto);
 		assertNotNull(dto);		

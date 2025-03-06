@@ -50,53 +50,111 @@ th {
 .gray {
 	background-color: #ddd;
 }
+
+.container {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.form-group {
+	margin-bottom: 15px;
+}
+
+label {
+	font-weight: bold;
+	display: block;
+}
+
+input[type="text"], textarea {
+	width: 100%;
+	padding: 10px;
+	margin-top: 5px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+input[type="file"] {
+	margin-top: 5px;
+}
+
+button {
+	padding: 10px 15px;
+	background-color: #4CAF50;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+button:hover {
+	background-color: #45a049;
+}
+
+.file-container {
+	display: flex;
+	align-items: center;
+}
+
+.file-container input[type="file"] {
+	flex-grow: 1;
+}
+
+.file-container button {
+	margin-left: 10px;
+}
+
+textarea {
+	height: 200px;
+}
 </style>
 </head>
 <%@ include file="sidebar.jsp" %>
 <body>
     <div class="content" id="content">
-        <div class="header">
-            <ul class="nav flex-wrap border-transparent">
-                <li class="nav-item my-1">
-                    <a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 active"
-                       href="./notice.do"> 공지사항 </a>
-                </li>
-                <li class="nav-item my-1">
-                    <a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 active"
-                       href="./free.do"> 커뮤니티 </a>
-                </li>
-            </ul>
-        </div>
-        
+		<%@ include file="header.jsp" %>
         <div class="main-content">
-        	<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
-				증명서 신청 이력
-			</h1>
-        	<div>
-        		<table border="1">
-       				<tr>
-       					<td>게시글ID</td>
-       					<td><input type="text"></td>
-       				</tr>
-       				<tr>
-       					<td>제목</td>
-       					<td><input type="text"></td>
-       				</tr>
-       				<tr>
-       					<td colspan="3">첨부파일</td>
-       					<td><input type="text"></td>
-       				</tr>
-       				<tr>
-       					<td>내용</td>
-       					<td><textarea></textarea></td>
-       				</tr>
-        		</table>
-        	</div>
-        
-        	<form id="select-form" action="./newNotice.do" method="POST">
-		        <button type="submit" class="btn btn-light-primary ms-2" id="newNotice">등록하기</button>
-		        <button class="btn btn-light-primary ms-2" onclick="history.back(-1)">취소</button>
-			</form>
+		    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
+					공지사항 글 등록하기</h1>
+		    <form action="/submitNotice" method="post" enctype="multipart/form-data">
+		        <table>
+	                <!-- 게시글 ID -->
+	                <tr>
+	                    <td><label for="postId">게시글 ID</label></td>
+	                    <td><input type="text" id="postId" name="postId" required placeholder="게시글 ID를 입력하세요"></td>
+	                </tr>
+	
+	                <!-- 제목 -->
+	                <tr>
+	                    <td><label for="title">제목</label></td>
+	                    <td><input type="text" id="title" name="title" required placeholder="제목을 입력하세요"></td>
+	                </tr>
+	
+	                <!-- 첨부파일 -->
+	                <tr>
+	                    <td><label for="file">첨부파일</label></td>
+	                    <td>
+	                        <div class="file-container">
+	                            <input type="file" id="file" name="file">
+	                        </div>
+	                    </td>
+	                </tr>
+	
+	                <!-- 내용 -->
+	                <tr>
+	                    <td><label for="content">내용</label></td>
+	                    <td><textarea id="content" name="content" required placeholder="내용을 입력하세요"></textarea></td>
+	                </tr>
+	                
+			        <!-- 제출 버튼 -->
+			        <tr class="form-group" style="text-align: right;">
+			        	<td colspan="2" class="submit-btn">
+					        <button type="submit" class="btn btn-light-primary ms-2" id="newNotice">등록하기</button>
+					        <button class="btn btn-light-primary ms-2" onclick="history.back(-1)">취소</button>
+				        </td>
+			        </tr>
+	            </table>
+		    </form>
 		</div>
     </div>
 </body>

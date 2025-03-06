@@ -1,8 +1,10 @@
 package com.min.edu.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,16 +53,22 @@ public class CertificationController {
 	}
 	
 	@GetMapping(value = "/select.do")
-	public String certSelect(Model model, HttpSession session, @RequestParam("type") String type,
-	                         HttpServletRequest req) {
+	public String certSelect(Model model, HttpSession session, 
+	                         @RequestParam(value = "type", defaultValue = "defaultType") String type,
+	                         HttpServletRequest req, 
+	                         @RequestParam(value = "emp_id", required = false) String emp_id) {  // emp_id로 변경
+
 	    EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
 
 	    if (loginVo != null) {
-	        String emp_id = loginVo.getEmp_id();
-	        System.out.println("empId from session: " + emp_id);
+	        String loggedInEmpId = loginVo.getEmp_id();  // 로그인한 사원번호 가져오기
+	        String role = loginVo.getRole();  // 로그인한 사용자의 역할 (관리자 체크)
 
-	        Map<String, Object> map = new HashMap<String, Object>();
-	        map.put("emp_id", emp_id);
+	        System.out.println("empId from session: " + loggedInEmpId);
+
+	        // map 생성
+	        Map<String, Object> map = new HashMap<>();
+	        map.put("emp_id", loggedInEmpId);  // 로그인한 사원번호를 map에 추가
 	        map.put("type", type);
 
 	        // 페이지 정보 가져오기 (기본값: 1)
@@ -72,35 +80,84 @@ public class CertificationController {
 
 	        // EmpPageDto 생성하여 페이지 관련 정보 설정
 	        EmpPageDto d = new EmpPageDto();
-	        
+
 	        // 전체 데이터 개수 가져오기 (selectCertTypeUser가 아닌 전체 데이터 카운트)
-	        int totalCount = service.countCert(map);  // 전체 데이터의 갯수
-	        d.setTotalCount(totalCount);  // 전체 글의 갯수
-	        d.setCountList(2);  // 한 페이지에 표시될 글 갯수
-	        d.setCountPage(5);  // 화면에 표시될 페이지 그룹 갯수
-
 	        // 전체 페이지 수 계산 (전체 데이터 수 / 페이지 크기)
-	        d.setTotalPage(d.getTotalCount());  
-
+	        if ("A".equals(role)) {
+	        	if (emp_id != null && !emp_id.trim().isEmpty()) {
+	        		d.setTotalCount(service.countCertAdminId(map));
+	        		int totalPageId = service.countCertAdminId(map) == 0 ? 1 : d.getCountPage();
+	        		d.setTotalPage(totalPageId);
+	        	} else {
+	        		d.setTotalCount(service.countCertAdminType(map));
+	        		int totalPageType = service.countCertAdminType(map) == 0 ? 1 : d.getCountPage();
+	        		d.setTotalPage(totalPageType);
+	        	}
+	        	d.setCountList(10);
+	        	d.setCountPage(5);
+	        } else {
+	        	d.setTotalCount(service.countCert(map)); 
+	        	int totalPage = service.countCert(map) == 0 ? 1 : d.getTotalCount();
+	 	        d.setTotalPage(totalPage);
+	        	d.setCountList(2);  // 한 페이지에 표시될 글 갯수
+	        	d.setCountPage(5);
+	        }
+	        
 	        d.setPage(selectPage);  // 현재 페이지 설정
 	        d.setStagePage(d.getPage());  // 현재 페이지 그룹의 시작 번호 계산
-	        d.setEndPage();  // 현재 페이지 그룹의 끝 번호 계산
+
+	        d.setEndPage();  // 기존의 setEndPage() 사용하여 처리
 
 	        // 페이징 처리를 위한 first, last 값 계산
 	        int first = (d.getPage() - 1) * d.getCountList() + 1;  // 시작 번호
 	        int last = d.getPage() * d.getCountList();             // 끝 번호
+
+	        // 마지막 페이지 번호는 totalCount를 초과할 수 없으므로, 제한
+	        if ("A".equals(role)) {
+	        	if (emp_id != null && !emp_id.trim().isEmpty()) {
+	        		last = Math.min(last, service.countCertAdminId(map));
+	        	} else {
+	        		last = Math.min(last, service.countCertAdminType(map));
+	        	}
+	        } else {
+	        	last = Math.min(last, service.countCert(map)); 
+	        }
+
 	        map.put("first", first);
 	        map.put("last", last);
 
-	        // selectCertTypeUser로 해당 페이지에 해당하는 데이터 가져오기
-	        List<CertificateDto> lists = service.selectCertTypeUserPage(map);  
+	        List<CertificateDto> lists = new ArrayList<>();
+
+	        // 관리자일 경우, 사원번호로 검색하여 리스트를 조회
+	        if ("A".equals(role)) {
+	            if (emp_id != null && !emp_id.trim().isEmpty()) {
+	                // 관리자일 경우, 사원번호로 검색
+	                map.put("emp_id", emp_id);  // emp_id로 필터링
+	                lists = service.selectCertIdAdminPage(map);  // emp_id로 데이터 조회
+	            } else {
+	                // 관리자일 경우, 사원번호 없이 증명서 종류(type)로 검색
+	                lists = service.selectCertTypeAdminPage(map);  // 증명서 종류로 데이터 조회
+	            }
+	        } else {
+	            // 일반 사용자일 경우, 로그인된 emp_id로 검색
+	            map.put("emp_id", loggedInEmpId);  // 로그인한 사용자의 emp_id 사용
+	            lists = service.selectCertTypeUserPage(map);  // 증명서 종류로 데이터 조회
+	        }
+
 	        System.out.println("Lists size: " + (lists == null ? 0 : lists.size()));  // 리스트의 크기 출력
-	        System.out.println("first:"+first);
-	        System.out.println("last:"+last);
-	        
+	        System.out.println("first:" + first);
+	        System.out.println("last:" + last);
+
 	        // 모델에 데이터 추가
 	        model.addAttribute("lists", lists);
 	        model.addAttribute("page", d);
+
+	        // 페이징 표시 여부 결정 (리스트가 없을 경우, 페이징을 표시하지 않음)
+	        if (lists.isEmpty()) {
+	            model.addAttribute("noPagination", true);
+	        } else {
+	        	model.addAttribute("noPagination",false);
+	        }
 
 	    } else {
 	        model.addAttribute("error", "로그인이 필요합니다.");
@@ -151,14 +208,59 @@ public class CertificationController {
 	}
 	
 	@PostMapping("/updateDownload")
-	public ResponseEntity<String> updateDownloadStatus(@RequestParam("certNum") String cert_num) {
+	public ResponseEntity<String> updateDownloadStatus(@RequestParam("certNum") String certNum) {
 	    try {
-	        service.updateDownload(cert_num);
-	        return ResponseEntity.ok("다운로드 상태가 업데이트되었습니다.");
+	        // 다운로드 상태를 'Y'로 업데이트
+	        boolean isUpdated = service.updateDownload(certNum);
+
+	        // 업데이트 성공 여부에 따라 응답 처리
+	        if (isUpdated) {
+	            return ResponseEntity.ok("다운로드 상태가 업데이트되었습니다.");
+	        } else {
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 인증서가 존재하지 않거나 이미 다운로드되었습니다.");
+	        }
 	    } catch (Exception e) {
+	        // 예외 처리: 서버 오류 발생 시
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류");
 	    }
 	}
+	
+	@GetMapping(value = "/status.do")
+	public String status_Accept(
+	        @RequestParam("emp_id") String emp_id,  // 사원 ID
+	        @RequestParam("cert_status") String cert_status,  // 증명서 상태
+	        @RequestParam("cert_num") String cert_num,  // 증명서 번호
+	        Model model) {
+
+	    // 파라미터 값 검증
+	    if (emp_id == null || emp_id.isEmpty() || cert_status == null || cert_status.isEmpty() || cert_num == null || cert_num.isEmpty()) {
+	        model.addAttribute("error", "필수 파라미터가 누락되었습니다.");
+	        return "redirect:/errorPage";  // 오류 페이지로 리디렉션 (혹은 다른 적합한 페이지)
+	    }
+
+	    // CertificateDto 객체 생성
+	    CertificateDto dto = CertificateDto.builder()
+	                                       .emp_id(emp_id)
+	                                       .cert_status(cert_status)
+	                                       .cert_num(cert_num)
+	                                       .build();
+
+	    try {
+	        // 증명서 승인 처리
+	        service.updateCertAccept(dto);
+	        model.addAttribute("message", "증명서 승인 완료!");
+	    } catch (Exception e) {
+	        model.addAttribute("error", "승인 처리 중 오류가 발생했습니다.");
+	        e.printStackTrace();  // 에러 로그 출력
+	    }
+
+	    return "redirect:/select.do?emp_id=" + emp_id;
+	}
+
+
+
+
+
 
 	
 	
