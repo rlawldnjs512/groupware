@@ -18,6 +18,8 @@ public interface IAttendanceDao {
 	
 	public int updateAttendance(String empId);
 	
+	public int checkAttendance(String empId);
+	
 	public String selectClockIn(String empId);
 	
 	public String selectClockOut(String empId);
@@ -29,4 +31,5 @@ public interface IAttendanceDao {
 	public int updateAttendtype(Map<String, Object> map);
 	
 	public int updateUseExtraTime(Map<String, Object> map);
+	
 }

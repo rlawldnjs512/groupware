@@ -19,6 +19,8 @@ public interface IAttendanceService {
 	
 	public String selectClockOut(String empId);	
 	
+	public boolean checkAttendance(String empId);
+	
 	public int calAttendance(String empId);
 	
 	public String selectAttendtype(String empId);
@@ -26,4 +28,14 @@ public interface IAttendanceService {
 	public int updateAttendtype(Map<String, Object> map);
 	
 	public int updateUseExtraTime(Map<String, Object> map);
+	
+	// 출근 버튼 로직
+	public void insertAttendanceLogic(String empId);
+	
+	// 퇴근 버튼 로직
+	public void updateAttendanceLogic(String empId, Map<String, String> infoAtten);
+	
+	// 보상 시간 계산 로직
+	public void calculateExtraTime(String empId, String checkInDateStr);
+	
 }

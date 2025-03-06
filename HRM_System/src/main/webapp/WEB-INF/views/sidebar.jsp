@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <ul id="menuList">
 			<li class="active"><a href="/homeList.do"> Home </a></li>
 			<li><a href="./mypage.do">마이페이지 </a></li>
-			<li><a href="./attendanceListByEmpId">근태관리</a></li>
+			<li><a href="./attendance">근태관리</a></li>
 			<!-- 사원조회 또는 사원관리 -->
 			<li><a href="./emp.do"> 
 				<c:choose>
