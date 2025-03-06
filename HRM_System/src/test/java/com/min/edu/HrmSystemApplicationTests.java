@@ -16,8 +16,9 @@ import org.springframework.mail.SimpleMailMessage;
 import com.min.edu.dto.EmployeeDto;
 import com.min.edu.model.mapper.IEmployeeDao;
 import com.min.edu.model.service.IEmployeeService;
-import com.min.edu.model.service.SimpleMailMessageService;
+import com.min.edu.model.service.MailSendService;
 
+import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest
@@ -29,7 +30,7 @@ class HrmSystemApplicationTests {
 //	private IEmployeeDao dao;
 	
 	@Autowired
-	private SimpleMailMessageService mailService;
+	private MailSendService mailSendService;
 	
 
 	
@@ -55,12 +56,13 @@ class HrmSystemApplicationTests {
 //		assertEquals("20240002", empId); //사원번호로 사원확인
 //		System.out.println(empId);	
 //		
-//		int n = service.modifyPw(new HashMap<String, Object>(){{
-//			put("empId","20240002");
-//			put("password","AT60201765");
-//		}});
+		int n = service.modifyPw(new HashMap<String, Object>(){{
+			
+			put("emp_id","20250005");
+			put("password","AT60201765");
+		}});
 		
-		//assertNotNull(n);
+		assertNotNull(n);
 		
 //		String chk = service.checkAd("A");
 //		assertNotNull(chk);
@@ -76,19 +78,19 @@ class HrmSystemApplicationTests {
 	
 		
 		
-		EmployeeDto dto = EmployeeDto.builder()
-						  .dept_id(3)
-						  .name("김사람")
-						  .position("대리")
-						  .birth("20021205")
-						  .phone("010-3456-7813")
-						  .tel("890")
-						  .email("aa156@test.com")
-						  .hire_date("2023-03-04")
-						  .build();
-		int n = service.insertEmployee(dto);
-		System.out.println(dto);
-		assertEquals(1, n);
+//		EmployeeDto dto = EmployeeDto.builder()
+//						  .dept_id(3)
+//						  .name("김사람")
+//						  .position("대리")
+//						  .birth("20021205")
+//						  .phone("010-3456-7813")
+//						  .tel("890")
+//						  .email("aa156@test.com")
+//						  .hire_date("2023-03-04")
+//						  .build();
+//		int n = service.insertEmployee(dto);
+//		System.out.println(dto);
+//		assertEquals(1, n);
 		
 		
 		
@@ -115,15 +117,23 @@ class HrmSystemApplicationTests {
 //		log.info("emp : {}", emp);
 //		
 //		
-//		//실제 이메일 주소 테스트
-//		String testEmail = "mw7813@naver.com";
-//		
-//		//메일보내기
-//		mailService.sendEmail(testEmail);
+
 		
-		//이메일이 전송되면 콘솔에 출력됨
+		
+		
+		
 		
     }
+	
+//	@Test //메일 테스트 성공
+//    public void testSendAuthMail() throws MessagingException {
+//        // 실제 이메일 주소로 테스트
+//        String email = "mw7813@naver.com";  // 실제 이메일 주소
+//        String authKey = mailSendService.sendAuthMail(email);  // 인증 메일 전송
+//
+//        System.out.println("AuthKey: " + authKey);  // 인증번호 출력
+//       
+//    }
 		
 		
 		

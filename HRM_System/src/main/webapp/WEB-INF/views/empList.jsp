@@ -5,8 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>사원 목록</title>
+<link rel="stylesheet" href="/css/emplist.css">
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<link rel="stylesheet" href="./css/emplist.css">
 
 </head>
 
