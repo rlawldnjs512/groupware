@@ -4,87 +4,116 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	<meta charset="UTF-8">
 	<title>근태관리</title>
 	<script type="text/javascript" src="./js/attendance.js"></script>
+	<style>
+		.card.border-light.mb-3 { 
+			background-color: #F0F0F0;
+			width: 18rem;
+			min-height: 11rem;
+			margin-left: 10px;
+			margin-top: 10px;
+ 		}
+ 		img {
+ 			width: 20px;
+ 			height: 20px;
+ 		}
+ 		h2.card-title {
+ 			padding-top: 30px;
+ 			margin-bottom: 0;
+ 			font-weight: bold;
+ 		}
+ 		p {
+ 			margin-top: auto;
+ 		}
+	</style>
 </head>
 <%@ include file="sidebar.jsp" %>
 <body>
 	
 	<div class="content" id="content">
-	
-		<div class="header">
-			<ul class="nav flex-wrap border-transparent">
-				<li class="nav-item my-1"><a
-					class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
-							active"
-					href="./attendance"> 나의 근태 </a></li>
-				<li class="nav-item my-1"><a
-					class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
-						    active"
-					href="./vacation"> 휴가 내역 조회 </a></li>
-			</ul>
-		</div>
-		
-		
+	<%@ include file="header.jsp" %>
 		<div class="main-content">
 		
-			<div class="col-sm-6 col-xl-2 mb-xl-10">
-        
-				<!--begin::Card widget 2-->
-				<div class="card h-lg-100">
-				    <!--begin::Body-->
-				    <div class="card-body d-flex justify-content-between align-items-start flex-column">         
-				        <!--begin::Icon--> 
-				        <div class="m-0">
-				                            <img src="/keen/demo1/assets/media/svg/brand-logos/instagram-2-1.svg" class="w-35px" alt="">   
-				                       
-				        </div>                           
-				        <!--end::Icon-->
-				
-				        <!--begin::Section--> 
-				        <div class="d-flex flex-column my-7">
-				            <!--begin::Number-->           
-				            <span class="fw-semibold fs-3x text-gray-800 lh-1 ls-n2">320k</span> 
-				            <!--end::Number--> 
-				
-				            <!--begin::Follower-->
-				            <div class="m-0">
-				            	<span class="fw-semibold fs-6 text-gray-500">Followers</span>                
-				            </div>       
-				            <!--end::Follower--> 
-				        </div>  
-				        <!--end::Section-->          
-				        
-				        <!--begin::Badge--> 
-				        <span class="badge badge-light-success fs-base">
-				                            <i class="ki-duotone ki-arrow-up fs-5 text-success ms-n1"><span class="path1"></span><span class="path2"></span></i> 
-				                                       
-				            2.1%
-				        </span>  
-				        <!--end::Badge-->                              
-				    </div>
-				    <!--end::Body-->
-				</div>
-				<!--end::Card widget 2-->
-
-
-     		</div>
+		<div class="d-flex">
+			<div class="card border-light mb-3 shadow p-3 rounded">
+			  <div class="card-header">
+			  	<img src="./images/work.svg">
+			  </div>
+			  <div class="card-body d-flex flex-column justify-content-between">
+			    <h2 class="card-title d-flex align-items-end">
+			    	${avgClockInTime}
+			    </h2>
+			    <p class="card-text d-flex align-items-end">평균 출근 시간</p>
+			  </div>
+			</div>
+			<div class="card border-light mb-3 shadow p-3 rounded">
+			  <div class="card-header">
+			  	<img src="./images/gohome.svg">
+			  </div>
+			  <div class="card-body d-flex flex-column justify-content-between">
+			    <h2 class="card-title d-flex align-items-center">
+			    	${avgClockOutTime}
+			    </h2>
+			    <p class="card-text d-flex align-items-end">평균 퇴근 시간</p>
+			  </div>
+			</div>
+			<div class="card border-light mb-3 shadow p-3 rounded">
+			  <div class="card-header">
+			  	<img src="./images/avg.svg">
+			  </div>
+			  <div class="card-body d-flex flex-column justify-content-between">
+			    <h2 class="card-title d-flex align-items-center">
+			    	${avgWorkTime}
+			    </h2>
+			    <p class="card-text d-flex align-items-end">평균 근무 시간</p>
+			  </div>
+			</div>
+		</div>
 		
 		
-		
-		
-			
+		<div class="d-flex">
+			<div class="card border-light mb-3 shadow p-3 rounded">
+			  <div class="card-header">
+			  	<img src="./images/extraTime.svg">
+			  </div>
+			  <div class="card-body d-flex flex-column justify-content-between">
+			    <h2 class="card-title d-flex align-items-center">
+			    	${extraTime}시간
+			    </h2>
+			    <p class="card-text d-flex align-items-end">보상시간</p>
+			  </div>
+			</div>
+			<div class="card border-light mb-3 shadow p-3 rounded">
+			  <div class="card-header">
+			  	<img src="./images/late.svg">
+			  </div>
+			  <div class="card-body d-flex flex-column justify-content-between">
+			    <h2 class="card-title d-flex align-items-center">
+			    	${late}번
+			    </h2>
+			    <p class="card-text d-flex align-items-end">이번 달 지각</p>
+			  </div>
+			</div>
+			<div class="card border-light mb-3 shadow p-3 rounded">
+			  <div class="card-header">
+			  	<img src="./images/vacation.svg">
+			  </div>
+			  <div class="card-body d-flex flex-column justify-content-between">
+			    <h2 class="card-title d-flex align-items-center">
+			    	${leaveRemain}일
+			    </h2>
+			    <p class="card-text d-flex align-items-end">남은 휴가</p>
+			  </div>
+			</div>
 		</div>
 		
 		
 		
+		</div>
 		
-		
-		
-	</div>	
+</div>	
 
 </body>
 

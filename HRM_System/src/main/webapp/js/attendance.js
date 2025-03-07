@@ -29,6 +29,9 @@ document.addEventListener('DOMContentLoaded', function() {
 		// 사용자의 보상시간을 가져옴.
 		var extraTime = document.getElementById("extraTime").value;
 		
+		// 사용자의 지각여부를 가져옴.
+		var attendType = document.getElementById("attendType").value;
+		
 		// 현재 시간(퇴근버튼을 누른 시간)
         const currentTime = new Date();
         const exitHour = currentTime.getHours();
@@ -38,29 +41,29 @@ document.addEventListener('DOMContentLoaded', function() {
 			useBonusTime : "N"
 		}
 
-        // 18시 이전 퇴근 시
-        if (exitHour < 18) {
+        // 지각이 아니면서 18시 이전 퇴근 시
+        if (attendType == null && exitHour < 18) {
 			let checkTime = confirm("현재 18시 이전입니다. 퇴근하시겠습니까?");
 			if(checkTime){
 				infoAtten.exitHour="N";
 				
-				// 디버깅을 위한 콘솔 출력 추가
+				// 디버깅을 위한 콘솔 출력
 		        console.log("나의 현재 보상시간:", extraTime);
 		        console.log("필요한 보상시간:", 18 - exitHour);
 				
 		        if(extraTime >= (18-exitHour)){
-					let useBonusTime = confirm("보상시간을 사용하시겠습니까?");
+					let useBonusTime = confirm(`현재 보유한 보상시간은 ${extraTime}시간 입니다. 사용하시겠습니까?`);
 					if(useBonusTime){
 						infoAtten.useBonusTime = "Y";
 					}
 				} else {
-					alert("보상시간이 부족하여 조퇴처리됩니다.");
+					alert(`현재 보유한 보상시간은 ${extraTime}시간 입니다. 조퇴 처리되었습니다.`);
 				}
 			} else { // 취소 클릭 시
 				return;
 			}
         } else {
-			// 정상퇴근
+			// 지각 or 18시 이후 퇴근
             attendance(infoAtten);
         }
 		

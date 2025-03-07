@@ -6,92 +6,107 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	<meta charset="UTF-8">
-	<title>홈페이지</title>
+	<title>Home</title>
+	<script type="text/javascript" src="./js/attendance.js"></script>
 	<style>
-		.btn.btn-light-primary {
-			color: var(--bs-primary);
-			border-color: var(--bs-primary-light);
-			background-color: var(--bs-primary-light);
+		img {
+ 			width: 120px;
+ 			height: 120px;
+ 			border-radius: 50%;
+ 			display: block;
+ 			margin: 0 auto;
+ 		}
+ 		.card.border-light.mb-3 {
+ 			background-color: #F0F0F0;
+ 			width: 20em;
+ 			height: auto;
+ 			text-align: center;
+ 			margin-left: 10px;
+			margin-top: 10px;
+ 		}
+ 		.card-text {
+		    display: flex;              	 /* 자식 요소들을 세로로 배치 */
+		    flex-direction: column;     	 /* 세로 방향으로 배치 */
+		    height: 100%;               	 /* 부모 요소의 높이를 100%로 설정 */
+		    gap: 50px; 						 /* 각 요소 사이에 간격 추가 */
 		}
 		
-		.btn.btn-light-primary:hover {
-			color: var(--bs-primary-white);
-			border-color: var(--bs-primary);
-			background-color: var(--bs-primary);
+		.attendButton {
+			display: flex;  				 /* 자식 요소들을 가로로 배치 */
+			justify-content: space-between;  /* 두 요소를 양 끝에 배치 */
+			width: 100%;  					 /* 부모 요소의 넓이를 꽉 채움 */
+		    margin-top: auto;           	 /* 남은 공간을 차지하면서 하단으로 밀어넣음 */
 		}
-		
-		.btn.btn-light-primary:focus {
-			outline: none;
-			box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary), 0.5);
+
+		.attendTime {
+		    display: flex;  				 /* 자식 요소들을 가로로 배치 */
+		    justify-content: space-between;  /* 두 요소를 양 끝에 배치 */
+		    width: 100%;  					 /* 부모 요소의 넓이를 꽉 채움 */
 		}
-		
-		.btn.btn-light-secondary {
-			color: var(--bs-secondary);
-			border-color: var(--bs-secondary-light);
-			background-color: var(--bs-secondary-light);
-		}
-		
-		.btn.btn-light-secondary:hover {
-			color: var(--bs-white);
-			border-color: var(--bs-secondary);
-			background-color: var(--bs-secondary);
-		}
-		
-		.btn.btn-light-secondary:focus {
-			outline: none;
-			box-shadow: 0 0 0 0.25rem rgba(var(--bs-secondary), 0.5);
-		}
-		.main-content {
-			  position: relative;
-			  width: 100%;
-			  padding-top: 20px; /* 위쪽 여백 추가 */
-			  text-align: center; /* 버튼 가운데 정렬 */
-		}
-		.button-container {
-		  display: flex;
-		  gap: 20px; /* 버튼 간격 */
-		  margin-bottom: 20px; /* 아래쪽 여백 */
-		}
-		.button-container button {
-		  flex: 1; /* 버튼 크기를 동일하게 확장 */
- 		  max-width: 300px; /* 버튼 최대 너비 설정 */
-		  height: 60px; /* 버튼 높이 */
-		  font-size: 18px; /* 글자 크기 */
-		  font-weight: bold; /* 글자 굵게 */
+		.attendTime div {
+		    text-align: center;  			 /* 각 div 안의 내용 중앙 정렬 */
 		}
 	</style>
-<script type="text/javascript" src="./js/attendance.js"></script>
 </head>
 <%@ include file="sidebar.jsp"%>
 <body>
 	<div class="content" id="content">
 		<%@ include file="header.jsp"%>
 		<div>
-			<input type="hidden" id="extraTime" value="${extraTime}">
+			<input type="hidden" id="extraTime" value="${extraTime}"> 
+			<input type="hidden" id="attendType" value="${attendType}">
 		</div>
+
 		<div class="main-content">
-			<div class="button-container">
-				<form id="clockInForm" action="/insertAttendance" method="post">
-					<button type="submit" class="btn btn-light-primary" id="clockIn"
-					    <c:if test="${isClockedIn}">disabled</c:if>>출근
-					</button>
-				</form>
-				<form id="clockOutForm">
-					<button type="button" class="btn btn-light-secondary" id="clockOut" 
-						<c:if test="${!isClockedIn}">disabled</c:if>>퇴근
-					</button>
-				</form>
-				<div>
-				출근 시간 : <span id="clockInTime">${clockIn}</span><br>
-				퇴근 시간 : <span id="clockOutTime">${clockOut}</span>
-				</div> 
-			</div>
-		</div>
-	</div>
+
+			<div class="card border-light mb-3 shadow p-3 rounded">
+				<div class="profile-image-area">
+					<img src="${profileImg}">
+				</div>
+				<div class="card-body">
+					<h3 class="card-title">${empName}</h3>
+					<p>${deptName}</p>
+
+					<div class="card-text">
+					
+						<div class="attendTime">
+							<div>
+								<span id="clockInTime" style="font-weight: bold;">${clockIn}</span><br>
+								<small class="text-body-secondary">출근 시간</small>
+							</div>
+							<div>
+								<span id="clockOutTime" style="font-weight: bold;">${clockOut}</span><br>
+								<small class="text-body-secondary">퇴근 시간</small>
+							</div>
+						</div>
+
+						
+						<div class="progress" role="progressbar" aria-label="Animated striped example" 
+							 aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100" style="position: relative;">
+							<div class="progress-bar progress-bar-striped progress-bar-animated" style="width: ${progress}%">
+								<span style="font-weight: bold;">${progress}%</span>
+							</div>
+						</div>
 
 
+						<div class="attendButton">
+							<form id="clockInForm" action="/insertAttendance" method="post">
+								<button type="submit" class="btn btn-outline-secondary btn-lg"
+									id="clockIn" <c:if test="${isClockedIn}">disabled</c:if>>출근
+								</button>
+							</form>
+							<form id="clockOutForm">
+								<button type="button" class="btn btn-outline-secondary btn-lg"
+									id="clockOut" <c:if test="${!isClockedIn}">disabled</c:if>>퇴근
+								</button>
+							</form>
+						</div>
+						
+					</div> <!-- card-text -->
+				</div> <!-- card-body -->
+			</div> <!-- card -->
+		</div> <!-- main-content -->
+	</div> <!-- content -->
 </body>
 </html>

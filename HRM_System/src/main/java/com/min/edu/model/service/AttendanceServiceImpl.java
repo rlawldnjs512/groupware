@@ -62,6 +62,32 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	}
 	
 	@Override
+	public Map<String, String> printClock(String empId) {
+		String clockIn = dao.selectClockIn(empId);
+		String clockOut = dao.selectClockOut(empId);
+		
+		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+ 		SimpleDateFormat outputFormat = new SimpleDateFormat("HH시 mm분");
+ 		
+ 		Map<String, String> clockTimes = new HashMap<>();
+ 		
+ 		try {
+			if(clockIn != null) {
+				Date clockInDate = inputFormat.parse(clockIn);
+				clockTimes.put("clockIn", outputFormat.format(clockInDate));
+			}
+			if(clockOut != null) {
+				Date clockOutDate = inputFormat.parse(clockOut);
+				clockTimes.put("clockOut", outputFormat.format(clockOutDate));
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		return clockTimes;
+	}
+
+	@Override
 	public int calAttendance(String empId) {
 		return dao.calAttendance(empId);
 	}
@@ -249,6 +275,122 @@ public class AttendanceServiceImpl implements IAttendanceService {
 			log.error("날짜 변환 오류", e);
 		}
 	}
+
+	@Override
+	public String avgClockInTime(String empId) {
+		String clockInTime = dao.avgClockInTime(empId);
+		
+		if (clockInTime == null) {
+			return "";
+		}
+		
+		try {
+			SimpleDateFormat inputFormat = new SimpleDateFormat("HH:mm:ss");
+			Date date = inputFormat.parse(clockInTime);
+			
+			SimpleDateFormat outputFormat = new SimpleDateFormat("a h시 mm분");
+			return outputFormat.format(date); 
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
+
+	@Override
+	public String avgClockOutTime(String empId) {
+		String clockInTime = dao.avgClockOutTime(empId);
+		
+		if (clockInTime == null) {
+			return "";
+		}
+		
+		try {
+			SimpleDateFormat inputFormat = new SimpleDateFormat("HH:mm:ss");
+			Date date = inputFormat.parse(clockInTime);
+			
+			SimpleDateFormat outputFormat = new SimpleDateFormat("a h시 mm분");
+			return outputFormat.format(date); 
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
+
+	@Override
+	public String avgWorkTime(String empId) {
+		String clockInTime = dao.avgWorkTime(empId);
+		
+		if (clockInTime == null) {
+			return "";
+		}
+		
+		try {
+			SimpleDateFormat inputFormat = new SimpleDateFormat("HH:mm");
+			Date date = inputFormat.parse(clockInTime);
+			
+			SimpleDateFormat outputFormat = new SimpleDateFormat("h시간 mm분");
+			return outputFormat.format(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
+
+	@Override
+	public int selectLate(String empId) {
+		return dao.selectLate(empId);
+	}
+
+	@Override
+	public double calProgress(String empId, String ClockIn) {
+		
+		String chkClockOut = dao.selectClockOut(empId);
+		String clockIn = dao.selectClockIn(empId);
+		
+		// 기준 퇴근 시간 (18시)
+		Calendar cal = new GregorianCalendar();
+		String checkOut = String.format("%d%02d%02d180000",
+			cal.get(Calendar.YEAR),
+			cal.get(Calendar.MONTH) + 1,
+			cal.get(Calendar.DATE)
+		);
+		
+		// Date로 변환할 Format
+		SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat customFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		
+		try {
+			Date checkInTime = dbFormat.parse(clockIn);
+			Date checkOutTime = customFormat.parse(checkOut);
+			
+			if (chkClockOut != null) {
+				return 100;
+			}
+			
+			// 현재시간을 가져옴
+            Date currentTime = new Date();
+            
+            // 출근시간부터 기준퇴근시간까지의 총 시간 차이
+            long totalWorkTime = checkOutTime.getTime() - checkInTime.getTime();
+            
+            // 현재시간까지의 진행된 시간
+            long elapsedTime = currentTime.getTime() - checkInTime.getTime();
+            
+            // 진행률 계산 (0~100%)
+            double progress = (double) elapsedTime / totalWorkTime * 100;
+            
+            // 반올림 처리
+            progress = Math.round(progress); 
+            
+            return (int)progress;
+            
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	
 
 	
 

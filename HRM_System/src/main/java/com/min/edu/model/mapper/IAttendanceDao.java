@@ -32,4 +32,12 @@ public interface IAttendanceDao {
 	
 	public int updateUseExtraTime(Map<String, Object> map);
 	
+	public String avgClockInTime(String empId);
+	
+	public String avgClockOutTime(String empId);
+	
+	public String avgWorkTime(String empId);
+	
+	public int selectLate(String empId);
+	
 }

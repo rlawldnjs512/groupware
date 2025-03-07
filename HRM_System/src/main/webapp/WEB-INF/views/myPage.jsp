@@ -45,14 +45,14 @@
 					<section class="profile-info-container">
 						<div class="profile-section">
 							<div class="profile-image-area">
-								<c:choose>
-									<c:when test="${empty employee.profile_image}">
-										<img src="/resources/images/user.png" id="profileImage">
-									</c:when>
-									<c:otherwise>
-										<img src="${employee.profile_image}" id="profileImage">
-									</c:otherwise>
-								</c:choose>
+									<c:choose>
+									    <c:when test="${not empty empId.profile_image}">
+									        <img src="${empId.profile_image}" id="profileImage">
+									    </c:when>
+									    <c:otherwise>
+									        <img src="/resources/images/user.png" id="profileImage">
+									    </c:otherwise>
+									</c:choose>
 							</div>
 							<div class="profile-btn-area">
 								<label for="imageInput" class="button-common">
