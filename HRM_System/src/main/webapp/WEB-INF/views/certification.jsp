@@ -72,25 +72,8 @@
 <%@ include file="sidebar.jsp" %>
 <body>
 	<div class="content" id="content">
-		<div class="header">
-			<ul class="nav flex-wrap border-transparent">
-				<li class="nav-item my-1"><a
-					class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
-							active"
-					href="./mypage.do"> 내 정보 </a></li>
-				<li class="nav-item my-1"><a
-					class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
-						    active"
-					href="#"> 일정 관리 </a></li>
-				<li class="nav-item my-1"><a
-					class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
-						    active"
-					href="./certification.do"> 증명서 관리 </a></li>
-			</ul>
-		</div>
+		<%@ include file="header.jsp" %>
 		<div class="main-content">
-
-
 			<div
 				class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 				<h1
@@ -471,6 +454,7 @@
 			</div>
 		</c:if>
 		</div>
+	</div>
 	</div>
 </body>
 </html>

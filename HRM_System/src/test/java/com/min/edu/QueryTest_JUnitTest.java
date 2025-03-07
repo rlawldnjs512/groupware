@@ -141,12 +141,19 @@ class QueryTest_JUnitTest {
 	}
 	
 //	@Test
+	public void selectSign() {
+		List<SignDto> lists = dao2.selectSign();
+		System.out.println(lists);
+		assertNotNull(lists);
+	}
+	
+//	@Test
 	public void deleteSign() {
 		SignDto dto = new SignDto().builder()
 					.name("홍길동")
 					.build();
-		int n = dao2.deleteSign(dto);
-		assertEquals(1, n);
+//		int n = dao2.deleteSign(dto);
+//		assertEquals(1, n);
 	}
 	
 //	@Test
