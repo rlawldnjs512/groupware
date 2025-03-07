@@ -31,8 +31,8 @@ public class ApprovalRestController {
 //	}
 	
 	@GetMapping(value = "/selectTree.do")
-	public ResponseEntity<List<Map<String, Object>>> selectTree (@RequestBody List<Map<String, Object>> req) {
-		System.out.println(req);
+	public ResponseEntity<List<Map<String, Object>>> selectTree () {
+
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
