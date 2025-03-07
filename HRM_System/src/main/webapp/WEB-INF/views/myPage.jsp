@@ -24,7 +24,7 @@
 				</li>
 				<li class="nav-item my-1">
 					<a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
-						    active" href="#">
+						    active" href="/schedule.do">
 						일정 관리
 					</a>
 				</li>
@@ -45,14 +45,14 @@
 					<section class="profile-info-container">
 						<div class="profile-section">
 							<div class="profile-image-area">
-								<c:choose>
-									<c:when test="${empty employee.profile_image}">
-										<img src="/resources/images/user.png" id="profileImage">
-									</c:when>
-									<c:otherwise>
-										<img src="${employee.profile_image}" id="profileImage">
-									</c:otherwise>
-								</c:choose>
+									<c:choose>
+									    <c:when test="${not empty empId.profile_image}">
+									        <img src="${empId.profile_image}" id="profileImage">
+									    </c:when>
+									    <c:otherwise>
+									        <img src="/resources/images/user.png" id="profileImage">
+									    </c:otherwise>
+									</c:choose>
 							</div>
 							<div class="profile-btn-area">
 								<label for="imageInput" class="button-common">

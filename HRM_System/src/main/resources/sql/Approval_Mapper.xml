@@ -90,5 +90,27 @@
 		    ON s.EMP_ID = a.EMP_ID
 </select>
 
+<select id="selectTree">
+<![CDATA[
+SELECT 'school' AS id, 
+       '#' AS parent, 
+       '<b class=''btn''>전체 직원</b>' AS text, 
+       '1' AS opened 
+FROM DUAL
+UNION ALL
+SELECT TO_CHAR(dept_id) AS id, 
+       'school' AS parent, 
+       dept_name AS text, 
+       '0' AS opened 
+FROM DEPT
+UNION ALL
+SELECT 'e' || EMP_ID AS id, 
+       TO_CHAR(dept_id) AS parent, 
+       name || ' (' || position || ')' AS text, 
+       '0' AS opened 
+FROM EMPLOYEE
+]]>
+</select>
+
 
 </mapper>

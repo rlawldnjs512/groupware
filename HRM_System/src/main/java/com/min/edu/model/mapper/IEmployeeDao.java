@@ -44,6 +44,12 @@ public interface IEmployeeDao {
     
     public int countEmployeesByDeptName(String keyword);
     
+    // 사원 1명의 부서명 조회
+    public String selectDeptName(String empId);
+    
+    // 사원 1명의 프로필이미지 조회
+    public String selectProfileImg(String empId);
+    
     
 
 

@@ -17,7 +17,11 @@ public interface IAttendanceService {
 	
 	public String selectClockIn(String empId);
 	
-	public String selectClockOut(String empId);	
+	public String selectClockOut(String empId);
+	
+	public Map<String, String> printClock(String empId);
+	
+	public boolean checkAttendance(String empId);
 	
 	public int calAttendance(String empId);
 	
@@ -26,4 +30,25 @@ public interface IAttendanceService {
 	public int updateAttendtype(Map<String, Object> map);
 	
 	public int updateUseExtraTime(Map<String, Object> map);
+	
+	// 출근 버튼 로직
+	public void insertAttendanceLogic(String empId);
+	
+	// 퇴근 버튼 로직
+	public void updateAttendanceLogic(String empId, Map<String, String> infoAtten);
+	
+	// 보상 시간 계산 로직
+	public void calculateExtraTime(String empId, String checkInDateStr);
+	
+	public String avgClockInTime(String empId);
+	
+	public String avgClockOutTime(String empId);
+	
+	public String avgWorkTime(String empId);
+	
+	public int selectLate(String empId);
+	
+	// 근무 진행률 계산 로직
+	public double calProgress(String empId, String ClockIn);
+	
 }

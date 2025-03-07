@@ -19,10 +19,17 @@
 			WHERE TRIM(EMP_ID) = TRIM(#{empId})
 	</select>
 	
-	<!-- 보상시간 업데이트 -->
+	<!-- 보상시간 적립 및 사용 -->
 	<update id="updateExtraTime" parameterType="Map">
 		UPDATE VACATION SET EXTRA_TIME = EXTRA_TIME + #{extraTime}
 			WHERE TRIM(EMP_ID) = TRIM(#{empId})
 	</update>
+	
+	<!-- 남은 휴가 조회 -->
+	<select id="selectLeaveRemain" resultType="Integer">
+		SELECT LEAVE_REMAIN 
+			FROM VACATION
+			WHERE TRIM(EMP_ID) = TRIM(#{empId})
+	</select>
 
 </mapper>

@@ -243,6 +243,24 @@
 		  FROM EMPLOYEE e
 	</select>
 	
+	<!-- 사원 1명의 부서명 조회 -->
+	<select id="selectDeptName" resultType="String">
+		SELECT DEPT_NAME , NAME
+			FROM DEPT d
+			JOIN EMPLOYEE e
+			ON d.DEPT_ID = e.DEPT_ID 
+			WHERE TRIM(EMP_ID) = TRIM(#{empId})
+	</select>
+	
+	<!-- 사원 1명의 프로필이미지 조회 -->
+	<select id="selectProfileImg" resultType="String">
+		SELECT PROFILE_IMAGE 
+			FROM EMPLOYEE
+			WHERE TRIM(EMP_ID) = TRIM(#{empId})
+	</select>
+	
+	
+	
 	
 	
 	

@@ -22,7 +22,9 @@ public interface IApprovalService {
 	public int deleteSaveDoc(DocumentDto dto);
 	
 	public List<ApprovalDto> selectPreviewDoc(Map<String, Object> map);
-	
+
 	String getDocNum(@Param("name") String name);
 	
+	public List<Map<String, Object>> selectTree(Map<String, Object> map);
+
 }

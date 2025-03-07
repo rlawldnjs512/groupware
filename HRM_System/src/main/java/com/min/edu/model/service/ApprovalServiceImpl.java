@@ -53,6 +53,10 @@ public class ApprovalServiceImpl implements IApprovalService {
 	@Override
 	public String getDocNum(String name) {
 		return dao.getDocNum(name);
+
+	@Override
+	public List<Map<String, Object>> selectTree(Map<String, Object> map) {
+		return dao.selectTree(map);
 	}
 
 
