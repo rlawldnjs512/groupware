@@ -46,8 +46,8 @@
 						<div class="profile-section">
 							<div class="profile-image-area">
 									<c:choose>
-									    <c:when test="${not empty empId.profile_image}">
-									        <img src="${empId.profile_image}" id="profileImage">
+									    <c:when test="${not empty employee.profile_image}">
+									        <img src="${employee.profile_image}" id="profileImage">
 									    </c:when>
 									    <c:otherwise>
 									        <img src="/resources/images/user.png" id="profileImage">
