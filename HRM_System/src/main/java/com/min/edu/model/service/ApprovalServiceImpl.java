@@ -26,7 +26,7 @@ public class ApprovalServiceImpl implements IApprovalService {
 	}
 
 	@Override
-	public int deleteSign(SignDto name) {
+	public int deleteSign(String name) {
 		return dao.deleteSign(name);
 	}
 	
@@ -44,6 +44,15 @@ public class ApprovalServiceImpl implements IApprovalService {
 	public List<ApprovalDto> selectPreviewDoc(Map<String, Object> map) {
 		return dao.selectPreviewDoc(map);
 	}
+
+	@Override
+	public List<SignDto> selectSign() {
+		return dao.selectSign();
+	}
+
+	@Override
+	public String getDocNum(String name) {
+		return dao.getDocNum(name);
 
 	@Override
 	public List<Map<String, Object>> selectTree(Map<String, Object> map) {

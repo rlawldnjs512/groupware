@@ -125,34 +125,15 @@
 <%@ include file="sidebar.jsp" %>
 <body>
     <div class="content" id="content">
-        <div class="header">
-			<ul class="nav flex-wrap border-transparent">
-				<li class="nav-item my-1"><a
-					class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
-							active"
-					href="./approval.do"> 결재 홈 </a></li>
-				<li class="nav-item my-1"><a
-					class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
-						    active"
-					href="./approval_mine.do"> 나의 결재 </a></li>
-				<li class="nav-item my-1"><a
-					class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
-						    active"
-					href="./approval_store.do"> 결재 문서함 </a></li>
-				<li class="nav-item my-1"><a
-					class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
-						    active"
-					href="./signature_manage.do"> 서명 관리 </a></li>
-			</ul>
-		</div>
+        <%@ include file="header.jsp"%>
 		<div class="main-content">
 		  <div class="button-container">
-		    <button type="button" class="btn btn-light-success">휴가 결재하기</button>
-		    <button type="button" class="btn btn-light-secondary">출장 결재하기</button>
-		    <button type="button" class="btn btn-light-warning">보고서 결재하기</button>
-		  </div>
-		  <div>
-		  
+		    <button type="button" class="btn btn-light-success" 
+		    		onclick="location.href='/vacationForm.do'">휴가 결재하기</button>
+		    <button type="button" class="btn btn-light-secondary" 
+		    		onclick="location.href='/tripForm.do'">출장 결재하기</button>
+		    <button type="button" class="btn btn-light-warning" 
+		    		onclick="location.href='/reportForm.do'">보고서 결재하기</button>
 		  </div>
 		</div>
     </div>

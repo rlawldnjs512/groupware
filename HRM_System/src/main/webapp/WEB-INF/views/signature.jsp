@@ -8,18 +8,17 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<script src="${pageContext.request.contextPath}/js/jquery-1.11.3.min.js" type="text/java nbv script"></script>
-<script src="${pageContext.request.contextPath}/js/signature_pad.min.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/signature.css">
 <title>서명관리</title>
 </head>
 <body>
 	<div id="signature-pad" class="m-signature-pad">
 		<div class="m-signature-pad--body">
-			<canvas></canvas>
+			<canvas id="signature" width="600" height="200"></canvas>
 		</div>
 		<div class="m-signature-pad--footer">
-			<div class="description">사인해 주세요~</div>
 			<button type="button" class="button clear" data-action="clear">지우기</button>
 			<button type="button" class="button save" data-action="save">저장</button>
 		</div>
