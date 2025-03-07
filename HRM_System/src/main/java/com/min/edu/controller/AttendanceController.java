@@ -28,21 +28,21 @@ public class AttendanceController {
 	private final IAttendanceService attendanceService;
 	private final IVacationService vacationService;
 	
-	@GetMapping(value = "/attendance")
-	public String attendanceListByEmpId(HttpSession session, Model model) {
-		EmployeeDto loginVo = (EmployeeDto)session.getAttribute("loginVo");
-		
-		if (loginVo == null) {
-			log.info("로그인 정보 없음.");
-			return "redirect:/loginForm";
-		}
-		
-		String empId = loginVo.getEmp_id();
-		List<AttendanceDto> lists = attendanceService.attendanceListByEmpId(empId);
-		model.addAttribute("lists", lists);
-
-		return "attendance";
-	}
+//	@GetMapping(value = "/attendance")
+//	public String attendanceListByEmpId(HttpSession session, Model model) {
+//		EmployeeDto loginVo = (EmployeeDto)session.getAttribute("loginVo");
+//		
+//		if (loginVo == null) {
+//			log.info("로그인 정보 없음.");
+//			return "redirect:/loginForm";
+//		}
+//		
+//		String empId = loginVo.getEmp_id();
+//		List<AttendanceDto> lists = attendanceService.attendanceListByEmpId(empId);
+//		model.addAttribute("lists", lists);
+//
+//		return "attendance";
+//	}
 	
 	@PostMapping(value = "/insertAttendance")
 	public String insertAttendance(HttpSession session, Model model) {
@@ -77,6 +77,33 @@ public class AttendanceController {
 		response.put("isc", Boolean.TRUE);
 		
 		return ResponseEntity.ok(response);
+	}
+	
+	@GetMapping(value = "attendance")
+	public String attendance(HttpSession session, Model model) {
+		
+		EmployeeDto loginVo = (EmployeeDto)session.getAttribute("loginVo");
+		if (loginVo == null) {
+			log.info("로그인 정보 없음.");
+			return "redirect:/loginForm";
+		}
+		
+		String empId = loginVo.getEmp_id();
+		String avgClockInTime = attendanceService.avgClockInTime(empId);
+		String avgClockOutTime = attendanceService.avgClockOutTime(empId);
+		String avgWorkTime = attendanceService.avgWorkTime(empId);
+		int late = attendanceService.selectLate(empId);
+		int extraTime = vacationService.selectExtraTime(empId);
+		int leaveRemain = vacationService.selectLeaveRemain(empId);
+		
+		model.addAttribute("avgClockInTime", avgClockInTime);
+		model.addAttribute("avgClockOutTime", avgClockOutTime);
+		model.addAttribute("avgWorkTime", avgWorkTime);
+		model.addAttribute("late", late);
+		model.addAttribute("extraTime", extraTime);
+		model.addAttribute("leaveRemain", leaveRemain);
+		
+		return "attendance";
 	}
 	
 }

@@ -5,13 +5,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>vacation</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+	<meta charset="UTF-8">
+	<title>vacation</title>
 </head>
+<%@ include file="sidebar.jsp" %>
 <body>
 
-	<div class="container">
+	<div class="content" id="content">
+	<%@ include file="header.jsp" %>
+		<div class="main-content">
 		<h3>사원들의 연차 정보 테이블 조회</h3>
 		<table class="table table-hover">
 			<thead>
@@ -41,6 +43,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		</div>
 
 		<br>
 		<br>

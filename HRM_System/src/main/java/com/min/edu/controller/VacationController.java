@@ -23,7 +23,7 @@ public class VacationController {
 
 	private final IVacationService vacationService;
 
-	@GetMapping(value = "/vacationList")
+	@GetMapping(value = "/vacation")
 	public String vacationList(Model model) {
 		log.info("사원들의 연차목록 조회");
 		List<VacationDto> lists = vacationService.vacationList();

@@ -154,4 +154,14 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		return dao.countEmployeesByName(keyword);
 	}
 
+	@Override
+	public String selectDeptName(String empId) {
+		return dao.selectDeptName(empId);
+	}
+
+	@Override
+	public String selectProfileImg(String empId) {
+		return dao.selectProfileImg(empId);
+	}
+
 }

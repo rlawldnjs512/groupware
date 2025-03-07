@@ -17,13 +17,13 @@
 	        ORDER BY ATTEND_ID ASC
 	</select>
 	
-	<!-- 출근 -->
+	<!-- 출근버튼을 눌렀을 때 출근 시간 입력 -->
 	<insert id="insertAttendance">
 		INSERT INTO ATTENDANCE (ATTEND_ID, EMP_ID, ATTEND_DATE, CLOCKIN)
 			VALUES (ATTENDANCE_SEQ.NEXTVAL, #{empId}, TO_CHAR(CURRENT_TIMESTAMP, 'YYYY-MM-DD'), CURRENT_TIMESTAMP)
 	</insert>
 	
-	<!-- 퇴근 -->
+	<!-- 퇴근버튼을 눌렀을 때 퇴근 시간 입력 -->
 	<update id="updateAttendance">
 		UPDATE ATTENDANCE SET CLOCKOUT = CURRENT_TIMESTAMP
 			WHERE TRIM(EMP_ID) = TRIM(#{empId})
@@ -31,7 +31,7 @@
 			AND CLOCKOUT IS NULL
 	</update>
 	
-	<!-- 출근여부확인 -->
+	<!-- 출근 여부 확인 -->
 	<select id="checkAttendance" resultType="Integer">
 	SELECT CASE 
            WHEN EXISTS (SELECT 1 
@@ -83,6 +83,46 @@
 		UPDATE ATTENDANCE SET USE_EXTRA_TIME = #{useExtraTime}
 			WHERE TRIM(EMP_ID) = TRIM(#{empId}) AND ATTEND_DATE = TRUNC(CURRENT_TIMESTAMP)
 	</update>
+	
+	<!-- 평균 출근시간 계산 -->
+	<select id="avgClockInTime" resultType="String">
+		SELECT TO_CHAR(
+			           TO_DATE('1900-01-01', 'YYYY-MM-DD')
+			           + (AVG(CLOCKIN - TRUNC(CLOCKIN)) * 24 * 60) / (24 * 60), 'HH24:MI:SS'
+			           ) AS avgClockInTime
+			FROM ATTENDANCE
+			WHERE TRIM(EMP_ID) = TRIM(#{empId})
+	</select>
+	
+	<!-- 평균 퇴근시간 계산 -->
+	<select id="avgClockOutTime" resultType="String">
+		SELECT TO_CHAR(
+			           TO_DATE('1900-01-01', 'YYYY-MM-DD')
+			           + (AVG(CLOCKOUT - TRUNC(CLOCKOUT)) * 24 * 60) / (24 * 60), 'HH24:MI:SS'
+			           ) AS avgClockOutTime
+			FROM ATTENDANCE
+			WHERE TRIM(EMP_ID) = TRIM(#{empId})
+	</select>
+	
+	<!-- 평균 근무 시간 계산 -->
+	<select id="avgWorkTime" resultType="String">
+		SELECT TO_CHAR(
+			           TRUNC(AVG(TOTAL_TIME) / 60), 'FM00') || ':' || 
+			           TO_CHAR(MOD(AVG(TOTAL_TIME), 60), 'FM00') AS avgWorkTime
+			FROM ATTENDANCE
+			WHERE TRIM(EMP_ID) = TRIM(#{empId})
+	</select>
+	
+	<!-- 이번 달 지각 횟수 계산 -->
+	<select id="selectLate" resultType="Integer">
+		SELECT COUNT(*)
+			FROM ATTENDANCE
+			WHERE TRIM(EMP_ID) = TRIM(#{empId})
+			AND TO_CHAR(ATTEND_DATE, 'YYYYMM') = TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMM')
+			AND ATTEND_TYPE = '지각'
+	</select>
+	
+	
 	
 
 </mapper>
