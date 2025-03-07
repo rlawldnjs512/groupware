@@ -123,7 +123,7 @@
 								<tr>
 										<td style="padding: 0px !important; border: 0px currentColor; height: 70px; text-align: center; color: black; font-size: 36px; font-weight: bold; vertical-align: top;"
 											colspan="2" class="dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
-											출&nbsp;장&nbsp;보&nbsp;고&nbsp;서<br>
+											출&nbsp;장&nbsp;서<br>
 										<br type="_moz">
 										</td>
 									</tr>
@@ -403,39 +403,6 @@
 									<td
 										style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
 
-										참조</td>
-									<td colspan="3"
-										style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle;">
-										<span unselectable="on" contenteditable="false"
-										class="comp_wrap" data-cid="15"
-										data-dsl="{{label:docReference}}" data-wrapper=""
-										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"
-										data-value="" data-autotype=""><span class="comp_item"
-											style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">참조자</span><span
-											contenteditable="false" class="comp_active"
-											style="display: none; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-												<span class="Active_dot1"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span
-												class="Active_dot2"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-												<span class="Active_dot3"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span
-												class="Active_dot4"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-										</span> <span contenteditable="false" class="comp_hover"
-											data-content-protect-cover="true" data-origin="15"
-											style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-												<a contenteditable="false"
-												class="ic_prototype ic_prototype_trash"
-												data-content-protect-cover="true"
-												data-component-delete-button="true"></a>
-										</span> </span><br>
-									</td>
-								</tr>
-								<tr>
-									<td
-										style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
-
 										제목</td>
 									<td colspan="3"
 										style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle;">
@@ -468,7 +435,7 @@
 									<td
 										style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
 
-										출장기간</td>
+										기&nbsp;&nbsp;&nbsp;&nbsp;간</td>
 									<td colspan="3"
 										style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle;">
 										<span unselectable="on" contenteditable="false"
@@ -476,8 +443,8 @@
 										data-wrapper=""
 										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"
 										data-value=""><input class="ipt_editor ipt_editor_date"
-											type="text"> ~ <input
-											class="ipt_editor ipt_editor_date" type="text"><span
+											type="date"> ~ <input
+											class="ipt_editor ipt_editor_date" type="date"><span
 											contenteditable="false" class="comp_active"
 											style="display: none; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
 												<span class="Active_dot1"
@@ -502,7 +469,7 @@
 									<td
 										style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
 
-										출장목적</td>
+										목&nbsp;&nbsp;&nbsp;&nbsp;적</td>
 									<td colspan="3"
 										style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle;">
 										<span unselectable="on" contenteditable="false"
@@ -534,7 +501,7 @@
 									<td
 										style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
 
-										출장지역</td>
+										지&nbsp;&nbsp;&nbsp;&nbsp;역</td>
 									<td colspan="3"
 										style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle;">
 										<span unselectable="on" contenteditable="false"
@@ -554,39 +521,6 @@
 												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
 										</span> <span contenteditable="false" class="comp_hover"
 											data-content-protect-cover="true" data-origin="8"
-											style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-												<a contenteditable="false"
-												class="ic_prototype ic_prototype_trash"
-												data-content-protect-cover="true"
-												data-component-delete-button="true"></a>
-										</span> </span><br>
-									</td>
-								</tr>
-								<tr>
-									<td
-										style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
-
-										출장결과</td>
-									<td colspan="3"
-										style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle;">
-										<span unselectable="on" contenteditable="false"
-										class="comp_wrap" data-cid="10" data-dsl="{{editor}}"
-										data-wrapper=""
-										style="width: 100%; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"
-										data-value=""><span class="comp_editor"
-											style="width: 100%; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: 200px; margin-top: 0px; margin-bottom: 0px;">에디터(본문)</span><span
-											contenteditable="false" class="comp_active"
-											style="display: none; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-												<span class="Active_dot1"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span
-												class="Active_dot2"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-												<span class="Active_dot3"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span
-												class="Active_dot4"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-										</span> <span contenteditable="false" class="comp_hover"
-											data-content-protect-cover="true" data-origin="10"
 											style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
 												<a contenteditable="false"
 												class="ic_prototype ic_prototype_trash"

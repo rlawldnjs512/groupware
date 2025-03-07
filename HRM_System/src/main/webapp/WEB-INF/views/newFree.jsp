@@ -72,7 +72,6 @@ th {
 <body>
 	<div class="content" id="content">
 		<%@ include file="header.jsp"%>
-
 		<div class="main-content" style="padding: 30px;">
 			<form id="select-form" action="./newFree.do" method="POST" enctype="multipart/form-data">
 				<div class="mb-3">
@@ -97,22 +96,21 @@ th {
 
 
 	<script>
-	ClassicEditor
-    .create(document.querySelector('#classic'), {
-        // 높이 설정
-        height: 400, // 높이를 400px로 설정
-        
-        // 툴바 설정 (옵션에 따라 조정)
-        toolbar: [
-            'bold', 'italic', 'link', 'undo', 'redo' // 툴바에 포함될 버튼들
-        ],
-        // 기본 글꼴 크기 및 스타일 설정
-        fontSize: '11px', // 기본 글꼴 크기
-    })
-    .catch(error => {
-        console.error(error);
-    });
-
+		ClassicEditor
+	    .create(document.querySelector('#classic'), {
+	        // 높이 설정
+	        height: 400, // 높이를 400px로 설정
+	        
+	        // 툴바 설정 (옵션에 따라 조정)
+	        toolbar: [
+	            'bold', 'italic', 'link', 'undo', 'redo' // 툴바에 포함될 버튼들
+	        ],
+	        // 기본 글꼴 크기 및 스타일 설정
+	        fontSize: '11px', // 기본 글꼴 크기
+	    })
+	    .catch(error => {
+	        console.error(error);
+	    });
     </script>
 </body>
 </html>

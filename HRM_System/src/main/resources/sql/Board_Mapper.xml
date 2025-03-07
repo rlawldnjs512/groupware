@@ -10,8 +10,8 @@
 		FILE_ID, EXPIRED)
 	VALUES(NOTICEBOARD_SEQ.NEXTVAL, 
 			(SELECT EMP_ID FROM EMPLOYEE e WHERE ROLE = 'A'), #{title},
-			#{content}, #{regdate}, 'N',
-			'' , '')
+			#{content}, SYSDATE, 'N',
+			'' , #{expired})
 </insert>
 
 <!-- 공지사항 게시글은 관리자만 수정할 수 있다. updateNotice -->
@@ -37,8 +37,9 @@
 <!-- 공지사항 게시글을 조회할 수 있다. selectNotice -->
 <select id="selectNotice" resultType="NoticeboardDto">
 	SELECT NOT_ID , TITLE , CONTENT , REGDATE , EXPIRED ,
-        (SELECT NAME FROM EMPLOYEE e WHERE ROLE = 'A')
+        (SELECT NAME FROM EMPLOYEE e WHERE ROLE = 'A') AS NAME
         FROM NOTICEBOARD n
+        ORDER BY NOT_ID ASC
 </select>
 
 
@@ -111,6 +112,7 @@
 	SELECT FREE_ID , TITLE , CONTENT , REGDATE , EMP_ID , NAME 
         FROM FREEBOARD f 
         JOIN EMPLOYEE e USING(EMP_ID)
+         ORDER BY FREE_ID ASC
 </select>
 
 

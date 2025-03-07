@@ -8,6 +8,7 @@
     <title>게시판</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.ckeditor.com/ckeditor5/29.1.0/classic/ckeditor.js"></script>
 <style>
 :root {
 	--bs-primary: #1b84ff;
@@ -116,12 +117,12 @@ textarea {
         <div class="main-content">
 		    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
 					공지사항 글 등록하기</h1>
-		    <form action="/submitNotice" method="post" enctype="multipart/form-data">
+		    <form action="/submitNotice.do" method="post" enctype="multipart/form-data">
 		        <table>
-	                <!-- 게시글 ID -->
+	                <!-- 작성자 -->
 	                <tr>
-	                    <td><label for="postId">게시글 ID</label></td>
-	                    <td><input type="text" id="postId" name="postId" required placeholder="게시글 ID를 입력하세요"></td>
+	                    <td><label for="name">작성자</label></td>
+	                    <td>${loginVo.name}</td>
 	                </tr>
 	
 	                <!-- 제목 -->
@@ -129,13 +130,19 @@ textarea {
 	                    <td><label for="title">제목</label></td>
 	                    <td><input type="text" id="title" name="title" required placeholder="제목을 입력하세요"></td>
 	                </tr>
+	                
+	                <!-- 기한 -->
+	                <tr>
+	                    <td><label for="expired">기한</label></td>
+	                    <td><input type="date" id="expired" name="expired"></td>
+	                </tr>
 	
 	                <!-- 첨부파일 -->
 	                <tr>
 	                    <td><label for="file">첨부파일</label></td>
 	                    <td>
 	                        <div class="file-container">
-	                            <input type="file" id="file" name="file">
+	                            <input class="form-control form-control-sm" id="formFileSm" type="file" multiple="multiple">
 	                        </div>
 	                    </td>
 	                </tr>
@@ -143,7 +150,7 @@ textarea {
 	                <!-- 내용 -->
 	                <tr>
 	                    <td><label for="content">내용</label></td>
-	                    <td><textarea id="content" name="content" required placeholder="내용을 입력하세요"></textarea></td>
+	                    <td><textarea class="form-control" id="content" name="content" required placeholder="내용을 입력하세요"></textarea><td>
 	                </tr>
 	                
 			        <!-- 제출 버튼 -->
@@ -157,5 +164,22 @@ textarea {
 		    </form>
 		</div>
     </div>
+    <script>
+		ClassicEditor
+	    .create(document.querySelector('#classic'), {
+	        // 높이 설정
+	        height: 400, // 높이를 400px로 설정
+	        
+	        // 툴바 설정 (옵션에 따라 조정)
+	        toolbar: [
+	            'bold', 'italic', 'link', 'undo', 'redo' // 툴바에 포함될 버튼들
+	        ],
+	        // 기본 글꼴 크기 및 스타일 설정
+	        fontSize: '11px', // 기본 글꼴 크기
+	    })
+	    .catch(error => {
+	        console.error(error);
+	    });
+    </script>
 </body>
 </html>

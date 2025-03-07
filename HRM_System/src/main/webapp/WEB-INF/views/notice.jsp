@@ -87,8 +87,10 @@ th {
 		               </c:choose>
 		           </tbody>
 		       </table>
-		       <input type="button" class="btn btn-light-primary ms-2" value="등록하기" 
-		       		onclick="location.href='./newNotice.do'">
+				<c:if test="${sessionScope.loginVo.role eq 'A'}">
+			       <input type="button" class="btn btn-light-primary ms-2" value="등록하기" 
+			       		onclick="location.href='./newNotice.do'">
+				</c:if>
 		   </div>            
 		</div>
     </div>
