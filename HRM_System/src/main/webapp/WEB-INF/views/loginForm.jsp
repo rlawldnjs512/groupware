@@ -59,6 +59,9 @@
 				<div class="forgot-password">
 					<a href="./forgot.do">비밀번호를 잊으셨나요?</a>
 				</div>
+				
+			
+				
 			</form>
 		</div>
 	</div>
