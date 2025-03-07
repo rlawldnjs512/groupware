@@ -106,6 +106,83 @@
 					</div> <!-- card-text -->
 				</div> <!-- card-body -->
 			</div> <!-- card -->
+			
+			<div class="card border-light mb-3 shadow p-3 rounded">
+				<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
+				    <li class="nav-item">
+				        <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_1">공지사항</a>
+				    </li>
+				    <li class="nav-item">
+				        <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_2">커뮤니티</a>
+				    </li>
+				</ul>
+				
+				<div class="tab-content" id="myTabContent">
+				    <div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel">
+						<table class="table table-hover table-rounded table-striped border gy-7 gs-7">
+				           <thead>
+				               <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+				                   <th>ID</th>
+				                   <th>제목</th>
+				                   <th>작성자</th>
+				                   <th>작성일</th>
+				               </tr>
+				           </thead>
+				           <tbody>
+				               <c:choose>
+				                   <c:when test="${empty noticeLists}">
+				                       <tr>
+				                           <td colspan="4" class="text-center text-muted">등록된 공지사항이 없습니다.</td>
+				                       </tr>
+				                   </c:when>
+				                   <c:otherwise>
+				                       <c:forEach var="vo" items="${noticeLists}">
+				                           <tr>
+				                               <td>${vo.not_id}</td>
+				                               <td>${vo.title}</td>
+				                               <td>${vo.name}</td>
+				                               <td>${vo.regdate}</td>
+				                           </tr>
+				                       </c:forEach>
+				                   </c:otherwise>
+				               </c:choose>
+				           </tbody>
+				       </table>
+				    </div>
+				    <div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel">
+						<table class="table table-hover table-rounded table-striped border gy-7 gs-7">
+							<thead>
+								<tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+									<th>ID</th>
+									<th>제목</th>
+									<th>작성자</th>
+									<th>작성일</th>
+					            </tr>
+							</thead>
+							<tbody>
+								<c:choose>
+		                            <c:when test="${empty freeLists}">
+		                                <tr>
+		                                    <td colspan="4" class="text-center text-muted">등록된 공지사항이 없습니다.</td>
+		                                </tr>
+		                            </c:when>
+		                            <c:otherwise>
+		                                <c:forEach var="vo" items="${freeLists}">
+		                                    <tr>
+		                                        <td>${vo.free_id}</td>
+		                                        <td>${vo.title}</td>
+		                                        <td>${vo.name}</td>
+		                                        <td>${vo.regdate}</td>
+		                                    </tr>
+		                                </c:forEach>
+		                            </c:otherwise>
+		                        </c:choose>
+							</tbody>
+						</table>
+				    </div>
+				</div> <!-- tab-content -->
+			</div> <!-- card -->
+			
 		</div> <!-- main-content -->
 	</div> <!-- content -->
 </body>

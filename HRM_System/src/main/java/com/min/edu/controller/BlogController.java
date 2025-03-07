@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.min.edu.dto.EmployeeDto;
 import com.min.edu.dto.FreeboardDto;
@@ -37,10 +39,39 @@ public class BlogController {
 		return "newNotice";
 	}
 	
-	@PostMapping(value = "/newNotice.do")
-	public String noticeBlog_insert() {
+	@PostMapping(value = "/submitNotice.do")
+	public String noticeBlog_insert(Model model, HttpSession session,
+									RedirectAttributes redirectAttributes,
+									@RequestParam("title") String title,
+									@RequestParam("content") String content,
+									@RequestParam("expired") String expired) {
+		
+		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
+
+		if (loginVo == null) {
+			redirectAttributes.addFlashAttribute("errorMessage", "로그인이 필요합니다.");
+			return "redirect:/login";
+		}
+		
+		NoticeboardDto dto = NoticeboardDto.builder()
+							.title(title)
+							.content(content)
+							.expired(expired)
+							.build();
+		
+		int result = service.insertNotice(dto);
+		
+		
+		
+		
 		return "redirect:/notice.do";
 	}
+	
+//	-------------- 공지사항 end --------------
+	
+	
+//	-------------- 커뮤니티 end --------------
+	
 	
 	@GetMapping(value = "/free.do")
 	public String freeBlog_move(Model model, HttpSession session) {

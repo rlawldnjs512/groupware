@@ -1,5 +1,6 @@
 package com.min.edu.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -7,7 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.min.edu.dto.EmployeeDto;
+import com.min.edu.dto.FreeboardDto;
+import com.min.edu.dto.NoticeboardDto;
 import com.min.edu.model.service.IAttendanceService;
+import com.min.edu.model.service.IBoardService;
 import com.min.edu.model.service.IEmployeeService;
 import com.min.edu.model.service.IVacationService;
 
@@ -24,7 +28,9 @@ public class HomeController {
 	private final IEmployeeService employeeService;
 	private final IAttendanceService attendanceService;
 	private final IVacationService vacationService;
-
+	
+	private final IBoardService boardService;
+	
 	@GetMapping(value = "/homeList.do")
 	public String homeList(Model model, HttpServletResponse response, HttpSession session) {
 		log.info("EmployeeController homeList GET 요청");
@@ -69,9 +75,22 @@ public class HomeController {
  			int progress = (int)attendanceService.calProgress(empId, clockIn);
  	 		model.addAttribute("progress", progress);
  		}
+ 		
+ 		
+ 		// 공지사항 게시판
+ 		List<NoticeboardDto> noticeLists = boardService.selectNotice();
+		System.out.println("noticeLists size: " + noticeLists.size());
+		model.addAttribute("noticeLists", noticeLists);
+		// 커뮤니티 게시판
+		List<FreeboardDto> freeLists = boardService.selectFree();
+		System.out.println("freeLists size: " + freeLists.size());
+		model.addAttribute("freeLists", freeLists);
 
 		return "homeList";
 	}
+	
+	
+	
 }
 
 
