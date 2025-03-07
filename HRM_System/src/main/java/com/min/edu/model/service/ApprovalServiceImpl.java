@@ -45,5 +45,10 @@ public class ApprovalServiceImpl implements IApprovalService {
 		return dao.selectPreviewDoc(map);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectTree(Map<String, Object> map) {
+		return dao.selectTree(map);
+	}
+
 
 }
