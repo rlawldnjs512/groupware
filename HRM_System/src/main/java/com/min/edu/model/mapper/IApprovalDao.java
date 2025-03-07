@@ -26,6 +26,8 @@ public interface IApprovalDao {
 	
 //	사용자는 작성한 결재문서를 결재하기 전에 미리보기를 할 수 있다.
 	public List<ApprovalDto> selectPreviewDoc(Map<String, Object> map);
+	
+	public List<Map<String, Object>> selectTree(Map<String, Object> map);
 
 
 }

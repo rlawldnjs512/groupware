@@ -19,4 +19,5 @@ public interface IApprovalService {
 	
 	public List<ApprovalDto> selectPreviewDoc(Map<String, Object> map);
 	
+	public List<Map<String, Object>> selectTree(Map<String, Object> map);
 }
