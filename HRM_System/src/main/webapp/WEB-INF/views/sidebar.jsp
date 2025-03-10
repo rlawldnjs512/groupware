@@ -50,6 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			<li><a href="./reservation.do"> 회의실예약 </a></li>
 			<li><a href="./approval.do">전자결재 </a></li>
 			<li><a href="./notice.do">게시판 </a></li>
+			<li><a href="./logout.do">로그아웃 </a></li>
 		</ul>
     </div>
 

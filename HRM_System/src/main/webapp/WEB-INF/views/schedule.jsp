@@ -23,6 +23,7 @@
 	<input type="hidden" id="emp_id" value="${sessionScope.loginVo.emp_id}">
 	<div class="content" id="content">
 		<%@ include file="header.jsp"%>
+		
 		<div class="main-content">
 			<div id='calendar'></div>
 		

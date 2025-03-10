@@ -29,7 +29,8 @@
                        href="./free.do"> 커뮤니티 </a>
                 </li>
             </ul>
-        <% } else if (currentURI.contains("myPage") || currentURI.contains("certification")){%>
+        <% } else if (currentURI.contains("myPage") || currentURI.contains("certification")
+             ||   currentURI.contains("schedule")     ){%>
               <ul class="nav flex-wrap border-transparent">
             <li class="nav-item my-1"><a
               class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
@@ -38,7 +39,7 @@
             <li class="nav-item my-1"><a
               class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
                     active"
-              href="#"> 일정 관리 </a></li>
+              href="./schedule.do"> 일정 관리 </a></li>
             <li class="nav-item my-1"><a
               class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
                     active"
@@ -78,6 +79,10 @@
 				</li>
 			</ul>
         <% }%>
+        <ul>
+        
+        
+        </ul>
         
 </nav>
 </div>
