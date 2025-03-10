@@ -1,7 +1,6 @@
 package com.min.edu.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -48,6 +47,10 @@ public class LoginController {
 	            session.setMaxInactiveInterval(60 * 10 * 8); // session 유효기간 설정 (5분)
 	            log.info("{} 님 반갑습니다.", loginVo.getName());
 	            response.getWriter().print("<script>alert('" + loginVo.getName() + "님 반갑습니다'); location.href='./homeList.do';</script>");
+	            
+	            
+	            
+	            
 	        } else {
 	            response.getWriter().print("<script>alert('로그인 정보가 없습니다.'); location.href='/';</script>");
 	        }
@@ -57,28 +60,28 @@ public class LoginController {
 	    
 	    
 	    
-//	    @GetMapping(value = "/logout.do")
-//		public String logout(HttpSession session, Model model) {
-//	    	
-//	    	  log.info("LoginController logout.do 요청");
-//	    	 EmployeeDto sessionVo = (EmployeeDto)session.getAttribute("loginVo");
-//	    	    
-//	    	    if(sessionVo != null) {
-//	    	        log.info("HttpSession은 삭제되기 전까지 유지된다. : {}", sessionVo);
-//	    	    } else {
-//	    	        log.info("세션에서 loginVo를 찾을 수 없습니다.");
-//	    	    }
-//
-//	    	    session.removeAttribute("loginVo");
-//	    	    
-//	    	    // 세션에서 loginVo를 제거한 후 다시 가져옴 (null 확인)
-//	    	    EmployeeDto removedVo = (EmployeeDto)session.getAttribute("loginVo");
-//	    	    log.info("HttpSession에서 loginVo 제거 후 확인: {}", removedVo);  // null
-//			
-//			
-//			//return "redirect:/homeList.do"; //** 세션 지워지는 것 확인
-//			return "redirect:/";
-//	    }
+	    @GetMapping(value = "/logout.do")
+		public String logout(HttpSession session, Model model) {
+	    	
+	    	  log.info("LoginController logout.do 요청");
+	    	 EmployeeDto sessionVo = (EmployeeDto)session.getAttribute("loginVo");
+	    	    
+	    	    if(sessionVo != null) {
+	    	        log.info("HttpSession은 삭제되기 전까지 유지된다. : {}", sessionVo);
+	    	    } else {
+	    	        log.info("세션에서 loginVo를 찾을 수 없습니다.");
+	    	    }
+
+	    	    session.removeAttribute("loginVo");
+	    	    
+	    	    // 세션에서 loginVo를 제거한 후 다시 가져옴 (null 확인)
+	    	    EmployeeDto removedVo = (EmployeeDto)session.getAttribute("loginVo");
+	    	    log.info("HttpSession에서 loginVo 제거 후 확인: {}", removedVo);  // null
+			
+			
+			//return "redirect:/homeList.do"; //** 세션 지워지는 것 확인
+			return "redirect:/";
+	    }
 	    
 
 	    @GetMapping(value = "/forgot.do")
