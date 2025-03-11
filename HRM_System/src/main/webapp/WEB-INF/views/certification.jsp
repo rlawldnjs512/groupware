@@ -82,13 +82,13 @@
 				<div
 					class="d-flex justify-content-end align-items-center gap-2 gap-lg-3">
 					<div class="d-flex align-items-center">
-						<c:if test="${sessionScope.loginVo.role eq 'A'}">
-						    <form id="search-form" action="./select.do" method="GET">
-						    	<input type="hidden" name="page" value="1">
-						        <input type="text" name="emp_id" id="emp_id" placeholder="사원번호 입력">  <!-- 이름 대신 사원번호로 변경 -->
-						        <button type="submit" class="btn btn-light-primary ms-2">검색</button>
-						    </form>
-						</c:if>
+<%-- 						<c:if test="${sessionScope.loginVo.role eq 'A'}"> --%>
+<!-- 						    <form id="search-form" action="./select.do" method="GET"> -->
+<!-- 						    	<input type="hidden" name="page" value="1"> -->
+<!-- 						        <input type="text" name="emp_id" id="emp_id" placeholder="사원번호 입력">  이름 대신 사원번호로 변경 -->
+<!-- 						        <button type="submit" class="btn btn-light-primary ms-2">검색</button> -->
+<!-- 						    </form> -->
+<%-- 						</c:if> --%>
 						
 						<select id="campaign-type" name="campaign-type"
 							data-control="select2" data-hide-search="true"
@@ -156,6 +156,9 @@
 					        <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
 					            <th class="text-length">발급번호</th>
 					            <th class="text-length">증명서 종류</th>
+					            <c:if test="${sessionScope.loginVo.role eq 'A'}">
+					            	<th class="text-length">사원 번호</th>
+					            </c:if>
 					            <th class="text-length">신청 날짜</th>
 					            <th class="text-length">신청 사유</th>
 					            <th class="text-length">승인 날짜</th>
@@ -172,16 +175,19 @@
 					    	<c:if test="${empty lists}">
 					            <!-- 리스트가 비어있는 경우 빈 행 추가 -->
 					            <tr class="empty-row">
-					                <td colspan="7" style="text-align: center;">결과가 없습니다.</td>
+					                <td colspan="8" style="text-align: center;">결과가 없습니다.</td>
 					            </tr>
 					            <tr class="empty-row">
-					                <td colspan="7"></td>
+					                <td colspan="8"></td>
 					            </tr>
 					        </c:if>
 					        <c:forEach var="vo" items="${lists}" varStatus="vs">
 					            <tr>
 					                <td class="text-length">${vo.cert_num}</td>
 					                <td class="text-length">${vo.type}</td>
+					                <c:if test="${sessionScope.loginVo.role eq 'A'}">
+					                	<td class="text-length">${vo.emp_id}</td>
+					                </c:if>
 					                <td class="text-length">${vo.req_date}</td>
 					                <td class="text-length">${vo.reason}</td>
 					                <td class="text-length">${vo.cert_date}</td>
@@ -292,10 +298,10 @@
 				                    <a href="./select.do?page=${page.page - 1}&type=${param.type}&emp_id=${param.emp_id}">&laquo;</a>
 				                </li>
 				                <c:if test="${sessionScope.loginVo.role eq 'A'}">
-				                    <c:if test="${param.emp_id != null}">
-				                        <!-- 사원번호로 검색하는 경우 -->
-				                        <a href="./select.do?page=${page.page - 1}&emp_id=${param.emp_id}">&laquo;</a>
-				                    </c:if>
+<%-- 				                    <c:if test="${param.emp_id != null}"> --%>
+<!-- 				                        사원번호로 검색하는 경우 -->
+<%-- 				                        <a href="./select.do?page=${page.page - 1}&emp_id=${param.emp_id}">&laquo;</a> --%>
+<%-- 				                    </c:if> --%>
 				                    <c:if test="${param.type != null}">
 				                        <!-- 증명서 종류로 검색하는 경우 -->
 				                        <a href="./select.do?page=${page.page - 1}&type=${param.type}">&laquo;</a>
@@ -308,10 +314,10 @@
 				                <li class="${i == page.page ? 'active' : ''}">
 				                    <a href="./select.do?page=${i}&type=${param.type}&emp_id=${param.emp_id}">${i}</a>
 				                    <c:if test="${sessionScope.loginVo.role eq 'A'}">
-				                        <c:if test="${param.emp_id != null}">
-				                            <!-- 사원번호로 검색하는 경우 -->
-				                            <a href="./select.do?page=${i}&emp_id=${param.emp_id}">${i}</a>
-				                        </c:if>
+<%-- 				                        <c:if test="${param.emp_id != null}"> --%>
+<!-- 				                            사원번호로 검색하는 경우 -->
+<%-- 				                            <a href="./select.do?page=${i}&emp_id=${param.emp_id}">${i}</a> --%>
+<%-- 				                        </c:if> --%>
 				                        <c:if test="${param.type != null}">
 				                            <!-- 증명서 종류로 검색하는 경우 -->
 				                            <a href="./select.do?page=${i}&type=${param.type}">${i}</a>
@@ -326,10 +332,10 @@
 				                    <a href="./select.do?page=${page.page + 1}&type=${param.type}&emp_id=${param.emp_id}">&raquo;</a>
 				                </li>
 				                <c:if test="${sessionScope.loginVo.role eq 'A'}">
-				                    <c:if test="${param.emp_id != null}">
-				                        <!-- 사원번호로 검색하는 경우 -->
-				                        <a href="./select.do?page=${page.page + 1}&emp_id=${param.emp_id}">&raquo;</a>
-				                    </c:if>
+<%-- 				                    <c:if test="${param.emp_id != null}"> --%>
+<!-- 				                        사원번호로 검색하는 경우 -->
+<%-- 				                        <a href="./select.do?page=${page.page + 1}&emp_id=${param.emp_id}">&raquo;</a> --%>
+<%-- 				                    </c:if> --%>
 				                    <c:if test="${param.type != null}">
 				                        <!-- 증명서 종류로 검색하는 경우 -->
 				                        <a href="./select.do?page=${page.page + 1}&type=${param.type}">&raquo;</a>

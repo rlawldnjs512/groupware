@@ -16,7 +16,7 @@ import lombok.ToString;
 public class FileUpDto {
 
 	private int file_id;
-	private String doc_id;
+	private int doc_id;
 	private String table_name;
 	private String origin_name;
 	private String store_name;
@@ -24,5 +24,9 @@ public class FileUpDto {
 	private String regdate;
 	private String delflag;
 	private String file_path;
+	
+	// 추가
+	private int not_id;
+	private int free_id;
 
 }

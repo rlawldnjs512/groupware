@@ -44,18 +44,31 @@
 
 <!-- 사용자는 작성중인 결재문서를 임시저장할 수 있다.	insertSaveDoc -->
 <insert id="insertSaveDoc">
+	<selectKey keyProperty="doc_id" resultType="Integer" order="BEFORE">
+		SELECT DOCUMENT_SEQ.NEXTVAL
+		FROM DUAL
+	</selectKey>
 	INSERT INTO DOCUMENT
-	    (DOC_ID, EMP_ID,
-	     DOC_TYPE, TITLE,
-	     CONTENT, CREATE_DATE,
-	     DOC_STATUS, DOC_DATE, 
-	     FILE_ID, DOC_NUM)
+	    (DOC_ID, 
+	     EMP_ID,
+	     DOC_TYPE, 
+	     TITLE,
+	     CONTENT, 
+	     CREATE_DATE,
+	     DOC_STATUS, 
+	     DOC_DATE, 
+	     FILE_ID, 
+	     DOC_NUM)
 	VALUES
-	    (DOCUMENT_SEQ.NEXTVAL, 
+	    (#{doc_id}, 
 	    (SELECT EMP_ID FROM EMPLOYEE e WHERE NAME = #{name}),
-		#{doc_type}, #{title},
-		#{content}, SYSDATE,
-		'T', NULL, 0, 
+		#{doc_type}, 
+		#{title},
+		#{content}, 
+		SYSDATE,
+		'T', 
+		NULL, 
+		0, 
 		CASE 
 			WHEN #{doc_type} = '휴가' THEN 'VACA'
 			WHEN #{doc_type} = '출장' THEN 'TRIP'

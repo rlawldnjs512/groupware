@@ -1,5 +1,6 @@
 package com.min.edu.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.min.edu.dto.EmpPageDto;
 import com.min.edu.dto.EmployeeDto;
 import com.min.edu.dto.FreeboardDto;
 import com.min.edu.dto.NoticeboardDto;
@@ -15,6 +17,7 @@ import com.min.edu.model.service.IBoardService;
 import com.min.edu.model.service.IEmployeeService;
 import com.min.edu.model.service.IVacationService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +35,8 @@ public class HomeController {
 	private final IBoardService boardService;
 	
 	@GetMapping(value = "/homeList.do")
-	public String homeList(Model model, HttpServletResponse response, HttpSession session) {
+	public String homeList(Model model, HttpServletResponse response, HttpSession session,
+							HttpServletRequest req) {
 		log.info("EmployeeController homeList GET 요청");
 
 		// 캐시 삭제 코드 작성
@@ -76,16 +80,39 @@ public class HomeController {
  	 		model.addAttribute("progress", progress);
  		}
  		
+ 		// ----------------- 게시판 시작 -------------------
  		
- 		// 공지사항 게시판
- 		List<NoticeboardDto> noticeLists = boardService.selectNotice();
-		System.out.println("noticeLists size: " + noticeLists.size());
-		model.addAttribute("noticeLists", noticeLists);
-		// 커뮤니티 게시판
-		List<FreeboardDto> freeLists = boardService.selectFree();
-		System.out.println("freeLists size: " + freeLists.size());
-		model.addAttribute("freeLists", freeLists);
+ 	// 현재 페이지 가져오기 (기본값: 1)
+ 	    String pageParam = req.getParameter("page");
+ 	    int selectPage = (pageParam == null) ? 1 : Integer.parseInt(pageParam);
 
+ 	    // EmpPageDto 생성 및 설정
+ 	    EmpPageDto pageDto = new EmpPageDto();
+ 	    pageDto.setTotalCount(boardService.countNoticePage()); // 전체 공지사항 개수
+ 	    pageDto.setCountList(5); // 한 페이지에 표시될 글 개수
+ 	    pageDto.setCountPage(5); // 한 번에 표시될 페이지 개수
+ 	    pageDto.setTotalPage(pageDto.getTotalCount()); // 전체 페이지 수 계산
+ 	    pageDto.setPage(selectPage); // 현재 페이지 설정
+ 	    pageDto.setStagePage(pageDto.getPage()); // 페이지 그룹 시작 번호 계산
+ 	    pageDto.setEndPage(); // 페이지 그룹 끝 번호 계산
+
+ 	    // 페이징을 위한 first, last 설정
+ 	    int first = (pageDto.getPage() - 1) * pageDto.getCountList() + 1;
+ 	    int last = pageDto.getPage() * pageDto.getCountList();
+
+ 	    // Map을 사용하여 first, last 값을 담아 전달
+ 	    Map<String, Object> map = new HashMap<>();
+ 	    map.put("first", first);
+ 	    map.put("last", last);
+
+ 	    List<NoticeboardDto> noticeLists = boardService.selectNoticePage(map);
+ 	    model.addAttribute("noticeLists", noticeLists);
+
+ 	    List<FreeboardDto> freeLists = boardService.selectFreePage(map);
+ 	    model.addAttribute("freeLists", freeLists);
+
+ 	    model.addAttribute("page", pageDto);
+		
 		return "homeList";
 	}
 	

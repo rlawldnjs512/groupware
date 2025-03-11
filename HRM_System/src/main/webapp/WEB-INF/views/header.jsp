@@ -18,7 +18,10 @@
             </ul>
         <% } else if (currentURI.contains("notice") || currentURI.contains("free") 
         		|| currentURI.contains("newNotice")
-        		|| currentURI.contains("newFree")){%>
+        		|| currentURI.contains("newFree")
+				|| currentURI.contains("modifyNotice")
+				|| currentURI.contains("modifyFree")
+				|| currentURI.contains("replyFree")){%>
         	<ul class="nav flex-wrap border-transparent">
                 <li class="nav-item my-1">
                     <a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 active"

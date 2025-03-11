@@ -317,20 +317,20 @@ class QueryTest_JUnitTest {
 	
 //	@Test
 	public void selectNoticeFile() {
-		List<FileUpDto> lists = dao3.selectNoticeFile();
-		for (FileUpDto d : lists) {
-			System.out.println(d);
-		}
-		assertNotNull(lists);
+////		List<FileUpDto> lists = dao3.selectNoticeFile();
+//		for (FileUpDto d : lists) {
+//			System.out.println(d);
+//		}
+//		assertNotNull(lists);
 	}
 	
 //	@Test
 	public void selectFreeFile() {
-		List<FileUpDto> lists = dao3.selectFreeFile();
-		for (FileUpDto d : lists) {
-			System.out.println(d);
-		}
-		assertNotNull(lists);
+//		List<FileUpDto> lists = dao3.selectFreeFile();
+//		for (FileUpDto d : lists) {
+//			System.out.println(d);
+//		}
+//		assertNotNull(lists);
 	}
 	
 	
