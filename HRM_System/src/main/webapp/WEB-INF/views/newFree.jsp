@@ -13,87 +13,158 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script
 	src="https://cdn.ckeditor.com/ckeditor5/29.1.0/classic/ckeditor.js"></script>
-<style>
-:root {
-	--bs-primary: #1b84ff;
-	--bs-primary-light: #e9f3ff;
-	--bs-primary-white: #fff;
-}
+	<style>
+	:root {
+		--bs-primary: #1b84ff;
+		--bs-primary-light: #e9f3ff;
+		--bs-primary-white: #fff;
+	}
 
-.btn.btn-light-primary {
-	color: var(--bs-primary);
-	border-color: var(--bs-primary-light);
-	background-color: var(--bs-primary-light);
-}
+	.btn.btn-light-primary {
+		color: var(--bs-primary);
+		border-color: var(--bs-primary-light);
+		background-color: var(--bs-primary-light);
+	}
 
-.btn.btn-light-primary:hover {
-	color: var(--bs-primary-white);
-	border-color: var(--bs-primary);
-	background-color: var(--bs-primary);
-}
+	.btn.btn-light-primary:hover {
+		color: var(--bs-primary-white);
+		border-color: var(--bs-primary);
+		background-color: var(--bs-primary);
+	}
 
-.btn.btn-light-primary:focus {
-	outline: none;
-	box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary), 0.5);
-}
+	.btn.btn-light-primary:focus {
+		outline: none;
+		box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary), 0.5);
+	}
 
-table {
-	width: 100%;
-	border-collapse: collapse;
-}
+	table {
+		width: 100%;
+		border-collapse: collapse;
+	}
 
-th, td {
-	border: 1px solid #ccc;
-	padding: 10px;
-	text-align: left;
-}
+	th, td {
+		border: 1px solid #ccc;
+		padding: 10px;
+		text-align: left;
+	}
 
-th {
-	background-color: #f0f0f0;
-}
+	th {
+		background-color: #f0f0f0;
+	}
 
-.gray {
-	background-color: #ddd;
-}
+	.gray {
+		background-color: #ddd;
+	}
 
-.container {
-	display: relative;
-}
+	.container {
+		width: 80%;
+		margin: 0 auto;
+	}
 
-.ck.ck-editor {
-    max-width: 100%;
-}
-.ck-editor__editable {
-    min-height: 400px;
-}
-</style>
+	.form-group {
+		margin-bottom: 15px;
+	}
+
+	label {
+		font-weight: bold;
+		display: block;
+	}
+
+	input[type="text"], textarea {
+		width: 100%;
+		padding: 10px;
+		margin-top: 5px;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+	}
+
+	input[type="file"] {
+		margin-top: 5px;
+	}
+
+	button {
+		padding: 10px 15px;
+		background-color: #4CAF50;
+		color: white;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+		font-size: 16px;
+	}
+
+	button:hover {
+		background-color: #45a049;
+	}
+
+	.file-container {
+		display: flex;
+		align-items: center;
+	}
+
+	.file-container input[type="file"] {
+		flex-grow: 1;
+	}
+
+	.file-container button {
+		margin-left: 10px;
+	}
+
+	textarea {
+		height: 200px;
+	}
+	</style>
 </head>
 <%@ include file="sidebar.jsp"%>
 <body>
 	<div class="content" id="content">
 		<%@ include file="header.jsp"%>
 		<div class="main-content" style="padding: 30px;">
-			<form id="select-form" action="./newFree.do" method="POST" enctype="multipart/form-data">
-				<div class="mb-3">
-					<input type="email" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력하세요">
-				</div>
-				<div class="mb-3">
-					<textarea class="form-control" id="classic" rows="3" style="width: 100%;" placeholder="내용을 입력하세요"></textarea>
-				</div>
-				<div class="mb-3">
-					<input class="form-control form-control-sm" id="formFileSm" type="file" multiple="multiple">
-				</div>
-				<div class="col-auto">
-					<button type="submit" class="btn btn-primary mb-3">확인</button>
-					<button class="btn btn-danger mb-3" onclick="history.back()">취소</button>
-				</div>
-			</form>
+			
+			<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
+								커뮤니티 글 등록하기</h1>
+		    <form action="/submitFree.do" method="post" enctype="multipart/form-data">
+		        <table>
+	                <!-- 작성자 -->
+	                <tr>
+	                    <td><label for="name">작성자</label></td>
+	                    <td>${loginVo.name}</td>
+	                </tr>
+	
+	                <!-- 제목 -->
+	                <tr>
+	                    <td><label for="title">제목</label></td>
+	                    <td><input type="text" id="title" name="title" required placeholder="제목을 입력하세요"></td>
+	                </tr>
+	                
+	                <!-- 첨부파일 -->
+	                <tr>
+	                    <td><label for="file">첨부파일</label></td>
+	                    <td>
+	                        <div class="file-container">
+	                            <input class="form-control form-control-sm" id="formFileSm" type="file" name="file" multiple="multiple">
+	                        </div>
+	                    </td>
+	                </tr>
+	
+	                <!-- 내용 -->
+	                <tr>
+	                    <td><label for="content">내용</label></td>
+	                    <td>
+							<textarea class="form-control" id="classic" name="content" placeholder="내용을 입력하세요"></textarea>
+						<td>
+	                </tr>
+	                
+			        <!-- 제출 버튼 -->
+			        <tr class="form-group" style="text-align: right;">
+			        	<td colspan="2" class="submit-btn">
+					        <button type="submit" class="btn btn-light-primary ms-2" id="newNotice">등록하기</button>
+					        <button class="btn btn-light-primary ms-2" onclick="history.back(-1)">취소</button>
+				        </td>
+			        </tr>
+	            </table>
+		    </form>
 		</div>
-
 	</div>
-
-
-
 
 	<script>
 		ClassicEditor

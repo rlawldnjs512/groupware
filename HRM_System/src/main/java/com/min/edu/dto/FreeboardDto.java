@@ -25,7 +25,8 @@ public class FreeboardDto {
 	private int step;
 	private int depth;
 	private String delflag;
-	private String file_id;
+	private int file_id;
+	private String file_exist;
 	
 	// 추가
 	private String name;

@@ -21,9 +21,16 @@ public class NoticeboardDto {
 	private String content;
 	private String regdate;
 	private String delflag;
-	private String file_id;
+	private int file_id;
 	private String expired;
+	private String file_exist;
 	
 	private String name;
 	
+	 // 파일 관련 필드 추가
+    private String origin_name;
+    private String store_name;
+    private int size;
+    private String file_path;
+    
 }

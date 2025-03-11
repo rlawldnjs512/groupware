@@ -117,53 +117,56 @@ textarea {
         <div class="main-content">
 		    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
 					공지사항 글 등록하기</h1>
-		    <form action="/submitNotice.do" method="post" enctype="multipart/form-data">
-			    <table>
-			        <!-- 작성자 -->
-			        <tr>
-			            <td><label for="name">작성자</label></td>
-			            <td>${loginVo.name}</td>
-			        </tr>
-			
-			        <!-- 제목 -->
-			        <tr>
-			            <td><label for="title">제목</label></td>
-			            <td><input type="text" id="title" name="title" required placeholder="제목을 입력하세요"></td>
-			        </tr>
-			        
-			        <!-- 기한 -->
-			        <tr>
-			            <td><label for="expired">기한</label></td>
-			            <td><input type="date" id="expired" name="expired"></td>
-			        </tr>
-			
-			        <!-- 첨부파일 -->
-			        <tr>
-			            <td><label for="file">첨부파일</label></td>
-			            <td>
-			                <div class="file-container">
-			                    <input class="form-control form-control-sm" id="formFileSm" type="file" name="file">
-			                </div>
-			            </td>
-			        </tr>
-			
-			        <!-- 내용 -->
-			        <tr>
-			            <td><label for="content">내용</label></td>
-			            <td>
-			                <textarea class="form-control" id="classic" name="content" placeholder="내용을 입력하세요"></textarea>
-			            </td>
-			        </tr>
-			        
+		    <form action="/modifyNotice.do" method="post" enctype="multipart/form-data">
+		        <table>
+	                <!-- 작성자 -->
+	                <tr>
+	                    <td><label for="name">작성자</label></td>
+	                    <td>${loginVo.name}</td>
+	                </tr>
+	
+	                <!-- 제목 -->
+	                <tr>
+	                    <td><label for="title">제목</label></td>
+	                    <td>${notice.title}</td>
+	                </tr>
+	                
+	                <!-- 기한 -->
+	                <tr>
+	                    <td><label for="expired">기한</label></td>
+	                    <td><input type="date" id="expired" name="expired" value="${notice.expired}"></td>
+	                </tr>
+	
+	                <!-- 첨부파일 -->
+	                <tr>
+	                    <td><label for="file">첨부파일</label></td>
+	                    <td>
+	                        <div class="file-container">
+	                            <input class="form-control form-control-sm" id="file" name="file"
+	                            	 type="file" multiple="multiple">
+	                        </div>
+	                    </td>
+	                </tr>
+	
+	                <!-- 내용 -->
+	                <tr>
+	                    <td><label for="content">내용</label></td>
+						<td>
+							<textarea class="form-control" id="classic" name="content" placeholder="내용을 입력하세요">${notice.content}</textarea>
+						<td>
+	                </tr>
+					
+					<input type="hidden" name="not_id" value="${notice.not_id}" />
+	                
 			        <!-- 제출 버튼 -->
 			        <tr class="form-group" style="text-align: right;">
-			            <td colspan="2" class="submit-btn">
-			                <button type="submit" class="btn btn-light-primary ms-2" id="newNotice">등록하기</button>
-			                <button class="btn btn-light-primary ms-2" onclick="history.back(-1)">취소</button>
-			            </td>
+			        	<td colspan="2" class="submit-btn">
+					        <button type="submit" class="btn btn-light-primary ms-2" id="newNotice">수정하기</button>
+					        <button class="btn btn-light-primary ms-2" onclick="history.back(-1)">취소</button>
+				        </td>
 			        </tr>
-			    </table>
-			</form>
+	            </table>
+		    </form>
 		</div>
     </div>
     <script>

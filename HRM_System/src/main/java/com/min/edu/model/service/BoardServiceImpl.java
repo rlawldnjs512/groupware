@@ -1,6 +1,7 @@
 package com.min.edu.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +22,20 @@ public class BoardServiceImpl implements IBoardService {
 	private IBoardDao dao;
 	
 	@Override
-	public int insertNotice(NoticeboardDto dto) {
-		return dao.insertNotice(dto);
+    public int insertNotice(NoticeboardDto dto) {
+        return dao.insertNotice(dto);
+    }
+    @Override
+    public int insertFile(FileUpDto dto) {
+        return dao.insertFile(dto);
+    }
+    @Override
+	public int getNotId() {
+		return dao.getNotId();
+	}
+    @Override
+	public int updateFileExist(int notId) {
+		return dao.updateFileExist(notId);
 	}
 
 	@Override
@@ -34,6 +47,11 @@ public class BoardServiceImpl implements IBoardService {
 	public int deleteNotice(int notId) {
 		return dao.deleteNotice(notId);
 	}
+	@Override
+	public int deletefile(int notId) {
+		return dao.deletefile(notId);
+	}
+
 
 	@Override
 	public int deleteNoticeDead() {
@@ -49,6 +67,18 @@ public class BoardServiceImpl implements IBoardService {
 	public int insertFree(FreeboardDto dto) {
 		return dao.insertFree(dto);
 	}
+	@Override
+	public int insertFileFree(FileUpDto dto) {
+		return dao.insertFileFree(dto);
+	}
+	@Override
+	public int getFreeId() {
+		return dao.getFreeId();
+	}
+	@Override
+	public int updateFreeFileExist(int freeId) {
+		return dao.updateFreeFileExist(freeId);
+	}
 
 	@Override
 	public int updateFree(FreeboardDto dto) {
@@ -58,6 +88,10 @@ public class BoardServiceImpl implements IBoardService {
 	@Override
 	public int deleteFree(FreeboardDto dto) {
 		return dao.deleteFree(dto);
+	}
+	@Override
+	public int deleteFreeFile(int freeId) {
+		return dao.deleteFreeFile(freeId);
 	}
 
 	@Override
@@ -95,13 +129,42 @@ public class BoardServiceImpl implements IBoardService {
 	}
 
 	@Override
-	public List<FileUpDto> selectNoticeFile() {
-		return dao.selectNoticeFile();
+	public FileUpDto selectNoticeFile(int notId) {
+		return dao.selectNoticeFile(notId);
 	}
 
 	@Override
-	public List<FileUpDto> selectFreeFile() {
-		return dao.selectFreeFile();
+	public FileUpDto selectFreeFile(int freeId) {
+		return dao.selectFreeFile(freeId);
 	}
-	
+
+	@Override
+	public NoticeboardDto getNoticeById(int notId) {
+		return dao.getNoticeById(notId);
+	}
+
+	@Override
+	public int countNoticePage() {
+		return dao.countNoticePage();
+	}
+
+	@Override
+	public List<NoticeboardDto> selectNoticePage(Map<String, Object> map) {
+		return dao.selectNoticePage(map);
+	}
+
+	@Override
+	public FreeboardDto getFreeById(int freeId) {
+		return dao.getFreeById(freeId);
+	}
+
+	@Override
+	public int countFreePage() {
+		return dao.countFreePage();
+	}
+
+	@Override
+	public List<FreeboardDto> selectFreePage(Map<String, Object> map) {
+		return dao.selectFreePage(map);
+	}
 }
