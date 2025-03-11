@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.min.edu.model.mapper.ILeaveDao">
+	
+	<!-- 모든 사원들의 사용휴가 내역 조회 -->
+	<select id="leaveList" resultType="Map">
+		SELECT EMP_ID, LEAVE_START, LEAVE_END, TYPE, LEAVE_DAYS
+			FROM LEAVE l
+			JOIN DOCUMENT d 
+			ON l.DOC_ID = d.DOC_ID 
+			WHERE DOC_TYPE = '휴가'
+	</select>
+	
+	<!-- 사원 1명의 사용휴가 내역 조회 -->
+	<select id="leaveListByEmpId" resultType="Map">
+		SELECT LEAVE_START, LEAVE_END, TYPE, LEAVE_DAYS
+			FROM LEAVE l
+			JOIN DOCUMENT d 
+			ON l.DOC_ID = d.DOC_ID 
+			WHERE TRIM(EMP_ID) = TRIM(#{empId})
+			AND DOC_TYPE = '휴가'
+	</select>
+
+</mapper>

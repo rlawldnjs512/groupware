@@ -1,5 +1,7 @@
 package com.min.edu.dto;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,9 +19,11 @@ public class AttendanceDto {
 
 	private int attend_id;
 	private String emp_id;
-	private String attend_date;
-	private String clockin;
-	private String clockout;
+	
+	private Date attend_date;
+	private Date clockin;
+	private Date clockout;
+	
 	private int total_time;
 	private String attend_type;
 	private int use_extra_time;

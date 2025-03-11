@@ -51,4 +51,6 @@ public interface IAttendanceService {
 	// 근무 진행률 계산 로직
 	public double calProgress(String empId, String ClockIn);
 	
+	public List<Map<String, Object>> getCalendar(String empId);
+	
 }

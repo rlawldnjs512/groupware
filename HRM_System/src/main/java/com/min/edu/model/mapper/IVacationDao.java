@@ -12,6 +12,8 @@ public interface IVacationDao {
 
 	public List<VacationDto> vacationList();
 	
+	public List<VacationDto> vacationListByEmpId(String empId);
+	
 	public int insertVacation(Map<String, Object> map);
 	
 	public int selectExtraTime(String empId);

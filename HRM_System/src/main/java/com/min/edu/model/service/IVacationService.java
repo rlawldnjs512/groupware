@@ -8,6 +8,8 @@ import com.min.edu.dto.VacationDto;
 public interface IVacationService {
 
 	public List<VacationDto> vacationList();
+	
+	public List<VacationDto> vacationListByEmpId(String empId);
 
 	public int insertVacation(Map<String, Object> map);
 	

@@ -1,5 +1,11 @@
 package com.min.edu.controller;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +16,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.min.edu.dto.AttendanceDto;
 import com.min.edu.dto.EmployeeDto;
@@ -79,7 +88,13 @@ public class AttendanceController {
 		return ResponseEntity.ok(response);
 	}
 	
-	@GetMapping(value = "attendance")
+	
+	/*
+	 * @GetMapping(value="/attendace/{id}") // {} 이름을 찾는 것이 아니라 형식을 찾는다
+	 * @GetMapping(value="/attendace/{pw}")
+	 */
+	
+	@GetMapping(value = "/attendance")
 	public String attendance(HttpSession session, Model model) {
 		
 		EmployeeDto loginVo = (EmployeeDto)session.getAttribute("loginVo");
@@ -105,5 +120,19 @@ public class AttendanceController {
 		
 		return "attendance";
 	}
+	
+	@RequestMapping(value = "/attendance/events", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<?> getAttendanceEvents(HttpSession session){
+		
+		EmployeeDto loginVo = (EmployeeDto)session.getAttribute("loginVo");
+		
+		String empId = loginVo.getEmp_id();
+		
+		List<Map<String, Object>> list = attendanceService.getCalendar(empId);
+		
+		return ResponseEntity.ok(list);
+	}
+	
 	
 }

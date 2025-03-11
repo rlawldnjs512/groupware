@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.min.edu.dto.EmployeeDto;
 import com.min.edu.dto.VacationDto;
+import com.min.edu.model.service.ILeaveService;
 import com.min.edu.model.service.IVacationService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,14 +25,31 @@ import lombok.extern.slf4j.Slf4j;
 public class VacationController {
 
 	private final IVacationService vacationService;
+	private final ILeaveService leaveService;
 
+//	@GetMapping(value = "/vacation")
+//	public String vacationList(Model model) {
+//		log.info("사원들의 연차목록 조회");
+//		List<VacationDto> lists = vacationService.vacationList();
+//		model.addAttribute("lists", lists);
+//		return "vacation";
+//	}
+	
 	@GetMapping(value = "/vacation")
-	public String vacationList(Model model) {
-		log.info("사원들의 연차목록 조회");
-		List<VacationDto> lists = vacationService.vacationList();
-		model.addAttribute("lists", lists);
+	public String vacationListByEmpId(HttpSession session, Model model) {
+		
+		EmployeeDto loginVo = (EmployeeDto)session.getAttribute("loginVo");
+		String empId = loginVo.getEmp_id();
+		
+		List<VacationDto> vacationInfo = vacationService.vacationListByEmpId(empId);
+		model.addAttribute("vacationInfo", vacationInfo);
+		
+		leaveService.leaveListByEmpId(empId);
+		
 		return "vacation";
 	}
+	
+	
 
 	@PostMapping(value = "/insertVacation") 
 	public String insertVacation(@RequestParam("leaveId") String leaveId,

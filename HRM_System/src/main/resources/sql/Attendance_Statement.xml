@@ -122,6 +122,20 @@
 			AND ATTEND_TYPE = '지각'
 	</select>
 	
+<!-- 	{ -->
+<!-- 		          title: 'Meeting with Team', -->
+<!-- 		          start: '2025-03-12T09:00:00', -->
+<!-- 		          end: 'T' -->
+<!-- 		        }, -->
+	<!-- FullCalendar 값 -->
+	<select id="getCalendar" resultType="Map">
+		SELECT ATTEND_TYPE as "title", 
+			   TO_CHAR (CLOCKIN, 'YYYY-MM-DD') || 'T'|| TO_CHAR (CLOCKIN, 'HH24:MI:SS') as "start" , 
+			   TO_CHAR (CLOCKOUT, 'YYYY-MM-DD') || 'T'|| TO_CHAR (CLOCKOUT, 'HH24:MI:SS') as "end" 
+			FROM ATTENDANCE
+		    WHERE TRIM(EMP_ID) = TRIM(#{empId})
+	</select>
+	
 	
 	
 
