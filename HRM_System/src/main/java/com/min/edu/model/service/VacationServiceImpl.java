@@ -24,6 +24,11 @@ public class VacationServiceImpl implements IVacationService {
 	}
 	
 	@Override
+	public List<VacationDto> vacationListByEmpId(String empId) {
+		return dao.vacationListByEmpId(empId);
+	}
+	
+	@Override
 	public int insertVacation(Map<String, Object> map) {
 		return dao.insertVacation(map);
 	}
@@ -42,5 +47,7 @@ public class VacationServiceImpl implements IVacationService {
 	public int selectLeaveRemain(String empId) {
 		return dao.selectLeaveRemain(empId);
 	}
+
+	
 
 }

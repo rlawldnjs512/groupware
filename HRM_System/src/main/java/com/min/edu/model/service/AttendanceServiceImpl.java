@@ -390,6 +390,11 @@ public class AttendanceServiceImpl implements IAttendanceService {
 		}
 	}
 
+	@Override
+	public List<Map<String, Object>> getCalendar(String empId) {
+		return dao.getCalendar(empId);
+	}
+
 	
 
 	
