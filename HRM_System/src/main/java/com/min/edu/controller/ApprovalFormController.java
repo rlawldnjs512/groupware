@@ -11,7 +11,9 @@ import com.min.edu.dto.ApprovalDto;
 import com.min.edu.dto.DocumentDto;
 import com.min.edu.dto.EmployeeDto;
 import com.min.edu.dto.SignDto;
+import com.min.edu.model.mapper.IEmployeeDao;
 import com.min.edu.model.service.IApprovalService;
+import com.min.edu.model.service.IEmployeeService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -22,11 +24,11 @@ public class ApprovalFormController {
 	
 	private final IApprovalService approvalService;
 
+
 	@GetMapping(value = "/vacationForm.do")
 	public String vacation_form(Model model, HttpSession session) {
 		
 		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
-
 		String ename = loginVo.getName();
 		
 		return "vacationApproval";
@@ -67,4 +69,14 @@ public class ApprovalFormController {
 	public String report_form() {
 		return "reportApproval";
 	}
+	
+	@GetMapping(value = "/tree.do")
+	public String tree() {
+		return "tree";
+	}
+	
+	public String getMethodName(@RequestParam String param) {
+		return new String();
+	}
+	
 }

@@ -4,8 +4,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
@@ -98,8 +96,8 @@
 			<div style="display: flex;">
 			    <!-- 왼쪽 버튼 컨테이너 -->
 			    <div style="display: flex; flex-direction: column; gap: 10px; margin: 20px;">
-			    	<button type="button" class="btn btn-light-success" 
-			    		style="width: 100%; margin-bottom: 10px;">결재선 선택</button>
+			    	<button id="openModal"type="button" class="btn btn-light-success" 
+			    		style="width: 100%; margin-bottom: 10px; ">결재선 선택</button>
 			    	<button type="button" class="btn btn-light-warning" 
 			    		style="width: 100%; margin-bottom: 10px;">임시 저장</button>
 			    	<button type="button" class="btn btn-light-info" 

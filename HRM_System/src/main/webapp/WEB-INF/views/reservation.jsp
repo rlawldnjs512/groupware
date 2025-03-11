@@ -10,7 +10,7 @@
 <title>예약관리</title>
 <script type="text/javascript" src="./js/reservation.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="./js/reservation_date.js"></script>
 <link rel="stylesheet" href="./css/reservation.css">
 
