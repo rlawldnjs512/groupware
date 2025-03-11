@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.min.edu.dto.RoomDto;
 import com.min.edu.model.mapper.IReservationDao;
+import com.min.edu.model.service.IReservationService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,13 +25,13 @@ import lombok.extern.slf4j.Slf4j;
 public class ReservationRestController {
 
 	@Autowired
-	private IReservationDao dao;
+	private IReservationService service;
 	
 	@PostMapping("/insertReserv.do")
 	public ResponseEntity<Map<String, Boolean>> insertReservation(@RequestBody Map<String, Object> requestReq) {
 		System.out.println(requestReq);
         
-        dao.insertReservation(requestReq);
+        service.insertReservation(requestReq);
 		Map<String, Boolean> map = new HashMap<String, Boolean>();
 		map.put("isc", Boolean.TRUE);
         return ResponseEntity.ok(map);
@@ -46,7 +47,7 @@ public class ReservationRestController {
             nowDate = sdf.format(date);
         }
 
-        List<RoomDto> lists = dao.selectReservation(nowDate);
+        List<RoomDto> lists = service.selectReservation(nowDate);
 
         Map<String, Object> response = new HashMap<>();
         response.put("lists", lists);

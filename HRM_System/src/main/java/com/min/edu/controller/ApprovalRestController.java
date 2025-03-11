@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,14 +31,11 @@ public class ApprovalRestController {
 //				 );
 //	}
 	
-	@GetMapping(value = "/selectTree.do")
-	public ResponseEntity<List<Map<String, Object>>> selectTree () {
-
+	@GetMapping(value = "/getTree.do")
+	public List<Map<String, Object>> selectTree () {
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		
-		return null;
+		return service.selectTree();
 	}
+	
 	
 }

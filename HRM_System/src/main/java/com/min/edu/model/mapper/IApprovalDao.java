@@ -33,7 +33,7 @@ public interface IApprovalDao {
 
 	String getDocNum(@Param("name") String name);
 
-	public List<Map<String, Object>> selectTree(Map<String, Object> map);
+	public List<Map<String, Object>> selectTree();
 
 
 
