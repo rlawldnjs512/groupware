@@ -41,6 +41,32 @@
     <div class="content" id="content">
         <%@ include file="header.jsp" %>
         <div class="main-content">
+			<!-- 내가 결재한 문서에 대한 진행상황 -->
+			<div>
+        		<table>
+        			<thead>
+	        			<tr>
+	        				<th>발급번호</th>
+	        				<th>유형</th>
+	        				<th>제목</th>
+	        				<th>작성자</th>
+	        				<th>결재상태</th>
+	        				<th>결재일</th>
+	        			</tr>
+        			</thead>
+        			<tbody>
+        				<tr>
+        					<td></td>
+        					<td></td>
+        					<td></td>
+        					<td>${loginVo.name}</td>
+        					<td></td>
+        					<td></td>
+        				</tr>
+        			</tbody>
+        		</table>
+        	</div>
+	
 
         </div>
     </div>

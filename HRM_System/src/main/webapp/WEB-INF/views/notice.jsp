@@ -64,18 +64,7 @@ th {
 <%@ include file="sidebar.jsp" %>
 <body>
     <div class="content" id="content">
-		  <div class="header">
-			<ul class="nav flex-wrap border-transparent">
-				<li class="nav-item my-1"><a
-					class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
-							active"
-					href="./notice.do"> 공지사항 </a></li>
-				<li class="nav-item my-1"><a
-					class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
-						    active"
-					href="./free.do"> 커뮤니티 </a></li>
-			</ul>
-		</div>
+		<%@ include file="header.jsp" %>
 		<div class="main-content">
 		
 		   <div class="table-responsive">
