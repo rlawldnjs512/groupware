@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.min.edu.dto.EmployeeDto;
+import com.min.edu.dto.VacationDto;
 
 @Mapper
 public interface IEmployeeDao {
@@ -50,6 +51,10 @@ public interface IEmployeeDao {
     // 사원 1명의 프로필이미지 조회
     public String selectProfileImg(String empId);
     
+    //신입 사원 연차 부여
+    public int insertVacation(VacationDto dto);
+     //마지막 회원 조회
+    public String getNotId();    
     
 
 
