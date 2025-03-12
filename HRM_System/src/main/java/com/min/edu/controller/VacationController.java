@@ -41,10 +41,18 @@ public class VacationController {
 		EmployeeDto loginVo = (EmployeeDto)session.getAttribute("loginVo");
 		String empId = loginVo.getEmp_id();
 		
-		List<VacationDto> vacationInfo = vacationService.vacationListByEmpId(empId);
-		model.addAttribute("vacationInfo", vacationInfo);
+		Map<String, Object> vacationMap = vacationService.vacationListByEmpId(empId);
+		List<Map<String, Object>> leaveList = leaveService.leaveListByEmpId(empId);
 		
-		leaveService.leaveListByEmpId(empId);
+		model.addAttribute("vacationMap", vacationMap);
+		model.addAttribute("leaveList", leaveList);
+		
+		
+//		List<Map<String, Object>> vacationList = vacationService.vacationListByEmpId(empId);
+//		if(!vacationList.isEmpty()) {
+//			Map<String, Object> vacationInfo = vacationList.get(0);
+//			model.addAttribute("vacationInfo", vacationInfo);
+//		}
 		
 		return "vacation";
 	}

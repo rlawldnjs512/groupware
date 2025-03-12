@@ -19,18 +19,18 @@
 				<div class="card-body">
 					<div class="vacationInfo">
 						<div class="card-title">
-							<p>15</p>
-							<h5 >총휴가</h5>
+							<h4>총휴가</h4>
+							<p>${vacationMap['LEAVE_TOTAL']}일</p>
 						</div>
 						
 						<div class="card-title">
-							<p>2</p>
-							<h5>사용휴가</h5>
+							<h4>사용휴가</h4>
+							<p>${vacationMap['LEAVE_USE']}일</p>
 						</div>
 						
 						<div class="card-title">
-							<p>13</p>
-							<h5>잔여휴가</h5>
+							<h4>잔여휴가</h4>
+							<p>${vacationMap['LEAVE_REMAIN']}일</p>
 						</div>
 					</div>
 					<div class="period">
@@ -51,22 +51,15 @@
 					</tr>
 				</thead>
 				<tbody class="table-group-divider">
-<%-- 					<c:forEach var="vo" items="${list}" varStatus="vs"> --%>
-						<tr>
-							<td>1</td>
-							<td>연차</td>
-							<td>2025.03.01 ~ 2025.03.01</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>연차</td>
-							<td>2025.03.02 ~ 2025.03.02</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>연차</td>
-							<td>2025.03.03 ~ 2025.03.03</td>
-						</tr>
+					<tr>
+						<c:forEach var="leave" items="${leaveList}" varStatus="status">
+							<tr>
+								<td>${status.index + 1}</td>
+								<td>${leave['TYPE']}</td>
+								<td>${leave['LEAVE_START']} ~ ${leave['LEAVE_END']}</td>
+							</tr>
+						</c:forEach>
+					</tr>
 				</tbody>
 			</table>
 			
@@ -75,6 +68,10 @@
 	
 	
 	
+	
+	
+	
+						
 	
 <!-- 	<div class="main-content"> -->
 <!-- 		<h3>사원들의 연차 정보 테이블 조회</h3> -->

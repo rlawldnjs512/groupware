@@ -40,4 +40,9 @@ public class ReservationServiceImpl implements IReservationService {
 		return dao.insertRoom(map);
 	}
 
+	@Override
+	public List<Map<String, Object>> getReservation(String empId) {
+		return dao.getReservation(empId);
+	}
+
 }

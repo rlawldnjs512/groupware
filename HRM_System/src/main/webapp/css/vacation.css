@@ -3,10 +3,12 @@
 .card.border-light.mb-3 {
 	background-color: #F0F0F0;
 	width: 60em;
-	height: auto;
+	height: 10em; /* 높이를 자동으로 설정하여 내부 요소들이 자연스럽게 배치되도록 */
 	text-align: center;
 	margin-left: 40px;
 	margin-top: 40px;
+	display: flex; /* flex로 설정하여 자식 요소들을 정렬 */
+    align-items: center; /* 자식 요소들이 세로 중앙에 위치하도록 설정 */
 }
 
 .card-body {
@@ -17,11 +19,13 @@
 
 .card-body div {
 	text-align: center; /* 각 div 안의 내용 중앙 정렬 */
+	white-space: nowrap; /* 텍스트가 한 줄로 나오게 제한 */
 }
 
 .vacationInfo {
 	display: flex; /* 자식 요소들을 가로로 배치 */
 	width: 100%; /* 부모 요소의 넓이를 꽉 채움 */
+	justify-content: space-around; /* 요소들 사이에 공간을 분배 */
 }
 
 .vacationInfo div {
@@ -29,8 +33,11 @@
 }
 
 .period {
-	display: flex; /* 자식 요소들을 가로로 배치 */
-	width: 100%; /* 부모 요소의 넓이를 꽉 채움 */
+	display: flex; /* 가로 정렬 (flexbox 사용) */
+	align-items: center; /* 세로 중앙 정렬 */
+	justify-content: center; /* 가로 중앙 정렬 (필요하면 추가) */
+	gap: 10px; /* 요소 간 간격 */
+	height: 50px; /* 필요에 따라 높이 조정 */
 }
 
 .period div {
@@ -42,19 +49,20 @@
 	margin-right: 50px;
 }
 
-.period {
-	display: flex; /* 가로 정렬 (flexbox 사용) */
-	align-items: center; /* 세로 중앙 정렬 */
-	justify-content: center; /* 가로 중앙 정렬 (필요하면 추가) */
-	width: 100%;
-	gap: 10px; /* 요소 간 간격 */
-	height: 50px; /* 필요에 따라 높이 조정 */
-}
-
 .table {
 	background-color: #F0F0F0;
 	max-width: 60em; /* 최대 너비를 .card와 동일하게 설정 */
 	text-align: center;
 	margin-left: 40px;
 	margin-top: 40px;
+}
+
+.card-title p {
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.card-title h4 {
+    font-weight: bold;
 }
