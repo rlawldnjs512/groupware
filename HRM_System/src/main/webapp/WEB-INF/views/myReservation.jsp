@@ -9,6 +9,12 @@
 <meta charset="UTF-8">
 <title>예약관리</title>
 <link rel="stylesheet" href="./css/emplist.css">
+<style type="text/css">
+tr, td {
+	text-align: center;	
+	vertical-align: middle;
+}
+</style>
 </head>
  <%@ include file="sidebar.jsp" %>
 <body>
@@ -19,7 +25,7 @@
 		<div class="main-content">
 			<table class="table table-hover">
 				<thead>
-	            	<tr class="success">
+	            	<tr>
 						<td>예약번호</td>
 						<td>회의실 이름</td>
 						<td>사원번호</td>
@@ -52,45 +58,8 @@
 					</c:forEach>
 				</tbody>
 			</table>
-	
-			
 		</div>
 	</div>
-
-
-
-
-<div class="modal fade" id="deleteReserv" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">예약 취소</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form action="#" >
-        	<div class="form-group">
-        <label for="room">회의실</label>
-        <input id="room" name="room" type="text" value="" readonly>
-        <label for="name">이름</label>
-        <input id="name" name="name" type="text" value="" readonly>
-        <label for="date">날짜</label>
-        <input id="date" name="date" type="text" value="" readonly>
-        <label for="time">시간</label>
-        <input id="time" name="time" type="text" value="" readonly>
-
-        <p>선택한 예약을 취소하시겠습니까?</p>
-    </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >뒤로</button>
-        <button type="button" class="btn btn-primary" id="delSubmit">확인</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script>
 function confirmCancel() {
     if (confirm("정말 예약을 취소하시겠습니까?")) {

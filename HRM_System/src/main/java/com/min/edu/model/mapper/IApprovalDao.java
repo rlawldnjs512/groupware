@@ -34,6 +34,10 @@ public interface IApprovalDao {
 	String getDocNum(@Param("name") String name);
 
 	public List<Map<String, Object>> selectTree();
+	
+	public int insertDocument(Map<String, Object> map);
+	
+	public int insertApproval(Map<String, Object> map);
 
 
 

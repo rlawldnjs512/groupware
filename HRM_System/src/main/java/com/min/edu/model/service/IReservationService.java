@@ -16,5 +16,9 @@ public interface IReservationService {
 	public int insertReservation(Map<String, Object> map);
 	
 	public int insertRoom(Map<String, Object> map);
+	
+	public int deleteRoom(String room_id);
+	
+	public List<RoomDto> selectRoom();
 
 }

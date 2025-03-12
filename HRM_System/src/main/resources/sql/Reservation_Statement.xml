@@ -103,14 +103,19 @@ WHERE RESERV_ID=#{reserv_id} AND EMP_ID=#{emp_id}
 
 </delete>
 
-
+<select id="selectRoom" resultType="RoomDto">
+SELECT ROOM_ID , ROOM_NAME 
+	FROM ROOM r 
+</select>
 
 
 <insert id="insertRoom">
+<selectKey keyProperty="room_id" resultType="java.lang.Integer" order="BEFORE">
+SELECT ROOM_SEQ.NEXTVAL FROM DUAL
+</selectKey>
 INSERT INTO ROOM
 (ROOM_ID, ROOM_NAME)
 VALUES(#{room_id}, #{room_name})
-
 </insert>
 
 <delete id="deleteRoom">

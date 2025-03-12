@@ -1,11 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="header">
 <%
     String currentURI = request.getRequestURI();
 %>
 
    <nav>
-        <% if (currentURI.contains("servation")) { %>
+        <% if (currentURI.contains("servation") || currentURI.contains("Room")) { %>
         <ul class="nav flex-wrap border-transparent">
                 <li class="nav-item my-1">
                     <a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 active"
@@ -15,6 +16,12 @@
                     <a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 active"
                        href="./myReservation.do"> 나의 예약조회 </a>
                 </li>
+                <c:if test="${sessionScope.loginVo.role eq 'A'}">
+                <li class="nav-item my-1">
+                    <a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 active"
+                       href="./selectRoom.do"> 회의실 관리 </a>
+                </li>
+                </c:if>
             </ul>
         <% } else if (currentURI.contains("notice") || currentURI.contains("free") 
         		|| currentURI.contains("newNotice")

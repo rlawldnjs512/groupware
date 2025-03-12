@@ -80,12 +80,26 @@ public class ReservationController {
 		return "redirect:/myReservation.do";
 	}
 	
-	@PostMapping(value = "/insertRoom.do")
-	public String insertRoom(Map<String, Object> map) {
+	@GetMapping(value = "/selectRoom.do")
+	public String selectRoom(Model model,
+							HttpSession session) {
+		List<RoomDto> list = service.selectRoom();
+		model.addAttribute("lists",list);
 		
-		return "insertRoom";
+		return "selectRoom";
 	}
 	
+	@PostMapping(value = "/deleteRoom.do")
+	public String deleteRoom(String room_id) {
+		service.deleteRoom(room_id);
+		return "redirect:/selectRoom.do";
+	}
+	
+	@PostMapping(value = "/insertRoom.do")
+	public String insertRoom(@RequestParam Map<String, Object> map) {
+		service.insertRoom(map);
+		return "redirect:/selectRoom.do";
+	}
 	
 
 
