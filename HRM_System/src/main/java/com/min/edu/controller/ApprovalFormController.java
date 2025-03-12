@@ -93,6 +93,14 @@ public class ApprovalFormController {
 		
 	}
 	
+	@PostMapping(value = "/submitVacation.do")
+	public String submitVacation(@RequestParam List<String> lineEmp_id) {
+		System.out.println(lineEmp_id);
+		
+		return "redirect:/approval";
+	}
+	
+
 	
 	
 	

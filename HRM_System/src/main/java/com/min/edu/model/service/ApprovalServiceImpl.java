@@ -88,6 +88,15 @@ public class ApprovalServiceImpl implements IApprovalService {
 	}
 
 	@Override
+	public int insertDocument(Map<String, Object> map) {
+		return dao.insertDocument(map);
+	}
+
+	@Override
+	public int insertApproval(Map<String, Object> map) {
+		return dao.insertApproval(map);
+
+	@Override
 	public List<ApprovalDto> continuePreviewDoc(Map<String, Object> map) {
 		return dao.continuePreviewDoc(map);
 	}

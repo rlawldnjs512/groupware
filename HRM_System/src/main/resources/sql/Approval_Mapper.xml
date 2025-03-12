@@ -271,14 +271,38 @@ FROM EMPLOYEE
 ]]>
 </select>
 
-<!-- 문서 생성 -->
+<!-- 상신하기 +문서 생성 -->
 <insert id="insertDocument">
-<selectKey keyProperty="seq" resultType="java.lang.Integer" order="BEFORE">
-(SELECT DOCUMENT_SEQ.NEXTVAL FROM DUAL)
-</selectKey>
-INSERT INTO DOCUMENT
-(DOC_ID, EMP_ID, DOC_TYPE, TITLE, CONTENT, CREATE_DATE, DOC_STATUS, DOC_DATE, FILE_ID, DOC_NUM)
-VALUES(#{seq}, #{emp_id}, #{doc_type} , #{title}, #{content}, CURRENT_DATE, 'N', '', '', #{doc_num})
+<selectKey keyProperty="doc_id" resultType="Integer" order="BEFORE">
+		SELECT DOCUMENT_SEQ.NEXTVAL
+		FROM DUAL
+	</selectKey>
+	INSERT INTO DOCUMENT
+	    (DOC_ID, 
+	     EMP_ID,
+	     DOC_TYPE, 
+	     TITLE,
+	     CONTENT, 
+	     CREATE_DATE,
+	     DOC_STATUS, 
+	     DOC_DATE, 
+	     FILE_ID, 
+	     DOC_NUM)
+	VALUES
+	    (#{doc_id}, 
+	    #{emp_id},
+		#{doc_type}, 
+		#{title},
+		#{content}, 
+		CURRENT_DATE,
+		'N', 
+		NULL, 
+		0, 
+		CASE 
+			WHEN #{doc_type} = '휴가' THEN 'VACA'
+			WHEN #{doc_type} = '출장' THEN 'TRIP'
+			WHEN #{doc_type} = '보고서' THEN 'REPORT'
+		END || '_' || TO_CHAR(SYSDATE, 'YYYY') || '_' || DOCUMENT_SEQ.NEXTVAL)
 </insert>
 
 <!-- 결재 생성 -->
@@ -290,7 +314,7 @@ VALUES(#{seq}, #{emp_id}, #{doc_type} , #{title}, #{content}, CURRENT_DATE, 'N',
 	
 	INSERT INTO APPROVAL (APPRV_ID, DOC_ID, EMP_ID, APPRV_LEVEL, APPRV_STATUS, SIGN)
 	<foreach collection="approval" item="app" separator=" UNION ALL " index="idx">
-	SELECT #{apprv_id}+${idx}, #{doc_seq}, #{app.emp_id}, ${idx}+1, '진행중', #{app.sign,  jdbcType=VARCHAR} FROM DUAL
+	SELECT #{apprv_id}+${idx}, #{doc_id}, #{app.emp_id}, ${idx}+1, '진행중', #{app.sign,  jdbcType=VARCHAR} FROM DUAL
 	</foreach>
 	
 </insert>

@@ -77,7 +77,7 @@ class Hoon_JUnitTest {
 //		System.out.println(cnt);
 //	}
 	
-//	@Test
+	@Test
 	public void insertDocument() {
 		Map<String, Object> map = new HashMap<String, Object>(){{
 			put("emp_id", "20250050");
@@ -111,7 +111,7 @@ class Hoon_JUnitTest {
 			lists.add(dto2);
 			lists.add(dto3);
 			
-			put("doc_seq", "71");
+			put("doc_id", "71");
 			put("approval", lists);
 			put("apprv_id", 0);
 	}};
