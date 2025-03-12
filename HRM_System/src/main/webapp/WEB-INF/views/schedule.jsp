@@ -6,29 +6,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>일정관리</title>
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
-<script type="text/javascript" src="./js/calendar.js"></script>
-<link rel="stylesheet" href="./css/calendar.css">
+	<meta charset="UTF-8">
+	<title>일정관리</title>
+	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+	<link rel="stylesheet" href="./css/calendar.css">
+	<style>
+		.main-content {
+		    display: flex;
+		    flex-direction: column;
+		    height: calc(100vh - 100px); 
+		}
+		
+		#calendar {
+		    flex-grow: 1;
+		    width: 100%;
+		    height: 100%;
+		}
+	</style>
 </head>
-<style>
-	
-
-</style>
-
  <%@ include file="sidebar.jsp" %>
 <body>
-	<input type="hidden" id="emp_name" value="${sessionScope.loginVo.name}">
-	<input type="hidden" id="emp_id" value="${sessionScope.loginVo.emp_id}">
+
 	<div class="content" id="content">
-	<%@ include file="header.jsp" %>
-		
+	<%@ include file="header.jsp" %>	
+
 		<div class="main-content">
 			<div id='calendar'></div>
-		
-		</div>
-	</div>
+		</div> <!-- main-content -->
+	</div> <!-- content -->
+
+	<script>
+		document.addEventListener('DOMContentLoaded', async function(event) {
+			var calendarEl = document.getElementById('calendar');
+			
+			async function fetchEvents() {
+		        try {
+		            const response = await fetch('./schedule/reservation'); // API 호출
+		            if (!response.ok) {
+		                throw new Error('Network response was not ok');
+		            }
+		            const data = await response.json(); // JSON 변환
+		            console.log('Fetched events:', data);
+		            return data; // 데이터 반환
+		        } catch (error) {
+		            console.error('There was a problem with the fetch operation:', error);
+		            return []; // 오류 발생 시 빈 배열 반환
+		        }
+		    }
+
+			var calendar = new FullCalendar.Calendar(calendarEl, {
+				timeZone : 'UTC',
+				initialView : 'dayGridMonth',
+				height : '100%',
+				events : async function (fetchInfo, successCallback, failureCallback) {
+					console.log("Fetching events...");
+					
+					// API에서 이벤트 데이터를 비동기 가져오기
+		            let sampleData = await fetchEvents();
+	
+		            console.log("Sample events:", sampleData);
+	
+		            // FullCalendar에 맞게 데이터 매핑
+		            let events = sampleData.map(event => ({
+		                title: event.title,
+		                start: event.start,
+		            }));
+	
+		            // FullCalendar에 이벤트 데이터 전달
+		            successCallback(events);
+				},
+				editable : true,
+				selectable : true
+			});
+
+			calendar.render();
+		});
+	</script>
+
 
 </body>
 </html>

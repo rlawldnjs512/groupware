@@ -9,7 +9,7 @@
 	</select>
 	
 	<!-- 사원 1명의 휴가 정보 조회 -->
-	<select id="vacationListByEmpId" resultType="VacationDto">
+	<select id="vacationListByEmpId" resultType="Map">
 		SELECT LEAVE_ID, EMP_ID, START_DATE, END_DATE, LEAVE_TOTAL, LEAVE_USE, LEAVE_REMAIN
 			FROM VACATION
 			WHERE TRIM(EMP_ID) = TRIM(#{empId})
@@ -28,9 +28,9 @@
 	</select>
 	
 	<!-- 보상시간 적립 및 사용 -->
-	<update id="updateExtraTime" parameterType="Map">
+	<update id="updateExtraTime">
 		UPDATE VACATION SET EXTRA_TIME = EXTRA_TIME + #{extraTime}
-			WHERE TRIM(EMP_ID) = TRIM(#{empId})
+        	WHERE EMP_ID = #{empId}
 	</update>
 	
 	<!-- 남은 휴가 조회 -->
@@ -39,9 +39,6 @@
 			FROM VACATION
 			WHERE TRIM(EMP_ID) = TRIM(#{empId})
 	</select>
-	
-	<!-- 휴가 신청 -->
-	
 	
 	
 

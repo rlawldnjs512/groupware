@@ -2,36 +2,34 @@
 <div class="header">
 <%
     String currentURI = request.getRequestURI();
+	String commonClass = "btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 active";
 %>
 
-  
+   <nav>
         <% if (currentURI.contains("servation")) { %>
-        <ul class="nav flex-wrap border-transparent">
-                <li class="nav-item my-1">
-                    <a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 active"
-                       href="./reservation.do"> 회의실 예약 </a>
-                </li>
-                <li class="nav-item my-1">
-                    <a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 active"
-                       href="./myReservation.do"> 나의 예약조회 </a>
-                </li>
-            </ul>
-        <% } else if (currentURI.contains("notice") || currentURI.contains("free") 
-        		|| currentURI.contains("newNotice")
-        		|| currentURI.contains("newFree")
-				|| currentURI.contains("modifyNotice")
-				|| currentURI.contains("modifyFree")
-				|| currentURI.contains("replyFree")){%>
+	        <ul class="nav flex-wrap border-transparent">
+		        <li class="nav-item my-1">
+		            <a class="<%= commonClass %>" href="./reservation.do"> 회의실 예약 </a>
+		        </li>
+		        <li class="nav-item my-1">
+		            <a class="<%= commonClass %>" href="./myReservation.do"> 나의 예약조회 </a>
+		        </li>
+	    	</ul>
+        <% } else if (currentURI.contains("notice") 
+	        	   || currentURI.contains("free") 
+	        	   || currentURI.contains("newNotice")
+	        	   || currentURI.contains("newFree")
+				   || currentURI.contains("modifyNotice")
+				   || currentURI.contains("modifyFree")
+				   || currentURI.contains("replyFree")){%>
         	<ul class="nav flex-wrap border-transparent">
                 <li class="nav-item my-1">
-                    <a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 active"
-                       href="./notice.do"> 공지사항 </a>
+                    <a class="<%= commonClass %>" href="./notice.do"> 공지사항 </a>
                 </li>
                 <li class="nav-item my-1">
-                    <a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 active"
-                       href="./free.do"> 커뮤니티 </a>
+                    <a class="<%= commonClass %>" href="./free.do"> 커뮤니티 </a>
                 </li>
-            </ul>
+         </ul>
         <% } else if (currentURI.contains("myPage") || currentURI.contains("certification")
              ||   currentURI.contains("schedule")     ){%>
              
@@ -44,7 +42,7 @@
 				</li>
 				<li class="nav-item my-1">
 					<a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
-						    active" href="/schedule.do">
+						    active" href="./schedule.do">
 						일정 관리
 					</a>
 				</li>
@@ -84,17 +82,10 @@
 					class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 active"
 					href="./attendance"> 나의 근태 </a>
 				</li>
-				<li class="nav-item my-1"><a
-					class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 active"
-					href="./vacation"> 휴가 내역 조회 </a>
+				<li class="nav-item my-1">
+					<a class="<%= commonClass %>" href="./vacation"> 휴가 내역 조회 </a>
 				</li>
-			</ul>
+			 </ul>
         <% }%>
-        <ul>
-        
-        
-        </ul>
-        
-
+</nav>
 </div>
-
