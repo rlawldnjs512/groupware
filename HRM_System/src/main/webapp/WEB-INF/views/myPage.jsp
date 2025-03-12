@@ -14,28 +14,7 @@
 <%@ include file="sidebar.jsp"%>
 <body>
 	<div class="content" id="content">
-		<div class="header">
-		   <ul class="nav flex-wrap border-transparent">
-				<li class="nav-item my-1">
-					<a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
-							active" href="./mypage.do">
-						내 정보
-					</a>
-				</li>
-				<li class="nav-item my-1">
-					<a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
-						    active" href="/schedule">
-						일정 관리
-					</a>
-				</li>
-				<li class="nav-item my-1">
-					<a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1  
-						    active" href="./certification.do">
-						증명서 관리
-					</a>
-				</li>
-			</ul>
-		</div>
+		<%@ include file="header.jsp" %>
 		<div class="main-content">
 			<section class="myPage-content">
 				<form action="./profileUpload.do" method="POST" name="myPageFrm"
@@ -127,70 +106,110 @@
 
 	<!-- 수정 모달 -->
 	<div class="modal" id="modal">
-		<div class="modal-content">
-			<span class="close" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
 
-			<form action="./mypageupload.do" method="POST" id="editForm">
-				<table class="info-table">
+        <form action="./mypageupload.do" method="POST" id="editForm" onsubmit="return validateForm()">
+            <table class="info-table">
+		
+                <tr>
+                    <td><label for="emp_id">사원번호</label></td>
+                    <td><input type="text" id="emp_id" name="emp_id" value="${employee.emp_id}" disabled></td>
+                </tr>
+                <tr>
+                    <td><label for="name">이름</label></td>
+                    <td><input type="text" id="name" name="name" value="${employee.name}"></td>
+                </tr>
+                <tr>
+                    <td><label for="position">직위</label></td>
+                    <td><input type="text" id="position" name="position" value="${employee.position}" disabled></td>
+                </tr>
+                <tr>
+                    <td><label for="dept_name">부서</label></td>
+                    <td><input type="text" id="dept_name" name="dept_name" value="${employee.dept_name}" disabled></td>
+                </tr>
+                <tr>
+                    <td><label for="birth">생년월일</label></td>
+                    <td><input type="text" id="birth" name="birth" value="${employee.birth}"></td>
+                </tr>
+                <tr>
+                    <td><label for="phone">연락처</label></td>
+                    <td><input type="text" id="phone" name="phone" value="${employee.phone}"></td>
+                </tr>
+                <tr>
+                    <td><label for="tel">내선번호</label></td>
+                    <td><input type="text" id="tel" name="tel" value="${employee.tel}"></td>
+                </tr>
+                <tr>
+                    <td><label for="email">이메일</label></td>
+                    <td><input type="email" id="email" name="email" value="${employee.email}"></td>
+                </tr>
+                <tr>
+                    <td><label for="hire_date">입사일</label></td>
+                    <td><input type="text" id="hire_date" name="hire_date" value="${employee.hire_date}" disabled></td>
+                </tr>
 
-					<tr>
-						<td><label for="emp_id">사원번호</label></td>
-						<td><input type="text" id="emp_id" name="emp_id"
-							value="${employee.emp_id}" disabled></td>
-					</tr>
-					<tr>
-						<td><label for="name">이름</label></td>
-						<td><input type="text" id="name" name="name"
-							value="${employee.name}"></td>
-					</tr>
-					<tr>
-						<td><label for="position">직위</label></td>
-						<td><input type="text" id="position" name="position"
-							value="${employee.position}" disabled></td>
-					</tr>
-					<tr>
-						<td><label for="dept_name">부서</label></td>
-						<td><input type="text" id="dept_name" name="dept_name"
-							value="${employee.dept_name}" disabled></td>
-					</tr>
-					<tr>
-						<td><label for="birth">생년월일</label></td>
-						<td><input type="text" id="birth" name="birth"
-							value="${employee.birth}"></td>
-					</tr>
-					<tr>
-						<td><label for="phone">연락처</label></td>
-						<td><input type="text" id="phone" name="phone"
-							value="${employee.phone}"></td>
-					</tr>
-					<tr>
-						<td><label for="tel">내선번호</label></td>
-						<td><input type="text" id="tel" name="tel"
-							value="${employee.tel}"></td>
-					</tr>
-					<tr>
-						<td><label for="email">이메일</label></td>
-						<td><input type="email" id="email" name="email"
-							value="${employee.email}"></td>
-					</tr>
-					<tr>
-						<td><label for="hire_date">입사일</label></td>
-						<td><input type="text" id="hire_date" name="hire_date"
-							value="${employee.hire_date}" disabled></td>
-					</tr>
-					
-				</table>
-				<button type="submit" class="button-common">
-				<img src="images/chk.svg" alt="아이콘" style="width: 30px; height: 30px;">
-				</button>
-			</form>
-		</div>
-	</div>
+            </table>
+            <button type="submit" class="button-common">
+                <img src="images/chk.svg" alt="아이콘" style="width: 30px; height: 30px;">
+            </button>
+        </form>
+    </div>
+</div>
+
 
 </body>
 
-<!-- JavaScript -->
+
+
 <script>
+	
+function validateForm() {
+    var name = document.getElementById("name").value;
+    var birth = document.getElementById("birth").value;
+    var phone = document.getElementById("phone").value;
+    var email = document.getElementById("email").value;
+    var tel = document.getElementById("tel").value;
+
+    var namePattern = /^[a-zA-Z가-힣\s]+$/;
+    if (!namePattern.test(name)) {
+        alert("이름은 숫자나 특수문자를 사용할 수 없습니다.");
+        return false;
+    }
+
+    var birthPattern = /^\d{8}$/;
+    if (!birthPattern.test(birth)) {
+        alert("생년월일은 8자리 숫자 형식이어야 합니다. (예: 19761205)");
+        return false;
+    }
+
+    var phonePattern = /^\d{3}-\d{4}-\d{4}$/;
+    if (!phonePattern.test(phone)) {
+        alert("연락처는 xxx-xxxx-xxxx 형식이어야 합니다.");
+        return false;
+    }
+
+    var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!emailPattern.test(email)) {
+        alert("이메일은 (아이디)@(주소) 형식이어야 합니다.");
+        return false;
+    }
+
+
+
+    return true;  
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

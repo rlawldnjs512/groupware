@@ -11,14 +11,14 @@
 </head>
 
 
-<body>
 
-<!-- 사이드바 포함 -->
+
+
 <%@ include file="sidebar.jsp"%>
-
+<body>
 <div class="content" id="content">
-    <!-- 헤더 포함 -->
-    <%@ include file="header.jsp"%>
+  
+
 
     <div class="main-content">
         <fieldset class="btn-container">
@@ -106,8 +106,6 @@
             </table>
         </div>
 
-			<!-- 페이징 처리: searchEmployee.do 요청일 때 -->
-			<!-- 페이징 처리: 검색 결과가 있고, 최소 1페이지 이상일 때 -->
 <c:if test="${not empty type && not empty keyword && page.totalPage >= 1}">
     <div class="pagination-container text-center">
         <ul class="pagination pagination-lg">
@@ -226,7 +224,7 @@
 </div>
 
 <script>
-    // 로그인한 사용자의 role을 JSP에서 EL로 가져오기
+    
     var userRole = '${sessionScope.loginVo.role}'; // 로그인한 사용자 role 값
 
     // 모달을 닫는 함수 정의
@@ -283,6 +281,6 @@
     }
 </script>
 
-
+</div>
 </body>
 </html>
