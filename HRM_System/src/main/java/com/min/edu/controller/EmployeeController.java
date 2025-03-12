@@ -153,7 +153,7 @@ public class EmployeeController {
 
 		int n = service.updateUser(inVo);
 		if (n == 1) {
-			response.getWriter().print("<script>alert('수정완료'); window.history.back();</script>");
+			response.getWriter().print("<script>alert('수정완료'); location.href='./emp.do';</script>");
 
 		} else {
 			response.getWriter().print("<script>alert('수정실패'); window.history.back();</script>");

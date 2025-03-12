@@ -66,7 +66,7 @@
             	   || currentURI.contains("continueTrip")){%>
              <ul class="nav flex-wrap border-transparent">
 	            <li class="nav-item my-1">
-	            	<a class="<%= commonClass %>" href="./approval.do"> 결재 홈 </a>
+	            	<a class="<%= commonClass %>" href="./approval.do">결제 홈</a>
 	            </li>
 	            <li class="nav-item my-1 dropdown">
 	            	<a class="<%= dropdownClass %>" href="./approval_mine.do"  id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 내 결재 </a>
