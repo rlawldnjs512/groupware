@@ -63,76 +63,78 @@ th, td {
 	<div class="content" id="content">
         <%@ include file="header.jsp"%>
         <div class="main-content">
-            <div class="card shadow-lg p-4">
-                <h2 class="text-center mb-4">출장서</h2>
-                <div>
-                	<div style="float: left; width: 30%">
-						<table class="table table-borderless w-100 mb-3">
-							<tr>
-								<th rowspan="2">기안자</th>
-								<th>소속부서</th>
-								<th>직급</th>
-								<th>성명</th>
-								<th>사원번호</th>
-							</tr>
-							<tr>
-								<td>${loginVo.dept_name}</td>
-								<td>${loginVo.position}</td>
-								<td>${loginVo.name}</td>
-								<td>${loginVo.emp_id}</td>
-							</tr>
-						</table>
+        	<form action="./TempTrip.do" method="post" enctype="multipart/form-data">
+	            <div class="card shadow-lg p-4">
+	                <h2 class="text-center mb-4">출장서</h2>
+	                <div>
+	                	<div style="float: left; width: 30%">
+							<table class="table table-borderless w-100 mb-3">
+								<tr>
+									<th rowspan="2">기안자</th>
+									<th>소속부서</th>
+									<th>직급</th>
+									<th>성명</th>
+									<th>사원번호</th>
+								</tr>
+								<tr>
+									<td>${loginVo.dept_name}</td>
+									<td>${loginVo.position}</td>
+									<td>${loginVo.name}</td>
+									<td>${loginVo.emp_id}</td>
+								</tr>
+							</table>
+						</div>
+						<div style="float: right; width: 60%">
+							<table class="table table-borderless mb-3">
+								<tr>
+									<th rowspan="2">결재</th>
+									<th>본인</th>
+									<th>결재자1</th>
+									<th>결재자2</th>
+									<th>결재자3</th>
+								</tr>
+								<tr id="approvalLineTd_1">
+									<td id="approvalLineTd_2"><img id="signatureImage"
+										src="${signSaved}" width="80" height="75"
+										style="border: 1px solid black;" /></td>
+								</tr>
+							</table>
+						</div>
+	                </div>
+	                
+	                <table class="table table-borderless mb-3">
+	                	<tr>
+							<th>제목</th>
+							<th><input type="text" id="title" name="title"
+								class="form-control" placeholder="제목을 입력하세요."></th>
+						</tr>
+						<tr>
+							<th>기간</th>
+							<th style="text-align: left;">
+								<input type="date" class="form-control" name="trip_start" style="width: 30%; display: inline-block;"> ~ <input type="date" class="form-control" name="trip_end" style="width: 30%; display: inline-block;">
+							</th>
+						</tr>
+						<tr>
+							<th>지역</th>
+							<th>
+								<textarea id="place" name="destination" class="form-control" rows="5" placeholder="지역을 입력하세요."></textarea>
+							</th>
+						</tr>
+						<tr>
+							<th>목적</th>
+							<th>
+								<textarea id="reason" name="content" class="form-control" rows="5" placeholder="목적을 입력하세요."></textarea>
+							</th>
+						</tr>
+	                </table>
+	                <div class="d-flex justify-content-end mb-3">
+						<button type="button" id="line" onclick="windowOpen()" class="btn btn-light-primary ms-2">결재선 선택</button>
+						<button type="submit" class="btn btn-light-primary ms-2">임시 저장</button>
+						<button type="button" class="btn btn-light-primary ms-2" onclick="history.back(-1)">취소</button>
+						<button type="button" class="btn btn-light-primary ms-2">상신 하기</button>
 					</div>
-					<div style="float: right; width: 60%">
-						<table class="table table-borderless mb-3">
-							<tr>
-								<th rowspan="2">결재</th>
-								<th>본인</th>
-								<th>결재자1</th>
-								<th>결재자2</th>
-								<th>결재자3</th>
-							</tr>
-							<tr id="approvalLineTd_1">
-								<td id="approvalLineTd_2"><img id="signatureImage"
-									src="${signSaved}" width="80" height="75"
-									style="border: 1px solid black;" /></td>
-							</tr>
-						</table>
-					</div>
-                </div>
-                
-                <table class="table table-borderless mb-3">
-                	<tr>
-						<th>제목</th>
-						<th><input type="text" id="title" name="title"
-							class="form-control" placeholder="제목을 입력하세요."></th>
-					</tr>
-					<tr>
-						<th>기간</th>
-						<th style="text-align: left;">
-							<input type="date" class="form-control" style="width: 30%; display: inline-block;"> ~ <input type="date" class="form-control" style="width: 30%; display: inline-block;">
-						</th>
-					</tr>
-					<tr>
-						<th>지역</th>
-						<th>
-							<textarea id="place" name="content" class="form-control" rows="5" placeholder="지역을 입력하세요."></textarea>
-						</th>
-					</tr>
-					<tr>
-						<th>목적</th>
-						<th>
-							<textarea id="reason" name="content" class="form-control" rows="5" placeholder="목적을 입력하세요."></textarea>
-						</th>
-					</tr>
-                </table>
-                <div class="d-flex justify-content-end mb-3">
-					<button id="line" onclick="windowOpen()" class="btn btn-light-primary ms-2">결재선 선택</button>
-					<button class="btn btn-light-primary ms-2" onclick="/vacationSave.do">임시 저장</button>
-					<button class="btn btn-light-primary ms-2" onclick="history.back(-1)">취소</button>
-					<button class="btn btn-light-primary ms-2">상신 하기</button>
-				</div>
-            </div>
+	            </div>
+			</form>
         </div>
 	</div>
 	<script type="text/javascript">

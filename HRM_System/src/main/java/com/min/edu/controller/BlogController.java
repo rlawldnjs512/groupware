@@ -96,7 +96,6 @@ public class BlogController {
 	
 	@PostMapping(value = "/submitNotice.do")
 	public String noticeBlog_insert(Model model, HttpSession session,
-	                                 RedirectAttributes redirectAttributes,
 	                                 @RequestParam("title") String title,
 	                                 @RequestParam("content") String content,
 	                                 @RequestParam("expired") String expired,
@@ -156,7 +155,6 @@ public class BlogController {
 
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	            redirectAttributes.addFlashAttribute("errorMessage", "파일 업로드 중 오류가 발생했습니다.");
 	            return "redirect:/notice.do";
 	        }
 	    }

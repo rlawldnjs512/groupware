@@ -41,6 +41,35 @@
     <div class="content" id="content">
         <%@ include file="header.jsp" %>
         <div class="main-content">
+			<!-- 결재권자로서 내가 결재해야 할 문서  -->
+			<div>
+        		<table>
+        			<thead>
+	        			<tr>
+	        				<th>발급번호</th>
+	        				<th>유형</th>
+	        				<th>제목</th>
+	        				<th>작성자</th>
+	        				<th>결재상태</th>
+	        				<th>결재일</th>
+	        				<th>결재하기</th>
+	        			</tr>
+        			</thead>
+        			<tbody>
+        				<tr>
+        					<td></td>
+        					<td></td>
+        					<td></td>
+        					<td></td>
+        					<td></td>
+        					<td></td>
+        					<td>
+        						<button>결재</button>
+        					</td>
+        				</tr>
+        			</tbody>
+        		</table>
+        	</div>
 
         </div>
     </div>

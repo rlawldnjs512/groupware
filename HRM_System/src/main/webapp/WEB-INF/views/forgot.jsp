@@ -183,22 +183,18 @@
                 confirmButtonColor: '#FF0000'
             });
         }
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    }    
     
 </script>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+

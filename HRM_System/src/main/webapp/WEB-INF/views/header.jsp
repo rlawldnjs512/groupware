@@ -6,7 +6,7 @@
 	String commonClass = "btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 active";
 	String dropdownClass = "btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 dropdown-toggle";
 %>
-   <nav>
+
         <% if (currentURI.contains("servation") || currentURI.contains("Room")) { %>
 	        <ul class="nav flex-wrap border-transparent">
 		        <li class="nav-item my-1">
@@ -59,13 +59,16 @@
             	   || currentURI.contains("reportApproval")
             	   || currentURI.contains("approval_receive")
             	   || currentURI.contains("temp_store")
-            	   || currentURI.contains("dept_store")){%>
+            	   || currentURI.contains("dept_store")
+            	   || currentURI.contains("continueLeave")
+            	   || currentURI.contains("continueReport")
+            	   || currentURI.contains("continueTrip")){%>
              <ul class="nav flex-wrap border-transparent">
 	            <li class="nav-item my-1">
-	            	<a class="<%= commonClass %>" href="#" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 결재 홈 </a>
+	            	<a class="<%= commonClass %>" href="./approval.do">결제 홈</a>
 	            </li>
 	            <li class="nav-item my-1 dropdown">
-	            	<a class="<%= dropdownClass %>" href="./approval_mine.do"> 내 결재 </a>
+	            	<a class="<%= dropdownClass %>" href="./approval_mine.do"  id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 내 결재 </a>
 	            	<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 			            <li><a class="dropdown-item" href="./approval_pending.do">결재 대기함</a></li>
 			            <li><a class="dropdown-item" href="./approval_receive.do">결재 수신함</a></li>
@@ -94,5 +97,8 @@
 				</li>
 			 </ul>
         <% }%>
-</nav>
+
 </div>
+
+<!-- Bootstrap JS 로드 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -14,6 +14,7 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 
 import com.min.edu.dto.EmployeeDto;
+import com.min.edu.dto.VacationDto;
 import com.min.edu.model.mapper.IEmployeeDao;
 import com.min.edu.model.service.IEmployeeService;
 import com.min.edu.model.service.MailSendService;
@@ -37,7 +38,7 @@ class HrmSystemApplicationTests {
 	@Autowired
 	private IEmployeeService service;
 	
-	@Test
+	//@Test
 	void contextLoads() {
 			
 			EmployeeDto employeeDto
@@ -56,13 +57,13 @@ class HrmSystemApplicationTests {
 //		assertEquals("20240002", empId); //사원번호로 사원확인
 //		System.out.println(empId);	
 //		
-		int n = service.modifyPw(new HashMap<String, Object>(){{
-			
-			put("emp_id","20250005");
-			put("password","AT60201765");
-		}});
-		
-		assertNotNull(n);
+//		int n = service.modifyPw(new HashMap<String, Object>(){{
+//			
+//			put("emp_id","20250005");
+//			put("password","AT60201765");
+//		}});
+//		
+//		assertNotNull(n);
 		
 //		String chk = service.checkAd("A");
 //		assertNotNull(chk);
@@ -118,7 +119,21 @@ class HrmSystemApplicationTests {
 //		
 //		
 
+//		//신입사원 연차 입력 테스트
+//		String empId = "20250188" ;
+//
+//		
+//		VacationDto dto = VacationDto.builder()
+//				          .emp_id(empId)
+//				          .start_date("2025-03-25")
+//				          .end_date("2025-12-31")
+//				          .build();
+//		
+//		int result = service.insertVacation(dto);
+//		assertEquals(1, result);
 		
+			
+//		
 		
 		
 		

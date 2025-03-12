@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.min.edu.dto.ApprovalDto;
 import com.min.edu.dto.DocumentDto;
+import com.min.edu.dto.FileUpDto;
+import com.min.edu.dto.LeaveDto;
 import com.min.edu.dto.SignDto;
+import com.min.edu.dto.TripDto;
 import com.min.edu.model.mapper.IApprovalDao;
 
 import lombok.RequiredArgsConstructor;
@@ -33,6 +36,30 @@ public class ApprovalServiceImpl implements IApprovalService {
 	@Override
 	public int insertSaveDoc(DocumentDto dto) {
 		return dao.insertSaveDoc(dto);
+	}
+	@Override
+	public int insertTempFile(FileUpDto dto) {
+		return dao.insertTempFile(dto);
+	}
+	@Override
+	public int getDocId() {
+		return dao.getDocId();
+	}
+	@Override
+	public int updateTempFileExist(int docId) {
+		return dao.updateTempFileExist(docId);
+	}
+	@Override
+	public int insertSaveTrip(TripDto dto) {
+		return dao.insertSaveTrip(dto);
+	}
+	@Override
+	public int insertSaveLeave(LeaveDto dto) {
+		return dao.insertSaveLeave(dto);
+	}
+	@Override
+	public String getDocType(int doc_id) {
+		return dao.getDocType(doc_id);
 	}
 
 	@Override
@@ -68,6 +95,35 @@ public class ApprovalServiceImpl implements IApprovalService {
 	@Override
 	public int insertApproval(Map<String, Object> map) {
 		return dao.insertApproval(map);
+
+	@Override
+	public List<ApprovalDto> continuePreviewDoc(Map<String, Object> map) {
+		return dao.continuePreviewDoc(map);
+	}
+
+	@Override
+	public TripDto continuePrviewTrip(int doc_id) {
+		return dao.continuePrviewTrip(doc_id);
+	}
+
+	@Override
+	public int insertApprovalDoc(DocumentDto dto) {
+		return dao.insertApprovalDoc(dto);
+	}
+
+	@Override
+	public int insertTempDoc(int doc_id) {
+		return dao.insertTempDoc(doc_id);
+	}
+
+	@Override
+	public int deleteSaveTrip(int doc_id) {
+		return dao.deleteSaveTrip(doc_id);
+	}
+
+	@Override
+	public int deleteSaveLeave(int doc_id) {
+		return dao.deleteSaveLeave(doc_id);
 	}
 
 
