@@ -41,22 +41,79 @@
     <div class="content" id="content">
         <%@ include file="header.jsp" %>
         <div class="main-content">
-        	
+        	<!-- 결재 상신 전에 문서 임시저장 장소 -->
         	<div>
         		<table>
-        			<tr>
-        				<th>발급번호</th>
-        				<th>유형</th>
-        				<th>제목</th>
-        				<th>승인상태</th>
-        				<th></th>
-        				<th></th>
-        			</tr>
+        			<thead>
+	        			<tr>
+	        				<th>발급번호</th>
+	        				<th>유형</th>
+	        				<th>제목</th>
+	        				<th>작성자</th>
+	        				<th>승인상태</th>
+	        				<th>이어하기</th>
+	        				<th>삭제</th>
+	        			</tr>
+        			</thead>
+        			<tbody>
+        				<c:forEach var="vo" items="${lists}">
+	        				<tr>
+	        					<td>${vo.doc_num}</td>
+	        					<td>${vo.doc_type}</td>
+	        					<td>${vo.title}</td>
+	        					<td>${loginVo.name}</td>
+	        					<c:if test="${vo.doc_status eq 'T'}">
+		        					<td>
+		        						임시저장
+		        					</td>
+	        					</c:if>
+	        					<td>
+	        						<input type="button" onclick="continueTemp('${vo.doc_id}', '${vo.doc_type}')" value="보기">
+	        					</td>
+	        					<td>
+	        						<input type="button" onclick="deleteTemp('${vo.doc_id}', '${vo.doc_type}')" value="삭제">
+	        					</td>
+	        				</tr>
+        				</c:forEach>
+        			</tbody>
         		</table>
         	</div>
-        	
-        	
         </div>
     </div>
 </body>
+<script type="text/javascript">
+	function continueTemp(doc_id,doc_type) {
+	    $.ajax({
+	        type: "GET",
+	        url: "/continueTemp.do",
+	        data: { 
+	            doc_id: doc_id,
+	            doc_type: doc_type
+	        },
+	        success: function(response) {
+	            window.location.href = "/continueTemp.do?doc_id=" + doc_id + "&doc_type=" + doc_type;
+	        },
+	        error: function(xhr, status, error) {
+	            alert("수정 페이지로 이동하는 중 오류 발생: " + error);
+	        }
+	    });
+	}
+	
+	function deleteTemp(doc_id,doc_type) {
+	    $.ajax({
+	        type: "GET",
+	        url: "/deleteTemp.do",
+	        data: { 
+	            doc_id: doc_id,
+	            doc_type: doc_type
+	        },
+	        success: function(response) {
+	            window.location.href = "/deleteTemp.do?doc_id=" + doc_id + "&doc_type=" + doc_type;
+	        },
+	        error: function(xhr, status, error) {
+	            alert("수정 페이지로 이동하는 중 오류 발생: " + error);
+	        }
+	    });
+	}
+</script>
 </html>

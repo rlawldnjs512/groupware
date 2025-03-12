@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>휴가원 신청</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css">
+<title>출장 신청</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/approval.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -36,6 +36,16 @@
 	box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary), 0.5);
 }
 
+.ck-editor {
+	min-height: 500px;
+}
+
+.ck-editor__editable_inline {
+	min-height: 500px; /* 최소 높이 설정 */
+	max-height: 600px; /* 최대 높이 설정 */
+	overflow-y: auto; /* 높이를 넘어서면 스크롤 */
+}
+
 th, td {
 	align-content: center;
 }
@@ -50,14 +60,14 @@ th, td {
 </head>
 <%@ include file="sidebar.jsp" %>
 <body>
-    <div class="content" id="content">
-        <%@ include file="header.jsp" %>
+	<div class="content" id="content">
+        <%@ include file="header.jsp"%>
         <div class="main-content">
-        	<form action="./TempLeave.do" method="post" enctype="multipart/form-data">
-	            <div class="card p-4" style="width: 1300px;">
-	                <h2 class="text-center mb-4">휴가원</h2>
+        	<form action="./TempTrip.do" method="post" enctype="multipart/form-data">
+	            <div class="card shadow-lg p-4">
+	                <h2 class="text-center mb-4">출장서</h2>
 	                <div>
-		                <div style="float: left; width: 30%">
+	                	<div style="float: left; width: 30%">
 							<table class="table table-borderless w-100 mb-3">
 								<tr>
 									<th rowspan="2">기안자</th>
@@ -90,45 +100,48 @@ th, td {
 								</tr>
 							</table>
 						</div>
-					</div>
-	
-					<table class="table table-borderless mb-3">
-						<tr>
-							<th>제목</th>
-							<th><input type="text" id="title" name="title"
-								class="form-control" placeholder="제목을 입력하세요."></th>
-						</tr>
-						<tr>
-							<th>종류</th>
-							<th style="text-align: left;">
-								<input type="radio" id="morning" name="type" value="오전반차" class="form-check-input"> <label for="morning" class="form-check-label">오전반차</label>
-		                        <input type="radio" id="afternoon" name="type" value="오후반차" class="form-check-input ms-2"> <label for="afternoon" class="form-check-label">오후반차</label>
-		                        <input type="radio" id="full" name="type" value="연차" class="form-check-input ms-2"> <label for="full" class="form-check-label">연차</label>
-							</th>
-						</tr>
-						<tr>
-							<th>기간</th>
-							<th style="text-align: left;">
-								<input type="date" class="form-control" name="leave_start" style="width: 30%; display: inline-block;"> ~ <input type="date" class="form-control" name="leave_end" style="width: 30%; display: inline-block;">
-							</th>
-						</tr>
-						<tr>
-							<th>사유</th>
-							<th>
-								<textarea id="reason" name="content" class="form-control" rows="5" placeholder="사유를 입력하세요."></textarea>
-							</th>
-						</tr>
-					</table>
+	                </div>
+	                
+	                <table class="table table-borderless mb-3">
+	                	<c:forEach var="vo" items="${reportDto}">
+		                	<tr>
+								<th>제목</th>
+								<th><input type="text" id="title" name="title" value="${vo.title}"
+									class="form-control" placeholder="제목을 입력하세요."></th>
+							</tr>
+							<tr>
+								<th>기간</th>
+								<th style="text-align: left;">
+									<input type="date" class="form-control" name="trip_start" 
+											style="width: 30%; display: inline-block;" value="${tripDto.trip_start}">
+									 ~ 
+									<input type="date" class="form-control" name="trip_end" 
+											style="width: 30%; display: inline-block;" value="${tripDto.trip_end}">
+								</th>
+							</tr>
+							<tr>
+								<th>지역</th>
+								<th>
+									<textarea id="place" name="destination" class="form-control" rows="5" placeholder="지역을 입력하세요.">${tripDto.destination}</textarea>
+								</th>
+							</tr>
+							<tr>
+								<th>목적</th>
+								<th>
+									<textarea id="reason" name="content" class="form-control" rows="5" placeholder="목적을 입력하세요.">${vo.content}</textarea>
+								</th>
+							</tr>
+						</c:forEach>
+	                </table>
 	                <div class="d-flex justify-content-end mb-3">
 						<button type="button" id="line" onclick="windowOpen()" class="btn btn-light-primary ms-2">결재선 선택</button>
-						<button type="submit" class="btn btn-light-primary ms-2">임시 저장</button>
 						<button type="button" class="btn btn-light-primary ms-2" onclick="history.back(-1)">취소</button>
 						<button type="button" class="btn btn-light-primary ms-2">상신 하기</button>
 					</div>
 	            </div>
 			</form>
         </div>
-    </div>
+	</div>
 	<script type="text/javascript">
 		function line(approvalLine) {
 			console.log(approvalLine)
