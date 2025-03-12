@@ -23,8 +23,8 @@ public class LeaveServiceImpl implements ILeaveService {
 	}
 
 	@Override
-	public List<Map<String, Object>> leaveListByEmpId(String empId) {
-		return leaveDao.leaveListByEmpId(empId);
+	public List<Map<String, Object>> leaveListByEmpId(String empId, String startDate, String endDate) {
+		return leaveDao.leaveListByEmpId(empId, startDate, endDate);
 	}
 
 }

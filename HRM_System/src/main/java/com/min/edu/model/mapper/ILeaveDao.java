@@ -10,6 +10,6 @@ public interface ILeaveDao {
 	
 	public List<Map<String, Object>> leaveList();
 	
-	public List<Map<String, Object>> leaveListByEmpId(String empId);
+	public List<Map<String, Object>> leaveListByEmpId(String empId, String startDate, String endDate);
 	
 }

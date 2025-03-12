@@ -22,6 +22,10 @@
 			ON l.DOC_ID = d.DOC_ID 
 			WHERE TRIM(EMP_ID) = TRIM(#{empId})
 			AND DOC_TYPE = '휴가'
+			<if test="startDate != null and endDate != null">
+				AND LEAVE_START &gt;= TO_DATE(#{startDate}, 'YYYY-MM-DD')
+				AND LEAVE_START &lt;= TO_DATE(#{endDate}, 'YYYY-MM-DD')
+			</if>
 			ORDER BY LEAVE_START DESC
 	</select>
 

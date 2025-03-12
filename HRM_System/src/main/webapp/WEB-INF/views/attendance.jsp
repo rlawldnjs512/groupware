@@ -92,6 +92,37 @@
 		</div> <!-- main-content -->
 	</div>	<!-- content -->
 	
+	<!-- 모달 창 추가 -->
+	<div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title" id="eventModalLabel">근무 정보</h5>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	            </div>
+	            <div class="modal-body">
+	                <p><img src="./images/calendar.svg"> <span id="modalEventTitle" style="font-weight: bold;"></span></p>
+	                <p>
+	                	<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="#17C653" class="bi bi-circle-fill" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/></svg>
+	                		<Strong>Start</Strong>
+	                	<span id="modalEventStart"></span>
+	                </p>
+	                <p>
+	                	<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="#F82457" class="bi bi-circle-fill" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/></svg>
+	                		<Strong>End</Strong>
+	                	<span id="modalEventEnd"></span>
+	                </p>
+	                <p><img src="./images/etc.svg"><span id="modalMemo"></span></p>
+	            </div>
+	            
+	            
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	
 	<script>
 		document.addEventListener('DOMContentLoaded', async function (event) {
 		    var calendarEl = document.getElementById('calendar');
@@ -103,7 +134,6 @@
 		                throw new Error('Network response was not ok');
 		            }
 		            const data = await response.json(); // JSON 변환
-		            console.log('Fetched events:', data);
 		            return data; // 데이터 반환
 		        } catch (error) {
 		            console.error('There was a problem with the fetch operation:', error);
@@ -123,23 +153,69 @@
 		            right: 'today'
 		        },
 		        events: async function (fetchInfo, successCallback, failureCallback) {
-		            console.log("Fetching events...");
-	
 		            // API에서 이벤트 데이터를 비동기 가져오기
 		            let sampleData = await fetchEvents();
 	
-		            console.log("Sample events:", sampleData);
-	
 		            // FullCalendar에 맞게 데이터 매핑
 		            let events = sampleData.map(event => ({
-		                title: event.title,
+		            	title: event.title ?? "",
 		                start: event.start,
-		                end: event.end
+		                end: event.end,
+		                extendedProps: {
+		                    useTime: event.useTime ?? "" 
+		                }
 		            }));
 	
 		            // FullCalendar에 이벤트 데이터 전달
 		            successCallback(events);
-		        }
+		        },
+		        eventClick: function(info) {
+		        	
+		        	function formatDate(date) {
+		                if (!date) return "";
+
+		                let utcDate = new Date(date);  // UTC 시간을 기준으로 Date 객체 생성
+		                // UTC 시간에 9시간 더해서 한국 시간으로 변환
+		                let localDate = new Date(utcDate.getTime() + ((-9) * 60 * 60 * 1000));
+		                
+		                let options = { 
+		                    year: 'numeric',  // 2025
+		                    month: 'long',    // March
+		                    day: 'numeric',   // 11
+		                    hour: 'numeric',  // 8
+		                    minute: '2-digit',// 50
+		                    hour12: true      // AM/PM 형식
+		                };
+
+		                let formattedDate = localDate.toLocaleString('en-US', options);
+		                return formattedDate.replace(',', '').replace(' at', ' -'); // ' at'을 ' -'로 변경
+		            }
+		        	
+		            // 보상시간 사용했으면 '보상시간 O시간 사용' 출력하기
+		            const useTime = info.event.extendedProps.useTime;
+		            let memoText = "";  // 사용하지 않았을 때 기본값
+
+		            if (useTime) {
+		                memoText = "보상시간 " + useTime + "시간 사용";
+		            }
+		            
+		        	document.getElementById('modalEventTitle').textContent = info.event.title || "";
+		            document.getElementById('modalEventStart').textContent = formatDate(info.event.start);
+		            document.getElementById('modalEventEnd').textContent = info.event.end ? formatDate(info.event.end) : "";
+		            document.getElementById('modalMemo').textContent = memoText;
+		            
+	                // 4️⃣ 모달 표시 (Bootstrap 사용)
+	                var eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
+	                eventModal.show();
+	            },
+	            eventMouseEnter: function(info) {
+	                info.el.style.backgroundColor = "rgba(0, 123, 255, 0.7)"; // hover 시 색상 변경
+	                info.el.style.color = "white";
+	            },
+	            eventMouseLeave: function(info) {
+	                info.el.style.backgroundColor = ""; // 원래대로 복구
+	                info.el.style.color = "";
+	            }
 		    });
 	
 		    // 캘린더 렌더링

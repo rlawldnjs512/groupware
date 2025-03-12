@@ -128,7 +128,7 @@ public class AttendanceController {
 		EmployeeDto loginVo = (EmployeeDto)session.getAttribute("loginVo");
 		String empId = loginVo.getEmp_id();
 		List<Map<String, Object>> list = attendanceService.getCalendar(empId);
-		
+		System.out.println(list);
 		return ResponseEntity.ok(list);
 	}
 	

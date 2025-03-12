@@ -1,7 +1,7 @@
+<%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,7 +37,7 @@
 						<input type="date" id="startDate">
 						<p>~</p>
 						<input type="date" id="endDate">
-						<button type="submit">조회</button>
+						<button id="searchBtn">조회</button>
 					</div>
 				</div> <!-- card-body -->
 			</div> <!-- card -->
@@ -46,25 +46,36 @@
 				<thead class="table-light">
 					<tr>
 						<td>번호</td>
-						<td>근태명</td>
+						<td>휴가 유형</td>
 						<td>기간</td>
 					</tr>
 				</thead>
-				<tbody class="table-group-divider">
-					<tr>
-						<c:forEach var="leave" items="${leaveList}" varStatus="status">
-							<tr>
-								<td>${status.index + 1}</td>
-								<td>${leave['TYPE']}</td>
-								<td>${leave['LEAVE_START']} ~ ${leave['LEAVE_END']}</td>
-							</tr>
-						</c:forEach>
-					</tr>
-				</tbody>
+				<tbody id="leaveTableBody">
+			    	<c:forEach var="leave" items="${leaveList}" varStatus="status">
+				        <tr>
+				            <td>${status.index + 1}</td>
+				            <td>${leave.TYPE}</td>
+				            <td>${leave.LEAVE_START} ~ ${leave.LEAVE_END}</td>
+				        </tr>
+				    </c:forEach>   
+			    </tbody>
 			</table>
-			
 		</div> <!-- main-content -->
 	</div> <!-- content -->
+	
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			const searchBtn = document.getElementById("searchBtn");
+		    searchBtn.addEventListener("click", function() {
+		        // 입력 요소 존재 여부 확인
+		        const startDate = document.getElementById("startDate").value;
+		        const endDate = document.getElementById("endDate").value;
+		        
+		        console.log(`요청 정보: startDate=${startDate}, endDate=${endDate}`);
+		        
+		    });
+		});
+	</script>
 	
 	
 	
