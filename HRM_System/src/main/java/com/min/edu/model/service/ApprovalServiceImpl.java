@@ -60,5 +60,15 @@ public class ApprovalServiceImpl implements IApprovalService {
 		return dao.selectTree();
 	}
 
+	@Override
+	public int insertDocument(Map<String, Object> map) {
+		return dao.insertDocument(map);
+	}
+
+	@Override
+	public int insertApproval(Map<String, Object> map) {
+		return dao.insertApproval(map);
+	}
+
 
 }

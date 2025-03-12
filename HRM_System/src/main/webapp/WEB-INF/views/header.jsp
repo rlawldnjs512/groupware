@@ -7,7 +7,7 @@
 	String dropdownClass = "btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 dropdown-toggle";
 %>
    <nav>
-        <% if (currentURI.contains("servation")) { %>
+        <% if (currentURI.contains("servation") || currentURI.contains("Room")) { %>
 	        <ul class="nav flex-wrap border-transparent">
 		        <li class="nav-item my-1">
 		            <a class="<%= commonClass %>" href="./reservation.do"> 회의실 예약 </a>

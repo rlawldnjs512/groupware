@@ -1,19 +1,18 @@
 package com.min.edu.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.min.edu.dto.ApprovalDto;
 import com.min.edu.dto.DocumentDto;
 import com.min.edu.dto.EmployeeDto;
-import com.min.edu.dto.SignDto;
-import com.min.edu.model.mapper.IEmployeeDao;
 import com.min.edu.model.service.IApprovalService;
-import com.min.edu.model.service.IEmployeeService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -59,6 +58,14 @@ public class ApprovalFormController {
 		
 		return "redirect:/vacationApproval";
 	}
+	
+	@PostMapping(value = "/submitVacation.do")
+	public String submitVacation(@RequestParam List<String> lineEmp_id) {
+		System.out.println(lineEmp_id);
+		
+		return "redirect:/approval";
+	}
+	
 	
 	@GetMapping(value = "/tripForm.do")
 	public String trip_form() {

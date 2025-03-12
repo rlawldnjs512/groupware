@@ -38,7 +38,7 @@ public interface IApprovalDao {
 	public int insertDocument(Map<String, Object> map);
 	
 	public int insertApproval(Map<String, Object> map);
-
+	
 
 
 }

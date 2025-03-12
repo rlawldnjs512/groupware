@@ -124,7 +124,7 @@ th, td {
 					<button id="line" onclick="windowOpen()" class="btn btn-light-primary ms-2">결재선 선택</button>
 					<button class="btn btn-light-primary ms-2" onclick="/vacationSave.do">임시 저장</button>
 					<button class="btn btn-light-primary ms-2" onclick="history.back(-1)">취소</button>
-					<button class="btn btn-light-primary ms-2">상신 하기</button>
+					<button class="btn btn-light-primary ms-2" type="submit">상신 하기</button>
 				</div>
             </div>
         </div>
@@ -139,16 +139,35 @@ th, td {
 // 	        이름 목록을 approvalLindTd_1의 td로 추가
 	        approvalLine.forEach(person => {
 				console.log(person.name)
+				console.log(person.id)
+				
+				const hiddenInput = document.createElement("input")
+				hiddenInput.type = "hidden";
+				hiddenInput.name = "lineEmp_id";
+				hiddenInput.value = person.id;
+				
 	            let td_1 = document.createElement("td");
 	            td_1.textContent = person.name;
 	            row1.appendChild(td_1);
+	            row1.appendChild(hiddenInput);
 	            
 	            let td_2 = document.createElement("td");
 	            td_2.setAttribute("rowspan", approvalLine.length);
 		        row2.appendChild(td_2)
 	        });
 	
+	
 		}
+		
+		function lineEmp(bool){
+		var lineEmps = document.querySelectorAll('input[type=hidden][name=lineEmp_id]');
+		console.log(lineEmps)
+		
+		}
+		
+			
+			
+			
 	</script>
 </body>
 </html>
