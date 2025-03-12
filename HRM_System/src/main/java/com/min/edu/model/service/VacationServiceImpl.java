@@ -24,7 +24,7 @@ public class VacationServiceImpl implements IVacationService {
 	}
 	
 	@Override
-	public List<VacationDto> vacationListByEmpId(String empId) {
+	public Map<String, Object> vacationListByEmpId(String empId) {
 		return dao.vacationListByEmpId(empId);
 	}
 	
