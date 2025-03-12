@@ -41,7 +41,21 @@
     <div class="content" id="content">
         <%@ include file="header.jsp" %>
         <div class="main-content">
-
+        	
+        	<div>
+        		<table>
+        			<tr>
+        				<th>발급번호</th>
+        				<th>유형</th>
+        				<th>제목</th>
+        				<th>승인상태</th>
+        				<th></th>
+        				<th></th>
+        			</tr>
+        		</table>
+        	</div>
+        	
+        	
         </div>
     </div>
 </body>
