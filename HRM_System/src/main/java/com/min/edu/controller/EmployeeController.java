@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.min.edu.dto.EmpPageDto;
 import com.min.edu.dto.EmployeeDto;
+import com.min.edu.dto.VacationDto;
 import com.min.edu.model.service.IEmployeeService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class EmployeeController {
 
 	private final IEmployeeService service;
+
 
 	//	@GetMapping(value = "/emp.do")
 	//	public String empList(Model model) {
@@ -193,11 +195,38 @@ public class EmployeeController {
 
 		int n= service.insertEmployee(dto);
 
-		if (n == 1) {
-			log.info("등록성공");
 
+		if (n == 1) {
+			
+	       
+	       String not_id = service.getNotId(); //방금 등록한 emp_id 가져오기
+	       
+	       String year = hire_date.substring(0, 4); //연도만 추출
+	       
+	       String endDate = year + "-12-31";
+
+	      VacationDto vdto = VacationDto.builder()
+	    		            .emp_id(not_id)
+	    		            .start_date(hire_date)
+	    		            .end_date(endDate)
+	    		            .build();
+	      int m = service.insertVacation(vdto);
+			
+			if(m == 1) {
+			
+			log.info("등록성공");
+			}
+			else {
+				log.info("등록실패");
+			}
+			
+			
 		} else {
 			log.info("등록실패");
+			
+			
+			
+			
 
 
 		}

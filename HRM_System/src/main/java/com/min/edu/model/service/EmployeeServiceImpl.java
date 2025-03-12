@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.min.edu.dto.EmployeeDto;
+import com.min.edu.dto.VacationDto;
 import com.min.edu.model.mapper.IEmployeeDao;
 
 import lombok.RequiredArgsConstructor;
@@ -164,4 +166,29 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		return dao.selectProfileImg(empId);
 	}
 
+	@Override
+	public int insertVacation(VacationDto dto) {
+		return dao.insertVacation(dto);
+	}
+
+	@Override
+	public String getNotId() {
+		return dao.getNotId();
+	}
+
+	    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

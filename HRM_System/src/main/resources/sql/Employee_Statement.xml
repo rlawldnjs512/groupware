@@ -137,13 +137,19 @@
 	
 	<!--관리자는 사원을 등록 insertUser  -->
    <insert id="insertEmployee" parameterType="EmployeeDto">
+   
+   <selectKey keyProperty="emp_id" resultType="String" order="BEFORE">
+			 SELECT TO_CHAR(TO_DATE(#{hire_date}, 'YYYY-MM-DD'), 'YYYY') || 
+                     LPAD(EMP_SEQ.NEXTVAL, 4, '0') EMP_ID
+              FROM DUAL 
+	</selectKey>
+	
     INSERT INTO EMPLOYEE (
         EMP_ID, DEPT_ID, NAME, PASSWORD, POSITION, BIRTH, 
         PHONE, TEL, EMAIL, HIRE_DATE
     ) 
     VALUES (
-        TO_CHAR(TO_DATE(#{hire_date}, 'YYYY-MM-DD'), 'YYYY') || 
-        LPAD(EMP_SEQ.NEXTVAL, 4, '0'), 
+        #{emp_id}, 
         #{dept_id}, 
         #{name}, 
         'a12345678',  <!-- 초기 비밀번호 고정 -->
@@ -155,8 +161,21 @@
         TO_DATE(#{hire_date}, 'YYYY-MM-DD HH24:MI:SS')
     )
 	</insert>
+	
+	<select id="getNotId" resultType="String">
+	SELECT EMP_ID FROM EMPLOYEE 
+	    ORDER BY EMP_ID DESC 
+	    FETCH FIRST 1 ROWS ONLY
+	</select>
+	
 
-
+	<!--신입사원 연차등록  -->
+	<insert id="insertVacation" parameterType="VacationDto">
+		INSERT INTO VACATION
+		(LEAVE_ID, EMP_ID, START_DATE, END_DATE, LEAVE_TOTAL, LEAVE_USE, LEAVE_REMAIN,
+		EXTRA_TIME)
+		VALUES (0, #{emp_id}, #{start_date}, #{end_date}, 0, 0, 0, 0)
+	</insert>
 
 	<!--관리자는 사원을 수정 updateUserInfo  -->
 	<update id="updateUser" parameterType="EmployeeDto">
@@ -259,7 +278,7 @@
 			WHERE TRIM(EMP_ID) = TRIM(#{empId})
 	</select>
 	
-	
+
 	
 	
 	
