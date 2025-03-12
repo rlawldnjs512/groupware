@@ -140,6 +140,33 @@ WHERE ROOM_ID = #{room_id}
 			WHEN '8' THEN '16:00~16:50'
 			WHEN '9' THEN '17:00~17:50'
 			END) || ' ' || ROOM_NAME		AS "title"
+		 , TO_CHAR(
+	        CASE SLOT
+			WHEN '0' THEN '08:00' 
+			WHEN '1' THEN '09:00' 
+			WHEN '2' THEN '10:00'
+			WHEN '3' THEN '11:00'
+			WHEN '4' THEN '12:00'
+			WHEN '5' THEN '13:00'
+			WHEN '6' THEN '14:00'
+			WHEN '7' THEN '15:00'
+			WHEN '8' THEN '16:00'
+			WHEN '9' THEN '17:00'
+			END) 							AS "startTime"
+		 , TO_CHAR(
+	        CASE SLOT
+			WHEN '0' THEN '08:50' 
+			WHEN '1' THEN '09:50' 
+			WHEN '2' THEN '10:50'
+			WHEN '3' THEN '11:50'
+			WHEN '4' THEN '12:50'
+			WHEN '5' THEN '13:50'
+			WHEN '6' THEN '14:50'
+			WHEN '7' THEN '15:50'
+			WHEN '8' THEN '16:50'
+			WHEN '9' THEN '17:50'
+			END) 							AS "endTime"
+		 , ROOM_NAME 						AS "roomName"
 	FROM RESERVATION r JOIN ROOM r2 
 	USING (ROOM_ID)
 	JOIN EMPLOYEE e 

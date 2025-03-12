@@ -23,9 +23,9 @@ class Leave_JUnitTest {
 	@Test
 	void leaveListByEmpId_Test() {
 		
-		String empId = "20180050";
+		String empId = "20240002";
 		
-		List<Map<String, Object>> list = leaveService.leaveListByEmpId(empId);
+		List<Map<String, Object>> list = leaveService.leaveListByEmpId(empId, "2025-02-27", "2025-02-28");
 		
 		System.out.println(list);
 	}

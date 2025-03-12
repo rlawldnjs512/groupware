@@ -3,12 +3,16 @@ package com.min.edu.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.min.edu.dto.EmployeeDto;
 import com.min.edu.dto.VacationDto;
@@ -37,28 +41,30 @@ public class VacationController {
 	
 	@GetMapping(value = "/vacation")
 	public String vacationListByEmpId(HttpSession session, Model model) {
-		
-		EmployeeDto loginVo = (EmployeeDto)session.getAttribute("loginVo");
-		String empId = loginVo.getEmp_id();
-		
-		Map<String, Object> vacationMap = vacationService.vacationListByEmpId(empId);
-		List<Map<String, Object>> leaveList = leaveService.leaveListByEmpId(empId);
-		
-		model.addAttribute("vacationMap", vacationMap);
-		model.addAttribute("leaveList", leaveList);
-		
-		
-//		List<Map<String, Object>> vacationList = vacationService.vacationListByEmpId(empId);
-//		if(!vacationList.isEmpty()) {
-//			Map<String, Object> vacationInfo = vacationList.get(0);
-//			model.addAttribute("vacationInfo", vacationInfo);
-//		}
-		
-		return "vacation";
+	    EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
+	    String empId = loginVo.getEmp_id();
+
+	    Map<String, Object> vacationMap = vacationService.vacationListByEmpId(empId);
+	    List<Map<String, Object>> leaveList = leaveService.leaveListByEmpId(empId, null, null);
+
+	    model.addAttribute("vacationMap", vacationMap);
+	    model.addAttribute("leaveList", leaveList);
+
+	    return "vacation";
+	}
+
+	@RequestMapping(value = "/vacation/filter", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Map<String, Object>> filterVacationList(HttpSession session,
+	                                                    @RequestParam(required = false) String startDate,
+	                                                    @RequestParam(required = false) String endDate) {
+	    EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
+	    String empId = loginVo.getEmp_id();
+
+	    return leaveService.leaveListByEmpId(empId, startDate, endDate); // JSON 형태로 응답
 	}
 	
 	
-
 	@PostMapping(value = "/insertVacation") 
 	public String insertVacation(@RequestParam("leaveId") String leaveId,
 								 @RequestParam("empId") String empId,
