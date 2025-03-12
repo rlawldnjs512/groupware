@@ -21,5 +21,10 @@ public interface IReservationDao {
 	
 	public int insertRoom(Map<String, Object> map);
 	
+	public int deleteRoom(String room_id);
+	
+	public List<RoomDto> selectRoom();
+
 	public List<Map<String, Object>> getReservation(String empId);
+
 }

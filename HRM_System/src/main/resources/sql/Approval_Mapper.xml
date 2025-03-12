@@ -125,5 +125,29 @@ FROM EMPLOYEE
 ]]>
 </select>
 
+<!-- 문서 생성 -->
+<insert id="insertDocument">
+<selectKey keyProperty="seq" resultType="java.lang.Integer" order="BEFORE">
+(SELECT DOCUMENT_SEQ.NEXTVAL FROM DUAL)
+</selectKey>
+INSERT INTO DOCUMENT
+(DOC_ID, EMP_ID, DOC_TYPE, TITLE, CONTENT, CREATE_DATE, DOC_STATUS, DOC_DATE, FILE_ID, DOC_NUM)
+VALUES(#{seq}, #{emp_id}, #{doc_type} , #{title}, #{content}, CURRENT_DATE, 'N', '', '', #{doc_num})
+</insert>
+
+<!-- 결재 생성 -->
+<insert id="insertApproval">
+
+	<selectKey keyProperty="apprv_id" resultType="java.lang.Integer" order="BEFORE">
+		SELECT MAX(APPRV_ID)+1 FROM APPROVAL
+	</selectKey>
+	
+	INSERT INTO APPROVAL (APPRV_ID, DOC_ID, EMP_ID, APPRV_LEVEL, APPRV_STATUS, SIGN)
+	<foreach collection="approval" item="app" separator=" UNION ALL " index="idx">
+	SELECT #{apprv_id}+${idx}, #{doc_seq}, #{app.emp_id}, ${idx}+1, '진행중', #{app.sign,  jdbcType=VARCHAR} FROM DUAL
+	</foreach>
+	
+</insert>
+
 
 </mapper>

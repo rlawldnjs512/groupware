@@ -9,7 +9,7 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.15/index.global.min.js"></script>
     <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/resource-timegrid@6.1.15/index.global.min.js'></script>
-	<link rel="stylesheet" href="./css/attendance.css">
+  	<link rel="stylesheet" href="./css/attendance.css">
 </head>
 <%@ include file="sidebar.jsp" %>
 <body>
