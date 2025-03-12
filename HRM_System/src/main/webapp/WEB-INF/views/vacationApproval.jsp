@@ -124,7 +124,7 @@ th, td {
 					<button id="line" onclick="windowOpen()" class="btn btn-light-primary ms-2">결재선 선택</button>
 					<button class="btn btn-light-primary ms-2" onclick="/vacationSave.do">임시 저장</button>
 					<button class="btn btn-light-primary ms-2" onclick="history.back(-1)">취소</button>
-					<button class="btn btn-light-primary ms-2">상신 하기</button>
+					<button class="btn btn-light-primary ms-2" onclick="submitApproval()">상신 하기</button>
 				</div>
             </div>
         </div>
@@ -149,6 +149,14 @@ th, td {
 	        });
 	
 		}
+		
+
 	</script>
 </body>
 </html>
+
+
+
+
+
+

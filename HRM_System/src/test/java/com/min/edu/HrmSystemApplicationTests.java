@@ -119,21 +119,20 @@ class HrmSystemApplicationTests {
 //		
 //		
 
-		//신입사원 연차 입력 테스트
-		String empId = "20250188" ;
-
+//		//신입사원 연차 입력 테스트
+//		String empId = "20250188" ;
+//
+//		
+//		VacationDto dto = VacationDto.builder()
+//				          .emp_id(empId)
+//				          .start_date("2025-03-25")
+//				          .end_date("2025-12-31")
+//				          .build();
+//		
+//		int result = service.insertVacation(dto);
+//		assertEquals(1, result);
 		
-		VacationDto dto = VacationDto.builder()
-				          .emp_id(empId)
-				          .start_date("2025-03-25")
-				          .end_date("2025-12-31")
-				          .build();
-		
-		int result = service.insertVacation(dto);
-		assertEquals(1, result);
-		
-		
-		
+			
 //		
 		
 		

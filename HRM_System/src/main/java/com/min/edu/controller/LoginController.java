@@ -191,40 +191,6 @@ public class LoginController {
 	    	    if(result == 1) {
 	    	    	response.getWriter().print("<script>alert('변경완료'); location.href='./homeList.do';</script>");
 	    	    }
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
-	    	
 	    	return null;
 	    }
-	    
-
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
 }
