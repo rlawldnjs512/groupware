@@ -13,12 +13,16 @@
 	
 	<!-- 사원 1명의 사용휴가 내역 조회 -->
 	<select id="leaveListByEmpId" resultType="Map">
-		SELECT LEAVE_START, LEAVE_END, TYPE, LEAVE_DAYS
+		SELECT TO_CHAR(LEAVE_START, 'YYYY-MM-DD')  AS LEAVE_START, 
+			   TO_CHAR(LEAVE_END, 'YYYY-MM-DD')    AS LEAVE_END, 
+			   TYPE, 
+			   LEAVE_DAYS
 			FROM LEAVE l
 			JOIN DOCUMENT d 
 			ON l.DOC_ID = d.DOC_ID 
 			WHERE TRIM(EMP_ID) = TRIM(#{empId})
 			AND DOC_TYPE = '휴가'
+			ORDER BY LEAVE_START DESC
 	</select>
 
 </mapper>

@@ -1,6 +1,7 @@
 package com.min.edu.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -36,7 +39,10 @@ public class LoginController {
 	    @PostMapping(value = "/login.do")
 	    public String login(@RequestParam Map<String, Object> map, HttpSession session, HttpServletResponse response) throws IOException {
 	        log.info("EmployeeController login 로그인 : {}", map);
-
+	        
+	        String password = (String)map.get("password");
+	        log.info(password);
+	 
 	        response.setContentType("text/html; charset=UTF-8;");
 
 	        EmployeeDto loginVo = service.getLogin(map);
@@ -45,6 +51,18 @@ public class LoginController {
 	        if (loginVo != null) {
 	            session.setAttribute("loginVo", loginVo);
 	            session.setMaxInactiveInterval(60 * 10 * 8); // session 유효기간 설정 (5분)
+	            
+	            //map으로 받은 password와 비교하기
+	            if(password.equals("a12345678")) {
+	            	log.info("초기 비밀번호 사용으로 인한 비밀번호 재설정 페이지로 이동");
+	            	  response.getWriter().print("<script>alert('초기 비밀번호입니다. 비밀번호를 재설정해주세요.'); location.href='./newPw.do';</script>");
+	                  return null;  // 비밀번호 재설정 화면으로 리디렉션
+
+	            }
+	            
+	            
+	            
+	            
 	            log.info("{} 님 반갑습니다.", loginVo.getName());
 	            response.getWriter().print("<script>alert('" + loginVo.getName() + "님 반갑습니다'); location.href='./homeList.do';</script>");
 	            
@@ -56,6 +74,16 @@ public class LoginController {
 	        }
 	        return null;
 	    }
+	    
+	    //비밀번호 재설정 GetMapping 
+	    @GetMapping(value = "/newPw.do")
+	    public String newPw() {
+	        log.info("초기 비밀번호 변경을 위한 비밀번호 재설정");
+	        return "newPw";
+	    }
+	    
+	    
+	    
 	    
 	    
 	    
@@ -145,6 +173,34 @@ public class LoginController {
 	        return null;
 	    }
 
+	    
+	    @PostMapping("/updatePassword.do")
+	    public String updatePasswor(@RequestParam String newPassword,
+	    		                     HttpSession session, HttpServletResponse response) throws IOException {
+	    	
+	    	response.setContentType("text/html; charset=UTF-8;");
+	    	
+	    	EmployeeDto loginVo = (EmployeeDto)session.getAttribute("loginVo");
+	    	
+	    	 Map<String, Object> paramMap = new HashMap<>();
+	    	    paramMap.put("emp_id", loginVo.getEmp_id());
+	    	    paramMap.put("password", newPassword);
+
+	    	    int result = service.modifyPw(paramMap);
+	    	    
+	    	    if(result == 1) {
+	    	    	response.getWriter().print("<script>alert('변경완료'); location.href='./homeList.do';</script>");
+	    	    }
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	return null;
+	    }
+	    
 
 	    
 	    

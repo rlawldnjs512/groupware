@@ -104,20 +104,49 @@ WHERE RESERV_ID=#{reserv_id} AND EMP_ID=#{emp_id}
 </delete>
 
 
+<select id="selectRoom" resultType="RoomDto">
+SELECT ROOM_ID , ROOM_NAME 
+	FROM ROOM r 
+</select>
 
 
 <insert id="insertRoom">
+<selectKey keyProperty="room_id" resultType="java.lang.Integer" order="BEFORE">
+SELECT ROOM_SEQ.NEXTVAL FROM DUAL
+</selectKey>
 INSERT INTO ROOM
 (ROOM_ID, ROOM_NAME)
 VALUES(#{room_id}, #{room_name})
-
 </insert>
 
 <delete id="deleteRoom">
 DELETE FROM ROOM
 WHERE ROOM_ID = #{room_id}
-
 </delete>
+
+<!-- 캘린더에 값을 뿌려주기 위한 데이터 조회 -->
+<select id="getReservation" resultType="Map">
+	SELECT TO_CHAR(REV_DATE,'YYYY-MM-DD')	AS "start"
+	     , TO_CHAR(
+	        CASE SLOT
+			WHEN '0' THEN '08:00~08:50' 
+			WHEN '1' THEN '09:00~09:50' 
+			WHEN '2' THEN '10:00~10:50'
+			WHEN '3' THEN '11:00~11:50'
+			WHEN '4' THEN '12:00~12:50'
+			WHEN '5' THEN '13:00~13:50'
+			WHEN '6' THEN '14:00~14:50'
+			WHEN '7' THEN '15:00~15:50'
+			WHEN '8' THEN '16:00~16:50'
+			WHEN '9' THEN '17:00~17:50'
+			END) || ' ' || ROOM_NAME		AS "title"
+	FROM RESERVATION r JOIN ROOM r2 
+	USING (ROOM_ID)
+	JOIN EMPLOYEE e 
+	USING (EMP_ID)
+	WHERE 1=1 
+	AND TRIM(EMP_ID) = TRIM(#{empId})
+</select>
 
 
 </mapper>

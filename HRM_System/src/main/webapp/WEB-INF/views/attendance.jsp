@@ -9,30 +9,7 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.15/index.global.min.js"></script>
     <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/resource-timegrid@6.1.15/index.global.min.js'></script>
-	<style>
-		.card.border-light.mb-3 { 
-			background-color: #F0F0F0;
-			width: 18rem;
-			min-height: 11rem;
-			margin-left: 10px;
-			margin-top: 10px;
- 		}
- 		img {
- 			width: 20px;
- 			height: 20px;
- 		}
- 		h2.card-title {
- 			padding-top: 30px;
- 			margin-bottom: 0;
- 			font-weight: bold;
- 		}
- 		p {
- 			margin-top: auto;
- 		}
-		#calendar {
-		  margin: 40px auto;
-		}
-	</style>
+  	<link rel="stylesheet" href="./css/attendance.css">
 </head>
 <%@ include file="sidebar.jsp" %>
 <body>
@@ -47,9 +24,9 @@
 				  	<img src="./images/work.svg">
 				  </div>
 				  <div class="card-body d-flex flex-column justify-content-between">
-				    <h2 class="card-title d-flex align-items-end">
+				    <h4 class="card-title d-flex align-items-end">
 				    	${avgClockInTime}
-				    </h2>
+				    </h4>
 				    <p class="card-text d-flex align-items-end">평균 출근 시간</p>
 				  </div>
 				</div>
@@ -58,9 +35,9 @@
 				  	<img src="./images/gohome.svg">
 				  </div>
 				  <div class="card-body d-flex flex-column justify-content-between">
-				    <h2 class="card-title d-flex align-items-center">
+				    <h4 class="card-title d-flex align-items-center">
 				    	${avgClockOutTime}
-				    </h2>
+				    </h4>
 				    <p class="card-text d-flex align-items-end">평균 퇴근 시간</p>
 				  </div>
 				</div>
@@ -69,23 +46,20 @@
 				  	<img src="./images/avg.svg">
 				  </div>
 				  <div class="card-body d-flex flex-column justify-content-between">
-				    <h2 class="card-title d-flex align-items-center">
+				    <h4 class="card-title d-flex align-items-center">
 				    	${avgWorkTime}
-				    </h2>
+				    </h4>
 				    <p class="card-text d-flex align-items-end">평균 근무 시간</p>
 				  </div>
 				</div>
-			</div>
-			
-			<div class="d-flex">
 				<div class="card border-light mb-3 shadow p-3 rounded">
 				  <div class="card-header">
 				  	<img src="./images/extraTime.svg">
 				  </div>
 				  <div class="card-body d-flex flex-column justify-content-between">
-				    <h2 class="card-title d-flex align-items-center">
+				    <h4 class="card-title d-flex align-items-center">
 				    	${extraTime}시간
-				    </h2>
+				    </h4>
 				    <p class="card-text d-flex align-items-end">보상시간</p>
 				  </div>
 				</div>
@@ -94,9 +68,9 @@
 				  	<img src="./images/late.svg">
 				  </div>
 				  <div class="card-body d-flex flex-column justify-content-between">
-				    <h2 class="card-title d-flex align-items-center">
+				    <h4 class="card-title d-flex align-items-center">
 				    	${late}번
-				    </h2>
+				    </h4>
 				    <p class="card-text d-flex align-items-end">이번 달 지각</p>
 				  </div>
 				</div>
@@ -105,9 +79,9 @@
 				  	<img src="./images/vacation.svg">
 				  </div>
 				  <div class="card-body d-flex flex-column justify-content-between">
-				    <h2 class="card-title d-flex align-items-center">
+				    <h4 class="card-title d-flex align-items-center">
 				    	${leaveRemain}일
-				    </h2>
+				    </h4>
 				    <p class="card-text d-flex align-items-end">남은 휴가</p>
 				  </div>
 				</div>
