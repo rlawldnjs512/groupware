@@ -93,35 +93,53 @@ th, td {
 					</div>
 	
 					<table class="table table-borderless mb-3">
-						<tr>
-							<th>제목</th>
-							<th><input type="text" id="title" name="title"
-								class="form-control" placeholder="제목을 입력하세요."></th>
-						</tr>
-						<tr>
-							<th>종류</th>
-							<th style="text-align: left;">
-								<input type="radio" id="morning" name="type" value="오전반차" class="form-check-input"> <label for="morning" class="form-check-label">오전반차</label>
-		                        <input type="radio" id="afternoon" name="type" value="오후반차" class="form-check-input ms-2"> <label for="afternoon" class="form-check-label">오후반차</label>
-		                        <input type="radio" id="full" name="type" value="연차" class="form-check-input ms-2"> <label for="full" class="form-check-label">연차</label>
-							</th>
-						</tr>
-						<tr>
-							<th>기간</th>
-							<th style="text-align: left;">
-								<input type="date" class="form-control" name="leave_start" style="width: 30%; display: inline-block;"> ~ <input type="date" class="form-control" name="leave_end" style="width: 30%; display: inline-block;">
-							</th>
-						</tr>
-						<tr>
-							<th>사유</th>
-							<th>
-								<textarea id="reason" name="content" class="form-control" rows="5" placeholder="사유를 입력하세요."></textarea>
-							</th>
-						</tr>
+						<c:forEach var="vo" items="${reportDto}">
+							<tr>
+								<th>제목</th>
+								<th><input type="text" id="title" name="title" value="${vo.title}"
+									class="form-control" placeholder="제목을 입력하세요."></th>
+							</tr>
+							<c:forEach var="lvo" items="${leaveDto}">
+							<tr>
+							    <th>종류</th>
+							    <th style="text-align: left;">
+							        <input type="radio" id="morning" name="type" value="오전반차" 
+							               class="form-check-input" 
+							               ${lvo['TYPE'] == '오전반차' ? 'checked' : ''}> 
+							        <label for="morning" class="form-check-label">오전반차</label>
+							
+							        <input type="radio" id="afternoon" name="type" value="오후반차" 
+							               class="form-check-input ms-2" 
+							               ${lvo['TYPE'] == '오후반차' ? 'checked' : ''}> 
+							        <label for="afternoon" class="form-check-label">오후반차</label>
+							
+							        <input type="radio" id="full" name="type" value="연차" 
+							               class="form-check-input ms-2" 
+							               ${lvo['TYPE'] == '연차' ? 'checked' : ''}> 
+							        <label for="full" class="form-check-label">연차</label>
+							    </th>
+							</tr>
+							<tr>
+								<th>기간</th>
+								<th style="text-align: left;">
+									<input type="date" class="form-control" name="leave_start" 
+									       value="${lvo['LEAVE_START']}" style="width: 30%; display: inline-block;">
+									~
+									<input type="date" class="form-control" name="leave_end" 
+									       value="${lvo['LEAVE_END']}" style="width: 30%; display: inline-block;">
+								</th>
+							</tr>
+							<tr>
+								<th>사유</th>
+								<th>
+									<textarea id="reason" name="content" class="form-control" rows="5" placeholder="사유를 입력하세요.">${vo.content}</textarea>
+								</th>
+							</tr>
+							</c:forEach>
+						</c:forEach>
 					</table>
 	                <div class="d-flex justify-content-end mb-3">
 						<button type="button" id="line" onclick="windowOpen()" class="btn btn-light-primary ms-2">결재선 선택</button>
-						<button type="submit" class="btn btn-light-primary ms-2">임시 저장</button>
 						<button type="button" class="btn btn-light-primary ms-2" onclick="history.back(-1)">취소</button>
 						<button type="button" class="btn btn-light-primary ms-2">상신 하기</button>
 					</div>

@@ -103,33 +103,34 @@ th, td {
 					</div>
 	
 					<table class="table table-borderless mb-3">
-						<tr>
-							<th>제목</th>
-							<th>
-								<input type="text" id="title" name="title"
-								class="form-control" placeholder="제목을 입력하세요.">
-							</th>
-						</tr>
-						<tr>
-							<th>파일</th>
-							<th>
-								<div class="file-container">
-									<input class="form-control form-control-sm" id="formFileSm"
-										type="file" name="file" multiple="multiple">
-								</div>
-							</th>
-						</tr>
-						<tr>
-							<th>내용</th>
-							<th><textarea class="ck-editor" id="classic" name="content"
-									placeholder="내용을 입력하세요"></textarea></th>
-						</tr>
+						<c:forEach var="vo" items="${reportDto}">
+							<tr>
+								<th>제목</th>
+								<th>
+									<input type="text" id="title" name="title" value="${vo.title}"
+									class="form-control" placeholder="제목을 입력하세요.">
+								</th>
+							</tr>
+							<tr>
+								<th>파일</th>
+								<th>
+									<div class="file-container">
+										<input class="form-control form-control-sm" id="formFileSm"
+											type="file" name="file" multiple="multiple">
+									</div>
+								</th>
+							</tr>
+							<tr>
+								<th>내용</th>
+								<th><textarea class="ck-editor" id="classic" name="content"
+										placeholder="내용을 입력하세요">${vo.content}</textarea></th>
+							</tr>
+						</c:forEach>
 					</table>
 					<div class="d-flex justify-content-end mb-3">
 						<button type="button" id="line" onclick="windowOpen()" class="btn btn-light-primary ms-2">결재선 선택</button>
-						<button type="submit" class="btn btn-light-primary ms-2">임시 저장</button>
 						<button type="button" class="btn btn-light-primary ms-2" onclick="history.back(-1)">취소</button>
-						<button type="button" class="btn btn-light-primary ms-2" onclick="approvalReport()">상신 하기</button>
+						<button type="button" class="btn btn-light-primary ms-2">상신 하기</button>
 					</div>
 				</div>
 			</form>
@@ -155,20 +156,6 @@ th, td {
 	        });
 	
 		}
-		
-		function approvalReport() {
-		    $.ajax({
-		        type: "POST",
-		        url: "/approvalReport.do", 
-		        success: function(response) {
-		            window.location.href = "/approval.do";
-		        },
-		        error: function(xhr, status, error) {
-		            alert("삭제 중 오류 발생: " + error); 
-		        }
-		    });
-		}
-		
 	</script>
 	<script>
 		ClassicEditor
