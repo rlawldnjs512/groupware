@@ -36,14 +36,29 @@ public class ApprovalController {
 		return "approval";
 	}
 	
+	@GetMapping(value = "/approval_pending.do")
+	public String approval_pending() {
+		return "approval_pending";
+	}
+	
+	@GetMapping(value = "/approval_receive.do")
+	public String approval_receive() {
+		return "approval_receive";
+	}
+	
 	@GetMapping(value = "/approval_mine.do")
 	public String approval_mine() {
 		return "approval_mine";
 	}
 	
-	@GetMapping(value = "/approval_store.do")
+	@GetMapping(value = "/temp_store.do")
 	public String approval_store() {
-		return "approval_store";
+		return "temp_store";
+	}
+	
+	@GetMapping(value = "/dept_store.do")
+	public String dept_store() {
+		return "dept_store";
 	}
 	
 	@GetMapping(value = "/signature_manage.do")

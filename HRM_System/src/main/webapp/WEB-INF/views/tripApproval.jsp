@@ -5,52 +5,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>출장 신청</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/approval.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    <script src="./js/approval_line.js"></script>
 <style>
 :root {
-	--bs-white: #fff;
 	--bs-primary: #1b84ff;
 	--bs-primary-light: #e9f3ff;
-	--bs-success: #17c653;
-	--bs-success-light: #dfffea;
-	--bs-secondary: #252f4a;
-	--bs-secondary-light: #f9f9f9;
-	--bs-warning: #f6c000;
-	--bs-warning-light: #fff8dd;
-}
-
-.btn.btn-light-success {
-	color: var(--bs-success);
-	border-color: var(--bs-success-light);
-	background-color: var(--bs-success-light);
-}
-
-.btn.btn-light-success:hover {
-	color: var(--bs-white);
-	border-color: var(--bs-success);
-	background-color: var(--bs-success);
-}
-
-.btn.btn-light-success:focus {
-	outline: none;
-	box-shadow: 0 0 0 0.25rem rgba(var(--bs-success), 0.5);
-}
-
-.btn.btn-light-secondary {
-	color: var(--bs-secondary);
-	border-color: var(--bs-secondary-light);
-	background-color: var(--bs-secondary-light);
-}
-
-.btn.btn-light-secondary:hover {
-	color: var(--bs-white);
-	border-color: var(--bs-secondary);
-	background-color: var(--bs-secondary);
-}
-
-.btn.btn-light-secondary:focus {
-	outline: none;
-	box-shadow: 0 0 0 0.25rem rgba(var(--bs-secondary), 0.5);
+	--bs-primary-white: #fff;
 }
 
 .btn.btn-light-primary {
@@ -70,469 +36,125 @@
 	box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary), 0.5);
 }
 
-.btn.btn-light-warning {
-	color: var(--bs-warning);
-	border-color: var(--bs-warning-light);
-	background-color: var(--bs-warning-light);
+.ck-editor {
+	min-height: 500px;
 }
 
-.btn.btn-light-warning:hover {
-	color: var(--bs-white);
-	border-color: var(--bs-warning);
-	background-color: var(--bs-warning);
+.ck-editor__editable_inline {
+	min-height: 500px; /* 최소 높이 설정 */
+	max-height: 600px; /* 최대 높이 설정 */
+	overflow-y: auto; /* 높이를 넘어서면 스크롤 */
 }
 
-.btn.btn-light-warning:focus {
-	outline: none;
-	box-shadow: 0 0 0 0.25rem rgba(var(--bs-warning), 0.5);
+th, td {
+	align-content: center;
 }
+
+#reason {
+	min-height: 500px; /* 최소 높이 설정 */
+	max-height: 600px; /* 최대 높이 설정 */
+	overflow-y: auto; /* 높이를 넘어서면 스크롤 */
+}
+
 </style>
 </head>
 <%@ include file="sidebar.jsp" %>
 <body>
 	<div class="content" id="content">
         <%@ include file="header.jsp"%>
-		<div class="main-content">
-			<div style="display: flex;">
-			    <!-- 왼쪽 버튼 컨테이너 -->
-			    <div style="display: flex; flex-direction: column; gap: 10px; margin: 20px;">
-			    	<button id="openModal"type="button" class="btn btn-light-success" 
-			    		style="width: 100%; margin-bottom: 10px; ">결재선 선택</button>
-			    	<button type="button" class="btn btn-light-warning" 
-			    		style="width: 100%; margin-bottom: 10px;">임시 저장</button>
-			    	<button type="button" class="btn btn-light-info" 
-			    		style="width: 100%; margin-bottom: 10px;" onclick="history.back(-1)">취소</button>
-			    	<button type="button" class="btn btn-light-secondary" 
-			    		style="width: 100%; margin-bottom: 10px;">상신 하기</button>
-				</div>
-				<div>
-					<span
-						style="font-family: &amp; quot; 맑은 고딕&amp;quot;; font-size: 10pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-
-						<table
-							style="border: 0px solid rgb(0, 0, 0); border-image: none; width: 800px; font-family: malgun gothic, dotum, arial, tahoma; margin-top: 1px; border-collapse: collapse;">
-							<!-- Header -->
-							<colgroup>
-								<col width="300">
-								<col width="500">
-							</colgroup>
-
-							<tbody>
-								<tr>
-										<td style="padding: 0px !important; border: 0px currentColor; height: 70px; text-align: center; color: black; font-size: 36px; font-weight: bold; vertical-align: top;"
-											colspan="2" class="dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
-											출&nbsp;장&nbsp;서<br>
-										<br type="_moz">
-										</td>
-									</tr>
-								<tr>
-									<td
-										style="padding: 0px !important; border: currentColor; border-image: none; text-align: left; color: black; font-size: 12px; font-weight: normal; vertical-align: top;">
-
-										<table
-											style="border: 1px solid rgb(0, 0, 0); border-image: none; font-family: malgun gothic, dotum, arial, tahoma; margin-top: 1px; border-collapse: collapse;">
-											<!-- User -->
-											<colgroup>
-												<col width="120">
-												<col width="180">
-											</colgroup>
-
-											<tbody>
-												<tr>
-													<td
-														style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 18px; text-align: center; color: rgb(0, 0, 0); font-size: 12px; font-weight: bold; vertical-align: middle;">
-														소속부서</td>
-													<td
-														style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;">
-														<span unselectable="on" contenteditable="false"
-														class="comp_wrap" data-cid="9"
-														data-dsl="{{label:draftDept}}" data-wrapper=""
-														style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"
-														data-value="" data-autotype=""> <span
-															class="comp_item"
-															style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-																${loginVo.dept_name}</span> <span contenteditable="false"
-															class="comp_active"
-															style="display: none; font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-																<span class="Active_dot1"
-																style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-																<span class="Active_dot2"
-																style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-																<span class="Active_dot3"
-																style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-																<span class="Active_dot4"
-																style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-														</span> <span contenteditable="false" class="comp_hover"
-															data-content-protect-cover="true" data-origin="9"
-															style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-																<a contenteditable="false"
-																class="ic_prototype ic_prototype_trash"
-																data-content-protect-cover="true"
-																data-component-delete-button="true"></a>
-														</span>
-													</span><br>
-													</td>
-												</tr>
-												<tr style="height: 32px;">
-													<td
-														style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 18px; text-align: center; color: rgb(0, 0, 0); font-size: 12px; font-weight: bold; vertical-align: middle;">
-														직&nbsp;&nbsp;&nbsp;&nbsp;급</td>
-													<td
-														style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; height: 18px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;">
-														<span unselectable="on" contenteditable="false"
-														class="comp_wrap" data-cid="10"
-														data-dsl="{{label:position}}" data-wrapper=""
-														style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"
-														data-value="" data-autotype=""> <span
-															class="comp_item"
-															style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-																${loginVo.position}</span> <span contenteditable="false"
-															class="comp_active"
-															style="display: none; font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-																<span class="Active_dot1"
-																style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-																<span class="Active_dot2"
-																style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-																<span class="Active_dot3"
-																style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-																<span class="Active_dot4"
-																style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-														</span> <span contenteditable="false" class="comp_hover"
-															data-content-protect-cover="true" data-origin="10"
-															style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-																<a contenteditable="false"
-																class="ic_prototype ic_prototype_trash"
-																data-content-protect-cover="true"
-																data-component-delete-button="true"></a>
-														</span>
-													</span><br>
-													</td>
-												</tr>
-												<tr>
-													<td
-														style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 18px; text-align: center; color: rgb(0, 0, 0); font-size: 12px; font-weight: bold; vertical-align: middle;">
-														성&nbsp;&nbsp;&nbsp;&nbsp;명</td>
-													<td
-														style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;">
-														<span unselectable="on" contenteditable="false"
-														class="comp_wrap" data-cid="11"
-														data-dsl="{{label:draftUser}}" data-wrapper=""
-														style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"
-														data-value="" data-autotype=""> <span
-															class="comp_item"
-															style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-																${loginVo.name}</span> <span contenteditable="false"
-															class="comp_active"
-															style="display: none; font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-																<span class="Active_dot1"
-																style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-																<span class="Active_dot2"
-																style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-																<span class="Active_dot3"
-																style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-																<span class="Active_dot4"
-																style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-														</span> <span contenteditable="false" class="comp_hover"
-															data-content-protect-cover="true" data-origin="11"
-															style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-																<a contenteditable="false"
-																class="ic_prototype ic_prototype_trash"
-																data-content-protect-cover="true"
-																data-component-delete-button="true"></a>
-														</span>
-													</span><br>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</td>
-									<td style="padding: 0px !important; border: currentColor; border-image: none; text-align: right; color: black; font-size: 12px; font-weight: normal; vertical-align: top;">
-										<div>
-											<table>
-												<tbody>
-													<tr>
-														<td rowspan="3"
-															style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 18px; text-align: center; color: rgb(0, 0, 0); font-size: 12px; font-weight: bold; vertical-align: middle;">
-															신청</td>
-														<td rowspan="3"
-															style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;">
-															<span unselectable="on" contenteditable="false"
-															class="comp_wrap" data-cid="9"
-															data-dsl="{{label:draftDept}}" data-wrapper=""
-															style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"
-															data-value="" data-autotype=""> <span
-																class="comp_item"
-																style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-																	<img id="signatureImage" src="${signSaved}" width="80"
-																	height="75" style="border: 1px solid black;" />
-															</span> <span contenteditable="false" class="comp_active"
-																style="display: none; font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-																	<span class="Active_dot1"
-																	style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-																	<span class="Active_dot2"
-																	style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-																	<span class="Active_dot3"
-																	style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-																	<span class="Active_dot4"
-																	style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-															</span> <span contenteditable="false" class="comp_hover"
-																data-content-protect-cover="true" data-origin="9"
-																style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-																	<a contenteditable="false"
-																	class="ic_prototype ic_prototype_trash"
-																	data-content-protect-cover="true"
-																	data-component-delete-button="true"></a>
-															</span>
-														</span><br>
-														</td>
-														<td rowspan="3"
-															style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 18px; text-align: center; color: rgb(0, 0, 0); font-size: 12px; font-weight: bold; vertical-align: middle;">
-															결재자</td>
-														<td rowspan="3"
-															style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;">
-															<span unselectable="on" contenteditable="false"
-															class="comp_wrap" data-cid="9"
-															data-dsl="{{label:draftDept}}" data-wrapper=""
-															style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"
-															data-value="" data-autotype=""> <span
-																class="comp_item"
-																style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-																	결재자1</span> <span contenteditable="false" class="comp_active"
-																style="display: none; font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-																	<span class="Active_dot1"
-																	style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-																	<span class="Active_dot2"
-																	style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-																	<span class="Active_dot3"
-																	style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-																	<span class="Active_dot4"
-																	style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-															</span> <span contenteditable="false" class="comp_hover"
-																data-content-protect-cover="true" data-origin="9"
-																style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-																	<a contenteditable="false"
-																	class="ic_prototype ic_prototype_trash"
-																	data-content-protect-cover="true"
-																	data-component-delete-button="true"></a>
-															</span>
-														</span><br>
-														</td>
-														<td rowspan="3"
-															style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;">
-															<span unselectable="on" contenteditable="false"
-															class="comp_wrap" data-cid="9"
-															data-dsl="{{label:draftDept}}" data-wrapper=""
-															style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"
-															data-value="" data-autotype=""> <span
-																class="comp_item"
-																style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-																	결재자2</span> <span contenteditable="false" class="comp_active"
-																style="display: none; font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-																	<span class="Active_dot1"
-																	style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-																	<span class="Active_dot2"
-																	style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-																	<span class="Active_dot3"
-																	style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-																	<span class="Active_dot4"
-																	style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-															</span> <span contenteditable="false" class="comp_hover"
-																data-content-protect-cover="true" data-origin="9"
-																style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-																	<a contenteditable="false"
-																	class="ic_prototype ic_prototype_trash"
-																	data-content-protect-cover="true"
-																	data-component-delete-button="true"></a>
-															</span>
-														</span><br>
-														</td>
-														<td rowspan="3"
-															style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;">
-															<span unselectable="on" contenteditable="false"
-															class="comp_wrap" data-cid="9"
-															data-dsl="{{label:draftDept}}" data-wrapper=""
-															style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"
-															data-value="" data-autotype=""> <span
-																class="comp_item"
-																style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-																	결재자3</span> <span contenteditable="false" class="comp_active"
-																style="display: none; font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-																	<span class="Active_dot1"
-																	style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-																	<span class="Active_dot2"
-																	style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-																	<span class="Active_dot3"
-																	style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-																	<span class="Active_dot4"
-																	style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-															</span> <span contenteditable="false" class="comp_hover"
-																data-content-protect-cover="true" data-origin="9"
-																style="font-family: &amp; amp; quot; malgun gothic&amp;amp; quot; , dotum , arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-																	<a contenteditable="false"
-																	class="ic_prototype ic_prototype_trash"
-																	data-content-protect-cover="true"
-																	data-component-delete-button="true"></a>
-															</span>
-														</span><br>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</td>
-								</tr>
-							</tbody>
+        <div class="main-content">
+            <div class="card shadow-lg p-4">
+                <h2 class="text-center mb-4">출장서</h2>
+                <div>
+                	<div style="float: left; width: 30%">
+						<table class="table table-borderless w-100 mb-3">
+							<tr>
+								<th rowspan="2">기안자</th>
+								<th>소속부서</th>
+								<th>직급</th>
+								<th>성명</th>
+								<th>사원번호</th>
+							</tr>
+							<tr>
+								<td>${loginVo.dept_name}</td>
+								<td>${loginVo.position}</td>
+								<td>${loginVo.name}</td>
+								<td>${loginVo.emp_id}</td>
+							</tr>
 						</table>
-
-
-						<div
-							style="font-size: 12px; text-align: left; color: red; padding-top: 10px; font-family: &amp; quot; 맑은 고딕&amp;quot;; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-						<table
-							style="border: 0px solid rgb(0, 0, 0); width: 800px; font-family: malgun gothic, dotum, arial, tahoma; margin-top: 10px; border-collapse: collapse;">
-							<colgroup>
-								<col width="120">
-								<col width="280">
-								<col width="150">
-								<col width="250">
-							</colgroup>
-
-							<tbody>
-								<tr>
-									<td
-										style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
-
-										제목</td>
-									<td colspan="3"
-										style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle;">
-										<span unselectable="on" contenteditable="false"
-										class="comp_wrap" data-cid="5" data-dsl="{{text:subject}}"
-										data-wrapper=""
-										style="width: 100%; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"
-										data-value=""><input class="ipt_editor" type="text"><span
-											contenteditable="false" class="comp_active"
-											style="display: none; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-												<span class="Active_dot1"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span
-												class="Active_dot2"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-												<span class="Active_dot3"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span
-												class="Active_dot4"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-										</span> <span contenteditable="false" class="comp_hover"
-											data-content-protect-cover="true" data-origin="5"
-											style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-												<a contenteditable="false"
-												class="ic_prototype ic_prototype_trash"
-												data-content-protect-cover="true"
-												data-component-delete-button="true"></a>
-										</span> </span><br>
-									</td>
-								</tr>
-								<tr>
-									<td
-										style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
-
-										기&nbsp;&nbsp;&nbsp;&nbsp;간</td>
-									<td colspan="3"
-										style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle;">
-										<span unselectable="on" contenteditable="false"
-										class="comp_wrap" data-cid="7" data-dsl="{{period}}"
-										data-wrapper=""
-										style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"
-										data-value=""><input class="ipt_editor ipt_editor_date"
-											type="date"> ~ <input
-											class="ipt_editor ipt_editor_date" type="date"><span
-											contenteditable="false" class="comp_active"
-											style="display: none; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-												<span class="Active_dot1"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span
-												class="Active_dot2"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-												<span class="Active_dot3"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span
-												class="Active_dot4"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-										</span> <span contenteditable="false" class="comp_hover"
-											data-content-protect-cover="true" data-origin="7"
-											style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-												<a contenteditable="false"
-												class="ic_prototype ic_prototype_trash"
-												data-content-protect-cover="true"
-												data-component-delete-button="true"></a>
-										</span> </span><br>
-									</td>
-								</tr>
-								<tr>
-									<td
-										style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
-
-										목&nbsp;&nbsp;&nbsp;&nbsp;적</td>
-									<td colspan="3"
-										style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle;">
-										<span unselectable="on" contenteditable="false"
-										class="comp_wrap" data-cid="6" data-dsl="{{textarea}}"
-										data-wrapper=""
-										style="width: 100%; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"
-										data-value=""><textarea class="txta_editor"></textarea><span
-											contenteditable="false" class="comp_active"
-											style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px; display: none;">
-												<span class="Active_dot1"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span
-												class="Active_dot2"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-												<span class="Active_dot3"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span
-												class="Active_dot4"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-										</span> <span contenteditable="false" class="comp_hover"
-											data-content-protect-cover="true" data-origin="6"
-											style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-												<a contenteditable="false"
-												class="ic_prototype ic_prototype_trash"
-												data-content-protect-cover="true"
-												data-component-delete-button="true"></a>
-										</span> </span><br>
-									</td>
-								</tr>
-								<tr>
-									<td
-										style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
-
-										지&nbsp;&nbsp;&nbsp;&nbsp;역</td>
-									<td colspan="3"
-										style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; text-align: left; color: rgb(0, 0, 0); font-size: 14px; vertical-align: middle;">
-										<span unselectable="on" contenteditable="false"
-										class="comp_wrap" data-cid="8" data-dsl="{{text}}"
-										data-wrapper=""
-										style="width: 100%; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"
-										data-value=""><input class="ipt_editor" type="text"><span
-											contenteditable="false" class="comp_active"
-											style="display: none; font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-												<span class="Active_dot1"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span
-												class="Active_dot2"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-												<span class="Active_dot3"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span
-												class="Active_dot4"
-												style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span>
-										</span> <span contenteditable="false" class="comp_hover"
-											data-content-protect-cover="true" data-origin="8"
-											style="font-family: &amp; quot; malgun gothic&amp;quot; , dotum , arial, tahoma; font-size: 11pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
-												<a contenteditable="false"
-												class="ic_prototype ic_prototype_trash"
-												data-content-protect-cover="true"
-												data-component-delete-button="true"></a>
-										</span> </span><br>
-									</td>
-								</tr>
-							</tbody>
+					</div>
+					<div style="float: right; width: 60%">
+						<table class="table table-borderless mb-3">
+							<tr>
+								<th rowspan="2">결재</th>
+								<th>본인</th>
+								<th>결재자1</th>
+								<th>결재자2</th>
+								<th>결재자3</th>
+							</tr>
+							<tr id="approvalLineTd_1">
+								<td id="approvalLineTd_2"><img id="signatureImage"
+									src="${signSaved}" width="80" height="75"
+									style="border: 1px solid black;" /></td>
+							</tr>
 						</table>
-					</span>
+					</div>
+                </div>
+                
+                <table class="table table-borderless mb-3">
+                	<tr>
+						<th>제목</th>
+						<th><input type="text" id="title" name="title"
+							class="form-control" placeholder="제목을 입력하세요."></th>
+					</tr>
+					<tr>
+						<th>기간</th>
+						<th style="text-align: left;">
+							<input type="date" class="form-control" style="width: 30%; display: inline-block;"> ~ <input type="date" class="form-control" style="width: 30%; display: inline-block;">
+						</th>
+					</tr>
+					<tr>
+						<th>지역</th>
+						<th>
+							<textarea id="place" name="content" class="form-control" rows="5" placeholder="지역을 입력하세요."></textarea>
+						</th>
+					</tr>
+					<tr>
+						<th>목적</th>
+						<th>
+							<textarea id="reason" name="content" class="form-control" rows="5" placeholder="목적을 입력하세요."></textarea>
+						</th>
+					</tr>
+                </table>
+                <div class="d-flex justify-content-end mb-3">
+					<button id="line" onclick="windowOpen()" class="btn btn-light-primary ms-2">결재선 선택</button>
+					<button class="btn btn-light-primary ms-2" onclick="/vacationSave.do">임시 저장</button>
+					<button class="btn btn-light-primary ms-2" onclick="history.back(-1)">취소</button>
+					<button class="btn btn-light-primary ms-2">상신 하기</button>
 				</div>
-			</div>
-		</div>
+            </div>
+        </div>
 	</div>
+	<script type="text/javascript">
+		function line(approvalLine) {
+			console.log(approvalLine)
+			let row1 = document.getElementById("approvalLineTd_1");
+	        let row2 = document.getElementById("approvalLineTd_2");
+	
+	
+// 	        이름 목록을 approvalLindTd_1의 td로 추가
+	        approvalLine.forEach(person => {
+				console.log(person.name)
+	            let td_1 = document.createElement("td");
+	            td_1.textContent = person.name;
+	            row1.appendChild(td_1);
+	            
+	            let td_2 = document.createElement("td");
+	            td_2.setAttribute("rowspan", approvalLine.length);
+		        row2.appendChild(td_2)
+	        });
+	
+		}
+	</script>
 </body>
 </html>
