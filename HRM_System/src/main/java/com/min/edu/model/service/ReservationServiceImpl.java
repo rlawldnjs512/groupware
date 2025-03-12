@@ -49,4 +49,9 @@ public class ReservationServiceImpl implements IReservationService {
 	public int deleteRoom(String room_id) {
 		return dao.deleteRoom(room_id);
 	}
+
+	public List<Map<String, Object>> getReservation(String empId) {
+		return dao.getReservation(empId);
+	}
+
 }

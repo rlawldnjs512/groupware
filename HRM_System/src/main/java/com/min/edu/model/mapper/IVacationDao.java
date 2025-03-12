@@ -12,7 +12,7 @@ public interface IVacationDao {
 
 	public List<VacationDto> vacationList();
 	
-	public List<VacationDto> vacationListByEmpId(String empId);
+	public Map<String, Object> vacationListByEmpId(String empId);
 	
 	public int insertVacation(Map<String, Object> map);
 	
