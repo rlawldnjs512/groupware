@@ -91,8 +91,6 @@ public class VacationController {
 		
 		return "redirect:/vacationList"; 
 	}
-	 
-
 }
 
 
