@@ -97,7 +97,8 @@ public class ApprovalController {
 		TripDto tripDto = service.continuePrviewTrip(docId);
 		System.out.println(tripDto);
 		
-		// 휴가
+
+//		// 휴가
 //		List<Map<String, Object>> leaveDto = leaveService.leaveListByEmpId(empId);
 //		System.out.println(leaveDto);
 //		
