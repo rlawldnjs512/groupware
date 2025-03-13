@@ -59,14 +59,21 @@ public class LoginController {
 				log.info("초기 비밀번호 사용으로 인한 비밀번호 재설정 페이지로 이동");
 				  response.getWriter().print("<script>alert('초기 비밀번호입니다. 비밀번호를 재설정해주세요.'); location.href='./newPw.do';</script>");
 			      return null;  
-
 			}
+			
+			if(loginVo.getSignSaved()==null) {
+				log.info("사인 등록 화면으로 이동");
+				  response.getWriter().print("<script>alert('사인등록은 필수 입니다'); location.href='./signature_manage.do';</script>");
+			      return null;  
+			}
+			
 			
 			
 			log.info("{} 님 반갑습니다.", loginVo.getName());
 			response.getWriter().print("<script>alert('" + loginVo.getName() + "님 반갑습니다'); location.href='./homeList.do';</script>");
 	        return null;
 	    }
+	    
 	    
 	    //비밀번호 재설정 GetMapping 
 	    @GetMapping(value = "/newPw.do")
@@ -93,11 +100,11 @@ public class LoginController {
 	    	        log.info("세션에서 loginVo를 찾을 수 없습니다.");
 	    	    }
 
-	    	    session.removeAttribute("loginVo");
+	    	    session.invalidate();
 	    	    
-	    	    // 세션에서 loginVo를 제거한 후 다시 가져옴 (null 확인)
-	    	    EmployeeDto removedVo = (EmployeeDto)session.getAttribute("loginVo");
-	    	    log.info("HttpSession에서 loginVo 제거 후 확인: {}", removedVo);  // null
+    	    // 세션에서 loginVo를 제거한 후 다시 가져옴 (null 확인)
+//	    	    EmployeeDto removedVo = (EmployeeDto)session.getAttribute("loginVo");
+//	    	    log.info("HttpSession에서 loginVo 제거 후 확인: {}", removedVo);  // null
 			
 			
 			//return "redirect:/homeList.do"; //** 세션 지워지는 것 확인

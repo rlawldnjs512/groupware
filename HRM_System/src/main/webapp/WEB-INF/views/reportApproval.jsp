@@ -65,6 +65,9 @@ th, td {
 		<%@ include file="header.jsp"%>
 		<div class="main-content">
 			<form method="post" enctype="multipart/form-data">
+			
+			
+			
 				<div class="card p-4" style="width: 1300px;">
 					<h2 class="text-center mb-4">보고서</h2> 
 					<div>
@@ -158,6 +161,7 @@ th, td {
 // 	        이름 목록을 approvalLindTd_1의 td로 추가
 	        approvalLine.forEach(person => {
 				console.log(person.name)
+				
 	            let td_1 = document.createElement("th");
 	            td_1.textContent = person.name;
 	            row1.appendChild(td_1);
@@ -171,6 +175,8 @@ th, td {
 	        });
 	
 		}
+		
+		
 		
 		function approvalReport() {
 		    $.ajax({
