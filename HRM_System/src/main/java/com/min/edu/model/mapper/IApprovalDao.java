@@ -65,6 +65,6 @@ public interface IApprovalDao {
 	
 	public int insertApproval(Map<String, Object> map);
 	
-
+	
 
 }

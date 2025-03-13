@@ -147,6 +147,7 @@ public class ApprovalFormController {
 	}
 	
 	// 보고서 결재하기--------------------------------------------------
+	
 	@GetMapping(value = "/reportForm.do")
 	public String report_form() {
 		return "reportApproval";
