@@ -132,4 +132,9 @@ public class ApprovalServiceImpl implements IApprovalService {
 		return dao.continuePreviewLeave(doc_id);
 	}
 
+	@Override
+	public SignDto selectSignOne(String emp_id) {
+		return dao.selectSignOne(emp_id);
+	}
+
 }

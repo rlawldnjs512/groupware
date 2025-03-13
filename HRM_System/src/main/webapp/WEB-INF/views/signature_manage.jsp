@@ -162,14 +162,14 @@ th {
 							<td>
 								<div id="signature-pad" class="m-signature-pad">
 									<div class="m-signature-pad--body">
-										<c:if test="${signSaved ne null}">
-			                                <img id="signatureImage" src="${signSaved}" width="600" height="400"
-			                                     style="border: 1px solid black;;" />
+										<c:if test="${loginVo.signSaved ne null}">
+			                                <img id="signatureImage" src="${loginVo.signSaved}" width="600" height="400"
+			                                     style="border: 1px solid black;" />
 			                                <canvas id="signature-pad-canvas" width="541" height="361"
 			                                        style="border: 1px solid black;"></canvas>
 			                            </c:if>
-			                            <c:if test="${signSaved eq null}">
-			                                <img id="signatureImage" src="${signSaved}" width="600" height="400"
+			                            <c:if test="${loginVo.signSaved eq null}">
+			                                <img id="signatureImage" src="${loginVo.signSaved}" width="600" height="400"
 			                                     style="border: 1px solid black;" />
 			                                <canvas id="signature-pad-canvas" width="541" height="361"
 			                                        style="border: 1px solid black; display: block;"></canvas>
@@ -180,7 +180,7 @@ th {
 						</tr>
 					</table>
 					<div class="m-signature-pad--footer">
-						<c:if test="${signSaved eq null}">
+						<c:if test="${loginVo.signSaved eq null}">
 							<button type="button" class="btn btn-danger clear"
 								 data-action="clear">지우기</button>
 							<button type="button" class="btn btn-primary save"
@@ -188,7 +188,7 @@ th {
 							<button type="button" class="btn btn-success save"
 								 data-action="delete" style="display: none;">다시 만들기</button>
 						</c:if>
-						<c:if test="${signSaved ne null}">
+						<c:if test="${loginVo.signSaved ne null}">
 							<button type="button" class="btn btn-danger clear"
 								 data-action="clear" style="display: none;">지우기</button>
 							<button type="button" class="btn btn-primary save"
@@ -263,29 +263,37 @@ th {
 	                        url: "/deleteSignature.do",
 	                        method: "POST",
 	                        contentType: "application/json",
-	                        data: JSON.stringify({ sign: sign.toDataURL() }),
+	                        data: JSON.stringify({}),
 	                        dataType: "json"
 	                    });
-	
+
 	                    console.log(response);
-	                    $("#signatureImage").hide();
+
+	                    $("#signatureImage").attr("src", "").hide();  
+
 	                    $("#signature-pad canvas").show();
 	                    sign.clear();
-	
+
+	                    $("button[data-action='clear']").show();
+	                    $("button[data-action='save']").show(); 
+	                    $("button[data-action='delete']").hide();
+
 	                    $("#messageContainer").text("서명이 삭제되었습니다.").show().css("color", "green");
-	
 	                    setTimeout(() => $("#messageContainer").fadeOut(500), 3000);
-	
-	                    if (response.redirect) {
-	                        setTimeout(() => {
-	                            window.location.href = response.redirect;
-	                        }, 1000);
-	                    }
-	
+
+	                    setTimeout(() => {
+	                    	location.reload();
+	                    }, 1000);
+	                    
+// 	                    if (response.redirect) {
+// 	                        setTimeout(() => {
+// 	                            window.location.href = response.redirect;
+// 	                        }, 1000);
+// 	                    }
+
 	                } catch (error) {
 	                    console.error(error);
 	                    $("#messageContainer").text("서명 삭제 실패. 다시 시도해주세요.").show().css("color", "red");
-	
 	                    setTimeout(() => $("#messageContainer").fadeOut(500), 3000);
 	                }
 	            }
@@ -309,7 +317,7 @@ th {
 
 		// 페이지 로드 시 서명이 있는 경우 img로 표시하고, 캔버스를 숨김
 		window.onload = function() {
-			var signSaved = '${signSaved}'; // 서버에서 전달된 base64 서명 이미지 데이터
+			var signSaved = '${loginVo.signSaved}'; // 서버에서 전달된 base64 서명 이미지 데이터
 
 			if (signSaved) {
 				// 서명이 있을 경우 이미지 표시

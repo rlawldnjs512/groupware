@@ -95,7 +95,7 @@ th, td {
 								</tr>
 								<tr id="approvalLineTd_1">
 									<td id="approvalLineTd_2"><img id="signatureImage"
-										src="${signSaved}" width="80" height="75"
+										src="${loginVo.signSaved}" width="80" height="75"
 										style="border: 1px solid black;" /></td>
 								</tr>
 							</table>

@@ -295,34 +295,14 @@
 				            <!-- 이전 버튼 (왼쪽) -->
 				            <c:if test="${page.page > 1}">
 				                <li>
-				                    <a href="./select.do?page=${page.page - 1}&type=${param.type}&emp_id=${param.emp_id}">&laquo;</a>
+				                    <a href="./select.do?page=${page.page - 1}&type=${type}&emp_id=${emp_id}">&laquo;</a>
 				                </li>
-				                <c:if test="${sessionScope.loginVo.role eq 'A'}">
-<%-- 				                    <c:if test="${param.emp_id != null}"> --%>
-<!-- 				                        사원번호로 검색하는 경우 -->
-<%-- 				                        <a href="./select.do?page=${page.page - 1}&emp_id=${param.emp_id}">&laquo;</a> --%>
-<%-- 				                    </c:if> --%>
-				                    <c:if test="${param.type != null}">
-				                        <!-- 증명서 종류로 검색하는 경우 -->
-				                        <a href="./select.do?page=${page.page - 1}&type=${param.type}">&laquo;</a>
-				                    </c:if>
-				                </c:if>
 				            </c:if>
 				
 				            <!-- 페이지 번호 (가운데) -->
 				            <c:forEach var="i" begin="${page.stagePage}" end="${page.endPage}" step="1">
 				                <li class="${i == page.page ? 'active' : ''}">
-				                    <a href="./select.do?page=${i}&type=${param.type}&emp_id=${param.emp_id}">${i}</a>
-				                    <c:if test="${sessionScope.loginVo.role eq 'A'}">
-<%-- 				                        <c:if test="${param.emp_id != null}"> --%>
-<!-- 				                            사원번호로 검색하는 경우 -->
-<%-- 				                            <a href="./select.do?page=${i}&emp_id=${param.emp_id}">${i}</a> --%>
-<%-- 				                        </c:if> --%>
-				                        <c:if test="${param.type != null}">
-				                            <!-- 증명서 종류로 검색하는 경우 -->
-				                            <a href="./select.do?page=${i}&type=${param.type}">${i}</a>
-				                        </c:if>
-				                    </c:if>
+				                    <a href="./select.do?page=${i}&type=${type}&emp_id=${emp_id}">${i}</a>
 				                </li>
 				            </c:forEach>
 				
@@ -331,16 +311,6 @@
 				                <li>
 				                    <a href="./select.do?page=${page.page + 1}&type=${param.type}&emp_id=${param.emp_id}">&raquo;</a>
 				                </li>
-				                <c:if test="${sessionScope.loginVo.role eq 'A'}">
-<%-- 				                    <c:if test="${param.emp_id != null}"> --%>
-<!-- 				                        사원번호로 검색하는 경우 -->
-<%-- 				                        <a href="./select.do?page=${page.page + 1}&emp_id=${param.emp_id}">&raquo;</a> --%>
-<%-- 				                    </c:if> --%>
-				                    <c:if test="${param.type != null}">
-				                        <!-- 증명서 종류로 검색하는 경우 -->
-				                        <a href="./select.do?page=${page.page + 1}&type=${param.type}">&raquo;</a>
-				                    </c:if>
-				                </c:if>
 				            </c:if>
 				        </ul>
 				    </c:if>

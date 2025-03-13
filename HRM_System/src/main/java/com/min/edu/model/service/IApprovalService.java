@@ -17,6 +17,7 @@ public interface IApprovalService {
 	public int insertSign(SignDto dto);
 	
 	public List<SignDto> selectSign();
+	public SignDto selectSignOne(String emp_id);
 	
 	public int deleteSign(String name);
 	

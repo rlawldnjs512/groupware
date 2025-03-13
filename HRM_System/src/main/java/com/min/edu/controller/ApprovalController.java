@@ -35,7 +35,22 @@ public class ApprovalController {
 	private final ILeaveService leaveService;
 	
 	@GetMapping(value = "/approval.do")
-	public String approval_move() {
+	public String approval_move(Model model,
+								HttpSession session,
+								HttpServletRequest request) {
+		
+		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
+		String name = loginVo.getName();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", name);
+		
+		// 임시 문서함
+		List<ApprovalDto> lists = service.selectPreviewDoc(map);
+		
+		
+		model.addAttribute("lists",lists);
+		
 		return "approval";
 	}
 	
@@ -155,7 +170,8 @@ public class ApprovalController {
 	public String signature_manage() {
 		return "signature_manage";
 	}
-	 // 서명 만들기
+	
+	// 서명 만들기
 	@PostMapping(value = "/mySignature.do")
 	@ResponseBody
 	public Map<String, String> my_signature(@RequestBody Map<String, String> requestData,
@@ -181,14 +197,12 @@ public class ApprovalController {
 			int signSave = service.insertSign(dto);
 			
 			model.addAttribute("signSaved",base64Sig); 
-			session.setAttribute("signSaved", base64Sig);
 			System.out.println("signSaved : " + base64Sig);
 
 			session.removeAttribute("loginVo");
 			
 			EmployeeDto removedVo = (EmployeeDto)session.getAttribute("loginVo");
 			
-			response.put("redirect", "서명이 저장되었습니다. 다시 로그인 해주세요.");
 			response.put("redirect", "/");
 			
 		} else {
@@ -214,7 +228,7 @@ public class ApprovalController {
 		model.addAttribute("lists",lists);
 		
 				
-		return "redirect:/signature_manage";
+		return "signature_manage";
 	}
 	
 	// 서명 삭제하기
@@ -231,7 +245,8 @@ public class ApprovalController {
 	    	
 	        int result = service.deleteSign(loginVo.getName());
 
-	        session.removeAttribute("signSaved");
+	        loginVo.setSignSaved(null);
+	        session.setAttribute("loginVo", loginVo);
 	        
 	        response.put("redirect", "/signature_manage.do");
 	        

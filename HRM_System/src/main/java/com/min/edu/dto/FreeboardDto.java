@@ -31,4 +31,6 @@ public class FreeboardDto {
 	// 추가
 	private String name;
 
+	private int seq;
+	
 }
