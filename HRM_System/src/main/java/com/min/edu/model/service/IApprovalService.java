@@ -55,9 +55,11 @@ public interface IApprovalService {
 	
 	public List<Map<String, Object>> selectTree();
 	
-	public int insertDocument(Map<String, Object> map);
 	
-	public int insertApproval(Map<String, Object> map);
+	// 2025 03 13 기안서 입력 및 결재선 입력
+	public int insertDocument(Map<String, Object> docMap, Map<String, Object> appMap);
+	
+//	public int insertApproval(Map<String, Object> map);
 
 
 }

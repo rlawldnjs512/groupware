@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.min.edu.dto.ApprovalDto;
 import com.min.edu.dto.DocumentDto;
@@ -87,15 +88,22 @@ public class ApprovalServiceImpl implements IApprovalService {
 		return dao.selectTree();
 	}
 
+	// 2025 03 13 기안서 입력 및 결재선 입력
 	@Override
-	public int insertDocument(Map<String, Object> map) {
-		return dao.insertDocument(map);
+	@Transactional
+	public int insertDocument(Map<String, Object> docMap, Map<String, Object> appMap) {
+		 int n = dao.insertDocument(docMap);
+		 System.out.println("입력된 docMap.get(\"doc_id\") :" + docMap.get("doc_id"));
+		 appMap.put("doc_id", docMap.get("doc_id"));
+		 System.out.println("입력된 appMap.get(\"doc_id\") :" + appMap.get("doc_id"));
+		 int m = dao.insertApproval(appMap);
+		 return (n+m) >0 ? 1 : 0;
 	}
 
-	@Override
-	public int insertApproval(Map<String, Object> map) {
-		return dao.insertApproval(map);
-	}
+//	@Override
+//	public int insertApproval(Map<String, Object> map) {
+//		return dao.insertApproval(map);
+//	}
 
 	@Override
 	public List<ApprovalDto> continuePreviewDoc(Map<String, Object> map) {
