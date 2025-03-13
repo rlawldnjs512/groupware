@@ -102,6 +102,7 @@ th, td {
 									<th>본인</th>
 									
 								</tr>
+
 								<tr  style="height: 100px;">
 									<td>
 										<img id="signatureImage" src="${loginVo.signSaved}" style="width: 50%; height: auto; object-fit: contain;"/>

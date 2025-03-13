@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -276,6 +277,75 @@ public class BlogController {
 		service.deleteNoticeDead();
 	}
 	
+	@GetMapping(value = "/searchNotice.do")
+	public String notice_search(@RequestParam(value = "type",required = false) String type,
+								@RequestParam(value = "keyword",required = false) String keyword,
+								HttpServletRequest request, 
+								HttpServletResponse response,
+								Model model,
+								HttpSession session) {
+		
+		List<NoticeboardDto> lists = new ArrayList<NoticeboardDto>();
+		
+		// 현재 페이지 가져오기 (기본값: 1)
+	    String pageParam = request.getParameter("page");
+	    if (pageParam == null) {
+	        pageParam = "1";
+	    }
+	    int selectPage = Integer.parseInt(pageParam);
+
+	    // EmpPageDto 생성 및 설정
+	    EmpPageDto d = new EmpPageDto();
+	    d.setTotalCount(service.countNoticePage()); // 전체 공지사항 개수
+	    d.setCountList(10); // 한 페이지에 표시될 글 개수
+	    d.setCountPage(5); // 한 번에 표시될 페이지 개수
+	    d.setTotalPage(d.getTotalCount()); // 전체 페이지 수 계산
+	    d.setPage(selectPage); // 현재 페이지 설정
+	    d.setStagePage(d.getPage()); // 페이지 그룹 시작 번호 계산
+	    d.setEndPage(); // 페이지 그룹 끝 번호 계산
+
+	    // 페이징을 위한 first, last 설정
+	    int first = (d.getPage() - 1) * d.getCountList() + 1;
+	    int last = d.getPage() * d.getCountList();
+
+	    // Map을 사용하여 first, last 값을 담아 전달
+	    Map<String, Object> map = new HashMap<>();
+	    map.put("first", first);
+	    map.put("last", last);
+	    map.put("keyword", keyword);
+
+	    if(type == null || keyword == null || keyword.trim().isEmpty()) {
+	    	return "redirect:/notice.do";
+	    } else {
+	    	int totalCount = 0;
+	    	if("title".equals(type)) {
+	    		lists = service.searchNoticeTitle(map);
+	    		totalCount = service.countSearchNoticeTitle(keyword);
+	    	} else if("content".equals(type)) {
+	    		lists = service.searchNotice(map);
+	    		totalCount = service.countSearchNotice(keyword);
+	    	}
+	    	
+	    	d.setTotalCount(totalCount); // 전체 공지사항 개수
+		    d.setCountList(10); // 한 페이지에 표시될 글 개수
+		    d.setCountPage(5); // 한 번에 표시될 페이지 개수
+		    d.setTotalPage(totalCount); // 전체 페이지 수 계산
+		    d.setPage(selectPage); // 현재 페이지 설정
+		    d.setStagePage(d.getPage()); // 페이지 그룹 시작 번호 계산
+		    d.setEndPage(); // 페이지 그룹 끝 번호 계산
+	    }
+	    
+	    
+	    // 모델에 데이터 추가
+	    model.addAttribute("lists", lists);
+	    model.addAttribute("type", type);
+	    model.addAttribute("keyword", keyword);
+	    model.addAttribute("page", d); // 페이징 데이터 추가
+
+	    return "notice"; // notice.jsp 반환
+	    
+	}
+	
 
 //	-------------- 공지사항 end --------------
 	
@@ -295,7 +365,7 @@ public class BlogController {
 
 	    // EmpPageDto 생성 및 설정
 	    EmpPageDto d = new EmpPageDto();
-	    d.setTotalCount(service.countNoticePage()); // 전체 공지사항 개수
+	    d.setTotalCount(service.countFreePage()); // 전체 공지사항 개수
 	    d.setCountList(10); // 한 페이지에 표시될 글 개수
 	    d.setCountPage(5); // 한 번에 표시될 페이지 개수
 	    d.setTotalPage(d.getTotalCount()); // 전체 페이지 수 계산
@@ -592,6 +662,76 @@ public class BlogController {
 	    return ResponseEntity.ok().body(fileBytes);
 	}
 	
+	@GetMapping(value = "/searchFree.do")
+	public String free_search(@RequestParam(value = "type",required = false) String type,
+								@RequestParam(value = "keyword",required = false) String keyword,
+								HttpServletRequest request, 
+								HttpServletResponse response,
+								Model model,
+								HttpSession session) {
+		
+		List<FreeboardDto> lists = new ArrayList<FreeboardDto>();
+		
+		// 현재 페이지 가져오기 (기본값: 1)
+	    String pageParam = request.getParameter("page");
+	    if (pageParam == null) {
+	        pageParam = "1";
+	    }
+	    int selectPage = Integer.parseInt(pageParam);
+
+	    // EmpPageDto 생성 및 설정
+	    EmpPageDto d = new EmpPageDto();
+	    d.setTotalCount(service.countFreePage()); // 전체 공지사항 개수
+	    d.setCountList(10); // 한 페이지에 표시될 글 개수
+	    d.setCountPage(5); // 한 번에 표시될 페이지 개수
+	    d.setTotalPage(d.getTotalCount()); // 전체 페이지 수 계산
+	    d.setPage(selectPage); // 현재 페이지 설정
+	    d.setStagePage(d.getPage()); // 페이지 그룹 시작 번호 계산
+	    d.setEndPage(); // 페이지 그룹 끝 번호 계산
+
+	    // 페이징을 위한 first, last 설정
+	    int first = (d.getPage() - 1) * d.getCountList() + 1;
+	    int last = d.getPage() * d.getCountList();
+
+	    // Map을 사용하여 first, last 값을 담아 전달
+	    Map<String, Object> map = new HashMap<>();
+	    map.put("first", first);
+	    map.put("last", last);
+	    map.put("keyword", keyword);
+
+	    if(type == null || keyword == null || keyword.trim().isEmpty()) {
+	    	return "redirect:/free.do";
+	    } else {
+	    	int totalCount = 0;
+	    	if("title".equals(type)) {
+	    		lists = service.searchFreeTitle(map);
+	    		totalCount = service.countSearchFreeTitle(keyword);
+	    	} else if("content".equals(type)) {
+	    		lists = service.searchFree(map);
+	    		totalCount = service.countSearchFree(keyword);
+	    	} else if("name".equals(type)) {
+	    		lists = service.searchFreeName(map);
+	    		totalCount = service.countSearchFreeName(keyword);
+	    	}
+	    	
+	    	d.setTotalCount(totalCount); // 전체 공지사항 개수
+		    d.setCountList(10); // 한 페이지에 표시될 글 개수
+		    d.setCountPage(5); // 한 번에 표시될 페이지 개수
+		    d.setTotalPage(totalCount); // 전체 페이지 수 계산
+		    d.setPage(selectPage); // 현재 페이지 설정
+		    d.setStagePage(d.getPage()); // 페이지 그룹 시작 번호 계산
+		    d.setEndPage(); // 페이지 그룹 끝 번호 계산
+	    }
+	    
+	    // 모델에 데이터 추가
+	    model.addAttribute("lists", lists);
+	    model.addAttribute("type", type);
+	    model.addAttribute("keyword", keyword);
+	    model.addAttribute("page", d); // 페이징 데이터 추가
+
+	    return "free"; // free.jsp 반환
+		
+	}
 	
 	
 	

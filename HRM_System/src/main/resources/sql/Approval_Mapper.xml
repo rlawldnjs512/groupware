@@ -36,6 +36,12 @@
 	FROM SIGN
 </select>
 
+<select id="selectSignOne" resultType="SignDto">
+	SELECT SIGN
+	FROM SIGN
+	WHERE EMP_ID = #{emp_id}
+</select>
+
 <!-- 사용자는 자신의 서명을 삭제할 수 있다.	deleteSign -->
 <delete id="deleteSign">
 	DELETE FROM SIGN
@@ -75,6 +81,7 @@
 			WHEN #{doc_type} = '보고서' THEN 'REPORT'
 		END || '_' || TO_CHAR(SYSDATE, 'YYYY') || '_' || #{doc_id})
 </insert>
+
 <!-- 임시저장한 문서를 상신할 때 -->
 <update id="insertTempDoc">
 UPDATE DOCUMENT SET DOC_STATUS='N'
@@ -284,8 +291,8 @@ FROM EMPLOYEE
 
 <!-- 상신하기 +문서 생성 -->
 <insert id="insertDocument">
-<selectKey keyProperty="doc_id" resultType="Integer" order="BEFORE">
-		SELECT DOCUMENT_SEQ.NEXTVAL as DOC_ID
+	<selectKey keyProperty="doc_id" resultType="Integer" order="BEFORE">
+		SELECT DOCUMENT_SEQ.NEXTVAL
 		FROM DUAL
 	</selectKey>
 	INSERT INTO DOCUMENT

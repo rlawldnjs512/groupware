@@ -20,6 +20,7 @@ public interface IApprovalDao {
 	public int insertSign(SignDto dto);
 	
 	public List<SignDto> selectSign();
+	public SignDto selectSignOne(String emp_id);
 	
 //	사용자는 자신의 서명을 삭제할 수 있다.
 	public int deleteSign(String name);

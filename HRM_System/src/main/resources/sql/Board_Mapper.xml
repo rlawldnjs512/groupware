@@ -303,6 +303,99 @@
 		ORDER BY FREE_ID ASC
 	</select>
 
+<!-- 게시글 검색하기 (공지사항/커뮤니티) -->
+<!-- 공지사항 -->
+<select id="searchNotice" resultType="NoticeboardDto">
+	SELECT SEQ, NOT_ID , TITLE , CONTENT , REGDATE , EXPIRED , NAME , FILE_EXIST
+			FROM (SELECT ROW_NUMBER() OVER (ORDER BY NOT_ID) AS SEQ,
+			NOT_ID , TITLE , CONTENT , REGDATE , EXPIRED , FILE_EXIST ,
+			(SELECT NAME FROM EMPLOYEE e WHERE ROLE = 'A') AS NAME
+			FROM NOTICEBOARD n)
+			WHERE SEQ BETWEEN #{first} AND #{last}
+			AND CONTENT LIKE '%' || #{keyword} || '%'
+			ORDER BY NOT_ID ASC
+</select>
+<select id="countSearchNotice" resultType="int">
+	SELECT COUNT(*)
+		FROM NOTICEBOARD n
+		WHERE CONTENT LIKE '%' || #{keyword} || '%'
+		ORDER BY NOT_ID ASC
+</select>
+
+<select id="searchNoticeTitle" resultType="NoticeboardDto">
+	SELECT SEQ, NOT_ID , TITLE , CONTENT , REGDATE , EXPIRED , NAME , FILE_EXIST
+			FROM (SELECT ROW_NUMBER() OVER (ORDER BY NOT_ID) AS SEQ,
+			NOT_ID , TITLE , CONTENT , REGDATE , EXPIRED , FILE_EXIST ,
+			(SELECT NAME FROM EMPLOYEE e WHERE ROLE = 'A') AS NAME
+			FROM NOTICEBOARD n)
+			WHERE SEQ BETWEEN #{first} AND #{last}
+			AND TITLE LIKE '%' || #{keyword} || '%'
+			ORDER BY NOT_ID ASC
+</select>
+<select id="countSearchNoticeTitle" resultType="int">
+	SELECT COUNT(*)
+		FROM NOTICEBOARD n
+		WHERE TITLE LIKE '%' || #{keyword} || '%'
+		ORDER BY NOT_ID ASC
+</select>
+
+<!-- 커뮤니티 -->
+<select id="searchFree" resultType="FreeboardDto">
+	SELECT SEQ, FREE_ID , TITLE , CONTENT , REGDATE , EMP_ID , NAME ,
+			REF , STEP , DEPTH , DELFLAG , FILE_EXIST
+			FROM (SELECT ROW_NUMBER() OVER (ORDER BY FREE_ID) AS SEQ,
+			FREE_ID , TITLE , CONTENT , REGDATE , EMP_ID , NAME ,
+			REF , STEP , DEPTH , DELFLAG , FILE_EXIST
+			FROM FREEBOARD f
+			JOIN EMPLOYEE e USING(EMP_ID))
+			WHERE SEQ BETWEEN #{first} AND #{last}
+			AND CONTENT LIKE '%' || #{keyword} || '%'
+			ORDER BY FREE_ID ASC
+</select>
+<select id="countSearchFree" resultType="int">
+	SELECT COUNT(*)
+		FROM FREEBOARD f
+		WHERE CONTENT LIKE '%' || #{keyword} || '%'
+		ORDER BY FREE_ID ASC
+</select>
+
+<select id="searchFreeTitle" resultType="FreeboardDto">
+	SELECT SEQ, FREE_ID , TITLE , CONTENT , REGDATE , EMP_ID , NAME ,
+			REF , STEP , DEPTH , DELFLAG , FILE_EXIST
+			FROM (SELECT ROW_NUMBER() OVER (ORDER BY FREE_ID) AS SEQ,
+			FREE_ID , TITLE , CONTENT , REGDATE , EMP_ID , NAME ,
+			REF , STEP , DEPTH , DELFLAG , FILE_EXIST
+			FROM FREEBOARD f
+			JOIN EMPLOYEE e USING(EMP_ID))
+			WHERE SEQ BETWEEN #{first} AND #{last}
+			AND TITLE LIKE '%' || #{keyword} || '%'
+			ORDER BY FREE_ID ASC
+</select>
+<select id="countSearchFreeTitle" resultType="int">
+	SELECT COUNT(*)
+		FROM FREEBOARD f
+		WHERE TITLE LIKE '%' || #{keyword} || '%'
+		ORDER BY FREE_ID ASC
+</select>
+
+<select id="searchFreeName" resultType="FreeboardDto">
+	SELECT SEQ, FREE_ID , TITLE , CONTENT , REGDATE , EMP_ID , NAME ,
+			REF , STEP , DEPTH , DELFLAG , FILE_EXIST
+			FROM (SELECT ROW_NUMBER() OVER (ORDER BY FREE_ID) AS SEQ,
+			FREE_ID , TITLE , CONTENT , REGDATE , EMP_ID , NAME ,
+			REF , STEP , DEPTH , DELFLAG , FILE_EXIST
+			FROM FREEBOARD f
+			JOIN EMPLOYEE e USING(EMP_ID))
+			WHERE SEQ BETWEEN #{first} AND #{last}
+			AND NAME LIKE '%' || #{keyword} || '%'
+			ORDER BY FREE_ID ASC
+</select>
+<select id="countSearchFreeName" resultType="int">
+	SELECT COUNT(*)
+			FROM FREEBOARD f
+			JOIN EMPLOYEE e USING(EMP_ID)
+			WHERE NAME LIKE '%' || #{keyword} || '%'
+</select>
 
 
 

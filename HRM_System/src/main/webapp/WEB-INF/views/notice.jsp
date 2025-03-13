@@ -66,82 +66,101 @@ th {
     <div class="content" id="content">
 		<%@ include file="header.jsp" %>
 		<div class="main-content">
-		
-		   <div class="table-responsive">
-		       <table class="table table-hover table-rounded table-striped border gy-7 gs-7">
-		           <thead>
-		               <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
-						   <th>ID</th>
-		                   <th>제목</th>
-		                   <th>작성자</th>
-		                   <th>작성일</th>
-		                   <th>첨부파일</th>
-		               </tr>
-		           </thead>
-		           <tbody>
-		               <c:choose>
-		                   <c:when test="${empty lists}">
-		                       <tr>
-		                           <td colspan="4" class="text-center text-muted">등록된 공지사항이 없습니다.</td>
-		                       </tr>
-		                   </c:when>
-		                   <c:otherwise>
-		                       <c:forEach var="vo" items="${lists}">
-		                           <tr>
-									   <td>${vo.not_id}</td>
-		                               <td>
-											<div class="panel-heading">
-												<a class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse${vo.not_id}">${vo.title}</a>
-											</div>
-									   </td>
-		                               <td>${vo.name}</td>
-		                               <td>${vo.regdate}</td>
-		                               <td>
-		                               		<c:if test="${vo.file_exist eq 'Y'}">
-												<img src="./images/filedown.png">
-		                               		</c:if>
-		                               		<c:if test="${vo.file_exist eq 'N'}">
-												<img src="./images/filenot.png">
-		                               		</c:if>
-									   </td>
-		                           </tr>
-								   <tr class="hidden-row">
-								   		<td colspan="${sessionScope.loginVo.role eq 'A' ? 6:6}">
-								   			<div id="collapse${vo.not_id}" class="panel-collapse collapse">
-								   				<div class="form-group">
-								   					<label>내용</label>
-													<div class="form-control" style="border: 1px solid #ccc; padding: 10px; background: #f8f9fa;">
-													    <c:out value="${vo.content}" escapeXml="false" />
-													</div>
-													<c:if test="${sessionScope.loginVo.role eq 'A'}">
-									   					<div class="btn-group btn-group-justified">
-									   						<div class="btn-group">
-									   							<input type="button" class="btn btn-primary" onclick="modify('${vo.not_id}')" value="수정">
-									   						</div>
-									   						<div class="btn-group">
-									   							<input type="button" class="btn btn-danger" onclick="del('${vo.not_id}')" value="삭제">
-									   						</div>
-													</c:if>
-														<div class="btn-group">
-															<c:if test="${vo.file_exist eq 'Y'}">
-																<input type="button" class="btn btn-success" id="saveFile" onclick="fileDown('${vo.not_id}')" value="첨부파일 다운로드">
-															</c:if>
-									   					</div>
+			<form action="./searchNotice.do" method="get" name="searchNotice">
+			   <div class="table-responsive">
+			   		<fieldset class="btn-container">
+			   			<select name="type" id="type">
+				            <option value="title" ${(param.type == "title")?"selected":""}>제목</option>
+				        	<option value="content" ${(param.type == "content")?"selected":""}>내용</option>
+				        </select> 
+						<input type="text" name="keyword" value="${param.keyword}" placeholder="검색어를 입력해주세요.">
+						<button type="submit" class="button-common search-btn">
+							<img src="images/search.svg" alt="검색 아이콘" style="width: 30px; height: 30px;">
+						</button>
+					</fieldset>
+					
+					<table class="table table-hover table-rounded table-striped border gy-7 gs-7">
+			           <thead>
+			               <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+							   <th>NO</th>
+			                   <th>제목</th>
+			                   <th>작성자</th>
+			                   <th>작성일</th>
+			                   <th>첨부파일</th>
+			               </tr>
+			           </thead>
+			           <tbody>
+			               <c:choose>
+			                   <c:when test="${empty lists}">
+			                       <tr>
+			                           <td colspan="5" class="text-center text-muted">조회된 글이 없습니다.</td>
+			                       </tr>
+			                   </c:when>
+			                   <c:otherwise>
+			                       <c:forEach var="vo" items="${lists}" varStatus="status">
+			                           <tr>
+										   <td>
+										   		<c:if test="${empty type && empty keyword}">
+										   			${vo.seq}
+										   		</c:if>
+										   		<c:if test="${not empty type && not empty keyword}">
+										   			${status.index+1}
+										   		</c:if>
+										   </td>
+			                               <td>
+												<div class="panel-heading">
+													<a class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse${vo.not_id}">${vo.title}</a>
+												</div>
+										   </td>
+			                               <td>${vo.name}</td>
+			                               <td>${vo.regdate}</td>
+			                               <td>
+			                               		<c:if test="${vo.file_exist eq 'Y'}">
+													<img src="./images/filedown.png">
+			                               		</c:if>
+			                               		<c:if test="${vo.file_exist eq 'N'}">
+													<img src="./images/filenot.png">
+			                               		</c:if>
+										   </td>
+			                           </tr>
+									   <tr class="hidden-row">
+									   		<td colspan="${sessionScope.loginVo.role eq 'A' ? 6:6}">
+									   			<div id="collapse${vo.not_id}" class="panel-collapse collapse">
+									   				<div class="form-group">
+									   					<label>내용</label>
+														<div class="form-control" style="border: 1px solid #ccc; padding: 10px; background: #f8f9fa;">
+														    <c:out value="${vo.content}" escapeXml="false" />
+														</div>
+														<c:if test="${sessionScope.loginVo.role eq 'A'}">
+										   					<div class="btn-group btn-group-justified">
+										   						<div class="btn-group">
+										   							<input type="button" class="btn btn-primary" onclick="modify('${vo.not_id}')" value="수정">
+										   						</div>
+										   						<div class="btn-group">
+										   							<input type="button" class="btn btn-danger" onclick="del('${vo.not_id}')" value="삭제">
+										   						</div>
+														</c:if>
+															<div class="btn-group">
+																<c:if test="${vo.file_exist eq 'Y'}">
+																	<input type="button" class="btn btn-success" id="saveFile" onclick="fileDown('${vo.not_id}')" value="첨부파일 다운로드">
+																</c:if>
+										   					</div>
+										   				</div>
 									   				</div>
-								   				</div>
-								   			</div>
-								   		</td>
-								   	</tr>
-		                       </c:forEach>
-		                   </c:otherwise>
-		               </c:choose>
-		           </tbody>
-		       </table>
-				<c:if test="${sessionScope.loginVo.role eq 'A'}">
-			       <input type="button" class="btn btn-light-primary ms-2" value="등록하기" 
-			       		onclick="location.href='./newNotice.do'">
-				</c:if>
-		   </div>            
+									   			</div>
+									   		</td>
+									   	</tr>
+			                       </c:forEach>
+			                   </c:otherwise>
+			               </c:choose>
+			           </tbody>
+			       </table>
+					<c:if test="${sessionScope.loginVo.role eq 'A'}">
+				       <input type="button" class="btn btn-light-primary ms-2" value="등록하기" 
+				       		onclick="location.href='./newNotice.do'">
+					</c:if>
+			   </div>  
+			</form>          
 		</div>
 		<div class="pagination-container text-center">
 		    <c:if test="${page.totalPage > 1}">

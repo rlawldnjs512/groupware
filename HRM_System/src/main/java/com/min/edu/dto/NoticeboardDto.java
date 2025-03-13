@@ -33,4 +33,6 @@ public class NoticeboardDto {
     private int size;
     private String file_path;
     
+    private int seq;
+    
 }

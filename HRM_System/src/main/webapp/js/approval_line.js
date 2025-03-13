@@ -14,7 +14,7 @@ window.onload = function() {
 	console.log(reports.length);
 	for(let i=0; i<reports.length; i++) {
 		reports[i].onclick = function(evt) {
-			evt.preventDefault();
+  			evt.preventDefault();
 			var reportName = this.name;
 			console.log(reportName);
 			if(reportName == "reportTemp") {

@@ -128,22 +128,6 @@ public class CertificationController {
 
 	        List<CertificateDto> lists = new ArrayList<>();
 
-	        // 관리자일 경우, 사원번호로 검색하여 리스트를 조회
-	        if ("A".equals(role)) {
-	            if (emp_id != null && !emp_id.trim().isEmpty()) {
-	                // 관리자일 경우, 사원번호로 검색
-	                map.put("emp_id", emp_id);  // emp_id로 필터링
-	                lists = service.selectCertIdAdminPage(map);  // emp_id로 데이터 조회
-	            } else {
-	                // 관리자일 경우, 사원번호 없이 증명서 종류(type)로 검색
-	                lists = service.selectCertTypeAdminPage(map);  // 증명서 종류로 데이터 조회
-	            }
-	        } else {
-	            // 일반 사용자일 경우, 로그인된 emp_id로 검색
-	            map.put("emp_id", loggedInEmpId);  // 로그인한 사용자의 emp_id 사용
-	            lists = service.selectCertTypeUserPage(map);  // 증명서 종류로 데이터 조회
-	        }
-
 	        System.out.println("Lists size: " + (lists == null ? 0 : lists.size()));  // 리스트의 크기 출력
 	        System.out.println("first:" + first);
 	        System.out.println("last:" + last);
@@ -151,6 +135,8 @@ public class CertificationController {
 	        // 모델에 데이터 추가
 	        model.addAttribute("lists", lists);
 	        model.addAttribute("page", d);
+	        model.addAttribute("type", type);
+	        model.addAttribute("emp_id", emp_id);
 
 	        // 페이징 표시 여부 결정 (리스트가 없을 경우, 페이징을 표시하지 않음)
 	        if (lists.isEmpty()) {
