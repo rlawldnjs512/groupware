@@ -106,7 +106,7 @@ public class ApprovalController {
 		model.addAttribute("reportDto",reportDto);
 		model.addAttribute("tripDto",tripDto);
 		model.addAttribute("leaveDto",leaveDto);
-		
+
 		if(doc_type.trim().equals("보고서")) {
 			return "continueReport";
 		} else if(doc_type.trim().equals("출장")) {

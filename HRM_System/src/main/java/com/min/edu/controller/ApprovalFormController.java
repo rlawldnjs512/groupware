@@ -50,7 +50,7 @@ public class ApprovalFormController {
 		return "tripApproval";
 	}
 
-	@GetMapping(value = "/reportForm.do")
+  @GetMapping(value = "/reportForm.do")
 	public String report_form() {
 		return "reportApproval";
 	}
