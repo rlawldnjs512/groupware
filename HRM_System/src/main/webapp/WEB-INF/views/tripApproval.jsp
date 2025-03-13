@@ -63,7 +63,7 @@ th, td {
 	<div class="content" id="content">
         <%@ include file="header.jsp"%>
         <div class="main-content">
-        	<form action="./TempTrip.do" method="post" enctype="multipart/form-data">
+        	<form method="post" enctype="multipart/form-data">
 	            <div class="card shadow-lg p-4">
 	                <h2 class="text-center mb-4">출장서</h2>
 	                <div>
@@ -102,6 +102,8 @@ th, td {
 						</div>
 	                </div>
 	                
+	                <input type="hidden" id="doc_type" name="doc_type"
+								class="form-control" value="출장">
 	                <table class="table table-borderless mb-3">
 	                	<tr>
 							<th>제목</th>
@@ -129,9 +131,9 @@ th, td {
 	                </table>
 	                <div class="d-flex justify-content-end mb-3">
 						<button type="button" id="line" onclick="windowOpen()" class="btn btn-light-primary ms-2">결재선 선택</button>
-						<button type="submit" class="btn btn-light-primary ms-2">임시 저장</button>
+						<button type="button" name="reportTemp" class="report btn btn-light-primary ms-2">임시 저장</button>
 						<button type="button" class="btn btn-light-primary ms-2" onclick="history.back(-1)">취소</button>
-						<button type="button" class="btn btn-light-primary ms-2">상신 하기</button>
+						<button type="button" name="reportApproval" class="report btn btn-light-primary ms-2">상신 하기</button>
 					</div>
 	            </div>
 			</form>

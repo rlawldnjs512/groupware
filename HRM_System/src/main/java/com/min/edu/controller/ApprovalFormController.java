@@ -4,7 +4,9 @@ import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Controller;
@@ -35,8 +37,7 @@ public class ApprovalFormController {
 	
 	private final IApprovalService approvalService;
 
-
-	// 휴가 결재하기--------------------------------------------------
+	// 결재문서 폼 이동------------------------------------------------------
 	@GetMapping(value = "/vacationForm.do")
 	public String vacation_form(Model model, HttpSession session) {
 		
@@ -45,126 +46,40 @@ public class ApprovalFormController {
 		
 		return "vacationApproval";
 	}
-	
-	@PostMapping(value = "/TempLeave.do")
-	public String vacation_temp(Model model, HttpSession session,
-								@RequestParam("title") String title,
-								@RequestParam("content") String content,
-								@RequestParam("leave_start") String leave_start,
-								@RequestParam("leave_end") String leave_end,
-								@RequestParam("type") String type,
-								HttpServletRequest request) throws ParseException {
-		
-		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
-		String name = loginVo.getName();
-		
-		DocumentDto dto = DocumentDto.builder()
-				.name(name)
-				.doc_type("휴가")
-				.title(title)
-				.content(content)
-				.build();
-	
-		int resultTemp = approvalService.insertSaveDoc(dto);
-		int doc_id = approvalService.getDocId();
-		
-		// SimpleDateFormat을 사용하여 문자열을 Date로 변환
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date startDate = sdf.parse(leave_start);
-        Date endDate = sdf.parse(leave_end);
 
-        // 두 날짜의 차이 계산 (밀리초 기준)
-        long diffInMillies = endDate.getTime() - startDate.getTime();
-        int leave_days = (int) TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-		
-		LeaveDto leaveDto = LeaveDto.builder()
-				.doc_id(doc_id)
-				.leave_start(leave_start)
-				.leave_end(leave_end)
-				.type(type)
-				.leave_days(leave_days)
-				.build();
-		
-		int resultLeave = approvalService.insertSaveLeave(leaveDto);
-		
-		session.setAttribute("doc_id", doc_id);		
-		
-		return "redirect:/approval.do";
-		
-	}
-	
-	@PostMapping(value = "/submitVacation.do")
-	public String submitVacation(@RequestParam List<String> lineEmp_id) {
-		System.out.println(lineEmp_id);
-		
-		return "redirect:/approval";
-	}
-	
-
-	
-	
-	
-	// 출장 결재하기--------------------------------------------------
 	@GetMapping(value = "/tripForm.do")
 	public String trip_form() {
 		return "tripApproval";
 	}
-	
-	@PostMapping(value = "/TempTrip.do")
-	public String trip_temp(Model model, HttpSession session,
-							@RequestParam("title") String title,
-							@RequestParam("content") String content,
-							@RequestParam("trip_start") String trip_start,
-							@RequestParam("trip_end") String trip_end,
-							@RequestParam("destination") String destination,
-							HttpServletRequest request) {
-		
-		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
-		String name = loginVo.getName();
-		
-		DocumentDto dto = DocumentDto.builder()
-				.name(name)
-				.doc_type("출장")
-				.title(title)
-				.content(content)
-				.build();
-	
-		int resultTemp = approvalService.insertSaveDoc(dto);
-		int doc_id = approvalService.getDocId();
-		
-		TripDto tripDto = TripDto.builder()
-				.doc_id(doc_id)
-				.trip_start(trip_start)
-				.trip_end(trip_end)
-				.destination(destination)
-				.build();
-		
-		int resultTrip = approvalService.insertSaveTrip(tripDto);
-		
-		session.setAttribute("doc_id", doc_id);		
-		
-		return "redirect:/approval.do";
-	}
-	
-	// 보고서 결재하기--------------------------------------------------
-	@GetMapping(value = "/reportForm.do")
+
+  @GetMapping(value = "/reportForm.do")
 	public String report_form() {
 		return "reportApproval";
 	}
 	
+	// 결재문서 임시저장------------------------------------------------------
 	@PostMapping(value = "/TempReport.do")
 	public String report_temp(Model model, HttpSession session,
 								@RequestParam("title") String title,
 								@RequestParam("content") String content,
+								@RequestParam("doc_type") String doc_type,
 								@RequestParam(value = "file", required = false) MultipartFile file,
-								HttpServletRequest request) {
+								@RequestParam(value = "leave_start", required = false) String leave_start,
+								@RequestParam(value = "leave_end", required = false) String leave_end,
+								@RequestParam(value = "type", required = false) String type,
+								@RequestParam(value = "trip_start", required = false) String trip_start,
+								@RequestParam(value = "trip_end", required = false) String trip_end,
+								@RequestParam(value = "destination", required = false) String destination,
+								HttpServletRequest request) throws ParseException {
 		
+		// 로그인 세션 불러오기
 		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
 		String name = loginVo.getName();
 		
+		// 공통 문서양식 저장
 		DocumentDto dto = DocumentDto.builder()
 					.name(name)
-					.doc_type("보고서")
+					.doc_type(doc_type)
 					.title(title)
 					.content(content)
 					.build();
@@ -172,9 +87,142 @@ public class ApprovalFormController {
 		int resultTemp = approvalService.insertSaveDoc(dto);
 		int doc_id = approvalService.getDocId();
 		
+		if (doc_type.trim().equals("출장") && 
+			    (trip_start != null && !trip_start.isEmpty()) || 
+			    (trip_end != null && !trip_end.isEmpty()) || 
+			    (destination != null && !destination.isEmpty())) {
+			
+			TripDto tripDto = TripDto.builder()
+					.doc_id(doc_id)
+					.trip_start(trip_start)
+					.trip_end(trip_end)
+					.destination(destination)
+					.build();
+			
+			int resultTrip = approvalService.insertSaveTrip(tripDto);
+			
+			session.setAttribute("doc_id", doc_id);		
+			
+			return "redirect:/approval.do";
+			
+		} else if (doc_type.trim().equals("휴가") && 
+		         (leave_start != null && !leave_start.isEmpty()) && 
+		         (leave_end != null && !leave_end.isEmpty()) && 
+		         (type != null && !type.isEmpty())) {
+
+			// SimpleDateFormat을 사용하여 문자열을 Date로 변환
+	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	        Date startDate = sdf.parse(leave_start);
+	        Date endDate = sdf.parse(leave_end);
+
+	        // 두 날짜의 차이 계산 (밀리초 기준)
+	        long diffInMillies = endDate.getTime() - startDate.getTime();
+	        int leave_days = (int) TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			
+			LeaveDto leaveDto = LeaveDto.builder()
+					.doc_id(doc_id)
+					.leave_start(leave_start)
+					.leave_end(leave_end)
+					.type(type)
+					.leave_days(leave_days)
+					.build();
+			
+			int resultLeave = approvalService.insertSaveLeave(leaveDto);
+			
+			session.setAttribute("doc_id", doc_id);		
+			
+			return "redirect:/approval.do";
+			
+		} else if(doc_type.trim().equals("보고서")) {
+
+			if(file != null && !file.isEmpty()) {
+				try {
+					
+					String uploadDir = request.getSession().getServletContext().getRealPath("fileup");
+		            File uploadFolder = new File(uploadDir);
+		            
+		            if(!uploadFolder.exists()) {
+		            	uploadFolder.mkdirs();
+		            }
+		            
+		            String origin_name = file.getOriginalFilename();
+		            String store_name = System.currentTimeMillis() + "_" + origin_name;
+		            String file_path = uploadDir + File.separator + store_name;
+
+		            File dest = new File(file_path);
+		            file.transferTo(dest);
+
+		            int size = (int) file.getSize();
+		            
+		            int resultTempFile = approvalService.insertTempFile(FileUpDto.builder()
+						            		.doc_id(doc_id)
+						            		.origin_name(origin_name)
+						            		.store_name(store_name)
+						            		.size(size)
+						            		.file_path(file_path)
+						            		.build());
+		            
+		            approvalService.updateTempFileExist(doc_id);
+		            
+		            model.addAttribute("origin_name", origin_name);
+		            model.addAttribute("store_name", store_name);
+		            model.addAttribute("file_path", file_path);
+		            
+				} catch (Exception e) {
+					return "approval";
+				}
+			}
+			
+			session.setAttribute("doc_id", doc_id);		
+			
+			return "approval";
+			
+		}
+		
+		return "redirect:/approval.do";
+		
+	}
+	
+	// 결재문서 상신------------------------------------------------------
+	@PostMapping(value = "/ApprovalReport.do")
+	public String report_approval(Model model,
+								  HttpSession session,
+								  HttpServletRequest request,
+								  @RequestParam("title") String title,
+								  @RequestParam("content") String content,
+								  @RequestParam("appLine") List<String> appLine,
+								  @RequestParam("doc_type") String doc_type,
+								  @RequestParam(value = "file", required = false) MultipartFile file) {
+		System.out.println("-------------------전달되는 보고서 입력 값 -----------------------");
+		String fileName = "";
 		if(file != null && !file.isEmpty()) {
+			fileName = file.getOriginalFilename();
+		}
+		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
+		String emp_id = loginVo.getEmp_id();
+		System.out.println("title : "+ title);
+		System.out.println("content : " + content);
+		System.out.println("appLine : " + appLine);
+		System.out.println("doc_type : " + doc_type);
+		System.out.println("file : " + fileName);
+		
+		
+		Map<String, Object>  docMap =  new HashMap<String, Object>();
+		docMap.put("doc_id", "");
+		docMap.put("emp_id", emp_id);
+		docMap.put("doc_type", doc_type);
+		docMap.put("title", title);
+		docMap.put("content", content);
+		
+		Map<String, Object>  appMap =  new HashMap<String, Object>();
+		appMap.put("approval", appLine);
+		appMap.put("doc_id", "");
+		
+		int result =  approvalService.insertDocument(docMap, appMap);
+		System.out.println(result>0 ?"결재성공":"결재실패");
+		if(result >0  && file != null && !file.isEmpty()) {
 			try {
-				
+				int doc_id=  (Integer)docMap.get("doc_id");
 				String uploadDir = request.getSession().getServletContext().getRealPath("fileup");
 	            File uploadFolder = new File(uploadDir);
 	            
@@ -201,34 +249,15 @@ public class ApprovalFormController {
 	            
 	            approvalService.updateTempFileExist(doc_id);
 	            
-	            model.addAttribute("origin_name", origin_name);
-	            model.addAttribute("store_name", store_name);
-	            model.addAttribute("file_path", file_path);
-	            
 			} catch (Exception e) {
 				return "approval";
 			}
 		}
 		
-		session.setAttribute("doc_id", doc_id);		
-		
-		return "approval";
-	}
-	
-	@PostMapping(value = "/approvalReport.do")
-	public String report_approval(Model model,
-								  HttpSession session,
-								  HttpServletRequest request,
-								  @RequestParam("title") String title,
-								  @RequestParam("content") String content,
-								  @RequestParam(value = "file", required = false) MultipartFile file) {
-		
-		
-		
 		return "redirect:/approval.do";
 	}
 	
-	// 결재선--------------------------------------------------
+	// 결재선------------------------------------------------------
 	@GetMapping(value = "/tree.do")
 	public String tree() {
 		return "tree";

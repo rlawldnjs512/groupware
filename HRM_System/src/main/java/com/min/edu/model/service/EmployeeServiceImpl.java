@@ -23,7 +23,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
 	@Override
 	public EmployeeDto getLogin(Map<String, Object> map) {
-		log.info("EmployeeServiceImpl {}", "getLogin");
+		log.info("EmployeeServiceImpl {}, {}", "getLogin", map);
 		return dao.getLogin(map); // 로그인 시 비밀번호 비교는 평문 그대로 사용
 	}
 

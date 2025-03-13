@@ -5,19 +5,24 @@
 
 	<!-- 로그인 getLogin -->
 	<select id="getLogin" resultType="EmployeeDto">
-		SELECT EMP_ID,NAME,
-			   POSITION, 
-			   EMAIL,
-			   LOGIN_AUTH,ROLE,
+		SELECT e.EMP_ID,
+		       e.NAME,
+			   e.POSITION, 
+			   e.EMAIL,
+			   e.LOGIN_AUTH,
+			   e.ROLE,
 			   TO_CHAR(HIRE_DATE, 'YYYY-MM-DD') AS HIRE_DATE,
-			   BIRTH,
-			   TEL,
-			   DEPT_NAME
-		FROM EMPLOYEE e
-		JOIN DEPT d ON e.DEPT_ID=d.DEPT_ID
-		WHERE trim(EMP_ID) = trim(#{emp_id})
+			   e.BIRTH,
+			   e.TEL,
+			   d.DEPT_NAME,   
+			   s.SIGN as SIGNSAVED
+		FROM EMPLOYEE e JOIN DEPT d 
+		ON e.DEPT_ID=d.DEPT_ID
+		LEFT JOIN SIGN s 
+		ON s.EMP_ID=e.EMP_ID
+		WHERE trim(e.EMP_ID) = trim(#{emp_id})
 		AND
-		trim(PASSWORD) = trim(#{password})
+		trim(e.PASSWORD) = trim(#{password})
 
 	</select>
 	<!--사원번호로 사용자 조회 findById -->

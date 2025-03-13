@@ -33,6 +33,8 @@ public interface IApprovalService {
 	String getDocType(@Param("doc_id") int doc_id);
 	// 출장 조회하기
 	public TripDto continuePrviewTrip(int doc_id);
+	// 휴가 조회하기
+	public LeaveDto continuePreviewLeave(int doc_id);
 	
 //	사용자는 결재를 상신할 수 있다.
 	public int insertApprovalDoc(DocumentDto dto);
@@ -53,9 +55,11 @@ public interface IApprovalService {
 	
 	public List<Map<String, Object>> selectTree();
 	
-	public int insertDocument(Map<String, Object> map);
 	
-	public int insertApproval(Map<String, Object> map);
+	// 2025 03 13 기안서 입력 및 결재선 입력
+	public int insertDocument(Map<String, Object> docMap, Map<String, Object> appMap);
+	
+//	public int insertApproval(Map<String, Object> map);
 
 
 }

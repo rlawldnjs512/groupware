@@ -99,34 +99,45 @@ class Hoon_JUnitTest {
 	}
 	
 //	@Test
-	public void insertApproval() {
-		Map<String, Object> map = new HashMap<String, Object>(){{
-			
-			
-			List<ApprovalDto>  lists = new ArrayList<ApprovalDto>();
-			
-			ApprovalDto dto1 = new ApprovalDto();
-			dto1.setEmp_id("20240002");
-			dto1.setSign("사인1");
-			ApprovalDto dto2 = new ApprovalDto();
-			dto2.setEmp_id("20220001");
-			dto2.setSign("사인2");
-			ApprovalDto dto3 = new ApprovalDto();
-			dto3.setEmp_id("20180057");
-			dto3.setSign("사인3");
-			lists.add(dto1);
-			lists.add(dto2);
-			lists.add(dto3);
-			
-			put("doc_id", "71");
-			put("approval", lists);
-			put("apprv_id", 0);
-	}};
+//	public void insertApproval() {
+//		Map<String, Object> map = new HashMap<String, Object>(){{
+//			
+//			
+//			List<ApprovalDto>  lists = new ArrayList<ApprovalDto>();
+//			
+//			ApprovalDto dto1 = new ApprovalDto();
+//			dto1.setEmp_id("20240002");
+//			dto1.setSign("사인1");
+//			ApprovalDto dto2 = new ApprovalDto();
+//			dto2.setEmp_id("20220001");
+//			dto2.setSign("사인2");
+//			ApprovalDto dto3 = new ApprovalDto();
+//			dto3.setEmp_id("20180057");
+//			dto3.setSign("사인3");
+//			lists.add(dto1);
+//			lists.add(dto2);
+//			lists.add(dto3);
+//			
+//			put("doc_id", "71");
+//			put("approval", lists);
+//			put("apprv_id", 0);
+//	}};
+//	
+//	
+//		int cnt = apprDao.insertApproval(map);
+//		System.out.println(map.get("apprv_id"));
+//		System.out.println(cnt);
+//	}
 	
-	
-		int cnt = apprDao.insertApproval(map);
-		System.out.println(map.get("apprv_id"));
-		System.out.println(cnt);
+	// 2025 03 13 결재선 입력 테스트
+	@Test
+	public void insertApproval(){
+		//92
+		Map<String, Object>  appMap =  new HashMap<String, Object>();
+		appMap.put("approval", List.of("20310081","20240004","20240002"));
+		appMap.put("doc_id", "92");
+		int m = apprDao.insertApproval(appMap);
+		System.out.println("입력된 결재선  :" + m);
 	}
 }
 

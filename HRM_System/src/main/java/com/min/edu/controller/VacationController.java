@@ -129,9 +129,6 @@ public class VacationController {
 		return "vacation_admin";
 	}
 	
-	
-
-	 
 
 }
 
