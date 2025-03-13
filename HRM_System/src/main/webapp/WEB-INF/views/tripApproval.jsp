@@ -129,9 +129,9 @@ th, td {
 	                </table>
 	                <div class="d-flex justify-content-end mb-3">
 						<button type="button" id="line" onclick="windowOpen()" class="btn btn-light-primary ms-2">결재선 선택</button>
-						<button type="submit" class="btn btn-light-primary ms-2">임시 저장</button>
+						<button type="button" name="reportTemp" class="report btn btn-light-primary ms-2">임시 저장</button>
 						<button type="button" class="btn btn-light-primary ms-2" onclick="history.back(-1)">취소</button>
-						<button type="button" class="btn btn-light-primary ms-2">상신 하기</button>
+						<button type="button" name="reportApproval" class="report btn btn-light-primary ms-2">상신 하기</button>
 					</div>
 	            </div>
 			</form>
