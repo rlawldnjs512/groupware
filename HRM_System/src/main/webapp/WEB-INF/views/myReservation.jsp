@@ -9,10 +9,9 @@
 <meta charset="UTF-8">
 <title>예약관리</title>
 <link rel="stylesheet" href="./css/emplist.css">
-<style type="text/css">
-tr, td {
-	text-align: center;	
-	vertical-align: middle;
+<style>
+td{
+	text-align: center; 
 }
 </style>
 </head>
@@ -26,24 +25,23 @@ tr, td {
 			<table class="table table-hover">
 				<thead>
 	            	<tr>
-						<td>예약번호</td>
-						<td>회의실 이름</td>
-						<td>사원번호</td>
-						<td>예약자 이름</td>
-						<td>예약날짜</td>
-						<td>예약시간</td>
-						<td></td>
+						<th style="text-align: center;">번호</th>
+						<th style="text-align: center;">회의실 이름</th>
+						<th style="text-align: center;">예약자</th>
+						<th style="text-align: center;">예약날짜</th>
+						<th style="text-align: center;">예약시간</th>
+						<th></th>
 					</tr>
 	            </thead>
 				
 				<tbody>
-					<c:forEach var="room" items="${lists}" varStatus="vs">
-						<c:forEach var="reserv" items="${room.reservation}" varStatus="vs">
+					<c:set var="index" value="1" />
+					<c:forEach var="room" items="${lists}">
+						<c:forEach var="reserv" items="${room.reservation}">
 							<tr>
-								<td>${reserv.reserv_id}</td>
+								<td>${index}</td>
 								<td>${room.room_name}</td>
-								<td>${reserv.emp_id}</td>
-								<td>${reserv.name}</td>
+								<td>${reserv.name} (${reserv.emp_id})</td>
 								<td>${reserv.rev_date}</td>
 								<td>${reserv.range}</td>
 								<td>
@@ -54,6 +52,7 @@ tr, td {
 									</form>
 								</td>
 							</tr>
+							<c:set var="index" value="${index + 1}" />
 						</c:forEach>
 					</c:forEach>
 				</tbody>

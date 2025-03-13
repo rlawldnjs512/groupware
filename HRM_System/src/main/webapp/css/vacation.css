@@ -66,3 +66,55 @@
 .card-title h4 {
     font-weight: bold;
 }
+
+
+
+
+.period input[type="date"] {
+    appearance: none; /* 기본 스타일 제거 */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    width: 150px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    color: #333;
+    cursor: pointer;
+
+    /* 캘린더 아이콘 추가 */
+    background-image: url('./images/calendar.svg');
+    background-size: 18px;
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+.period input[type="date"]:hover {
+    border-color: #007bff;
+}
+
+.period input[type="date"]:focus {
+    outline: none;
+    border-color: #0056b3;
+    background-color: #fff;
+}
+
+.btn.btn-light-primary {
+	color: var(--bs-primary);
+	border-color: var(--bs-primary-light);
+	background-color: var(--bs-primary-light);
+}
+
+.btn.btn-light-primary:hover {
+	color: var(--bs-primary-white);
+	border-color: var(--bs-primary);
+	background-color: var(--bs-primary);
+}
+
+.btn.btn-light-primary:focus {
+	outline: none;
+	box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary), 0.5);
+}
+

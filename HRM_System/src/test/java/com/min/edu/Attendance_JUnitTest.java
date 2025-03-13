@@ -35,22 +35,24 @@ class Attendance_JUnitTest {
 	void getAttendanceEvents_Test() {
 		
 		String empId = "20180050";
-		
 		List<AttendanceDto> attendanceList = service.attendanceListByEmpId(empId);
-		
 		System.out.println(attendanceList);
 		
 	}
 	
-	@Test
+	//@Test
 	void getCalendar_Test() {
 		
 		String empId = "20180050";
-		
 		List<Map<String, Object>> list = service.getCalendar(empId);
-		
 		System.out.println(list);
 		
+	}
+	
+	@Test
+	void avgWorkTimeByDept_Test() {
+		List<Map<String, Object>> list = service.avgWorkTimeByDept();
+		System.out.println(list);
 	}
 	
 }

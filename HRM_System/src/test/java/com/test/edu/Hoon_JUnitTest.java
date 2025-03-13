@@ -27,6 +27,13 @@ class Hoon_JUnitTest {
 	@Autowired
 	IApprovalDao apprDao;
 	
+	@Test
+	public void myReservation() {
+		List<RoomDto> lists = dao.myReservation("20240002");
+		System.out.println(lists);
+	}
+	
+	
 //	@Test
 	public void selectReservation() {
 		List<RoomDto> list = dao.selectReservation("2025-02-27");
@@ -77,7 +84,7 @@ class Hoon_JUnitTest {
 //		System.out.println(cnt);
 //	}
 	
-	@Test
+//	@Test
 	public void insertDocument() {
 		Map<String, Object> map = new HashMap<String, Object>(){{
 			put("emp_id", "20250050");

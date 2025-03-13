@@ -37,7 +37,7 @@
 						<input type="date" id="startDate">
 						<p>~</p>
 						<input type="date" id="endDate">
-						<button id="searchBtn">조회</button>
+						<button id="searchBtn" class="btn btn-light-primary ms-2">조회</button>
 					</div>
 				</div> <!-- card-body -->
 			</div> <!-- card -->
@@ -65,16 +65,48 @@
 	
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
-			const searchBtn = document.getElementById("searchBtn");
+		    // 조회 버튼 클릭 이벤트
+		    const searchBtn = document.getElementById("searchBtn");
 		    searchBtn.addEventListener("click", function() {
-		        // 입력 요소 존재 여부 확인
-		        const startDate = document.getElementById("startDate").value;
-		        const endDate = document.getElementById("endDate").value;
-		        
-		        console.log(`요청 정보: startDate=${startDate}, endDate=${endDate}`);
-		        
+		        var startDate = document.getElementById("startDate").value;
+		        var endDate = document.getElementById("endDate").value;
+		        selectPeriod(startDate, endDate);
 		    });
 		});
+	
+		function selectPeriod(startDate, endDate) {
+		    var url = "/vacation/filter?startDate="+startDate+"&endDate="+endDate;
+		    fetch(url)
+		        .then(response => response.json())
+		        .then(data => {
+		            console.log(data); 
+		            
+ 		            const leaveTableBody = document.getElementById("leaveTableBody");
+ 		            leaveTableBody.innerHTML = "";
+		            
+		            data.forEach((leave, index) => {
+		            	const tr = document.createElement("tr");
+		            	
+		            	const tdIndex = document.createElement("td");
+		            	tdIndex.textContent = index + 1;
+		            	
+		            	const tdType = document.createElement("td");
+		            	tdType.textContent = leave.TYPE;
+		            	
+		            	const tdPeriod = document.createElement("td");
+		            	tdPeriod.textContent = leave.LEAVE_START + " ~ " + leave.LEAVE_END;
+		            	
+		            	tr.appendChild(tdIndex);
+		            	tr.appendChild(tdType);
+		            	tr.appendChild(tdPeriod);
+		            	
+		            	leaveTableBody.appendChild(tr);
+		            });
+		        })
+		        .catch(error => {
+		            console.error(error);
+		        });
+		}
 	</script>
 	
 	
