@@ -336,6 +336,59 @@ FROM EMPLOYEE
 </insert>
 
 
+<!--본인이 결재해야 할 문서 리스트  -->
+<select id="getApprovalList" parameterType="string" resultType="ApprovalDto">
+    SELECT 
+        A.APPRV_ID,
+        A.DOC_ID,
+        D.DOC_TYPE,
+        D.TITLE,
+        E.NAME,
+        D.DOC_STATUS,
+        TO_CHAR(D.DOC_DATE, 'YYYY-MM-DD') AS DOC_DATE,
+        A.APPRV_STATUS,
+        A.APPRV_LEVEL,
+        A.SIGN
+    FROM (
+        SELECT 
+            APPRV_ID, DOC_ID, EMP_ID, APPRV_STATUS, SIGN,  APPRV_LEVEL,
+            LAG(APPRV_STATUS, 1) OVER (PARTITION BY DOC_ID ORDER BY APPRV_LEVEL) AS PREV_SIGN,
+            ROW_NUMBER() OVER (PARTITION BY DOC_ID ORDER BY APPRV_LEVEL ASC) AS rn
+        FROM APPROVAL
+    ) A
+    JOIN DOCUMENT D ON A.DOC_ID = D.DOC_ID
+    JOIN EMPLOYEE E ON D.EMP_ID = E.EMP_ID
+    WHERE (A.PREV_SIGN = '승인' OR A.PREV_SIGN IS NULL)
+        AND A.APPRV_STATUS != '승인'
+        AND A.EMP_ID = #{emp_id}  
+</select>
+
+
+<!-- 리스트에서 상세보기된 문서 -->
+<select id="getApprovalDetail" parameterType="map" resultType="DocumentDto">
+    SELECT 
+        d.*,                
+        e.POSITION,         
+        e.NAME,             
+        s.SIGN as SIGNSAVED,    
+        dept.DEPT_NAME     ,
+        a.apprv_level 
+    FROM DOCUMENT d
+    JOIN APPROVAL a ON TRIM(a.DOC_ID) = TRIM(d.DOC_ID)
+    JOIN EMPLOYEE e ON TRIM(e.EMP_ID) = TRIM(d.EMP_ID)  
+    LEFT JOIN SIGN s ON TRIM(e.EMP_ID) = TRIM(s.EMP_ID)  
+    LEFT JOIN DEPT dept ON TRIM(e.DEPT_ID) = TRIM(dept.DEPT_ID) 
+    WHERE TRIM(a.DOC_ID) = TRIM(#{doc_id})
+    AND TRIM(a.APPRV_ID) = TRIM(#{apprv_id})
+</select>
+
+
+
+
+
+
+
+
 
 
 

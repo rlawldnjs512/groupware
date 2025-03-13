@@ -32,5 +32,12 @@ public class DocumentDto {
 	private String name;
 	private List<ApprovalDto> approvalDtos;
 	
+	//상세조회에 필요한 내용 추가
+	private String position;
+	private String signSaved;
+	private String dept_name;
+	
+	private String apprv_level;
+	
 
 }

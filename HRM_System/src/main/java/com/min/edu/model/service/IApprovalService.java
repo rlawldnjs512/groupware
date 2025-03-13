@@ -60,7 +60,10 @@ public interface IApprovalService {
 	// 2025 03 13 기안서 입력 및 결재선 입력
 	public int insertDocument(Map<String, Object> docMap, Map<String, Object> appMap);
 	
-//	public int insertApproval(Map<String, Object> map);
+	public int insertApproval(Map<String, Object> map);
+	
+	public List<ApprovalDto> getApprovalList(String emp_id); 
 
 
+	public DocumentDto getApprovalDetail(int doc_id, int apprv_id);
 }

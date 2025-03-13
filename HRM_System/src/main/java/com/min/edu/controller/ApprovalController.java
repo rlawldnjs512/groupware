@@ -62,9 +62,60 @@ public class ApprovalController {
 	
 	// 결재문서 결재 수신함------------------------------------------------------------
 	@GetMapping(value = "/approval_receive.do")
-	public String approval_receive() {
-		return "approval_receive";
+	public String approvalReceive(HttpSession session, Model model) {
+	    EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");  
+	    String emp_id = loginVo.getEmp_id(); 
+	    
+	    List<ApprovalDto> approvalList = service.getApprovalList(emp_id); 
+	    model.addAttribute("approvalList", approvalList); 
+
+	    return "approval_receive";  
 	}
+	
+	
+	@GetMapping("/approval_detail.do")
+	public String approvalDetail(@RequestParam("doc_id") int docId, 
+	                             @RequestParam("apprv_id") int apprvId, 
+	                             Model model) {
+	   
+	    DocumentDto document = service.getApprovalDetail(docId, apprvId);
+	    
+	    
+	    String docType = document.getDoc_type();
+
+	    model.addAttribute("documentDto", document);
+	    
+	    Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", document.getName());
+		map.put("doc_id", document.getDoc_id());
+		
+		// 공통 문서 
+		List<ApprovalDto> reportDto = service.continuePreviewDoc(map);
+		model.addAttribute("reportDto",reportDto);		
+	    
+	    if ("휴가".equals(document.getDoc_type())) {
+	        LeaveDto leaveDto = service.continuePreviewLeave(docId); 
+	        
+	        model.addAttribute("leaveDto", leaveDto);
+	        
+	    } else if ("출장".equals(document.getDoc_type())) {
+	        TripDto tripDto = service.continuePrviewTrip(docId); 
+	        
+	        model.addAttribute("tripDto", tripDto);
+
+	    }
+	    model.addAttribute("docType", docType);	
+
+	    return "approval_detail";  
+	}
+
+
+
+
+	
+	
+	
+	
 	
 	// 결재문서 내 결재함------------------------------------------------------------
 	@GetMapping(value = "/approval_mine.do")

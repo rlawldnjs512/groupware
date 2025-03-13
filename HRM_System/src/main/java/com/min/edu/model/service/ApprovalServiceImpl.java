@@ -145,4 +145,13 @@ public class ApprovalServiceImpl implements IApprovalService {
 		return dao.selectSignOne(emp_id);
 	}
 
+	@Override
+	 public List<ApprovalDto> getApprovalList(String emp_id){
+		return dao.getApprovalList(emp_id);
+	}
+
+	@Override
+	public DocumentDto getApprovalDetail(int doc_id, int apprv_id) {
+		return dao.getApprovalDetail(doc_id, apprv_id);
+	}
 }
