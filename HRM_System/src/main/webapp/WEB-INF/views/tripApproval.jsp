@@ -66,17 +66,29 @@ th, td {
         	<form method="post" enctype="multipart/form-data">
 	            <div class="card shadow-lg p-4">
 	                <h2 class="text-center mb-4">출장서</h2>
-	                <div>
-	                	<div style="float: left; width: 30%">
-							<table class="table table-borderless w-100 mb-3">
-								<tr>
+	               <div class="main-content">
+			<form method="post" enctype="multipart/form-data">
+			
+			
+			
+				<div class="card p-4" style="width: 1300px;">
+					<h2 class="text-center mb-4">보고서</h2> 
+					<div>
+						<div style="float: left; width: 400px; height: 120px;">
+							<table class="table table-borderless mb-3">
+								<col width="80px">
+								<col width="80px">
+								<col width="80px">
+								<col width="80px">
+								<col width="80px">
+								<tr style="height: 20px;">
 									<th rowspan="2">기안자</th>
-									<th>소속부서</th>
+									<th>부서</th>
 									<th>직급</th>
 									<th>성명</th>
 									<th>사원번호</th>
 								</tr>
-								<tr>
+								<tr style="height: 100px;">
 									<td>${loginVo.dept_name}</td>
 									<td>${loginVo.position}</td>
 									<td>${loginVo.name}</td>
@@ -84,23 +96,30 @@ th, td {
 								</tr>
 							</table>
 						</div>
-						<div style="float: right; width: 60%">
+						<div style="float: right; width: 800px">
 							<table class="table table-borderless mb-3">
-								<tr>
+								<col width="180px">
+								<col width="180px">
+								<col width="180px">
+								<col width="180px">
+								<col width="180px">
+								<tr id="approvalLineTd_1" style="height: 20px;">
 									<th rowspan="2">결재</th>
 									<th>본인</th>
-									<th>결재자1</th>
-									<th>결재자2</th>
-									<th>결재자3</th>
+									
 								</tr>
-								<tr id="approvalLineTd_1">
-									<td id="approvalLineTd_2"><img id="signatureImage"
-										src="${loginVo.signSaved}" width="80" height="75"
-										style="border: 1px solid black;" /></td>
+								<tr  style="height: 100px;">
+									<td>
+										<img id="signatureImage" src="${loginVo.signSaved}" style="width: 50%; height: auto; object-fit: contain;"/>
+									</td>
+									<td>&nbsp;</td>
+									<td>&nbsp;</td>
+									<td>&nbsp;</td>
 								</tr>
 							</table>
 						</div>
-	                </div>
+					</div>
+	
 	                
 	                <input type="hidden" id="doc_type" name="doc_type"
 								class="form-control" value="출장">
@@ -140,25 +159,29 @@ th, td {
         </div>
 	</div>
 	<script type="text/javascript">
-		function line(approvalLine) {
-			console.log(approvalLine)
-			let row1 = document.getElementById("approvalLineTd_1");
-	        let row2 = document.getElementById("approvalLineTd_2");
+	function line(approvalLine) {
+		console.log(approvalLine)
+		let row1 = document.getElementById("approvalLineTd_1");
+		let frm = document.forms[0];
+
+//	        이름 목록을 approvalLindTd_1의 td로 추가
+        approvalLine.forEach(person => {
+			console.log(person.name)
+			
+            let td_1 = document.createElement("th");
+            td_1.textContent = person.name;
+            row1.appendChild(td_1);
+            
+            let input_1 = document.createElement("input");
+            input_1.setAttribute("type","hidden")
+            input_1.setAttribute("name","appLine")
+            input_1.value = person.id;
+            let firstChild = frm.firstElementChild;
+            frm.insertBefore(input_1, firstChild);
+        });
+
+	}
 	
-	
-// 	        이름 목록을 approvalLindTd_1의 td로 추가
-	        approvalLine.forEach(person => {
-				console.log(person.name)
-	            let td_1 = document.createElement("td");
-	            td_1.textContent = person.name;
-	            row1.appendChild(td_1);
-	            
-	            let td_2 = document.createElement("td");
-	            td_2.setAttribute("rowspan", approvalLine.length);
-		        row2.appendChild(td_2)
-	        });
-	
-		}
 	</script>
 </body>
 </html>

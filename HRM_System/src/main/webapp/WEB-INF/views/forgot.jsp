@@ -10,10 +10,11 @@
 <link rel="stylesheet" href="css/forgot.css">
 <title>비밀번호 재설정 화면</title>
 </head>
-
 <body>
 <div class="container">
-    <h2 class="header">비밀번호 재설정 (인증)</h2>
+    <h2 class="header">
+     <img src="images/forgot.svg" alt="아이콘" style="width: 70px; height: 80px;">
+    </h2>
     
     <!-- 1단계 인증 폼 -->
     <form action="/check.do" method="GET" class="card">
@@ -46,7 +47,7 @@
         
         <table>
             <tr>
-                <td>이메일</td>
+                <td>Email</td>
                 <td>
                     <input type="text" id="emailInput" name="emailInput" class="input-field"> @ 
                     <select id="emailDomain" name="emailDomain" class="input-field">
@@ -90,7 +91,7 @@
         <input type="hidden" name="emp_id" value="${sessionScope.emp_id}" />
         <table>
             <tr>
-                <td>새 비밀번호</td>
+                <td>새비밀번호</td>
                 <td><input id="password" type="password" name="password" required class="input-field"></td>
             </tr>
             <tr>
