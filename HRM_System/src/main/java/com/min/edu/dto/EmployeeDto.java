@@ -39,7 +39,24 @@ public class EmployeeDto {
 	
 	private String signSaved;
 	
+	
 	// 추가
 	private List<CertificateDto> certificateDto;
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
