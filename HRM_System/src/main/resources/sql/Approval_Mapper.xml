@@ -242,6 +242,17 @@ WHERE DOC_ID=#{doc_id}
 	WHERE DOC_ID = #{doc_id}
 </select>
 
+<select id="continuePreviewLeave" resultType="LeaveDto">
+	SELECT DOC_ID,
+		   TO_CHAR(LEAVE_START,'YYYY-MM-DD') AS LEAVE_START,
+		   TO_CHAR(LEAVE_END,'YYYY-MM-DD') AS LEAVE_END,
+		   "TYPE",
+		   LEAVE_DAYS
+	FROM LEAVE
+	WHERE DOC_ID = #{doc_id}
+</select>
+
+
 <!-- 결재문서 유형만 조회하기 -->
 <select id="getDocType" resultType="String">
 	SELECT DOC_TYPE

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.min.edu.dto.ApprovalDto;
 import com.min.edu.dto.DocumentDto;
 import com.min.edu.dto.EmployeeDto;
+import com.min.edu.dto.LeaveDto;
 import com.min.edu.dto.SignDto;
 import com.min.edu.dto.TripDto;
 import com.min.edu.model.service.IApprovalService;
@@ -75,6 +76,7 @@ public class ApprovalController {
 		return "temp_store";
 	}
 	
+	// 결재문서 임시저장 이어하기
 	@GetMapping(value = "/continueTemp.do")
 	public String temp_Reportcontinue(@RequestParam("doc_id") int docId, 
 									  @RequestParam("doc_type") String doc_type,
@@ -96,15 +98,15 @@ public class ApprovalController {
 		// 출장
 		TripDto tripDto = service.continuePrviewTrip(docId);
 		System.out.println(tripDto);
-		
+
 		// 휴가
-//		List<Map<String, Object>> leaveDto = leaveService.leaveListByEmpId(empId);
-//		System.out.println(leaveDto);
+		LeaveDto leaveDto = service.continuePreviewLeave(docId);
+		System.out.println(leaveDto);
 		
 		model.addAttribute("reportDto",reportDto);
 		model.addAttribute("tripDto",tripDto);
-//		model.addAttribute("leaveDto",leaveDto);
-		
+		model.addAttribute("leaveDto",leaveDto);
+
 		if(doc_type.trim().equals("보고서")) {
 			return "continueReport";
 		} else if(doc_type.trim().equals("출장")) {
@@ -114,6 +116,7 @@ public class ApprovalController {
 		}
 	}
 	
+	// 결재문서 임시저장 삭제하기
 	@GetMapping(value = "/deleteTemp.do")
 	public String temp_delete(@RequestParam("doc_id") int docId, 
 							  @RequestParam("doc_type") String doc_type,
@@ -152,7 +155,7 @@ public class ApprovalController {
 	public String signature_manage() {
 		return "signature_manage";
 	}
-	
+	 // 서명 만들기
 	@PostMapping(value = "/mySignature.do")
 	@ResponseBody
 	public Map<String, String> my_signature(@RequestBody Map<String, String> requestData,
@@ -177,12 +180,16 @@ public class ApprovalController {
 			
 			int signSave = service.insertSign(dto);
 			
-			
 			model.addAttribute("signSaved",base64Sig); 
 			session.setAttribute("signSaved", base64Sig);
 			System.out.println("signSaved : " + base64Sig);
 
-			response.put("redirect", "/signature_manage.do");
+			session.removeAttribute("loginVo");
+			
+			EmployeeDto removedVo = (EmployeeDto)session.getAttribute("loginVo");
+			
+			response.put("redirect", "서명이 저장되었습니다. 다시 로그인 해주세요.");
+			response.put("redirect", "/");
 			
 		} else {
 			response.put("message", "로그인이 필요합니다.");
@@ -191,6 +198,7 @@ public class ApprovalController {
 		return response;
 	}
 	
+	// 서명 조회하기
 	@GetMapping(value = "/select_signature.do")
 	public String select_signature(Model model, HttpSession session) {
 		
@@ -209,6 +217,7 @@ public class ApprovalController {
 		return "redirect:/signature_manage";
 	}
 	
+	// 서명 삭제하기
 	@PostMapping(value = "/deleteSignature.do")
 	@ResponseBody
 	public Map<String, String> delete_Signature(HttpSession session,

@@ -38,6 +38,8 @@ public interface IApprovalDao {
 	String getDocType(@Param("doc_id") int doc_id);
 	// 출장 조회하기
 	public TripDto continuePrviewTrip(int doc_id);
+	// 휴가 조회하기
+	public LeaveDto continuePreviewLeave(int doc_id);
 	
 //	사용자는 결재를 상신할 수 있다.
 	public int insertApprovalDoc(DocumentDto dto);
