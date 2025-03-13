@@ -100,10 +100,10 @@ public class ApprovalServiceImpl implements IApprovalService {
 		 return (n+m) >0 ? 1 : 0;
 	}
 
-//	@Override
-//	public int insertApproval(Map<String, Object> map) {
-//		return dao.insertApproval(map);
-//	}
+	@Override
+	public int insertApproval(Map<String, Object> map) {
+		return dao.insertApproval(map);
+	}
 
 	@Override
 	public List<ApprovalDto> continuePreviewDoc(Map<String, Object> map) {

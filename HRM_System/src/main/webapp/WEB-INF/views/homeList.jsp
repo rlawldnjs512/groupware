@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,6 +46,13 @@
 		.attendTime div {
 		    text-align: center;  			 /* 각 div 안의 내용 중앙 정렬 */
 		}
+		.certification-area, .approval-area {
+		    display: flex;
+		    flex-direction: column;  /* 세로 정렬 */
+		    align-items: flex-start; /* 왼쪽 정렬 */
+		}
+		
+		
 		
 /* ------------- 게시판 ------------------------ */		
 		
@@ -85,52 +90,71 @@
 
 		<div class="main-content">
 
-			<div class="card border-light mb-3 shadow p-3 rounded">
-				<div class="profile-image-area">
-					<img src="${profileImg}">
-				</div>
-				<div class="card-body">
-					<h3 class="card-title">${empName}</h3>
-					<p>${deptName}</p>
-
-					<div class="card-text">
-					
-						<div class="attendTime">
-							<div>
-								<span id="clockInTime" style="font-weight: bold;">${clockIn}</span><br>
-								<small class="text-body-secondary">출근 시간</small>
+			<c:if test="${sessionScope.loginVo.role eq 'A'}">
+				<div class="card border-light mb-3 shadow p-3 rounded">
+					<div class="profile-image-area"><img src="${profileImg}"></div>
+					<div class="card-body">
+						<h3 class="card-title">${empName}</h3>
+						<div class="card-text">
+							<div class="certification-area">
+								<strong class="text-body-secondary">승인 대기 중인 증명서 : </strong>
 							</div>
-							<div>
-								<span id="clockOutTime" style="font-weight: bold;">${clockOut}</span><br>
-								<small class="text-body-secondary">퇴근 시간</small>
+							<div class="approval-area">
+								<strong class="text-body-secondary">결재 대기 중인 휴가 : </strong>
+								<strong class="text-body-secondary">결재 대기 중인 출장 : </strong>
+								<strong class="text-body-secondary">결재 대기 중인 보고서 : </strong>
 							</div>
-						</div>
+						</div> <!-- card-text -->
+					</div> <!-- card-body -->
+				</div> <!-- card -->
+			</c:if> <!-- 관리자 로그인 시 -->
 
+			<c:if test="${sessionScope.loginVo.role eq 'U'}">
+				<div class="card border-light mb-3 shadow p-3 rounded">
+					<div class="profile-image-area"><img src="${profileImg}"></div>
+					<div class="card-body">
+						<h3 class="card-title">${empName}</h3>
+						<p>${deptName}</p>
+	
+						<div class="card-text">
 						
-						<div class="progress" role="progressbar" aria-label="Animated striped example" 
-							 aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100" style="position: relative;">
-							<div class="progress-bar progress-bar-striped progress-bar-animated" style="width: ${progress}%">
-								<span style="font-weight: bold;">${progress}%</span>
+							<div class="attendTime">
+								<div>
+									<span id="clockInTime" style="font-weight: bold;">${clockIn}</span><br>
+									<small class="text-body-secondary">출근 시간</small>
+								</div>
+								<div>
+									<span id="clockOutTime" style="font-weight: bold;">${clockOut}</span><br>
+									<small class="text-body-secondary">퇴근 시간</small>
+								</div>
 							</div>
-						</div>
-
-
-						<div class="attendButton">
-							<form id="clockInForm" action="/insertAttendance" method="post">
-								<button type="submit" class="btn btn-outline-secondary btn-lg"
-									id="clockIn" <c:if test="${isClockedIn}">disabled</c:if>>출근
-								</button>
-							</form>
-							<form id="clockOutForm">
-								<button type="button" class="btn btn-outline-secondary btn-lg"
-									id="clockOut" <c:if test="${!isClockedIn}">disabled</c:if>>퇴근
-								</button>
-							</form>
-						</div>
-						
-					</div> <!-- card-text -->
-				</div> <!-- card-body -->
-			</div> <!-- card -->
+	
+							
+							<div class="progress" role="progressbar" aria-label="Animated striped example" 
+								 aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100" style="position: relative;">
+								<div class="progress-bar progress-bar-striped progress-bar-animated" style="width: ${progress}%">
+									<span style="font-weight: bold;">${progress}%</span>
+								</div>
+							</div>
+	
+	
+							<div class="attendButton">
+								<form id="clockInForm" action="/insertAttendance" method="post">
+									<button type="submit" class="btn btn-outline-secondary btn-lg"
+										id="clockIn" <c:if test="${isClockedIn}">disabled</c:if>>출근
+									</button>
+								</form>
+								<form id="clockOutForm">
+									<button type="button" class="btn btn-outline-secondary btn-lg"
+										id="clockOut" <c:if test="${!isClockedIn}">disabled</c:if>>퇴근
+									</button>
+								</form>
+							</div>
+							
+						</div> <!-- card-text -->
+					</div> <!-- card-body -->
+				</div> <!-- card -->
+			</c:if> <!-- 사원 로그인 시 -->
 			
 			<div class="card border-light mb-3 shadow p-3 rounded wide-card">
 			    <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">

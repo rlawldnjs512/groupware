@@ -2,6 +2,7 @@ package com.min.edu;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,12 +22,25 @@ class Leave_JUnitTest {
 	private ILeaveService leaveService;
 	
 	@Test
+	void selectLeavePage_Test() {
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("first", 1);
+		map.put("last", 5);
+		
+		List<Map<String, Object>> lists = leaveService.selectLeavePage(map);
+		System.out.println(lists);
+	}
+	
+	//@Test
+	void leaveList_Test() {
+		List<Map<String, Object>> lists = leaveService.leaveList();
+		System.out.println(lists);
+	}
+	
+	//@Test
 	void leaveListByEmpId_Test() {
-		
-		String empId = "20240002";
-		
-		List<Map<String, Object>> list = leaveService.leaveListByEmpId(empId, "2025-02-27", "2025-02-28");
-		
+		List<Map<String, Object>> list = leaveService.leaveListByEmpId("20240002", "2025-02-28", "2025-02-28");
 		System.out.println(list);
 	}
 

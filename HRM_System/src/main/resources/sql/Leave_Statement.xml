@@ -2,13 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.min.edu.model.mapper.ILeaveDao">
 	
+	<!-- 사원들의 휴가 내역 총 개수 -->
+	<select id="countLeavePage" resultType="Integer">
+		SELECT COUNT(*)
+			FROM LEAVE
+	</select>
+	
+	<!-- 사원들의 전체 휴가 내역 (페이징처리) -->
+	<select id="selectLeavePage" resultType="Map">
+		SELECT SEQ, t.EMP_ID, t.TYPE, t.LEAVE_START, t.LEAVE_END
+			FROM ( SELECT ROW_NUMBER() OVER (ORDER BY l.LEAVE_START DESC) AS SEQ
+						  , l.LEAVE_START
+						  , l.LEAVE_END
+						  , l.TYPE
+						  , l.LEAVE_DAYS
+						  , d.EMP_ID 
+				   	FROM LEAVE l
+					JOIN DOCUMENT d ON l.DOC_ID = d.DOC_ID 
+					WHERE d.DOC_TYPE = '휴가' ) t
+			WHERE SEQ BETWEEN #{first} AND #{last}
+			ORDER BY SEQ
+	</select>
+	
 	<!-- 모든 사원들의 사용휴가 내역 조회 -->
+	<!-- 사용 X , 위에 있는 (페이징처리) 쿼리로 사용 -->
 	<select id="leaveList" resultType="Map">
-		SELECT EMP_ID, LEAVE_START, LEAVE_END, TYPE, LEAVE_DAYS
+		SELECT e.NAME, d.EMP_ID, l.LEAVE_START, l.LEAVE_END, l.TYPE, l.LEAVE_DAYS
 			FROM LEAVE l
-			JOIN DOCUMENT d 
-			ON l.DOC_ID = d.DOC_ID 
-			WHERE DOC_TYPE = '휴가'
+			JOIN DOCUMENT d ON l.DOC_ID = d.DOC_ID
+			JOIN EMPLOYEE e ON d.EMP_ID = e.EMP_ID
+			WHERE d.DOC_TYPE = '휴가'
+			ORDER BY l.LEAVE_START DESC
 	</select>
 	
 	<!-- 사원 1명의 사용휴가 내역 조회 -->
