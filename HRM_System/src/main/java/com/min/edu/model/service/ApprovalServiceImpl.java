@@ -100,10 +100,10 @@ public class ApprovalServiceImpl implements IApprovalService {
 		 return (n+m) >0 ? 1 : 0;
 	}
 
-//	@Override
-//	public int insertApproval(Map<String, Object> map) {
-//		return dao.insertApproval(map);
-//	}
+	@Override
+	public int insertApproval(Map<String, Object> map) {
+		return dao.insertApproval(map);
+	}
 
 	@Override
 	public List<ApprovalDto> continuePreviewDoc(Map<String, Object> map) {
@@ -138,6 +138,11 @@ public class ApprovalServiceImpl implements IApprovalService {
 	@Override
 	public LeaveDto continuePreviewLeave(int doc_id) {
 		return dao.continuePreviewLeave(doc_id);
+	}
+
+	@Override
+	public SignDto selectSignOne(String emp_id) {
+		return dao.selectSignOne(emp_id);
 	}
 
 }

@@ -88,14 +88,28 @@
           	 </ul>
         <% } else if (currentURI.contains("attendance") 
         		   || currentURI.contains("vacation")){%>
-        	 <ul class="nav flex-wrap border-transparent">
-				<li class="nav-item my-1">
-					<a class="<%= commonClass %>" href="./attendance"> 나의 근태 </a>
-				</li>
-				<li class="nav-item my-1">
-					<a class="<%= commonClass %>" href="./vacation"> 휴가 내역 조회 </a>
-				</li>
-			 </ul>
+        	 <c:choose>
+        	 	<c:when test="${sessionScope.loginVo.role eq 'A'}">
+        	 		<ul class="nav flex-wrap border-transparent">
+					 	<li class="nav-item my-1">
+					 		<a class="<%= commonClass %>" href="./attendance_admin"> 근태 통계 </a>
+					 	</li>
+					 	<li class="nav-item my-1">
+					 		<a class="<%= commonClass %>" href="./vacation_admin"> 직원 휴가 관리 </a>
+					 	</li>
+				 	</ul>
+        	 	</c:when>
+        	 	<c:otherwise>
+        	 		<ul class="nav flex-wrap border-transparent">
+						<li class="nav-item my-1">
+							<a class="<%= commonClass %>" href="./attendance"> 나의 근태 </a>
+						</li>
+						<li class="nav-item my-1">
+							<a class="<%= commonClass %>" href="./vacation"> 휴가 내역 조회 </a>
+						</li>
+					</ul>
+        	 	</c:otherwise>
+        	 </c:choose>
         <% }%>
 
 </div>

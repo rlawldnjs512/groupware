@@ -295,6 +295,22 @@ public class AttendanceServiceImpl implements IAttendanceService {
 			return "";
 		}
 	}
+	
+	@Override
+	public String avgClockInTimeAll() {
+		String clockInTime = dao.avgClockInTimeAll();
+
+		try {
+			SimpleDateFormat inputFormat = new SimpleDateFormat("HH:mm:ss");
+			Date date = inputFormat.parse(clockInTime);
+			
+			SimpleDateFormat outputFormat = new SimpleDateFormat("a h시 mm분");
+			return outputFormat.format(date); 
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
 
 	@Override
 	public String avgClockOutTime(String empId) {
@@ -304,6 +320,22 @@ public class AttendanceServiceImpl implements IAttendanceService {
 			return "";
 		}
 		
+		try {
+			SimpleDateFormat inputFormat = new SimpleDateFormat("HH:mm:ss");
+			Date date = inputFormat.parse(clockInTime);
+			
+			SimpleDateFormat outputFormat = new SimpleDateFormat("a h시 mm분");
+			return outputFormat.format(date); 
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
+	
+	@Override
+	public String avgClockOutTimeAll() {
+		String clockInTime = dao.avgClockOutTimeAll();
+
 		try {
 			SimpleDateFormat inputFormat = new SimpleDateFormat("HH:mm:ss");
 			Date date = inputFormat.parse(clockInTime);
@@ -335,10 +367,36 @@ public class AttendanceServiceImpl implements IAttendanceService {
 			return "";
 		}
 	}
+	
+	@Override
+	public String avgWorkTimeAll() {
+		String clockInTime = dao.avgWorkTimeAll();
+
+		try {
+			SimpleDateFormat inputFormat = new SimpleDateFormat("HH:mm");
+			Date date = inputFormat.parse(clockInTime);
+			
+			SimpleDateFormat outputFormat = new SimpleDateFormat("h시간 mm분");
+			return outputFormat.format(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
+	
+	@Override
+	public List<Map<String, Object>> avgWorkTimeByDept() {
+		return dao.avgWorkTimeByDept();
+	}
 
 	@Override
 	public int selectLate(String empId) {
 		return dao.selectLate(empId);
+	}
+	
+	@Override
+	public int selectLateToday() {
+		return dao.selectLateToday();
 	}
 
 	@Override

@@ -167,4 +167,45 @@ public class BoardServiceImpl implements IBoardService {
 	public List<FreeboardDto> selectFreePage(Map<String, Object> map) {
 		return dao.selectFreePage(map);
 	}
+	
+	@Override
+	public List<NoticeboardDto> searchNotice(Map<String, Object> map) {
+		return dao.searchNotice(map);
+	}
+	@Override
+	public List<FreeboardDto> searchFree(Map<String, Object> map) {
+		return dao.searchFree(map);
+	}
+	@Override
+	public List<NoticeboardDto> searchNoticeTitle(Map<String, Object> map) {
+		return dao.searchNoticeTitle(map);
+	}
+	@Override
+	public int countSearchNotice(String keyword) {
+		return dao.countSearchNotice(keyword);
+	}
+	@Override
+	public int countSearchNoticeTitle(String keyword) {
+		return dao.countSearchNoticeTitle(keyword);
+	}
+	@Override
+	public int countSearchFree(String keyword) {
+		return dao.countSearchFree(keyword);
+	}
+	@Override
+	public List<FreeboardDto> searchFreeTitle(Map<String, Object> map) {
+		return dao.searchFreeTitle(map);
+	}
+	@Override
+	public int countSearchFreeTitle(String keyword) {
+		return dao.countSearchFreeTitle(keyword);
+	}
+	@Override
+	public List<FreeboardDto> searchFreeName(Map<String, Object> map) {
+		return dao.searchFreeName(map);
+	}
+	@Override
+	public int countSearchFreeName(String keyword) {
+		return dao.countSearchFreeName(keyword);
+	}
 }

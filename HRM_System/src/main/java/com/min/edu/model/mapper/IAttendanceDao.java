@@ -34,11 +34,21 @@ public interface IAttendanceDao {
 	
 	public String avgClockInTime(String empId);
 	
+	public String avgClockInTimeAll();
+	
 	public String avgClockOutTime(String empId);
+	
+	public String avgClockOutTimeAll();
 	
 	public String avgWorkTime(String empId);
 	
+	public String avgWorkTimeAll();
+	
+	public List<Map<String, Object>> avgWorkTimeByDept();
+	
 	public int selectLate(String empId);
+	
+	public int selectLateToday();
 	
 	public List<Map<String, Object>> getCalendar(String empId);
 	

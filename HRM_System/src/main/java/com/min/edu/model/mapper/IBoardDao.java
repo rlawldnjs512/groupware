@@ -75,8 +75,22 @@ public interface IBoardDao {
 	public int countFreePage();
 	public List<FreeboardDto> selectFreePage(Map<String, Object> map);
 	
+	// 게시글 내용으로 조회하기 (공지사항/커뮤니티)
+	// 공지사항
+	public List<NoticeboardDto> searchNotice(Map<String, Object> map);
+	public int countSearchNotice(String keyword);
 	
+	public List<NoticeboardDto> searchNoticeTitle(Map<String, Object> map);
+	public int countSearchNoticeTitle(String keyword);
 	
+	// 커뮤니티
+	public List<FreeboardDto> searchFree(Map<String, Object> map);
+	public int countSearchFree(String keyword);
+	
+	public List<FreeboardDto> searchFreeTitle(Map<String, Object> map);
+	public int countSearchFreeTitle(String keyword);
 
+	public List<FreeboardDto> searchFreeName(Map<String, Object> map);
+	public int countSearchFreeName(String keyword);
 
 }

@@ -18,6 +18,16 @@ public class LeaveServiceImpl implements ILeaveService {
 	private final ILeaveDao leaveDao;
 	
 	@Override
+	public int countLeavePage() {
+		return leaveDao.countLeavePage();
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectLeavePage(Map<String, Object> map) {
+		return leaveDao.selectLeavePage(map);
+	}
+	
+	@Override
 	public List<Map<String, Object>> leaveList() {
 		return leaveDao.leaveList();
 	}
@@ -26,5 +36,7 @@ public class LeaveServiceImpl implements ILeaveService {
 	public List<Map<String, Object>> leaveListByEmpId(String empId, String startDate, String endDate) {
 		return leaveDao.leaveListByEmpId(empId, startDate, endDate);
 	}
+
+
 
 }
