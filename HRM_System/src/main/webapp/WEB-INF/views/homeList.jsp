@@ -242,6 +242,9 @@
 			                        <c:if test="${page.page < page.totalPage}">
 			                            <li><a href="./homeList.do?page=${page.page + 1}">&raquo;</a></li>
 			                        </c:if>
+			                        
+			                        
+			                        
 			                    </ul>
 			                </c:if>
 			            </div>

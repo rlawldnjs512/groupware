@@ -97,13 +97,12 @@ public class ApprovalController {
 		TripDto tripDto = service.continuePrviewTrip(docId);
 		System.out.println(tripDto);
 		
-
-//		// 휴가
+		// 휴가
 //		List<Map<String, Object>> leaveDto = leaveService.leaveListByEmpId(empId);
 //		System.out.println(leaveDto);
-//		
-//		model.addAttribute("reportDto",reportDto);
-//		model.addAttribute("tripDto",tripDto);
+		
+		model.addAttribute("reportDto",reportDto);
+		model.addAttribute("tripDto",tripDto);
 //		model.addAttribute("leaveDto",leaveDto);
 		
 		if(doc_type.trim().equals("보고서")) {
