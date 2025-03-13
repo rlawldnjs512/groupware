@@ -21,7 +21,7 @@ window.onload = function() {
 				frm.action = "./TempReport.do";
 				frm.submit();
 			} else {
-				frm.action = "./ApprovalLeave.do";
+				frm.action = "./ApprovalReport.do";
 				frm.submit();
 			}
 			console.log("이동주소 : " , frm.action);

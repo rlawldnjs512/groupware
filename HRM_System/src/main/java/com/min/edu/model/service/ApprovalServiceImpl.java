@@ -127,5 +127,10 @@ public class ApprovalServiceImpl implements IApprovalService {
 		return dao.deleteSaveLeave(doc_id);
 	}
 
+	@Override
+	public LeaveDto continuePreviewLeave(int doc_id) {
+		return dao.continuePreviewLeave(doc_id);
+	}
+
 
 }

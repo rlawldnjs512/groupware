@@ -63,7 +63,7 @@ th, td {
 	<div class="content" id="content">
         <%@ include file="header.jsp"%>
         <div class="main-content">
-        	<form action="./TempTrip.do" method="post" enctype="multipart/form-data">
+        	<form method="post" enctype="multipart/form-data">
 	            <div class="card shadow-lg p-4">
 	                <h2 class="text-center mb-4">출장서</h2>
 	                <div>
@@ -102,6 +102,8 @@ th, td {
 						</div>
 	                </div>
 	                
+	                <input type="hidden" id="doc_type" name="doc_type"
+								class="form-control" value="출장">
 	                <table class="table table-borderless mb-3">
 	                	<tr>
 							<th>제목</th>

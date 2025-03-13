@@ -102,6 +102,8 @@ th, td {
 						</div>
 					</div>
 	
+					<input type="hidden" id="doc_type" name="doc_type"
+								class="form-control" value="보고서">
 					<table class="table table-borderless mb-3">
 						<tr>
 							<th>제목</th>
