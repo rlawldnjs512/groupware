@@ -1,13 +1,8 @@
 package com.min.edu.controller;
 
-import java.sql.Clob;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.sql.rowset.serial.SerialClob;
-import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.min.edu.dto.ApprovalDto;
 import com.min.edu.dto.DocumentDto;
 import com.min.edu.dto.EmployeeDto;
-import com.min.edu.dto.FileUpDto;
-import com.min.edu.dto.LeaveDto;
 import com.min.edu.dto.SignDto;
 import com.min.edu.dto.TripDto;
 import com.min.edu.model.service.IApprovalService;
@@ -104,6 +97,7 @@ public class ApprovalController {
 		TripDto tripDto = service.continuePrviewTrip(docId);
 		System.out.println(tripDto);
 		
+
 //		// 휴가
 //		List<Map<String, Object>> leaveDto = leaveService.leaveListByEmpId(empId);
 //		System.out.println(leaveDto);
