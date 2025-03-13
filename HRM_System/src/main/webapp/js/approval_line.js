@@ -7,3 +7,24 @@ function windowOpen(){
     window.open(url,title,prop)
 
 }
+
+window.onload = function() {
+	var reports = document.querySelectorAll(".report");
+	var frm = document.forms[0];
+	console.log(reports.length);
+	for(let i=0; i<reports.length; i++) {
+		reports[i].onclick = function(evt) {
+			evt.preventDefault();
+			var reportName = this.name;
+			console.log(reportName);
+			if(reportName == "reportTemp") {
+				frm.action = "./TempReport.do";
+				frm.submit();
+			} else {
+				frm.action = "./ApprovalLeave.do";
+				frm.submit();
+			}
+			console.log("이동주소 : " , frm.action);
+		}
+	}
+}
