@@ -14,12 +14,11 @@
 			   TO_CHAR(HIRE_DATE, 'YYYY-MM-DD') AS HIRE_DATE,
 			   e.BIRTH,
 			   e.TEL,
-			   d.DEPT_NAME,
-			   s.SIGN_ID,
+			   d.DEPT_NAME,   
 			   s.SIGN as SIGNSAVED
 		FROM EMPLOYEE e JOIN DEPT d 
 		ON e.DEPT_ID=d.DEPT_ID
-		JOIN SIGN s 
+		LEFT JOIN SIGN s 
 		ON s.EMP_ID=e.EMP_ID
 		WHERE trim(e.EMP_ID) = trim(#{emp_id})
 		AND
