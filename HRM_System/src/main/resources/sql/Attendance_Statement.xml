@@ -84,7 +84,7 @@
 			WHERE TRIM(EMP_ID) = TRIM(#{empId}) AND ATTEND_DATE = TRUNC(CURRENT_TIMESTAMP)
 	</update>
 	
-	<!-- 평균 출근시간 계산 -->
+	<!-- 사원 1명의 평균 출근시간 계산 -->
 	<select id="avgClockInTime" resultType="String">
 		SELECT TO_CHAR(
 			           TO_DATE('1900-01-01', 'YYYY-MM-DD')
@@ -94,7 +94,16 @@
 			WHERE TRIM(EMP_ID) = TRIM(#{empId})
 	</select>
 	
-	<!-- 평균 퇴근시간 계산 -->
+	<!-- 모든 사원의 평균 출근시간 계산 -->
+	<select id="avgClockInTimeAll" resultType="String">
+		SELECT TO_CHAR(
+			           TO_DATE('1900-01-01', 'YYYY-MM-DD')
+			           + (AVG(CLOCKIN - TRUNC(CLOCKIN)) * 24 * 60) / (24 * 60), 'HH24:MI:SS'
+			           ) AS avgClockInTime
+			FROM ATTENDANCE
+	</select>
+	
+	<!-- 사원 1명의 평균 퇴근시간 계산 -->
 	<select id="avgClockOutTime" resultType="String">
 		SELECT TO_CHAR(
 			           TO_DATE('1900-01-01', 'YYYY-MM-DD')
@@ -104,7 +113,16 @@
 			WHERE TRIM(EMP_ID) = TRIM(#{empId})
 	</select>
 	
-	<!-- 평균 근무 시간 계산 -->
+	<!-- 모든 사원의 평균 퇴근시간 계산 -->
+	<select id="avgClockOutTimeAll" resultType="String">
+		SELECT TO_CHAR(
+			           TO_DATE('1900-01-01', 'YYYY-MM-DD')
+			           + (AVG(CLOCKOUT - TRUNC(CLOCKOUT)) * 24 * 60) / (24 * 60), 'HH24:MI:SS'
+			           ) AS avgClockOutTime
+			FROM ATTENDANCE
+	</select>
+	
+	<!-- 사원 1명의 평균 근무 시간 계산 -->
 	<select id="avgWorkTime" resultType="String">
 		SELECT TO_CHAR(
 			           TRUNC(AVG(TOTAL_TIME) / 60), 'FM00') || ':' || 
@@ -113,12 +131,39 @@
 			WHERE TRIM(EMP_ID) = TRIM(#{empId})
 	</select>
 	
+	<!-- 모든 사원의 평균 근무 시간 계산 -->
+	<select id="avgWorkTimeAll" resultType="String">
+		SELECT TO_CHAR(
+			           TRUNC(AVG(TOTAL_TIME) / 60), 'FM00') || ':' || 
+			           TO_CHAR(MOD(AVG(TOTAL_TIME), 60), 'FM00') AS avgWorkTime
+			FROM ATTENDANCE
+	</select>
+	
+	<!-- 부서별 평균 근무 시간 계산 -->
+	<select id="avgWorkTimeByDept" resultType="Map">
+		SELECT d.DEPT_NAME													AS DEPTNAME, 
+		       TO_CHAR(TRUNC(AVG(a.TOTAL_TIME) / 60), 'FM00') || ':' || 
+       		   TO_CHAR(MOD(AVG(a.TOTAL_TIME), 60), 'FM00') 					AS AVERAGETIME
+			FROM EMPLOYEE e
+			JOIN DEPT d ON TRIM(e.DEPT_ID) = TRIM(d.DEPT_ID)
+			JOIN ATTENDANCE a ON TRIM(e.EMP_ID) = TRIM(a.EMP_ID)
+			GROUP BY d.DEPT_NAME
+	</select>
+	
 	<!-- 이번 달 지각 횟수 계산 -->
 	<select id="selectLate" resultType="Integer">
 		SELECT COUNT(*)
 			FROM ATTENDANCE
 			WHERE TRIM(EMP_ID) = TRIM(#{empId})
 			AND TO_CHAR(ATTEND_DATE, 'YYYYMM') = TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMM')
+			AND ATTEND_TYPE = '지각'
+	</select>
+	
+	<!-- 오늘 지각한 직원수 조회 -->
+	<select id="selectLateToday" resultType="Integer">
+		SELECT COUNT(*)
+			FROM ATTENDANCE
+			WHERE TO_CHAR(ATTEND_DATE, 'YYYYMMDD') = TO_CHAR(CURRENT_TIMESTAMP, 'YYYYMMDD')
 			AND ATTEND_TYPE = '지각'
 	</select>
 	

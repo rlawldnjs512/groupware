@@ -4,7 +4,9 @@ import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Controller;
@@ -188,9 +190,69 @@ public class ApprovalFormController {
 								  HttpServletRequest request,
 								  @RequestParam("title") String title,
 								  @RequestParam("content") String content,
+								  @RequestParam("appLine") List<String> appLine,
+								  @RequestParam("doc_type") String doc_type,
 								  @RequestParam(value = "file", required = false) MultipartFile file) {
+		System.out.println("-------------------전달되는 보고서 입력 값 -----------------------");
+		String fileName = "";
+		if(file != null && !file.isEmpty()) {
+			fileName = file.getOriginalFilename();
+		}
+		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
+		String emp_id = loginVo.getEmp_id();
+		System.out.println("title : "+ title);
+		System.out.println("content : " + content);
+		System.out.println("appLine : " + appLine);
+		System.out.println("doc_type : " + doc_type);
+		System.out.println("file : " + fileName);
 		
 		
+		Map<String, Object>  docMap =  new HashMap<String, Object>();
+		docMap.put("doc_id", "");
+		docMap.put("emp_id", emp_id);
+		docMap.put("doc_type", doc_type);
+		docMap.put("title", title);
+		docMap.put("content", content);
+		
+		Map<String, Object>  appMap =  new HashMap<String, Object>();
+		appMap.put("approval", appLine);
+		appMap.put("doc_id", "");
+		
+		int result =  approvalService.insertDocument(docMap, appMap);
+		System.out.println(result>0 ?"결재성공":"결재실패");
+		if(result >0  && file != null && !file.isEmpty()) {
+			try {
+				int doc_id=  (Integer)docMap.get("doc_id");
+				String uploadDir = request.getSession().getServletContext().getRealPath("fileup");
+	            File uploadFolder = new File(uploadDir);
+	            
+	            if(!uploadFolder.exists()) {
+	            	uploadFolder.mkdirs();
+	            }
+	            
+	            String origin_name = file.getOriginalFilename();
+	            String store_name = System.currentTimeMillis() + "_" + origin_name;
+	            String file_path = uploadDir + File.separator + store_name;
+
+	            File dest = new File(file_path);
+	            file.transferTo(dest);
+
+	            int size = (int) file.getSize();
+	            
+	            int resultTempFile = approvalService.insertTempFile(FileUpDto.builder()
+					            		.doc_id(doc_id)
+					            		.origin_name(origin_name)
+					            		.store_name(store_name)
+					            		.size(size)
+					            		.file_path(file_path)
+					            		.build());
+	            
+	            approvalService.updateTempFileExist(doc_id);
+	            
+			} catch (Exception e) {
+				return "approval";
+			}
+		}
 		
 		return "redirect:/approval.do";
 	}

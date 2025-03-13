@@ -325,17 +325,16 @@ FROM EMPLOYEE
 
 <!-- 결재 생성 -->
 <insert id="insertApproval">
+    <selectKey keyProperty="apprv_id" resultType="java.lang.Integer" order="BEFORE">
+        SELECT NVL(MAX(APPRV_ID), 0) + 1 FROM APPROVAL
+    </selectKey>
 
-	<selectKey keyProperty="apprv_id" resultType="java.lang.Integer" order="BEFORE">
-		SELECT MAX(APPRV_ID)+1 FROM APPROVAL
-	</selectKey>
-	
-	INSERT INTO APPROVAL (APPRV_ID, DOC_ID, EMP_ID, APPRV_LEVEL, APPRV_STATUS, SIGN)
-	<foreach collection="approval" item="app" separator=" UNION ALL " index="idx">
-	SELECT #{apprv_id}+${idx}, #{doc_id}, #{app.emp_id}, ${idx}+1, '진행중', #{app.sign,  jdbcType=VARCHAR} FROM DUAL
-	</foreach>
-	
+    INSERT INTO APPROVAL (APPRV_ID, DOC_ID, EMP_ID, APPRV_LEVEL, APPRV_STATUS)
+    <foreach collection="approval" item="app" index="idx" separator=" UNION ALL ">
+        SELECT #{apprv_id} + #{idx}, #{doc_id}, #{app}, #{idx} + 1, '진행중' FROM DUAL
+    </foreach>
 </insert>
+
 
 
 

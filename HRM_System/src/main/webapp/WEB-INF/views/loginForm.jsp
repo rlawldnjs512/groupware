@@ -38,14 +38,14 @@
 				<div class="form-field">
 					<label for="login-mail"><i class="fa fa-user"></i></label> <input
 						id="emp_id" type="text" name="emp_id" placeholder="사원번호"
-						pattern="\d{8}" value='20230023' required>
+						pattern="\d{8}" value='20220001' required>
 
 
 				</div>
 				<div class="form-field">
 					<label for="login-password"><i class="fa fa-lock"></i></label> <input
 						id="password" type="password" name="password" placeholder="비밀번호"
-						pattern=".{6,}" value="PC09876543" required>
+						pattern=".{6,}" value="SS54492214" required>
 
 				</div>
 				<button type="submit" class="button">

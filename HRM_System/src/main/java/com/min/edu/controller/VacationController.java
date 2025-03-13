@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.min.edu.dto.EmpPageDto;
 import com.min.edu.dto.EmployeeDto;
 import com.min.edu.dto.VacationDto;
 import com.min.edu.model.service.ILeaveService;
 import com.min.edu.model.service.IVacationService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -61,7 +63,11 @@ public class VacationController {
 	    EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
 	    String empId = loginVo.getEmp_id();
 
-	    return leaveService.leaveListByEmpId(empId, startDate, endDate); // JSON 형태로 응답
+	    if (startDate == null || endDate == null) {
+	        return leaveService.leaveListByEmpId(empId, null, null); // 전체 데이터 조회
+	    } else {
+	        return leaveService.leaveListByEmpId(empId, startDate, endDate); // 날짜 범위에 맞는 데이터 조회
+	    }
 	}
 	
 	
@@ -91,6 +97,39 @@ public class VacationController {
 		
 		return "redirect:/vacationList"; 
 	}
+	
+	@GetMapping(value = "/vacation_admin")
+	public String vacation_admin(HttpSession session, Model model, HttpServletRequest req) {
+		
+		String pageParam = req.getParameter("page");
+ 	    int selectPage = (pageParam == null) ? 1 : Integer.parseInt(pageParam);
+		
+		EmpPageDto pageDto = new EmpPageDto();
+		pageDto.setTotalCount(leaveService.countLeavePage()); // 전체 로우 개수
+		pageDto.setCountList(5); // 한 페이지에 표시될 로우 개수
+		pageDto.setCountPage(5); // 한 번에 표시될 페이지 개수
+		pageDto.setTotalPage(pageDto.getTotalCount()); // 전체 페이지 수 계산
+		pageDto.setPage(selectPage); // 현재 페이지 설정
+		pageDto.setStagePage(pageDto.getPage()); // 페이지 그룹 시작 번호 계산
+ 	    pageDto.setEndPage(); // 페이지 그룹 끝 번호 계산
+ 	    
+ 	    // 페이징을 위한 first, last 설정
+ 	    int first = (pageDto.getPage() - 1) * pageDto.getCountList() + 1;
+ 	    int last = pageDto.getPage() * pageDto.getCountList();
+
+ 	    // Map을 사용하여 first, last 값을 담아 전달
+ 	    Map<String, Object> map = new HashMap<>();
+ 	    map.put("first", first);
+ 	    map.put("last", last);
+ 	    
+ 	    List<Map<String, Object>> leaveLists = leaveService.selectLeavePage(map);
+ 	    model.addAttribute("leaveLists", leaveLists);
+ 	    model.addAttribute("page", pageDto);
+ 	   
+		return "vacation_admin";
+	}
+	
+
 }
 
 
