@@ -126,5 +126,4 @@ public class ApprovalServiceImpl implements IApprovalService {
 	public int deleteSaveLeave(int doc_id) {
 		return dao.deleteSaveLeave(doc_id);
 	}
-
 }

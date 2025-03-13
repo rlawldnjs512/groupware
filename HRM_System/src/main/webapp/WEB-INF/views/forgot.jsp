@@ -12,20 +12,22 @@
 </head>
 
 <body>
-<div>
-    <h2>비밀번호 재설정 (인증)</h2>
-    <form action="/check.do" method="GET">
+<div class="container">
+    <h2 class="header">비밀번호 재설정 (인증)</h2>
+    
+    <!-- 1단계 인증 폼 -->
+    <form action="/check.do" method="GET" class="card">
         <table>
             <tr>
                 <td>이름</td>
                 <!-- 이름 입력 값 유지 -->
-                <td><input id="name" type="text" name="name" placeholder="이름" required value="${param.name}"></td>
+                <td><input id="name" type="text" name="name" placeholder="이름" required value="${param.name}" class="input-field"></td>
             </tr>
 
             <tr>
                 <td>사원번호</td>
                 <!-- 사원번호 입력 값 유지 -->
-                <td><input id="emp_id" type="text" name="emp_id" placeholder="사원번호" required value="${param.emp_id}"></td>
+                <td><input id="emp_id" type="text" name="emp_id" placeholder="사원번호" required value="${param.emp_id}" class="input-field"></td>
             </tr>
             
             <tr>
@@ -36,18 +38,18 @@
         </table>
     </form>
 
-    <!-- 이메일 필드: 사원번호가 일치할 경우에만 보여짐 -->
+    <!-- 이메일 입력 폼: 사원번호가 일치할 경우에만 보여짐 -->
     <c:if test="${empIdExists}">
-    <form id="emailForm" action="/sendEmail.do" method="POST">
-       
-        	 <input type="hidden" name="emp_id" value="${emp_id}" />
-             <input type="hidden" name="name" value="${name}" />
-         <table>
+    <form id="emailForm" action="/sendEmail.do" method="POST" class="card">
+        <input type="hidden" name="emp_id" value="${emp_id}" />
+        <input type="hidden" name="name" value="${name}" />
+        
+        <table>
             <tr>
                 <td>이메일</td>
                 <td>
-                    <input type="text" class="email" id="emailInput" name="emailInput"> @ 
-                    <select id="emailDomain" name="emailDomain">
+                    <input type="text" id="emailInput" name="emailInput" class="input-field"> @ 
+                    <select id="emailDomain" name="emailDomain" class="input-field">
                         <option>naver.com</option>
                         <option>gmail.com</option>
                         <option>daum.net</option>
@@ -62,17 +64,16 @@
             </tr>
         </table>
     </form>
-</c:if>
+    </c:if>
 
- <!-- 인증번호 입력 필드: 이메일이 존재할 때만 보임 -->
+    <!-- 인증번호 입력 폼: 이메일이 존재할 때만 보임 -->
     <c:if test="${emailExists}">
-    <form id="authForm">
-     <input type="hidden" name="emp_id" value="${emp_id}" />
+    <form id="authForm" class="card">
+        <input type="hidden" name="emp_id" value="${emp_id}" />
         <table>
             <tr>
                 <td>인증번호</td>
-               
-                <td><input id="check" type="text" name="check"></td>
+                <td><input id="check" type="text" name="check" class="input-field"></td>
             </tr>
             <tr>
                 <td colspan="2">
@@ -83,17 +84,14 @@
     </form>
     </c:if>
 
-
-
-
- <!--이메일 인증 후에 보이는 div  -->
+    <!-- 이메일 인증 후 새 비밀번호 폼 -->
     <div id="passwordForm" style="display:none;">
-    <form action="/resetPassword.do" method="POST" onsubmit="return checkPassword();">
-      <input type="hidden" name="emp_id" value="${sessionScope.emp_id}" />
+    <form action="/resetPassword.do" method="POST" onsubmit="return checkPassword();" class="card">
+        <input type="hidden" name="emp_id" value="${sessionScope.emp_id}" />
         <table>
             <tr>
                 <td>새 비밀번호</td>
-                <td><input id="password" type="password" name="password" required></td>
+                <td><input id="password" type="password" name="password" required class="input-field"></td>
             </tr>
             <tr>
                 <td colspan="2">
@@ -102,11 +100,7 @@
             </tr>
         </table>
     </form>
-</div>
-
-
-
-
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -138,8 +132,6 @@
         form.submit();
     }
     
-    
-    
     function checkPassword() {
         var password = document.getElementById("password").value;
 
@@ -158,9 +150,7 @@
         
         return true; // 유효성 검사 성공 시 폼 제출
     }
-    
-    
-    
+
     function checkAuthKey() {
         var inputAuthKey = document.getElementById("check").value.trim();
         var serverAuthKey = "${authKey}";  // 서버에서 전달된 authKey
@@ -184,17 +174,7 @@
             });
         }
     }    
-    
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-

@@ -115,9 +115,6 @@ public class HomeController {
 		
 		return "homeList";
 	}
-	
-	
-	
 }
 
 

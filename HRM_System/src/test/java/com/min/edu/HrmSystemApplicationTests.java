@@ -38,19 +38,19 @@ class HrmSystemApplicationTests {
 	@Autowired
 	private IEmployeeService service;
 	
-	//@Test
+	@Test
 	void contextLoads() {
 			
 			EmployeeDto employeeDto
 			= service.getLogin(new HashMap<String, Object>(){{
-				put("emp_id", "20220001");
-				put("password", "SS54492214");	
+				put("emp_id", "20230023");
+				put("password", "PC09876543");	
 			}});
 			
 			System.out.println(employeeDto);
 		}
 	
-	@Test
+	//@Test
 	public void test() {
 		
 //		String empId = service.findById("20240002");

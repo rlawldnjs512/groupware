@@ -20,7 +20,6 @@ public class EmployeeDto {
 	private String emp_id; //테이블이랑 맞춰줘야함 
 	private int dept_id;
 	private String name;
-	private String password;
 	private String position;
 	private String birth;
 	private String phone;
@@ -37,6 +36,8 @@ public class EmployeeDto {
 	private String dept_name;
 
 	private String role;
+	
+	private String signSaved;
 	
 	// 추가
 	private List<CertificateDto> certificateDto;
