@@ -65,7 +65,6 @@ th, td {
 		<div class="main-content">
 			<form action="./TempReport.do" method="post" enctype="multipart/form-data">
 				<div class="card p-4" style="width: 1300px;">
-					<h2 class="text-center mb-4">보고서</h2> 
 					<div>
 						<div style="float: left; width: 30%">
 							<table class="table table-borderless w-100 mb-3">

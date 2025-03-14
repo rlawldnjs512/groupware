@@ -121,6 +121,15 @@ th, td {
 									</td>
 									<c:forEach var="appSign" items="${approvalList}">
 										<th>
+											<c:if test="${appSign.emp_id == loginVo.emp_id}">
+											<button>
+												승인										
+											</button>
+											<br>
+											<button>
+											    반려
+											</button>
+											</c:if>
 											<img alt="" src="${appSign.sign}" style="width: 50%; height: auto; object-fit: contain"/>
 										</th>
 									</c:forEach>
@@ -130,7 +139,67 @@ th, td {
 					</div>
 	
 					<table class="table table-borderless mb-3">
-					
+						<tr>
+								<th>제목</th>
+								<th><input type="text" id="title" name="title" value="${vo.title}"
+									class="form-control" placeholder="제목을 입력하세요."></th>
+							   </tr>
+							    <c:if test="${leaveDto != null}">
+							    tr>
+							    <th>종류</th>
+							    <th style="text-align: left;">
+							        <input type="radio" id="morning" name="type" value="오전반차" 
+							               class="form-check-input" 
+							               ${leaveDto.type == '오전반차' ? 'checked' : ''}> 
+							        <label for="morning" class="form-check-label">오전반차</label>
+							
+							        <input type="radio" id="afternoon" name="type" value="오후반차" 
+							               class="form-check-input ms-2" 
+							               ${leaveDto.type == '오후반차' ? 'checked' : ''}> 
+							        <label for="afternoon" class="form-check-label">오후반차</label>
+							
+							        <input type="radio" id="full" name="type" value="연차" 
+							               class="form-check-input ms-2" 
+							               ${leaveDto.type == '연차' ? 'checked' : ''}> 
+							        <label for="full" class="form-check-label">연차</label>
+							    </th>
+							</tr>
+							<tr>
+								<th>기간</th>
+								<th style="text-align: left;">
+									<input type="date" class="form-control" name="leave_start" 
+									       value="${leaveDto.leave_start}" style="width: 30%; display: inline-block;">
+									~
+									<input type="date" class="form-control" name="leave_end" 
+									       value="${leaveDto.leave_end}" style="width: 30%; display: inline-block;">
+								</th>
+							</tr>
+							    </c:if>
+							 <c:if test="${tripDto != null}">
+							 ${tripDto}
+							 <tr>
+								<th>기간</th>
+								<th style="text-align: left;">
+									<input type="date" class="form-control" name="trip_start" 
+											style="width: 30%; display: inline-block;" value="${tripDto.trip_start}">
+									 ~ 
+									<input type="date" class="form-control" name="trip_end" 
+											style="width: 30%; display: inline-block;" value="${tripDto.trip_end}">
+								</th>
+							</tr>
+							<tr>
+								<th>지역</th>
+								<th>
+									<textarea id="place" name="destination" class="form-control" rows="5" placeholder="지역을 입력하세요.">${tripDto.destination}</textarea>
+								</th>
+							</tr>
+							 </c:if>
+							 <tr>
+								<th>내용</th>
+								<th>
+									<textarea id="reason" name="content" class="form-control" rows="5" placeholder="내용을 입력하세요.">${documentDto.content}</textarea>
+								</th>
+							</tr>
 					</table>
 	            </div>
         </div>
