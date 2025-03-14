@@ -64,15 +64,13 @@ th, td {
         <%@ include file="header.jsp"%>
         <div class="main-content">
         	<form method="post" enctype="multipart/form-data">
-	            <div class="card shadow-lg p-4">
-	                <h2 class="text-center mb-4">출장서</h2>
-	               <div class="main-content">
-			<form method="post" enctype="multipart/form-data">
+	  
+			
 			
 			
 			
 				<div class="card p-4" style="width: 1300px;">
-					<h2 class="text-center mb-4">보고서</h2> 
+					<h2 class="text-center mb-4">출장서</h2> 
 					<div>
 						<div style="float: left; width: 400px; height: 120px;">
 							<table class="table table-borderless mb-3">

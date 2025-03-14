@@ -25,9 +25,11 @@ import com.min.edu.model.service.ILeaveService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class ApprovalController {
 
 	private final IApprovalService service;
@@ -76,9 +78,9 @@ public class ApprovalController {
 	@GetMapping("/approval_detail.do")
 	public String approvalDetail(@RequestParam("doc_id") String docId, 
 	                             Model model) {
+		//log.info("{}",docId);
 	   // 문서정보 // 
 	    DocumentDto document = service.getApprovalDetail(docId);
-	    
 	    List<ApprovalDto> approvalList = service.geteApproval(docId);
   
 	    if ("휴가".equals(document.getDoc_type())) {
@@ -86,15 +88,20 @@ public class ApprovalController {
 	        model.addAttribute("leaveDto", leaveDto);
 	        
 	    } else if ("출장".equals(document.getDoc_type())) {
+	    	 log.info(document.getDoc_type());
+	    	
 	        TripDto tripDto = service.continuePrviewTrip(Integer.parseInt(docId)); 
 	        model.addAttribute("tripDto", tripDto);
-
+	        log.info("{}",tripDto);
 	    }
+	    
+	    
 	    model.addAttribute("approvalList", approvalList);  
 	    model.addAttribute("documentDto", document);
 	    return "approval_detail";  
 	}
 
+	
 	@PostMapping(value = "/updateApprov.do")
 	public String updateApproval() {
 		
