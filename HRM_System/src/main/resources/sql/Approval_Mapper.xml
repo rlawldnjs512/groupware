@@ -365,27 +365,52 @@ FROM EMPLOYEE
 
 
 <!-- 리스트에서 상세보기된 문서 -->
-<select id="getApprovalDetail" parameterType="map" resultType="DocumentDto">
-    SELECT 
-        d.*,                
-        e.POSITION,         
-        e.NAME,             
-        s.SIGN as SIGNSAVED,    
-        dept.DEPT_NAME     ,
-        a.apprv_level 
-    FROM DOCUMENT d
-    JOIN APPROVAL a ON TRIM(a.DOC_ID) = TRIM(d.DOC_ID)
-    JOIN EMPLOYEE e ON TRIM(e.EMP_ID) = TRIM(d.EMP_ID)  
-    LEFT JOIN SIGN s ON TRIM(e.EMP_ID) = TRIM(s.EMP_ID)  
-    LEFT JOIN DEPT dept ON TRIM(e.DEPT_ID) = TRIM(dept.DEPT_ID) 
-    WHERE TRIM(a.DOC_ID) = TRIM(#{doc_id})
-    AND TRIM(a.APPRV_ID) = TRIM(#{apprv_id})
+<select id="getApprovalDetail" resultType="DocumentDto">
+ 	SELECT d.TITLE, d.CONTENT, d.DOC_TYPE,
+  	    f.ORIGIN_NAME, f.FILE_ID
+ 	FROM DOCUMENT d LEFT JOIN FILEUP f 
+ 	ON d.DOC_ID = f.DOC_ID 
+ 	WHERE d.DOC_ID = #{doc_id}
+</select>
+<select id="geteApproval" resultType="ApprovalDto">
+	 SELECT APPRV_ID , SIGN, NAME , d.DEPT_NAME  , a.EMP_ID
+ 	FROM APPROVAL a JOIN EMPLOYEE e 
+ 	ON a.EMP_ID = e.EMP_ID 
+ 	JOIN DEPT d 
+ 	ON e.DEPT_ID  = d.DEPT_ID 
+ 	WHERE DOC_ID =  #{doc_id}
+ 
 </select>
 
 
 
 
 
+<!--결재 대상자 리스트  -->
+<!--  <select id="geteApproval" resultType="ApprovalDto"> -->
+<!--         SELECT  -->
+<!--             e.NAME,  -->
+<!--             d.DEPT_NAME,  -->
+<!--             sub.APPRV_LEVEL -->
+<!--         FROM ( -->
+<!--             SELECT a.APPRV_LEVEL, a.EMP_ID -->
+<!--             FROM APPROVAL a -->
+<!--             WHERE TRIM(a.DOC_ID) = TRIM(#{doc_id}) -->
+<!--         ) sub -->
+<!--         JOIN EMPLOYEE e ON sub.EMP_ID = e.EMP_ID -->
+<!--         JOIN DEPT d ON e.DEPT_ID = d.DEPT_ID -->
+<!--  </select> -->
+
+<!--승인을 누르면 진행중에서 승인으로  -->
+<update id="updateApprovalStatus" parameterType="map">
+
+	UPDATE APPROVAL 
+			SET SIGN = (SELECT SIGN FROM SIGN s WHERE EMP_ID = #{emp_id}) ,  
+			APPRV_STATUS  = '승인', 
+			APPRV_DATE = CURRENT_DATE 
+	WHERE DOC_ID =#{doc_id} AND APPRV_ID = #{apprv_id}
+
+</update>
 
 
 

@@ -39,5 +39,7 @@ public class DocumentDto {
 	
 	private String apprv_level;
 	
+	//상세조회 파일명 조회
+	private String origin_name;
 
 }

@@ -74,42 +74,35 @@ public class ApprovalController {
 	
 	
 	@GetMapping("/approval_detail.do")
-	public String approvalDetail(@RequestParam("doc_id") int docId, 
-	                             @RequestParam("apprv_id") int apprvId, 
+	public String approvalDetail(@RequestParam("doc_id") String docId, 
 	                             Model model) {
-	   
-	    DocumentDto document = service.getApprovalDetail(docId, apprvId);
+	   // 문서정보 // 
+	    DocumentDto document = service.getApprovalDetail(docId);
 	    
-	    
-	    String docType = document.getDoc_type();
-
-	    model.addAttribute("documentDto", document);
-	    
-	    Map<String, Object> map = new HashMap<String, Object>();
-		map.put("name", document.getName());
-		map.put("doc_id", document.getDoc_id());
-		
-		// 공통 문서 
-		List<ApprovalDto> reportDto = service.continuePreviewDoc(map);
-		model.addAttribute("reportDto",reportDto);		
-	    
+	    List<ApprovalDto> approvalList = service.geteApproval(docId);
+  
 	    if ("휴가".equals(document.getDoc_type())) {
-	        LeaveDto leaveDto = service.continuePreviewLeave(docId); 
-	        
+	        LeaveDto leaveDto = service.continuePreviewLeave(Integer.parseInt(docId)); 
 	        model.addAttribute("leaveDto", leaveDto);
 	        
 	    } else if ("출장".equals(document.getDoc_type())) {
-	        TripDto tripDto = service.continuePrviewTrip(docId); 
-	        
+	        TripDto tripDto = service.continuePrviewTrip(Integer.parseInt(docId)); 
 	        model.addAttribute("tripDto", tripDto);
 
 	    }
-	    model.addAttribute("docType", docType);	
-
+	    model.addAttribute("approvalList", approvalList);  
+	    model.addAttribute("documentDto", document);
 	    return "approval_detail";  
 	}
 
-
+	@PostMapping(value = "/updateApprov.do")
+	public String updateApproval() {
+		
+		
+		
+		
+		return null;
+	}
 
 
 	
