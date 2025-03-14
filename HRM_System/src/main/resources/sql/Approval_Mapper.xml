@@ -339,6 +339,7 @@ FROM EMPLOYEE
 <!--본인이 결재해야 할 문서 리스트  -->
 <select id="getApprovalList" parameterType="string" resultType="ApprovalDto">
     SELECT 
+    	A.EMP_ID,
         A.APPRV_ID,
         A.DOC_ID,
         D.DOC_TYPE,
@@ -348,7 +349,7 @@ FROM EMPLOYEE
         TO_CHAR(D.DOC_DATE, 'YYYY-MM-DD') AS DOC_DATE,
         A.APPRV_STATUS,
         A.APPRV_LEVEL,
-        A.SIGN
+        A.SIGN as SIGNSAVED
     FROM (
         SELECT 
             APPRV_ID, DOC_ID, EMP_ID, APPRV_STATUS, SIGN,  APPRV_LEVEL,
@@ -360,7 +361,8 @@ FROM EMPLOYEE
     JOIN EMPLOYEE E ON D.EMP_ID = E.EMP_ID
     WHERE (A.PREV_SIGN = '승인' OR A.PREV_SIGN IS NULL)
         AND A.APPRV_STATUS != '승인'
-        AND A.EMP_ID = #{emp_id}  
+        AND A.EMP_ID = #{emp_id}
+     ORDER BY D.DOC_ID DESC
 </select>
 
 
@@ -382,6 +384,15 @@ FROM EMPLOYEE
  
 </select>
 
+<!--결재문서 보낸사람 정보 표시 -->
+<select id="getApp" resultType="EmplyeeDto" parameterType="Integer">
+SELECT d2.DEPT_NAME, e."POSITION", e.NAME , e.EMP_ID, s.SIGN 
+	FROM EMPLOYEE e JOIN DEPT d2 
+	ON d2.DEPT_ID = e.DEPT_ID 
+	JOIN SIGN s 
+	ON e.EMP_ID  = s.EMP_ID 
+	WHERE e.EMP_ID = (SELECT EMP_ID FROM DOCUMENT d WHERE DOC_ID =${doc_id});
+</select>
 
 
 
@@ -402,12 +413,13 @@ FROM EMPLOYEE
 <!--  </select> -->
 
 <!--승인을 누르면 진행중에서 승인으로  -->
-<update id="updateApprovalStatus" parameterType="map">
+
+<update id="updateApprovalStatus" parameterType="ApprovalDto">
 
 	UPDATE APPROVAL 
-			SET SIGN = (SELECT SIGN FROM SIGN s WHERE EMP_ID = #{emp_id}) ,  
-			APPRV_STATUS  = '승인', 
-			APPRV_DATE = CURRENT_DATE 
+	       SET SIGN = (SELECT SIGN FROM SIGN s WHERE EMP_ID = #{emp_id}) ,  
+	APPRV_STATUS  = '승인', 
+	APPRV_DATE = CURRENT_DATE 
 	WHERE DOC_ID =#{doc_id} AND APPRV_ID = #{apprv_id}
 
 </update>

@@ -38,22 +38,21 @@
             </ul>
         <% } else if (currentURI.contains("myPage") 
         		   || currentURI.contains("certification")
-             	   || currentURI.contains("schedule")){%>
+        		   || currentURI.contains("signature_manage")){%>
              <ul class="nav flex-wrap border-transparent">
 	            <li class="nav-item my-1">
 	            	<a class="<%= commonClass %>" href="./mypage.do"> 내 정보 </a>
 	            </li>
 	            <li class="nav-item my-1">
-	            	<a class="<%= commonClass %>" href="./schedule"> 일정 관리 </a>
+	            	<a class="<%= commonClass %>" href="./certification.do"> 증명서 관리 </a>
 	            </li>
 	            <li class="nav-item my-1">
-	            	<a class="<%= commonClass %>" href="./certification.do"> 증명서 관리 </a>
+	            	<a class="<%= commonClass %>" href="./signature_manage.do"> 서명 관리 </a>
 	            </li>
           	</ul>
         <% } else if (currentURI.contains("approval") 
         		   || currentURI.contains("approval_mine") 
         		   || currentURI.contains("approval_store") 
-        		   || currentURI.contains("signature_manage")
             	   || currentURI.contains("vacationApproval") 
             	   || currentURI.contains("tripApproval")
             	   || currentURI.contains("reportApproval")
@@ -82,9 +81,7 @@
 		            	<li><a class="dropdown-item" href="./dept_store.do">부서 문서함</a></li>
 		            </ul>
 	            </li>
-	            <li class="nav-item my-1">
-	            	<a class="<%= commonClass %>" href="./signature_manage.do"> 서명 관리 </a>
-	            </li>
+	            
           	 </ul>
         <% } else if (currentURI.contains("attendance") 
         		   || currentURI.contains("vacation")){%>

@@ -208,16 +208,16 @@
 				#{content}, 
 				SYSDATE,
 				'RP' || LPAD(FREEBOARD_SEQ.NEXTVAL,4,'0'),
-				(SELECT "REF" FROM FREEBOARD f WHERE FREE_ID = #{free_id}),
-				(SELECT STEP FROM FREEBOARD f2 WHERE FREE_ID = #{free_id})+1,
-				(SELECT "DEPTH" FROM FREEBOARD f3 WHERE FREE_ID = #{free_id})+1,
+				(SELECT "REF" FROM FREEBOARD WHERE FREE_ID = #{free_id}),
+				(SELECT STEP FROM FREEBOARD WHERE FREE_ID = #{free_id})+1,
+				(SELECT "DEPTH" FROM FREEBOARD WHERE FREE_ID = #{free_id})+1,
 				'N', 
 				'')
 	</insert>
 	<update id="updateReply">
 		UPDATE FREEBOARD SET STEP = STEP + 1
-		WHERE "REF" = (SELECT "REF" FROM FREEBOARD f WHERE FREE_ID = #{free_id})
-		AND STEP > (SELECT STEP FROM FREEBOARD f2 WHERE FREE_ID = #{free_id})
+		WHERE "REF" = (SELECT "REF" FROM FREEBOARD WHERE FREE_ID = #{free_id})
+		AND STEP > (SELECT STEP FROM FREEBOARD WHERE FREE_ID = #{free_id})
 	</update>
 	
 
@@ -235,13 +235,13 @@
 		AND EMP_ID IN (SELECT EMP_ID FROM EMPLOYEE e WHERE NAME = #{name})
 	</delete>
 
-	<!-- 자유게시판을 조회할 수 있다. selectFree -->
+	<!-- 자유게시판을 조회할 수 있다. selectFree-->
 	<select id="selectFree" resultType="FreeboardDto">
 		SELECT FREE_ID , TITLE , CONTENT , REGDATE , EMP_ID , NAME ,
 		REF , STEP , DEPTH , DELFLAG , FILE_EXIST
 		FROM FREEBOARD f
 		JOIN EMPLOYEE e USING(EMP_ID)
-		ORDER BY FREE_ID ASC , "REF" DESC , STEP
+		ORDER BY "REF" DESC , STEP
 	</select>
 
 	<!-- 특정 공지사항을 free_id로 조회 -->
@@ -292,15 +292,20 @@
 	</select>
 
 	<select id="selectFreePage" resultType="FreeboardDto">
-		SELECT SEQ, FREE_ID , TITLE , CONTENT , REGDATE , EMP_ID , NAME ,
-		REF , STEP , DEPTH , DELFLAG , FILE_EXIST
-		FROM (SELECT ROW_NUMBER() OVER (ORDER BY FREE_ID) AS SEQ,
-		FREE_ID , TITLE , CONTENT , REGDATE , EMP_ID , NAME ,
-		REF , STEP , DEPTH , DELFLAG , FILE_EXIST
-		FROM FREEBOARD f
-		JOIN EMPLOYEE e USING(EMP_ID))
-		WHERE SEQ BETWEEN #{first} AND #{last}
-		ORDER BY FREE_ID ASC
+		SELECT SEQ, FREE_ID, TITLE 
+			 , CONTENT, REGDATE, EMP_ID 
+			 , NAME, REF, STEP 
+			 , DEPTH, DELFLAG, FILE_EXIST
+			FROM (	SELECT ROW_NUMBER() OVER (ORDER BY FREE_ID DESC) AS SEQ 
+					, FREE_ID, TITLE, CONTENT 
+					, REGDATE, EMP_ID, NAME 
+					, REF, STEP, DEPTH
+					, DELFLAG, FILE_EXIST
+						FROM FREEBOARD f
+						JOIN EMPLOYEE e USING(EMP_ID)
+				 )
+			WHERE SEQ BETWEEN #{first} AND #{last}
+			ORDER BY "REF" DESC , STEP
 	</select>
 
 <!-- 게시글 검색하기 (공지사항/커뮤니티) -->

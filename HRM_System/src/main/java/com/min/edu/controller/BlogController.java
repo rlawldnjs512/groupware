@@ -356,6 +356,9 @@ public class BlogController {
 	@GetMapping(value = "/free.do")
 	public String freeBlog_move(Model model, HttpSession session, HttpServletRequest req) {
 		
+		List<FreeboardDto> freeBoards = service.selectFree();
+		model.addAttribute("freeBoards", freeBoards);
+		
 		// 현재 페이지 가져오기 (기본값: 1)
 	    String pageParam = req.getParameter("page");
 	    if (pageParam == null) {

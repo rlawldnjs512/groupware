@@ -3,22 +3,14 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>사원 목록</title>
-<link rel="stylesheet" href="/css/emplist.css">
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-
+	<meta charset="UTF-8">
+	<title>사원 목록</title>
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<link rel="stylesheet" href="/css/emplist.css">
 </head>
-
-
-
-
-
 <%@ include file="sidebar.jsp"%>
 <body>
 <div class="content" id="content">
-  
-
 
     <div class="main-content">
         <fieldset class="btn-container">
@@ -47,60 +39,55 @@
         <div id="searchResult">
             <table class="table table-hover">
                 <thead>
-                    <tr class="success">
-                        <td>프로필</td>
-                        <td>이름</td>
-                        <td>직급</td>
-                        <td>이메일</td>
-                        <td>연락처</td>
-                        <td>부서명</td>
-                        <c:if test="${sessionScope.loginVo.role eq 'A'}">
-                        <td>수정</td>
-                        </c:if>
+                    <tr class="success" >
+                        <td style="text-align: center;">프로필</td>
+                        <td style="text-align: center;">이름</td>
+                        <td style="text-align: center;">직급</td>
+                        <td style="text-align: center;">이메일</td>
+                        <td style="text-align: center;">연락처</td>
+                        <td style="text-align: center;">부서명</td>
+                        <td></td>
+<%--                         <c:if test="${sessionScope.loginVo.role eq 'A'}"> --%>
+<!--                         	<td style="text-align: center;">수정</td> -->
+<%--                         </c:if> --%>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach var="emp" items="${empList}" varStatus="vs">
-                        <tr>
-                            <td>
-                            <a href="javascript:void(0);"
-                                    onclick="openEmployeeModal('${emp.emp_id}')"> 
-                                    <img
-                                        src="${empty emp.profile_image ? '/upload/profile/default.png' : emp.profile_image}"
-                                        class="profile-img" alt="프로필 이미지">
-                                </a> 
+                        <tr onclick="openEmployeeModal('${emp.emp_id}')">
+                            <td style="text-align: center;">
+	                            <a href="javascript:void(0);"> 
+	                            	<img src="${empty emp.profile_image ? '/upload/profile/default.png' : emp.profile_image}"
+	                                     class="profile-img" alt="프로필 이미지">
+	                            </a> 
                             </td>
-                            <td>${emp.name}</td>
-                            <td>${emp.position}</td>
-                            <td>${emp.email}
+                            <td style="text-align: center;">${emp.name}</td>
+                            <td style="text-align: center;">${emp.position}</td>
+                            <td style="text-align: center;">${emp.email}
                                 <img src="images/mail.svg" alt="아이콘" style="width: 15px; height: 15px;">
                             </td>
-                            <td>
+                            <td style="text-align: center;">
                                 <c:choose>
                                     <c:when test="${sessionScope.loginVo.role eq 'A'}">
-                                     ${emp.phone} 
-                                    <img src="images/phone.svg" alt="아이콘" style="width: 15px; height: 15px; margin-left: 5px;">
+                                     	${emp.phone}<img src="images/phone.svg" alt="아이콘" style="width: 15px; height: 15px; margin-left: 5px;">
                         			</c:when>
                                     <c:otherwise>
                                        ${emp.phone.substring(0, 3)}-****${emp.phone.substring(8)}
                                     </c:otherwise>
                                 </c:choose>
                             </td>
-                            <td>${emp.dept_name}</td>
-
-
-								<c:if test="${sessionScope.loginVo.role eq 'A'}">
-									<td>
-										<form action="./empupload.do" method="GET">
-											<input type="hidden" name="emp_id" value="${emp.emp_id}">
-											<button type="submit" class="button-common search-btn">
-												수정 <img src="images/pen.svg" alt="수정"
-													style="width: 15px; height: 15px;">
-											</button>
-										</form>
-									</td>
-								</c:if>
-							</tr>
+                            <td style="text-align: center;">${emp.dept_name}</td>
+                            <td style="text-align: center;">
+                            	<c:if test="${sessionScope.loginVo.role eq 'A'}">
+                            		<form action="./empupload.do" method="GET">
+										<input type="hidden" name="emp_id" value="${emp.emp_id}">
+										<button type="submit" class="button-common search-btn" style="text-align: center;">
+											수정 <img src="images/pen.svg" alt="수정" style="width: 15px; height: 15px;">
+										</button>
+									</form>
+                            	</c:if>
+                            </td>
+						</tr>
                     </c:forEach>
                 </tbody>
             </table>
