@@ -81,5 +81,13 @@ public interface IApprovalDao {
   // 2025 03 14 승인
   public int updateApprovalStatus (ApprovalDto dto);
   
+  //결재문서 보낸사람 정보 표시
   public EmployeeDto getApp(int doc_id);
+  
+  //내 결재 순서보다 앞사람들 사인을 조회하기 
+  public List<EmployeeDto> getApproverSignatures(Map<String, Object> map);
 }
+
+
+
+

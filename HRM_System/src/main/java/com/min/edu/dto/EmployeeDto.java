@@ -38,6 +38,7 @@ public class EmployeeDto {
 	private String role;
 	
 	private String signSaved;
+	private String apprv_level; //결재 순서 
 	
 	
 	// 추가

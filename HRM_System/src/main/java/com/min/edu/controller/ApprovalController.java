@@ -77,23 +77,43 @@ public class ApprovalController {
 	    return "approval_receive";  
 	}
 	
-	
+	//전자결재 상세정보
 	@GetMapping("/approval_detail.do")
 	public String approvalDetail(@RequestParam("doc_id") String docId, 
 			                      @RequestParam("apprv_id")String apprv_id,
-	                             Model model) {
+	                             Model model,HttpSession session) {
 		log.info("{}",docId);
 		log.info("{}",apprv_id);
 		model.addAttribute("docId", docId);
 		model.addAttribute("apprv_id", apprv_id);
 		
 		
+		
+
 	   // 문서정보 // 
 	    DocumentDto document = service.getApprovalDetail(docId);
 	    List<ApprovalDto> approvalList = service.geteApproval(docId);
 	    
-	    //기안자 정보 
 	    
+	    //기안자 정보 
+	    int doc_id = Integer.parseInt(docId);
+		EmployeeDto empdto = service.getApp(doc_id);
+		model.addAttribute("empdto",empdto);
+		
+		
+		
+		//2025 03 15 각 결재자마다 사인 찍기
+		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
+	    String empId = loginVo.getEmp_id();
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("docId", doc_id);   
+		paramMap.put("empId", empId);   
+
+		List<EmployeeDto> signatures = service.getApproverSignatures(paramMap);
+		model.addAttribute("signatures",signatures);
+		log.info("{}",signatures);
+
+		       
   
 	    if ("휴가".equals(document.getDoc_type())) {
 	        LeaveDto leaveDto = service.continuePreviewLeave(Integer.parseInt(docId)); 
@@ -109,6 +129,7 @@ public class ApprovalController {
 	    
 	    
 	    model.addAttribute("approvalList", approvalList);  
+	    log.info("approvalList {}",approvalList);
 	    model.addAttribute("documentDto", document);
 	    
 	    
@@ -121,7 +142,7 @@ public class ApprovalController {
 			                   @RequestParam int apprv_id,
 			                   HttpServletResponse response) throws IOException {
 		
-		
+		 response.setContentType("text/html; charset=UTF-8;");
 		EmployeeDto edto = (EmployeeDto)session.getAttribute("loginVo");
 		String emp_id = edto.getEmp_id();
 		

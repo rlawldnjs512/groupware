@@ -336,6 +336,9 @@ FROM EMPLOYEE
 </insert>
 
 
+
+
+
 <!--본인이 결재해야 할 문서 리스트  -->
 <select id="getApprovalList" parameterType="string" resultType="ApprovalDto">
     SELECT 
@@ -369,29 +372,55 @@ FROM EMPLOYEE
 <!-- 리스트에서 상세보기된 문서 -->
 <select id="getApprovalDetail" resultType="DocumentDto">
  	SELECT d.TITLE, d.CONTENT, d.DOC_TYPE,
-  	    f.ORIGIN_NAME, f.FILE_ID
+  	    f.FILE_ID,f.STORE_NAME ,f.ORIGIN_NAME
  	FROM DOCUMENT d LEFT JOIN FILEUP f 
  	ON d.DOC_ID = f.DOC_ID 
  	WHERE d.DOC_ID = #{doc_id}
 </select>
 <select id="geteApproval" resultType="ApprovalDto">
-	 SELECT APPRV_ID , SIGN, NAME , d.DEPT_NAME  , a.EMP_ID
+	 SELECT APPRV_ID ,NAME , d.DEPT_NAME , a.EMP_ID, APPRV_LEVEL,a.SIGN AS signSaved
  	FROM APPROVAL a JOIN EMPLOYEE e 
  	ON a.EMP_ID = e.EMP_ID 
  	JOIN DEPT d 
  	ON e.DEPT_ID  = d.DEPT_ID 
  	WHERE DOC_ID =  #{doc_id}
+ 	ORDER BY APPRV_LEVEL
  
 </select>
 
 <!--결재문서 보낸사람 정보 표시 -->
-<select id="getApp" resultType="EmplyeeDto" parameterType="Integer">
-SELECT d2.DEPT_NAME, e."POSITION", e.NAME , e.EMP_ID, s.SIGN 
+<select id="getApp" resultType="EmployeeDto" parameterType="Integer">
+SELECT d2.DEPT_NAME, e."POSITION", e.NAME , e.EMP_ID, s.SIGN as signSaved
 	FROM EMPLOYEE e JOIN DEPT d2 
 	ON d2.DEPT_ID = e.DEPT_ID 
 	JOIN SIGN s 
 	ON e.EMP_ID  = s.EMP_ID 
-	WHERE e.EMP_ID = (SELECT EMP_ID FROM DOCUMENT d WHERE DOC_ID =${doc_id});
+	WHERE e.EMP_ID = (SELECT EMP_ID FROM DOCUMENT d WHERE DOC_ID =#{doc_id})
+</select>
+
+<!--내 결재 순서보다 앞사람들 사인을 조회하기   -->
+<select id="getApproverSignatures" resultType="EmployeeDto" parameterType="map">
+    SELECT 
+        s.SIGN AS signSaved,
+        sub.APPRV_LEVEL
+    FROM (
+       
+        SELECT a.APPRV_LEVEL, a.EMP_ID
+        FROM APPROVAL a
+        WHERE DOC_ID = #{docId}
+    ) sub
+    JOIN EMPLOYEE e 
+    ON sub.EMP_ID = e.EMP_ID
+    JOIN SIGN s 
+    ON s.EMP_ID = sub.EMP_ID
+    WHERE sub.APPRV_LEVEL &lt; (
+        
+        SELECT APPRV_LEVEL 
+        FROM APPROVAL 
+        WHERE EMP_ID = #{empId}
+        AND DOC_ID = #{docId}
+    )
+    ORDER BY sub.APPRV_LEVEL
 </select>
 
 
@@ -412,16 +441,14 @@ SELECT d2.DEPT_NAME, e."POSITION", e.NAME , e.EMP_ID, s.SIGN
 <!--         JOIN DEPT d ON e.DEPT_ID = d.DEPT_ID -->
 <!--  </select> -->
 
+
 <!--승인을 누르면 진행중에서 승인으로  -->
-
 <update id="updateApprovalStatus" parameterType="ApprovalDto">
-
 	UPDATE APPROVAL 
 	       SET SIGN = (SELECT SIGN FROM SIGN s WHERE EMP_ID = #{emp_id}) ,  
 	APPRV_STATUS  = '승인', 
 	APPRV_DATE = CURRENT_DATE 
 	WHERE DOC_ID =#{doc_id} AND APPRV_ID = #{apprv_id}
-
 </update>
 
 

@@ -28,6 +28,7 @@ public class DocumentDto {
 	private int file_id;
 	private String doc_num;
 	
+	
 	// 추가
 	private String name;
 	private List<ApprovalDto> approvalDtos;
@@ -41,5 +42,6 @@ public class DocumentDto {
 	
 	//상세조회 파일명 조회
 	private String origin_name;
+	private String store_name;
 
 }
