@@ -28,8 +28,6 @@
 <body>
 
 	<div class="content" id="content">
-	<%@ include file="header.jsp" %>	
-
 		<div class="main-content">
 			<div id='calendar'></div>
 		</div> <!-- main-content -->

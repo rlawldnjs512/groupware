@@ -38,6 +38,13 @@
         <ul id="menuList">
 			<li class="active"><a href="/homeList.do"> Home </a></li>
 			<li><a href="./mypage.do">마이페이지 </a></li>
+			<!-- 사원조회 또는 사원관리 -->
+			<li><a href="./emp.do"> 
+				<c:choose>
+					<c:when test="${sessionScope.loginVo.role eq 'A'}">사원관리</c:when>
+					<c:otherwise>사원조회</c:otherwise>
+				</c:choose>
+			</a></li>
 			<c:choose>
 				<c:when test="${sessionScope.loginVo.role eq 'A'}">
 					<li><a href="./attendance_admin">근태관리</a></li>
@@ -46,13 +53,11 @@
 					<li><a href="./attendance">근태관리</a></li>
 				</c:otherwise>
 			</c:choose>
-			<!-- 사원조회 또는 사원관리 -->
-			<li><a href="./emp.do"> 
-				<c:choose>
-					<c:when test="${sessionScope.loginVo.role eq 'A'}">사원관리</c:when>
-					<c:otherwise>사원조회</c:otherwise>
-				</c:choose>
-			</a></li>
+			<c:choose>
+				<c:when test="${sessionScope.loginVo.role eq 'U'}">
+					<li><a href="./schedule">일정관리</a></li>
+				</c:when>
+			</c:choose>
 
 			<li><a href="./reservation.do"> 회의실예약 </a></li>
 			<li><a href="./approval.do">전자결재 </a></li>

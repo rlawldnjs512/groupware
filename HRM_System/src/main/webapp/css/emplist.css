@@ -78,6 +78,7 @@
 .main-content table tbody tr td {
     padding: 10px;
     border-bottom: 1px solid #eee;
+    vertical-align: middle;
 }
 
 .main-content table tbody tr:hover {
@@ -130,16 +131,12 @@
 .modal.show .table td {
     color: #333;
     font-size: 16px;
+    background-color: #f0f8ff; /* 연한 하늘색 */
 }
 
 /* 테이블의 셀 구분선 색상 */
 .modal.show .table tr {
     border-bottom: 1px solid #e0e0e0;
-}
-
-/* 테이블 셀 배경을 연한 하늘색으로 변경 */
-.modal.show .table td {
-    background-color: #f0f8ff; /* 연한 하늘색 */
 }
 
 /* 애니메이션 추가: 모달이 열릴 때 부드러운 확대 효과 */

@@ -71,7 +71,7 @@ th {
 			   		<fieldset class="btn-container">
 			   			<select name="type" id="type">
 				            <option value="title" ${(param.type == "title")?"selected":""}>제목</option>
-				        	<option value="content" ${(param.type == "content")?"selected":""}>내용</option>
+				        	<option value="content" ${(param.type == "content")?"selected":""}></option>
 				        </select> 
 						<input type="text" name="keyword" value="${param.keyword}" placeholder="검색어를 입력해주세요.">
 						<button type="submit" class="button-common search-btn">
@@ -113,21 +113,21 @@ th {
 												</div>
 										   </td>
 			                               <td>${vo.name}</td>
-			                               <td>${vo.regdate}</td>
+			                               <td>${fn:substring(vo.regdate, 0, 10)}</td>
 			                               <td>
 			                               		<c:if test="${vo.file_exist eq 'Y'}">
-													<img src="./images/filedown.png">
+													<img src="./images/filedown.png" width="25">
 			                               		</c:if>
-			                               		<c:if test="${vo.file_exist eq 'N'}">
-													<img src="./images/filenot.png">
-			                               		</c:if>
+<%-- 			                               		<c:if test="${vo.file_exist eq 'N'}"> --%>
+<!-- 													<img src="./images/filenot.png"> -->
+<%-- 			                               		</c:if> --%>
 										   </td>
 			                           </tr>
 									   <tr class="hidden-row">
 									   		<td colspan="${sessionScope.loginVo.role eq 'A' ? 6:6}">
 									   			<div id="collapse${vo.not_id}" class="panel-collapse collapse">
 									   				<div class="form-group">
-									   					<label>내용</label>
+									   					<label></label>
 														<div class="form-control" style="border: 1px solid #ccc; padding: 10px; background: #f8f9fa;">
 														    <c:out value="${vo.content}" escapeXml="false" />
 														</div>
