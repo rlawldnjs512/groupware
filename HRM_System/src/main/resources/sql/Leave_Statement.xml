@@ -52,5 +52,12 @@
 			</if>
 			ORDER BY LEAVE_START DESC
 	</select>
+	
+	<!-- 휴가 결재하기 - 상신하기 - LEAVE INSERT -->
+	<insert id="vacation_approval">
+	INSERT INTO LEAVE
+		(DOC_ID, LEAVE_START, LEAVE_END, "TYPE", LEAVE_DAYS)
+	VALUES(#{doc_id}, #{leave_start}, #{leave_end}, #{TYPE}, TO_NUMBER(#{leave_end} - #{leave_start}))
+	</insert>
 
 </mapper>

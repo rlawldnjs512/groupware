@@ -38,7 +38,7 @@ public class ApprovalFormController {
 	private final IApprovalService approvalService;
 
 	// 결재문서 폼 이동------------------------------------------------------
-	@GetMapping(value = "/vacationForm.do")
+	@GetMapping(value = "/vacationForm.do")   // 휴가 작성하기
 	public String vacation_form(Model model, HttpSession session) {
 		
 		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
@@ -47,12 +47,12 @@ public class ApprovalFormController {
 		return "vacationApproval";
 	}
 
-	@GetMapping(value = "/tripForm.do")
+	@GetMapping(value = "/tripForm.do")    // 출장 작성하기
 	public String trip_form() {
 		return "tripApproval";
 	}
 
-  @GetMapping(value = "/reportForm.do")
+	@GetMapping(value = "/reportForm.do")    // 보고서 작성하기
 	public String report_form() {
 		return "reportApproval";
 	}
@@ -255,6 +255,96 @@ public class ApprovalFormController {
 		}
 		
 		return "redirect:/approval.do";
+	}
+	
+	
+	
+//	 휴가 상신------------------------------------------------------
+	@PostMapping(value = "/leaveTest.do" )
+	public String approvalLeave(Model model,
+									  HttpSession session,
+									  HttpServletRequest request,
+									  @RequestParam("title") String title,
+									  @RequestParam("content") String content,
+									  @RequestParam("appLine") List<String> appLine,
+									  @RequestParam("doc_type") String doc_type,
+//									  @RequestParam("leave_start") String leave_start,
+//									  @RequestParam("leave_end") String leave_end,
+//									  @RequestParam("type") String type
+									  LeaveDto leaveDto
+									  ) {
+		
+		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
+		String emp_id = loginVo.getEmp_id();
+		System.out.println("-------------------전달되는 보고서 입력 값 -----------------------");
+		System.out.println("title : "+ title);
+		System.out.println("content : " + content);
+		System.out.println("appLine : " + appLine);
+		System.out.println("doc_type : " + doc_type);
+		System.out.println("-------------------전달되는 휴가 입력 값 -----------------------");
+		System.out.println("leave_start : " + leaveDto.getLeave_start());
+		System.out.println("leave_end : " + leaveDto.getLeave_end());
+		System.out.println("type : " + leaveDto.getType());
+		
+		
+		// 문서 저장
+		Map<String, Object>  docMap =  new HashMap<String, Object>();
+		docMap.put("doc_id", "");
+		docMap.put("emp_id", emp_id);
+		docMap.put("doc_type", doc_type);
+		docMap.put("title", title);
+		docMap.put("content", content);
+		
+		// 결재선 저장 
+		Map<String, Object>  appMap =  new HashMap<String, Object>();
+		appMap.put("approval", appLine);
+		appMap.put("doc_id", "");
+		
+//		int result =  approvalService.insertDocument(docMap, appMap);
+		
+		// 휴가 저장
+//		Map<String, Object> leaMap = new HashMap<String, Object>();
+//		leaMap.put("doc_id", "");
+//		leaMap.put("leave_start", leave_start);
+//		leaMap.put("leave_end", leave_end);
+//		leaMap.put("type", type);
+		
+		
+		
+		
+		return "leaveTest";
+	}
+	
+	
+	
+	// 출장 상신------------------------------------------------------
+	@PostMapping(value = "/tripTest.do" )
+	public String trip_approval(Model model,
+								  HttpSession session,
+								  HttpServletRequest request,
+								  @RequestParam("title") String title,
+								  @RequestParam("content") String content,
+								  @RequestParam("appLine") List<String> appLine,
+								  @RequestParam("doc_type") String doc_type,
+								  @RequestParam("trip_start") String trip_start,
+								  @RequestParam("trip_end") String trip_end,
+								  @RequestParam("destination") String destination) {
+		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
+		String emp_id = loginVo.getEmp_id();
+		System.out.println("-------------------전달되는 보고서 입력 값 -----------------------");
+		System.out.println("title : "+ title);
+		System.out.println("content : " + content);
+		System.out.println("appLine : " + appLine);
+		System.out.println("doc_type : " + doc_type);
+		
+		System.out.println("-------------------전달되는 출장 입력 값 -----------------------");
+		System.out.println("trip_start : " + trip_start);
+		System.out.println("trip_end : " + trip_end);
+		System.out.println("destination : " + destination);
+		
+		
+		
+		return "tripTest";
 	}
 	
 	// 결재선------------------------------------------------------

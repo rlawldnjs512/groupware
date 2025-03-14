@@ -72,14 +72,21 @@ public interface IApprovalDao {
 	//본인이 결재해야할 문서 리스트
   public List<ApprovalDto> getApprovalList(String emp_id); 
   
-  
+	public int insertDocumentLeave(Map<String, Object> docMap, Map<String, Object> appMap, LeaveDto leaveDto);
   
   // 2025 03 14 상세보기 된 문서
   public DocumentDto getApprovalDetail(String doc_id);
   
   public List<ApprovalDto> geteApproval(String doc_id);
   // 2025 03 14 승인
+
+  
+  // 2025 03 14 반려
+  public int updateApprovalReject(Map<String, Object> map);
+  
+
   public int updateApprovalStatus (ApprovalDto dto);
   
   public EmployeeDto getApp(int doc_id);
+
 }

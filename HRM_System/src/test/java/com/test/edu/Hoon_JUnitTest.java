@@ -15,6 +15,8 @@ import org.springframework.test.context.ContextConfiguration;
 import com.min.edu.HrmSystemApplication;
 import com.min.edu.dto.ApprovalDto;
 import com.min.edu.dto.DocumentDto;
+import com.min.edu.dto.EmployeeDto;
+import com.min.edu.dto.LeaveDto;
 import com.min.edu.dto.RoomDto;
 import com.min.edu.model.mapper.IApprovalDao;
 import com.min.edu.model.mapper.IReservationDao;
@@ -142,7 +144,7 @@ class Hoon_JUnitTest {
 	}
 	
 	// 2025 03 14 문서 상세 (문서 정보 + 결재라인 조회)
-	@Test
+//	@Test
 	public void detailApproval() {
 		DocumentDto detailDto = apprDao.getApprovalDetail("203");
 		List<ApprovalDto> apprList = apprDao.geteApproval("203");
@@ -158,6 +160,53 @@ class Hoon_JUnitTest {
 		
 		
 	}
+	
+//	@Test
+//	public void updateApprovalReject() {
+//		Map<String, Object> map = new HashMap<String, Object>(){{
+//			put("doc_id", "209");
+//			put("apprv_id", "");
+//		}};
+//		
+//		int n = apprDao.updateApprovalReject(map);
+//		System.out.println(n);
+//		
+//	}
+	
+	@Test
+	public void insertDocumentLeave() {
+		
+		Map<String, Object>  docMap =  new HashMap<String, Object>();
+		docMap.put("doc_id", "");
+		docMap.put("emp_id", 20220001);
+		docMap.put("doc_type", "휴가");
+		docMap.put("title", "휴가삽입테스트");
+		docMap.put("content", "휴가삽입테스트");
+		
+		List<String> appLine = new ArrayList<String>();
+		appLine.add("20250040");
+		appLine.add("20250034");
+		appLine.add("20250024");
+		
+		Map<String, Object>  appMap =  new HashMap<String, Object>();
+		appMap.put("approval", appLine);
+		appMap.put("doc_id", "");
+		
+		
+		LeaveDto dto = new LeaveDto();
+		dto.setLeave_start("2025-03-12");
+		dto.setLeave_end("2025-03-21");
+		dto.setType("오전반차");
+		
+		apprDao.insertDocumentLeave(docMap, appMap, dto);
+		
+		
+		
+	}
+	
+	
+	
+	
 }
 
 
