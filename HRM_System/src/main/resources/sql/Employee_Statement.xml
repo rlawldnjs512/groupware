@@ -23,8 +23,8 @@
 		WHERE trim(e.EMP_ID) = trim(#{emp_id})
 		AND
 		trim(e.PASSWORD) = trim(#{password})
-
 	</select>
+	
 	<!--사원번호로 사용자 조회 findById -->
 	<select id="findById" resultType="EmployeeDto">
 		SELECT *

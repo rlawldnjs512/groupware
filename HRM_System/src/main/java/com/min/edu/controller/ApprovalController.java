@@ -1,5 +1,6 @@
 package com.min.edu.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import com.min.edu.model.service.IApprovalService;
 import com.min.edu.model.service.ILeaveService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -70,6 +72,7 @@ public class ApprovalController {
 	    
 	    List<ApprovalDto> approvalList = service.getApprovalList(emp_id); 
 	    model.addAttribute("approvalList", approvalList); 
+	    
 
 	    return "approval_receive";  
 	}
@@ -77,11 +80,20 @@ public class ApprovalController {
 	
 	@GetMapping("/approval_detail.do")
 	public String approvalDetail(@RequestParam("doc_id") String docId, 
+			                      @RequestParam("apprv_id")String apprv_id,
 	                             Model model) {
-		//log.info("{}",docId);
+		log.info("{}",docId);
+		log.info("{}",apprv_id);
+		model.addAttribute("docId", docId);
+		model.addAttribute("apprv_id", apprv_id);
+		
+		
 	   // 문서정보 // 
 	    DocumentDto document = service.getApprovalDetail(docId);
 	    List<ApprovalDto> approvalList = service.geteApproval(docId);
+	    
+	    //기안자 정보 
+	    
   
 	    if ("휴가".equals(document.getDoc_type())) {
 	        LeaveDto leaveDto = service.continuePreviewLeave(Integer.parseInt(docId)); 
@@ -98,16 +110,34 @@ public class ApprovalController {
 	    
 	    model.addAttribute("approvalList", approvalList);  
 	    model.addAttribute("documentDto", document);
+	    
+	    
 	    return "approval_detail";  
 	}
 
 	
 	@PostMapping(value = "/updateApprov.do")
-	public String updateApproval() {
+	public String updateApproval(HttpSession session,@RequestParam int doc_id,
+			                   @RequestParam int apprv_id,
+			                   HttpServletResponse response) throws IOException {
 		
 		
+		EmployeeDto edto = (EmployeeDto)session.getAttribute("loginVo");
+		String emp_id = edto.getEmp_id();
 		
-		
+		ApprovalDto dto = ApprovalDto.builder()
+				          .emp_id(emp_id)
+				          .doc_id(doc_id)
+				          .apprv_id(apprv_id)
+				          .build();
+		int n = service.updateApprovalStatus(dto);
+		if (n == 1) {
+			response.getWriter().print("<script>alert('승인완료'); location.href='./approval_receive.do';</script>");
+
+		} else {
+			response.getWriter().print("<script>alert('승인실패'); window.history.back();</script>");
+
+		}
 		return null;
 	}
 
@@ -156,6 +186,7 @@ public class ApprovalController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", name);
 		map.put("doc_id", docId);
+		
 		
 		// 공통 문서 
 		List<ApprovalDto> reportDto = service.continuePreviewDoc(map);

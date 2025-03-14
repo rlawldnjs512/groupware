@@ -183,7 +183,7 @@ public class ApprovalFormController {
 		
 	}
 	
-	// 결재문서 상신------------------------------------------------------
+	// 보고서 상신------------------------------------------------------
 	@PostMapping(value = "/ApprovalReport.do")
 	public String report_approval(Model model,
 								  HttpSession session,

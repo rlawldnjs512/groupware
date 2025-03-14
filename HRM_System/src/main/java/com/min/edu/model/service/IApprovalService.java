@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.min.edu.dto.ApprovalDto;
 import com.min.edu.dto.DocumentDto;
+import com.min.edu.dto.EmployeeDto;
 import com.min.edu.dto.FileUpDto;
 import com.min.edu.dto.LeaveDto;
 import com.min.edu.dto.SignDto;
@@ -68,6 +69,8 @@ public interface IApprovalService {
 	public DocumentDto getApprovalDetail(String doc_id);
 	public List<ApprovalDto> geteApproval(String doc_id);
 
-	public int updateApprovalStatus (Map<String, Object>map);
+	public int updateApprovalStatus (ApprovalDto dto) ;
+	
+	 public EmployeeDto getApp(int doc_id);
 
 }
