@@ -41,7 +41,6 @@
     <div class="content" id="content">
         <%@ include file="header.jsp" %>
         <div class="main-content">
-			<!-- 결재권자로서 내가 결재해야 할 문서  -->
 			<div>
         		<table>
         			<thead>

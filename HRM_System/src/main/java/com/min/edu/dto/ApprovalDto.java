@@ -28,4 +28,14 @@ public class ApprovalDto {
 	// 추가
 	private String name;
 	
+	
+	
+	// 결재할 내역 리스트를 위해 추가됨
+    private String doc_type;     
+    private String title;        
+        
+    private String doc_status;   
+    private String doc_date;      
+    
+    private String dept_name;
 }
