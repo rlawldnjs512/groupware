@@ -19,7 +19,7 @@
  		.card.border-light.mb-3 {
  			background-color: #F0F0F0;
  			width: 20em;
- 			height: auto;
+ 			min-height: 30em;
  			text-align: center;
  			margin-left: 10px;
 			margin-top: 10px;
@@ -75,6 +75,10 @@
 		.wide-card .table {
 		    width: 100%;
 		    min-width: 900px; /* 최소 너비 설정 */
+		}
+		#kt_tab_pane_1 table thead tr th,
+		#kt_tab_pane_2 table thead tr th {
+		    text-align: center;  /* 텍스트 중앙 정렬 */
 		}
 
 
