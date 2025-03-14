@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.min.edu.dto.ApprovalDto;
 import com.min.edu.dto.DocumentDto;
+import com.min.edu.dto.EmployeeDto;
 import com.min.edu.dto.FileUpDto;
 import com.min.edu.dto.LeaveDto;
 import com.min.edu.dto.SignDto;
@@ -78,5 +79,7 @@ public interface IApprovalDao {
   
   public List<ApprovalDto> geteApproval(String doc_id);
   // 2025 03 14 승인
-  public int updateApprovalStatus (Map<String, Object> map);
+  public int updateApprovalStatus (ApprovalDto dto);
+  
+  public EmployeeDto getApp(int doc_id);
 }

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.min.edu.dto.ApprovalDto;
 import com.min.edu.dto.DocumentDto;
+import com.min.edu.dto.EmployeeDto;
 import com.min.edu.dto.FileUpDto;
 import com.min.edu.dto.LeaveDto;
 import com.min.edu.dto.SignDto;
@@ -147,7 +148,9 @@ public class ApprovalServiceImpl implements IApprovalService {
 
 	@Override
 	 public List<ApprovalDto> getApprovalList(String emp_id){
-		return dao.getApprovalList(emp_id);
+		List<ApprovalDto> temp = dao.getApprovalList(emp_id);
+		System.out.println("d---" + temp);
+		return temp;
 	}
 
 	@Override
@@ -161,9 +164,14 @@ public class ApprovalServiceImpl implements IApprovalService {
 	}
 	
 	@Override
-	 public int updateApprovalStatus (Map<String, Object>map) {
-		 return dao.updateApprovalStatus(map);
+	public int updateApprovalStatus (ApprovalDto dto) {
+		 return dao.updateApprovalStatus(dto);
 	 }
+	
+	@Override
+	 public EmployeeDto getApp(int doc_id) {
+		return dao.getApp(doc_id);
+	}
 }
 
 
