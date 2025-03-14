@@ -25,9 +25,11 @@ import com.min.edu.model.service.ILeaveService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class ApprovalController {
 
 	private final IApprovalService service;
@@ -62,9 +64,58 @@ public class ApprovalController {
 	
 	// 결재문서 결재 수신함------------------------------------------------------------
 	@GetMapping(value = "/approval_receive.do")
-	public String approval_receive() {
-		return "approval_receive";
+	public String approvalReceive(HttpSession session, Model model) {
+	    EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");  
+	    String emp_id = loginVo.getEmp_id(); 
+	    
+	    List<ApprovalDto> approvalList = service.getApprovalList(emp_id); 
+	    model.addAttribute("approvalList", approvalList); 
+
+	    return "approval_receive";  
 	}
+	
+	
+	@GetMapping("/approval_detail.do")
+	public String approvalDetail(@RequestParam("doc_id") String docId, 
+	                             Model model) {
+		//log.info("{}",docId);
+	   // 문서정보 // 
+	    DocumentDto document = service.getApprovalDetail(docId);
+	    List<ApprovalDto> approvalList = service.geteApproval(docId);
+  
+	    if ("휴가".equals(document.getDoc_type())) {
+	        LeaveDto leaveDto = service.continuePreviewLeave(Integer.parseInt(docId)); 
+	        model.addAttribute("leaveDto", leaveDto);
+	        
+	    } else if ("출장".equals(document.getDoc_type())) {
+	    	 log.info(document.getDoc_type());
+	    	
+	        TripDto tripDto = service.continuePrviewTrip(Integer.parseInt(docId)); 
+	        model.addAttribute("tripDto", tripDto);
+	        log.info("{}",tripDto);
+	    }
+	    
+	    
+	    model.addAttribute("approvalList", approvalList);  
+	    model.addAttribute("documentDto", document);
+	    return "approval_detail";  
+	}
+
+	
+	@PostMapping(value = "/updateApprov.do")
+	public String updateApproval() {
+		
+		
+		
+		
+		return null;
+	}
+
+
+	
+	
+	
+	
 	
 	// 결재문서 내 결재함------------------------------------------------------------
 	@GetMapping(value = "/approval_mine.do")

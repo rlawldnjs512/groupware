@@ -14,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import com.min.edu.HrmSystemApplication;
 import com.min.edu.dto.ApprovalDto;
+import com.min.edu.dto.DocumentDto;
 import com.min.edu.dto.RoomDto;
 import com.min.edu.model.mapper.IApprovalDao;
 import com.min.edu.model.mapper.IReservationDao;
@@ -27,7 +28,7 @@ class Hoon_JUnitTest {
 	@Autowired
 	IApprovalDao apprDao;
 	
-	@Test
+//	@Test
 	public void myReservation() {
 		List<RoomDto> lists = dao.myReservation("20240002");
 		System.out.println(lists);
@@ -130,7 +131,7 @@ class Hoon_JUnitTest {
 //	}
 	
 	// 2025 03 13 결재선 입력 테스트
-	@Test
+//	@Test
 	public void insertApproval(){
 		//92
 		Map<String, Object>  appMap =  new HashMap<String, Object>();
@@ -138,6 +139,24 @@ class Hoon_JUnitTest {
 		appMap.put("doc_id", "92");
 		int m = apprDao.insertApproval(appMap);
 		System.out.println("입력된 결재선  :" + m);
+	}
+	
+	// 2025 03 14 문서 상세 (문서 정보 + 결재라인 조회)
+	@Test
+	public void detailApproval() {
+		DocumentDto detailDto = apprDao.getApprovalDetail("203");
+		List<ApprovalDto> apprList = apprDao.geteApproval("203");
+		
+		System.out.println(detailDto.getTitle());
+		System.out.println(detailDto.getContent());
+		System.out.println(detailDto.getOrigin_name()); //화면출력
+		System.out.println(detailDto.getFile_id()); // 다운로드 식별자
+		
+		System.out.println(apprList);
+		
+		
+		
+		
 	}
 }
 
