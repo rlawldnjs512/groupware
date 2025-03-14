@@ -62,6 +62,12 @@ public interface IApprovalService {
 
 	public int insertApproval(Map<String, Object> map);
 
+	
+	// 2025 03 14
+	public int insertDocumentLeave(Map<String, Object> docMap, Map<String, Object> appMap, LeaveDto leaveDto);
+	
+	
+	
 	public List<ApprovalDto> getApprovalList(String emp_id); 
 
 
@@ -69,5 +75,8 @@ public interface IApprovalService {
 	public List<ApprovalDto> geteApproval(String doc_id);
 
 	public int updateApprovalStatus (Map<String, Object>map);
+	 
+	// 2025 03 14 반려
+	public int updateApprovalReject(Map<String, Object> map);
 
 }
