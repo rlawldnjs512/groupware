@@ -1,12 +1,23 @@
 package com.min.edu.controller;
 
+import java.awt.PageAttributes.MediaType;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.net.http.HttpHeaders;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,12 +28,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.min.edu.dto.ApprovalDto;
 import com.min.edu.dto.DocumentDto;
 import com.min.edu.dto.EmployeeDto;
+import com.min.edu.dto.FileUpDto;
 import com.min.edu.dto.LeaveDto;
 import com.min.edu.dto.SignDto;
 import com.min.edu.dto.TripDto;
 import com.min.edu.model.service.IApprovalService;
 import com.min.edu.model.service.ILeaveService;
 
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -162,7 +175,49 @@ public class ApprovalController {
 		return null;
 	}
 
+	//전자결재 문서의 파일 다운로드 
+	@GetMapping(value = "/downloadFile.do")
+	public ResponseEntity<byte[]> FreeFileDownload(HttpServletRequest request, 
+							         			   HttpServletResponse response,
+							         			   @RequestParam("doc_id") int doc_id,
+							         			   Model model) throws IOException {
+			
+		FileUpDto files = service.getReportFileById(doc_id);
+		log.info("{}",files);
 
+		 // 파일 저장 경로 설정 (절대 경로를 사용하는 방식)
+	    String uploadDir = System.getProperty("user.dir") + File.separator + "src\\main\\webapp\\fileup";  // 절대 경로로 관리
+	    
+	    System.out.println(uploadDir);
+	    System.out.println(files.getStore_name());
+	    System.out.println(files.getOrigin_name());
+	    
+	    File file = new File(uploadDir, files.getStore_name());
+
+	    // 파일이 존재하지 않을 경우 예외 발생 (파일 없음 방지)
+	    if (!file.exists()) {
+	        throw new FileNotFoundException("파일을 찾을 수 없습니다: " + file.getAbsolutePath());
+	    }
+
+	    System.out.println(file);
+	    // 파일을 바이트 배열로 변환
+	    byte[] fileBytes = FileCopyUtils.copyToByteArray(file);
+
+	    // 파일명 인코딩 (브라우저 호환성 고려)
+	    String encodedFileName = URLEncoder.encode(files.getOrigin_name(), StandardCharsets.UTF_8)
+	            .replaceAll("\\+", "%20"); // 공백 처리
+
+
+	    // 파일을 브라우저에 응답해준다.
+	    response.setHeader("Content-Disposition", "attachment; filename=\""+encodedFileName+"\"");
+		response.setContentLength(fileBytes.length);
+		response.setContentType("application/octet-stream");
+		
+		model.addAttribute("file", file);
+
+	    // 파일 데이터 응답 반환
+	    return ResponseEntity.ok().body(fileBytes);
+	}
 	
 	
 	

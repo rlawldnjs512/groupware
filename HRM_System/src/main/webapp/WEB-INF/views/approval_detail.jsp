@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>휴가원 신청</title>
-	
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">	
 <link rel="stylesheet" href="./css/approval_detail.css">
 
 
@@ -60,7 +60,7 @@
         
         <!-- 결재자 목록 -->
         <tr id="approvalLineTd_1" style="height: 20px;">
-            <th rowspan="2">결재</th>
+            <th rowspan="2">결재자</th>
             <th>본인</th>
             <c:forEach var="appNameList" items="${approvalList}">
                 <th data-empid="${appNameList.emp_id}">
@@ -79,7 +79,6 @@
                     <img class="signature-image" src="${signatures[status.index].signSaved}" 
                          style="width: 50%; height: auto; object-fit: contain;"/>
 
-                    <!-- 로그인한 사용자의 경우 승인/반려 버튼 표시 -->
                     <c:if test="${appSign.emp_id == loginVo.emp_id}">
                         <form action="./updateApprov.do" method="POST">
                             <input type="hidden" name="doc_id" value="${param.doc_id}" />
@@ -108,20 +107,27 @@
 							<th>
 								${documentDto.title}
 							</th> 
-						</tr>  
-						
-						<tr>
-							<th>파일</th>
-							<th>
-							${documentDto.origin_name}
-								<c:if test="${documentDto.origin_name == null}">
-								파일이 없습니다
-								</c:if>
-							</th> 
-						</tr> 
-						
-						
-						<c:if test="${tripDto != null}">
+						</tr>
+
+					<tr>
+						<th>파일</th>
+						<th>
+						<c:choose>
+								<c:when test="${not empty documentDto.origin_name}">
+									<!-- 파일 다운로드 링크 -->
+									<a href="/downloadFile.do?fileName=${documentDto.origin_name}&doc_id=${param.doc_id}" 
+										target="_blank"> 📂 ${documentDto.origin_name} </a>
+								</c:when>
+								<c:otherwise>
+					                파일이 없습니다
+					            </c:otherwise>
+						</c:choose>
+						</th>
+					</tr>
+
+
+
+					<c:if test="${tripDto != null}">
 							<tr>
 								<th>기간</th>
 								<th>${tripDto.trip_start} ~ ${tripDto.trip_end}</th>

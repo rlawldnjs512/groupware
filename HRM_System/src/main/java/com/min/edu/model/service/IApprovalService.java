@@ -74,5 +74,7 @@ public interface IApprovalService {
 	 public EmployeeDto getApp(int doc_id);
 	  //내 결재 순서보다 앞사람들 사인을 조회하기 
 	 public List<EmployeeDto> getApproverSignatures(Map<String, Object> map);
+	 
+	 public FileUpDto getReportFileById(int doc_id);
 
 }

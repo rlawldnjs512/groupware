@@ -179,6 +179,12 @@ public class ApprovalServiceImpl implements IApprovalService {
 	 public List<EmployeeDto> getApproverSignatures(Map<String, Object> map) {
 		return dao.getApproverSignatures(map);
 	}
+	
+	
+	@Override
+	public FileUpDto getReportFileById(int doc_id) {
+		return dao.getReportFileById(doc_id);
+	}
 }
 
 

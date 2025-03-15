@@ -369,6 +369,18 @@ FROM EMPLOYEE
 </select>
 
 
+<!-- 파일관련 정보 (파일다운로드를 위해)-->
+	<select id="getReportFileById" resultType="FileUpDto">
+    SELECT FILE_ID, DOC_ID,
+           ORIGIN_NAME, STORE_NAME, "SIZE", FILE_PATH
+    FROM FILEUP f
+    WHERE TABLE_NAME = 'DOCUMENT'
+    AND DOC_ID = #{doc_id}
+   </select>
+
+
+
+
 <!-- 리스트에서 상세보기된 문서 -->
 <select id="getApprovalDetail" resultType="DocumentDto">
  	SELECT d.TITLE, d.CONTENT, d.DOC_TYPE,

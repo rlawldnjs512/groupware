@@ -86,6 +86,9 @@ public interface IApprovalDao {
   
   //내 결재 순서보다 앞사람들 사인을 조회하기 
   public List<EmployeeDto> getApproverSignatures(Map<String, Object> map);
+  
+  //파일조회
+  public FileUpDto getReportFileById(int doc_id);
 }
 
 
