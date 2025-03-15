@@ -156,7 +156,13 @@
 						</td>
 					</tr>
 					<tr>
+					
 				</table>
+				<div class="btn-container" style="text-align: center; margin-top: 20px;">
+					    <button type="button" class="back-btn" onclick="history.back()">
+					        <i class="fa-solid fa-arrow-left"></i> 뒤로가기
+					    </button>
+					</div>
 	            </div>
         </div>
     </div>
