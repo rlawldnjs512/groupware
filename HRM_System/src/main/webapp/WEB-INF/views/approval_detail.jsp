@@ -80,18 +80,23 @@
                          style="width: 50%; height: auto; object-fit: contain;"/>
 
                     <c:if test="${appSign.emp_id == loginVo.emp_id}">
-                        <form action="./updateApprov.do" method="POST">
-                            <input type="hidden" name="doc_id" value="${param.doc_id}" />
-                            <input type="hidden" name="apprv_id" value="${appSign.apprv_id}" />
+                       
+                           
                             <div class="btn-container">
+                             <form action="./updateApprov.do" method="POST">
+                              <input type="hidden" name="doc_id" value="${param.doc_id}" />
+                            <input type="hidden" name="apprv_id" value="${appSign.apprv_id}" />
                                 <button type="submit" class="approval-btn">
                                     <i class="fa-solid fa-check"></i> 승인
                                 </button>
+                              </form>
+                              
+                              
                                 <button type="button" class="approval-btn reject-btn">
                                     <i class="fa-solid fa-xmark"></i> 반려
                                 </button>
                             </div>
-                        </form>
+                        
                     </c:if>
                 </td>
             </c:forEach>
@@ -119,7 +124,7 @@
 										target="_blank"> 📂 ${documentDto.origin_name} </a>
 								</c:when>
 								<c:otherwise>
-					                파일이 없습니다
+					                첨부된 파일이 없습니다
 					            </c:otherwise>
 						</c:choose>
 						</th>
