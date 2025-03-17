@@ -64,15 +64,13 @@ th, td {
         <%@ include file="header.jsp"%>
         <div class="main-content">
         	<form method="post" enctype="multipart/form-data">
-	            <div class="card shadow-lg p-4">
-	                <h2 class="text-center mb-4">출장서</h2>
-	               <div class="main-content">
-			<form method="post" enctype="multipart/form-data">
+	  
+			
 			
 			
 			
 				<div class="card p-4" style="width: 1300px;">
-					<h2 class="text-center mb-4">보고서</h2> 
+					<h2 class="text-center mb-4">출장서</h2> 
 					<div>
 						<div style="float: left; width: 400px; height: 120px;">
 							<table class="table table-borderless mb-3">
@@ -152,7 +150,7 @@ th, td {
 						<button type="button" id="line" onclick="windowOpen()" class="btn btn-light-primary ms-2">결재선 선택</button>
 						<button type="button" name="reportTemp" class="report btn btn-light-primary ms-2">임시 저장</button>
 						<button type="button" class="btn btn-light-primary ms-2" onclick="history.back(-1)">취소</button>
-						<button type="button" name="reportApproval" class="report btn btn-light-primary ms-2">상신 하기</button>
+						<button type="button" name="tripApproval" class="report btn btn-light-primary ms-2">상신 하기</button>
 					</div>
 	            </div>
 			</form>

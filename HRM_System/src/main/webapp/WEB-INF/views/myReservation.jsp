@@ -6,14 +6,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>예약관리</title>
-<link rel="stylesheet" href="./css/emplist.css">
-<style>
-td{
-	text-align: center; 
-}
-</style>
+	<meta charset="UTF-8">
+	<title>예약관리</title>
+	<link rel="stylesheet" href="./css/emplist.css">
+	<style>
+		td{
+			text-align: center;
+			
+		}
+		tbody tr {
+		    height: 60px;
+		    vertical-align: middle; 
+		}
+	</style>
 </head>
  <%@ include file="sidebar.jsp" %>
 <body>
@@ -45,29 +50,35 @@ td{
 								<td>${reserv.rev_date}</td>
 								<td>${reserv.range}</td>
 								<td>
-									<form action="./deleteReservation.do" method="post" onsubmit="return confirmCancel()">
-									    <input type="hidden" name="reserv_id" value="${reserv.reserv_id}">
-									    <input type="hidden" name="emp_id" value="${reserv.emp_id}">
-									    <button type="submit" class="btn btn-danger">취소</button>
-									</form>
+									<!-- 오늘 포함 이후의 날짜들만 취소가 가능하도록 함. -->
+									<fmt:formatDate value="<%= new java.util.Date() %>" pattern="yyyy-MM-dd" var="today" />
+									<c:if test="${reserv.rev_date >= today}">
+										<form action="./deleteReservation.do" method="post" onsubmit="return confirmCancel()">
+										    <input type="hidden" name="reserv_id" value="${reserv.reserv_id}">
+										    <input type="hidden" name="emp_id" value="${reserv.emp_id}">
+										    <button type="submit" class="btn btn-danger">취소</button>
+										</form>
+									</c:if>
 								</td>
 							</tr>
 							<c:set var="index" value="${index + 1}" />
 						</c:forEach>
 					</c:forEach>
 				</tbody>
+				
 			</table>
-		</div>
-	</div>
-<script>
-function confirmCancel() {
-    if (confirm("정말 예약을 취소하시겠습니까?")) {
-        alert("취소되었습니다.");
-        return true;
-    }
-    return false;
-}
-</script>
+		</div> <!-- main-content -->
+	</div> <!-- content -->
+	
+	<script>
+		function confirmCancel() {
+		    if (confirm("정말 예약을 취소하시겠습니까?")) {
+		        alert("취소되었습니다.");
+		        return true;
+		    }
+		    return false;
+		}
+	</script>
 
 </body>
 </html>

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.min.edu.dto.ApprovalDto;
 import com.min.edu.dto.DocumentDto;
+import com.min.edu.dto.EmployeeDto;
 import com.min.edu.dto.FileUpDto;
 import com.min.edu.dto.LeaveDto;
 import com.min.edu.dto.SignDto;
@@ -99,7 +100,19 @@ public class ApprovalServiceImpl implements IApprovalService {
 		 int m = dao.insertApproval(appMap);
 		 return (n+m) >0 ? 1 : 0;
 	}
-
+	
+	@Override
+	@Transactional
+	public int insertDocumentLeave(Map<String, Object> docMap, Map<String, Object> appMap, LeaveDto leaveDto)
+	{
+		 int n = dao.insertDocument(docMap);
+		 appMap.put("doc_id", docMap.get("doc_id"));
+		 leaveDto.setDoc_id(Integer.parseInt((String)docMap.get("doc_id")));
+		 int m = dao.insertApproval(appMap);
+		 int o = dao.insertSaveLeave(leaveDto);
+		 
+		 return (n+m+o) >0 ? 1 : 0;
+	}
 	@Override
 	public int insertApproval(Map<String, Object> map) {
 		return dao.insertApproval(map);
@@ -145,4 +158,45 @@ public class ApprovalServiceImpl implements IApprovalService {
 		return dao.selectSignOne(emp_id);
 	}
 
+	@Override
+	 public List<ApprovalDto> getApprovalList(String emp_id){
+		List<ApprovalDto> temp = dao.getApprovalList(emp_id);
+		System.out.println("d---" + temp);
+		return temp;
+	}
+
+	@Override
+	public DocumentDto getApprovalDetail(String doc_id) {
+		return dao.getApprovalDetail(doc_id);
+	}
+
+	@Override
+	public List<ApprovalDto> geteApproval(String doc_id) {
+		return dao.geteApproval(doc_id);
+	}
+	
+	@Override
+	public int updateApprovalStatus (ApprovalDto dto) {
+		 return dao.updateApprovalStatus(dto);
+	 }
+
+
+	@Override
+	public int updateApprovalReject(Map<String, Object> map) {
+		return dao.updateApprovalReject(map);
+
+	
+	@Override
+	 public EmployeeDto getApp(int doc_id) {
+		return dao.getApp(doc_id);
+
+	}
 }
+
+
+
+
+
+
+
+
