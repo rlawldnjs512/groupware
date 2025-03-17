@@ -100,7 +100,19 @@ public class ApprovalServiceImpl implements IApprovalService {
 		 int m = dao.insertApproval(appMap);
 		 return (n+m) >0 ? 1 : 0;
 	}
-
+	
+	@Override
+	@Transactional
+	public int insertDocumentLeave(Map<String, Object> docMap, Map<String, Object> appMap, LeaveDto leaveDto)
+	{
+		 int n = dao.insertDocument(docMap);
+		 appMap.put("doc_id", docMap.get("doc_id"));
+		 leaveDto.setDoc_id(Integer.parseInt((String)docMap.get("doc_id")));
+		 int m = dao.insertApproval(appMap);
+		 int o = dao.insertSaveLeave(leaveDto);
+		 
+		 return (n+m+o) >0 ? 1 : 0;
+	}
 	@Override
 	public int insertApproval(Map<String, Object> map) {
 		return dao.insertApproval(map);
@@ -167,10 +179,17 @@ public class ApprovalServiceImpl implements IApprovalService {
 	public int updateApprovalStatus (ApprovalDto dto) {
 		 return dao.updateApprovalStatus(dto);
 	 }
+
+
+	@Override
+	public int updateApprovalReject(Map<String, Object> map) {
+		return dao.updateApprovalReject(map);
+
 	
 	@Override
 	 public EmployeeDto getApp(int doc_id) {
 		return dao.getApp(doc_id);
+
 	}
 	
 	

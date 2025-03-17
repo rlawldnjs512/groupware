@@ -463,8 +463,14 @@ SELECT d2.DEPT_NAME, e."POSITION", e.NAME , e.EMP_ID, s.SIGN as signSaved
 	WHERE DOC_ID =#{doc_id} AND APPRV_ID = #{apprv_id}
 </update>
 
+<update id="updateApprovalReject" parameterType="map">
 
+	UPDATE APPROVAL 
+			APPRV_STATUS  = '승인', 
+			APPRV_DATE = CURRENT_DATE 
+	WHERE DOC_ID =#{doc_id} AND APPRV_ID = #{apprv_id}
 
+</update>
 
 
 

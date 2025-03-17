@@ -20,8 +20,14 @@ window.onload = function() {
 			if(reportName == "reportTemp") {
 				frm.action = "./TempReport.do";
 				frm.submit();
-			} else {
+			} else if(reportName == "reportApproval"){
 				frm.action = "./ApprovalReport.do";
+				frm.submit();
+			} else if (reportName == "leaveApproval"){
+				frm.action = "./leaveTest.do";
+				frm.submit();
+			} else {
+				frm.action = "./tripTest.do";
 				frm.submit();
 			}
 			console.log("이동주소 : " , frm.action);

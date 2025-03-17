@@ -115,9 +115,14 @@ th, td {
 						<tr>
 							<th>종류</th>
 							<th style="text-align: left;">
-								<input type="radio" id="morning" name="type" value="오전반차" class="form-check-input"> <label for="morning" class="form-check-label">오전반차</label>
-		                        <input type="radio" id="afternoon" name="type" value="오후반차" class="form-check-input ms-2"> <label for="afternoon" class="form-check-label">오후반차</label>
-		                        <input type="radio" id="full" name="type" value="연차" class="form-check-input ms-2"> <label for="full" class="form-check-label">연차</label>
+								<input type="radio" id="morning" name="type" value="오전반차" class="form-check-input"> 
+								<label for="morning" class="form-check-label">오전반차</label>
+								
+		                        <input type="radio" id="afternoon" name="type" value="오후반차" class="form-check-input ms-2"> 
+		                        <label for="afternoon" class="form-check-label">오후반차</label>
+		                        
+		                        <input type="radio" id="full" name="type" value="연차" class="form-check-input ms-2"> 
+		                        <label for="full" class="form-check-label">연차</label>
 							</th>
 						</tr>
 						<tr>
@@ -137,7 +142,7 @@ th, td {
 						<button type="button" id="line" onclick="windowOpen()" class="btn btn-light-primary ms-2">결재선 선택</button>
 						<button type="button" name="reportTemp" class="report btn btn-light-primary ms-2">임시 저장</button>
 						<button type="button" class="btn btn-light-primary ms-2" onclick="history.back(-1)">취소</button>
-						<button type="button" name="reportApproval" class="report btn btn-light-primary ms-2">상신 하기</button>
+						<button type="button" name="leaveApproval" class="report btn btn-light-primary ms-2">상신 하기</button>
 					</div>
 	            </div>
 			</form>
