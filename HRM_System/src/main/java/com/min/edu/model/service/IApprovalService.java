@@ -82,7 +82,10 @@ public interface IApprovalService {
 
 	public int updateApprovalStatus (ApprovalDto dto) ;
 	
-	 public EmployeeDto getApp(int doc_id);
+	public int insertApproval(Map<String, Object> map);
+
+	public EmployeeDto getApp(int doc_id);
+
 
 
 }
