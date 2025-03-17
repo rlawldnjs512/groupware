@@ -23,6 +23,7 @@ public class ApprovalDto {
 	private String apprv_level;
 	private String apprv_status;
 	private String apprv_date;
+	private String signSaved;
 	private String sign;
 	
 	// 추가
