@@ -184,7 +184,7 @@ public class ApprovalServiceImpl implements IApprovalService {
 	@Override
 	public int updateApprovalReject(Map<String, Object> map) {
 		return dao.updateApprovalReject(map);
-
+	}
 	
 	@Override
 	 public EmployeeDto getApp(int doc_id) {
