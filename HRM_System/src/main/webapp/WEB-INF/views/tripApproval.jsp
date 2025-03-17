@@ -64,11 +64,6 @@ th, td {
         <%@ include file="header.jsp"%>
         <div class="main-content">
         	<form method="post" enctype="multipart/form-data">
-	  
-			
-			
-			
-			
 				<div class="card p-4" style="width: 1300px;">
 					<h2 class="text-center mb-4">출장서</h2> 
 					<div>
