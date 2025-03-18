@@ -210,7 +210,17 @@ WHERE DOC_ID=#{doc_id}
 	WHERE DOC_ID = #{doc_id}
 </delete>
 
-<!-- 사용자는 작성한 결재문서를 결재하기 전에 미리보기를 할 수 있다.	selectPreviewDoc -->
+<select id="selectSuccessDoc" resultMap="DocumentDtoMap">
+	SELECT EMP_ID, DOC_ID, DOC_TYPE, TITLE, CONTENT , CREATE_DATE ,
+	   DOC_STATUS , DOC_DATE , DOC_NUM , FILE_EXIST , DEPT_ID, NAME, POSITION
+	FROM DOCUMENT d JOIN EMPLOYEE e 
+	USING(EMP_ID)
+	WHERE DOC_STATUS = 'Y'
+	AND DEPT_ID IN (SELECT DEPT_ID FROM EMPLOYEE e2 WHERE EMP_ID = #{emp_id})
+</select>
+
+
+<!-- 사용자는 임시저장한 문서를 조회할 수 있다.	selectPreviewDoc -->
 <select id="selectPreviewDoc" resultMap="DocumentDtoMap">
 	SELECT s.EMP_ID , a.APPRV_LEVEL , a.APPRV_STATUS , a.SIGN , s.DOC_ID ,
 			(SELECT NAME FROM EMPLOYEE e WHERE NAME = #{name}) AS NAME ,
@@ -219,6 +229,7 @@ WHERE DOC_ID=#{doc_id}
 		    (SELECT *
 		     FROM DOCUMENT d
 		     WHERE EMP_ID IN (SELECT EMP_ID FROM EMPLOYEE e WHERE NAME = #{name})
+		     AND DOC_STATUS = 'T'
 		     ) s
 		LEFT OUTER JOIN APPROVAL a 
 		    ON s.EMP_ID = a.EMP_ID
@@ -352,7 +363,8 @@ FROM EMPLOYEE
         TO_CHAR(D.DOC_DATE, 'YYYY-MM-DD') AS DOC_DATE,
         A.APPRV_STATUS,
         A.APPRV_LEVEL,
-        A.SIGN as SIGNSAVED
+        A.SIGN as SIGNSAVED,
+        D.DOC_NUM
     FROM (
         SELECT 
             APPRV_ID, DOC_ID, EMP_ID, APPRV_STATUS, SIGN,  APPRV_LEVEL,

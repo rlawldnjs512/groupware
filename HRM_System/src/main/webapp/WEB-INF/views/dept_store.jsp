@@ -56,20 +56,45 @@
 	        			</tr>
         			</thead>
         			<tbody>
-        				<tr>
-        					<td></td>
-        					<td></td>
-        					<td></td>
-        					<td>${loginVo.dept_name}</td>
-        					<td>${loginVo.name}</td>
-        					<td></td>
-        					<td></td>
-        				</tr>
+        				<c:forEach var="vo" items="${lists}">
+	        				<tr>
+	        					<td>${vo.doc_num}</td>
+	        					<td>${vo.doc_type}</td>
+	        					<td>
+	        						<a onclick="successDocView('${vo.doc_id}', '${vo.doc_type}')"> 
+										${vo.title}
+									</a>
+	        					</td>
+	        					<td>${loginVo.dept_name}</td>
+	        					<td>${loginVo.name}</td>
+	        					<c:if test="${vo.doc_status eq 'Y'}">
+		        					<td>승인완료</td>
+	        					</c:if>
+	        					<td>${vo.doc_date}</td>
+	        				</tr>
+        				</c:forEach>
         			</tbody>
         		</table>
         	</div>
-
         </div>
     </div>
 </body>
+<script type="text/javascript">
+	function successDocView(doc_id,doc_type) {
+	    $.ajax({
+	        type: "GET",
+	        url: "/successDocView.do",
+	        data: { 
+	            doc_id: doc_id,
+	            doc_type: doc_type
+	        },
+	        success: function(response) {
+	            window.location.href = "/successDocView.do?doc_id=" + doc_id + "&doc_type=" + doc_type;
+	        },
+	        error: function(xhr, status, error) {
+	            alert("수정 페이지로 이동하는 중 오류 발생: " + error);
+	        }
+	    });
+	}
+</script>
 </html>

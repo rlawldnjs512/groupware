@@ -237,8 +237,10 @@ public class ApprovalServiceImpl implements IApprovalService {
 	}
 
 
-	
-
+	@Override
+	public List<ApprovalDto> selectSuccessDoc(Map<String, Object> map) {
+		return dao.selectSuccessDoc(map);
+	}
 
 }
 

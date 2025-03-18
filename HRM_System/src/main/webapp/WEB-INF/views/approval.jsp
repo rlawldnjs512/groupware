@@ -168,14 +168,33 @@ th {
 									class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
 									<th>유형</th>
 									<th>제목</th>
-									<th>작성자</th>
+									<th>작성자</th> 
 									<th>날짜</th>
+									<th>결재상태</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td colspan="4" class="text-center text-muted">진행중인 결재가
-										없습니다.</td>
+									<c:choose>
+			                            <c:when test="${empty approvalList}">
+			                                <tr>
+			                                    <td colspan="7" class="text-center">결재할 문서가 없습니다.</td>
+			                                </tr>
+			                            </c:when>
+			                            <c:otherwise>
+			                                <c:forEach var="approval" items="${approvalList}">
+			                                <input type="hidden" name="apprv_id" value="${approval.apprv_id}">
+			                                    <tr>
+			                                        <td>${approval.doc_id}</td>
+			                                        <td>${approval.doc_type}</td>
+			                                        <td>${approval.title}</td>
+			                                        <td>${approval.name}</td>
+			                                        <td>${approval.doc_status}</td>
+			                                        <td>${approval.doc_date}</td>
+			                                    </tr>
+			                                </c:forEach>
+			                            </c:otherwise>
+			                        </c:choose>
 								</tr>
 							</tbody>
 						</table>
@@ -264,8 +283,7 @@ th {
 								<c:choose>
 									<c:when test="${empty freeLists}">
 										<tr>
-											<td colspan="4" class="text-center text-muted">등록된 커뮤니티
-												글이 없습니다.</td>
+											<td colspan="4" class="text-center text-muted">등록된 글이 없습니다.</td>
 										</tr>
 									</c:when>
 									<c:otherwise>
@@ -298,7 +316,6 @@ th {
 									<c:if test="${page.page < page.totalPage}">
 										<li><a href="./homeList.do?page=${page.page + 1}">&raquo;</a></li>
 									</c:if>
-
 								</ul>
 							</c:if>
 						</div>

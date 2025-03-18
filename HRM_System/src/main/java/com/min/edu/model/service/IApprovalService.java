@@ -51,6 +51,7 @@ public interface IApprovalService {
 	// + 휴가삭제
 	public int deleteSaveLeave(int doc_id);
 
+	public List<ApprovalDto> selectSuccessDoc(Map<String, Object> map);
 	public List<ApprovalDto> selectPreviewDoc(Map<String, Object> map);
 
 	public List<ApprovalDto> continuePreviewDoc(Map<String, Object> map);

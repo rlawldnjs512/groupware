@@ -69,7 +69,6 @@
 	            <li class="nav-item my-1 dropdown">
 	            	<a class="<%= dropdownClass %>" href="./approval_mine.do"  id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"> 내 결재 </a>
 	            	<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-			            <li><a class="dropdown-item" href="./approval_pending.do">결재 대기함</a></li>
 			            <li><a class="dropdown-item" href="./approval_receive.do">결재 수신함</a></li>
 			            <li><a class="dropdown-item" href="./approval_mine.do">내 결재함</a></li>
 		            </ul>
