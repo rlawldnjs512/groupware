@@ -44,43 +44,59 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
     $(document).ready(function() {
-            let currentDate = new Date();
+        let currentDate = new Date();
 
-            function updateDateDisplay() {
-                const year = currentDate.getFullYear();
-                const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-                const day = String(currentDate.getDate()).padStart(2, "0");
-                $("#date-text").text(`${year}년 ${month}월 ${day}일`);
-                $("#rev_date").val(`${year}-${month}-${day}`);
-                
-                fetchReservations($("#rev_date").val());
-            }
+        function updateDateDisplay() {
+            const year = currentDate.getFullYear();
+            const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+            const day = String(currentDate.getDate()).padStart(2, "0");
+            $("#date-text").text(`${year}년 ${month}월 ${day}일`);
+            $("#rev_date").val(`${year}-${month}-${day}`);
+            
+            fetchReservations($("#rev_date").val());
+        }
 
+        updateDateDisplay();
+
+        $("#today-btn").on("click", function() {
+            currentDate = new Date();
             updateDateDisplay();
-
-            $("#today-btn").on("click", function() {
-                currentDate = new Date();
-                updateDateDisplay();
-            });
-
-            $("#prev-day").on("click", function() {
-                currentDate.setDate(currentDate.getDate() - 1);
-                updateDateDisplay();
-            });
-
-            $("#next-day").on("click", function() {
-                currentDate.setDate(currentDate.getDate() + 1);
-                updateDateDisplay();
-            });
-
-            $("#date-display").on("click", function() {
-                $("#rev_date")[0].showPicker();
-            });
-
-            $("#rev_date").on("change", function() {
-                currentDate = new Date(this.value);
-                updateDateDisplay();
-            });
         });
+
+        $("#prev-day").on("click", function() {
+            currentDate.setDate(currentDate.getDate() - 1);
+            updateDateDisplay();
+        });
+
+        $("#next-day").on("click", function() {
+            currentDate.setDate(currentDate.getDate() + 1);
+            updateDateDisplay();
+        });
+
+        $("#date-display").on("click", function() {
+            $("#rev_date")[0].showPicker();
+        });
+
+        $("#rev_date").on("change", function() {
+            currentDate = new Date(this.value);
+            updateDateDisplay();
+        });
+    });
+    
+    
+    // 달력에서 오늘보다 이전의 날짜들은 선택하지 못하도록
+    const today = new Date();
+    
+    const yyyy = today.getFullYear();
+    let mm = today.getMonth() + 1;  
+    let dd = today.getDate();
+    
+    if (mm < 10) mm = '0' + mm;  
+    if (dd < 10) dd = '0' + dd;  
+    
+    const todayFormatted = `${yyyy}-${mm}-${dd}`;
+    
+    document.getElementById('rev_date').setAttribute('min', todayFormatted);
+    
     
 });
