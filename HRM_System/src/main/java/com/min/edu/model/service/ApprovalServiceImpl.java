@@ -246,7 +246,8 @@ public class ApprovalServiceImpl implements IApprovalService {
 
 	public int updateDocumentStatus(int doc_id) {
 		return dao.updateDocumentStatus(doc_id);
-
+	}
+	@Override
 	public int updateDocStatus(int doc_id) {
 		return dao.updateDocStatus(doc_id);
 	}
