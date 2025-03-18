@@ -35,14 +35,15 @@
             background-color: var(--bs-primary);
         }
 
-        thead th, tbody td {
-            text-align: center;
-            padding: 10px;
-        }
-
-        tbody tr:hover {
-            background-color: var(--bs-primary-light);
-        }
+        thead th {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+tbody td {
+    text-align: center;
+    vertical-align: middle;
+}
+      
     </style>
 </head>
 
