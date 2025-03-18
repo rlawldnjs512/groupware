@@ -43,11 +43,11 @@
 
 /* 이벤트 스타일 */
 .fc-event {
-  background-color: #007bff !important;
+/*   background-color: #007bff !important; */
   border: none !important;
   border-radius: 5px !important;
   padding: 5px;
-  color: white !important;
+  color: black;
   font-size: 14px;
 }
 
