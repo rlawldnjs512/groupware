@@ -85,7 +85,10 @@
                             <div class="btn-container">
                              <form action="./updateApprov.do" method="POST">
                               <input type="hidden" name="doc_id" value="${param.doc_id}" />
-                              <input type="hidden" name="apprv_id" value="${appSign.apprv_id}" />
+
+                            <input type="hidden" name="apprv_id" value="${appSign.apprv_id}" />
+                            <input type="hidden" name="apprv_level" value="${appSign.apprv_level}" />
+
                                 <button type="submit" class="approval-btn">
                                     <i class="fa-solid fa-check"></i> 승인
                                 </button>

@@ -150,6 +150,7 @@ public class ApprovalController {
 	@PostMapping(value = "/updateApprov.do")
 	public String updateApproval(HttpSession session,@RequestParam int doc_id,
 			                   @RequestParam int apprv_id,
+			                   @RequestParam String apprv_level,
 			                   HttpServletResponse response) throws IOException {
 		
 		 response.setContentType("text/html; charset=UTF-8;");
@@ -161,6 +162,9 @@ public class ApprovalController {
 				          .doc_id(doc_id)
 				          .apprv_id(apprv_id)
 				          .build();
+		
+		int level = Integer.parseInt(apprv_level);
+		log.info("레벨레벨레벨레벨레벨레벨 : {}",level);
 		int n = service.updateApprovalStatus(dto);
 		
 		
@@ -173,6 +177,9 @@ public class ApprovalController {
 		
 		
 		if (n == 1) {
+			if (level == 3) {
+				service.updateDocStatus(doc_id);
+			}
 			response.getWriter().print("<script>alert('승인완료'); location.href='./approval_receive.do';</script>");
 
 		} else {
@@ -255,12 +262,14 @@ public class ApprovalController {
 	
 	// 결재문서 내 결재함------------------------------------------------------------
 	@GetMapping(value = "/approval_mine.do")
+
 	public String approval_mine(HttpSession session, Model model) {
 		 EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo"); 
 		  String emp_id = loginVo.getEmp_id(); 
 		  
 		  List<DocumentDto> docList = service.selectApprvMine(emp_id);
 		  model.addAttribute("docList",docList);
+
 		return "approval_mine";
 	}
 	

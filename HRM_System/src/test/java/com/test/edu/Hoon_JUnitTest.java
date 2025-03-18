@@ -234,6 +234,13 @@ class Hoon_JUnitTest {
 	}
 	
 	
+//	@Test
+	public void updateDocStatus() {
+		int doc_id = 363;
+		
+		apprDao.updateDocStatus(doc_id);
+	}
+	
 	
 }
 

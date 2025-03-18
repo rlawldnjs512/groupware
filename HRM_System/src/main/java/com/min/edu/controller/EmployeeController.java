@@ -65,25 +65,25 @@ public class EmployeeController {
 
 
 		if (type == null || keyword == null || keyword.trim().isEmpty()) {
-		    return "redirect:/emp.do";
+			return "redirect:/emp.do";
 		} else {
-		    int totalCount = 0;
-		    if ("dept".equals(type)) {
-		        empList = service.getEmployeesByDept(keyword, selectPage, d.getCountList());
-		        totalCount = service.countEmployeesByDeptName(keyword); // 검색 결과 수
-		    } else if ("name".equals(type)) {
-		        empList = service.getEmployeesByName(keyword, selectPage, d.getCountList());
-		        totalCount = service.countEmployeesByName(keyword); // 검색 결과 수
-		    }
+			int totalCount = 0;
+			if ("dept".equals(type)) {
+				empList = service.getEmployeesByDept(keyword, selectPage, d.getCountList());
+				totalCount = service.countEmployeesByDeptName(keyword); // 검색 결과 수
+			} else if ("name".equals(type)) {
+				empList = service.getEmployeesByName(keyword, selectPage, d.getCountList());
+				totalCount = service.countEmployeesByName(keyword); // 검색 결과 수
+			}
 
-		    // 기존 EmpPageDto 메서드 활용
-		    d.setTotalCount(totalCount);  
-		    d.setCountList(10);  
-		    d.setCountPage(5);   
-		    d.setTotalPage(totalCount); // ← 여기!
-		    d.setPage(selectPage); 
-		    d.setStagePage(d.getPage());
-		    d.setEndPage();
+			// 기존 EmpPageDto 메서드 활용
+			d.setTotalCount(totalCount);  
+			d.setCountList(10);  
+			d.setCountPage(5);   
+			d.setTotalPage(totalCount); // ← 여기!
+			d.setPage(selectPage); 
+			d.setStagePage(d.getPage());
+			d.setEndPage();
 		}
 
 
@@ -179,7 +179,7 @@ public class EmployeeController {
 			@RequestParam String tel,
 			@RequestParam String email,
 			@RequestParam String hire_date,
-			Model model,HttpServletResponse response) throws IOException {
+			Model model,HttpServletResponse response) throws IOException, InterruptedException {
 
 		EmployeeDto dto = EmployeeDto.builder()
 
@@ -193,42 +193,35 @@ public class EmployeeController {
 				.hire_date(hire_date)
 				.build();
 
-		int n= service.insertEmployee(dto);
+		int n= service.insertEmployee(dto); // 사원정보 입력
 
+		Thread.sleep(1000*3);
 
 		if (n == 1) {
-			
-	       
-	       String not_id = service.getNotId(); //방금 등록한 emp_id 가져오기
-	       
-	       String year = hire_date.substring(0, 4); //연도만 추출
-	       
-	       String endDate = year + "-12-31";
+//
+//
+			String year = hire_date.substring(0, 4); //연도만 추출
 
-	      VacationDto vdto = VacationDto.builder()
-	    		            .emp_id(not_id)
-	    		            .start_date(hire_date)
-	    		            .end_date(endDate)
-	    		            .build();
-	      int m = service.insertVacation(vdto);
-			
+			String endDate = year + "-12-31";
+
+			VacationDto vdto = VacationDto.builder()
+					.emp_id(dto.getEmp_id())
+					.start_date(hire_date)
+					.end_date(endDate)
+					.build();
+			int m = service.insertVacation(vdto);
+
 			if(m == 1) {
-			
-			log.info("등록성공");
+
+				log.info("등록성공");
 			}
 			else {
 				log.info("등록실패");
 			}
-			
-			
+//
+//
 		} else {
 			log.info("등록실패");
-			
-			
-			
-			
-
-
 		}
 		return "redirect:/emp.do";
 	}

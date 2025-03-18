@@ -177,11 +177,19 @@
 	<!-- FullCalendar 값 -->
 	<select id="getCalendar" resultType="Map">
 		SELECT ATTEND_TYPE 																	AS "title", 
-			   TO_CHAR (CLOCKIN, 'YYYY-MM-DD') || 'T'|| TO_CHAR (CLOCKIN, 'HH24:MI:SS') 	AS "start" , 
-			   TO_CHAR (CLOCKOUT, 'YYYY-MM-DD') || 'T'|| TO_CHAR (CLOCKOUT, 'HH24:MI:SS') 	AS "end" ,
-			   USE_EXTRA_TIME 																AS "useTime"
-			FROM ATTENDANCE
-		    WHERE TRIM(EMP_ID) = TRIM(#{empId})
+			   TO_CHAR (CLOCKIN, 'YYYY-MM-DD') || 'T'|| TO_CHAR (CLOCKIN, 'HH24:MI:SS') 	AS "start", 
+			   TO_CHAR (CLOCKOUT, 'YYYY-MM-DD') || 'T'|| TO_CHAR (CLOCKOUT, 'HH24:MI:SS') 	AS "end",
+			   USE_EXTRA_TIME 																AS "useTime",
+			   '#0064DC' 																	AS "color",
+			   0																			AS "allDay"
+		FROM ATTENDANCE
+	    WHERE TRIM(EMP_ID) = TRIM(#{empId})
+	    UNION ALL
+			SELECT TYPE, TO_CHAR(LEAVE_START, 'YYYY-MM-DD"T00:00:00"'), TO_CHAR(LEAVE_END + 1, 'YYYY-MM-DD"T00:00:00"'), NULL, '#646464', 1
+			FROM LEAVE l 
+			JOIN DOCUMENT d 
+			ON l.DOC_ID = d.DOC_ID 
+			WHERE TRIM(EMP_ID) = TRIM(#{empId})
 	</select>
 	
 	

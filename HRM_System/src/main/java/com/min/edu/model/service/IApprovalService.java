@@ -105,6 +105,7 @@ public interface IApprovalService {
 	  //승인순서가 마지막인지 확인 - 결재완료표시
 	  public String selectApprovalLast(int apprv_id);
 
+	 public int updateDocStatus(int doc_id);
 
 
 

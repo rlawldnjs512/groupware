@@ -62,6 +62,7 @@ tbody tr:hover {
 </head>
 <%@ include file="sidebar.jsp"%>
 <body>
+
 	<div class="content" id="content">
 		<%@ include file="header.jsp"%>
 		<div class="main-content">
@@ -114,5 +115,6 @@ tbody tr:hover {
 
 		</div>
 	</div>
+
 </body>
 </html>
