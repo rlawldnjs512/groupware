@@ -86,7 +86,7 @@ public interface IApprovalService {
 	
 //	public int insertRejection(RejectionDto dto);
 	
-	public int approvalRejection(ApprovalDto appDto, RejectionDto rejDto);
+	public int approvalRejection(int apprv_id, RejectionDto rejDto);
 
 	 public EmployeeDto getApp(int doc_id);
   
