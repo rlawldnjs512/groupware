@@ -92,6 +92,7 @@ public interface IApprovalDao {
   //결재순서의 마지막번호 조회
   public int selectApprovalMax(int doc_id);
   
+  public int updateDocumentStatus(ApprovalDto dto);
   
   
   // 2025 03 14 반려

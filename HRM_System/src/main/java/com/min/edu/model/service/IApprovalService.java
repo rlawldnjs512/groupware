@@ -59,6 +59,7 @@ public interface IApprovalService {
 	String getDocNum(@Param("name") String name);
 
 	public List<Map<String, Object>> selectTree();
+	public int updateDocumentStatus(ApprovalDto dto);
 
 	
 	  
