@@ -161,34 +161,47 @@
 		            	title: event.title ?? "",
 		                start: event.start,
 		                end: event.end,
+		                allDay: Boolean(event.allDay),
+		                backgroundColor: event.color,
 		                extendedProps: {
 		                    useTime: event.useTime ?? "" 
-		                }
+		                },
+		            	classNames: event.allDay ? ['all-day-event'] : [] // all-day 이벤트에 클래스 추가
 		            }));
+		            
+		            console.log(sampleData);
 	
 		            // FullCalendar에 이벤트 데이터 전달
 		            successCallback(events);
 		        },
 		        eventClick: function(info) {
 		        	
-		        	function formatDate(date) {
+		        	function formatDate(date, isAllDay = false) {
 		                if (!date) return "";
 
 		                let utcDate = new Date(date);  // UTC 시간을 기준으로 Date 객체 생성
 		                // UTC 시간에 9시간 더해서 한국 시간으로 변환
 		                let localDate = new Date(utcDate.getTime() + ((-9) * 60 * 60 * 1000));
 		                
-		                let options = { 
-		                    year: 'numeric',  // 2025
-		                    month: 'long',    // March
-		                    day: 'numeric',   // 11
-		                    hour: 'numeric',  // 8
-		                    minute: '2-digit',// 50
-		                    hour12: true      // AM/PM 형식
-		                };
-
-		                let formattedDate = localDate.toLocaleString('en-US', options);
-		                return formattedDate.replace(',', '').replace(' at', ' -'); // ' at'을 ' -'로 변경
+		                if(isAllDay){
+		                	let dateOptions = {
+		                		year: 'numeric',
+		                		month: 'long',
+		                		day: 'numeric'
+		                	};
+		                	return localDate.toLocaleDateString('en-US', dateOptions);
+		                } else {
+		                	let options = {
+	                			year: 'numeric',  // 2025
+			                    month: 'long',    // March
+			                    day: 'numeric',   // 11
+			                    hour: 'numeric',  // 8
+			                    minute: '2-digit',// 50
+			                    hour12: true      // AM/PM 형식	
+		                	};
+		                	let formattedDate = localDate.toLocaleString('en-US', options);
+			                return formattedDate.replace(',', '').replace(' at', ' -'); // ' at'을 ' -'로 변경
+		                }
 		            }
 		        	
 		            // 보상시간 사용했으면 '보상시간 O시간 사용' 출력하기
@@ -200,21 +213,34 @@
 		            }
 		            
 		        	document.getElementById('modalEventTitle').textContent = info.event.title || "";
-		            document.getElementById('modalEventStart').textContent = formatDate(info.event.start);
-		            document.getElementById('modalEventEnd').textContent = info.event.end ? formatDate(info.event.end) : "";
+		            document.getElementById('modalEventStart').textContent = formatDate(info.event.start, info.event.allDay);
+		            document.getElementById('modalEventEnd').textContent = info.event.end ? formatDate(info.event.end, info.event.allDay) : "";
 		            document.getElementById('modalMemo').textContent = memoText;
 		            
-	                // 4️⃣ 모달 표시 (Bootstrap 사용)
 	                var eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
 	                eventModal.show();
 	            },
 	            eventMouseEnter: function(info) {
-	                info.el.style.backgroundColor = "rgba(0, 123, 255, 0.7)"; // hover 시 색상 변경
-	                info.el.style.color = "white";
+	                if (info.event.allDay) {
+	                    // all-day(휴가) 이벤트인 경우
+	                    info.el.style.backgroundColor = "rgba(100, 100, 100, 0.85)"; // 중간 회색 (hover)
+	                    info.el.style.color = "white";
+	                } else {
+	                    // 일반 출퇴근 이벤트인 경우
+	                    info.el.style.backgroundColor = "rgba(0, 100, 220, 0.85)"; // 중간 파란색 (hover)
+	                    info.el.style.color = "white";
+	                }
 	            },
 	            eventMouseLeave: function(info) {
-	                info.el.style.backgroundColor = ""; // 원래대로 복구
-	                info.el.style.color = "";
+	                if (info.event.allDay) {
+	                    // all-day(휴가) 이벤트인 경우
+	                    info.el.style.backgroundColor = "#646464"; // 연한 회색
+	                    info.el.style.color = "white";
+	                } else {
+	                    // 일반 출퇴근 이벤트인 경우
+	                    info.el.style.backgroundColor = "#0064DC"; // 연한 파란색
+	                    info.el.style.color = "white";
+	                }
 	            }
 		    });
 	
@@ -225,47 +251,4 @@
 	</script>
 
 </body>
-
-
-
-
-
-
-<!-- <table class="table table-hover"> -->
-<!-- 				<thead> -->
-<!-- 					<tr class="success"> -->
-<!-- 						<td>번호</td> -->
-<!-- 						<td>출퇴근날짜</td> -->
-<!-- 						<td>출근시간</td> -->
-<!-- 						<td>퇴근시간</td> -->
-<!-- 						<td>총근무시간(분)</td> -->
-<!-- 						<td>근무형태</td> -->
-<!-- 						<td>보상시간사용</td> -->
-<!-- 					</tr> -->
-<!-- 				</thead> -->
-<!-- 				<tbody> -->
-<%-- 					<c:forEach var="vo" items="${lists}" varStatus="vs"> --%>
-<!-- 						<tr> -->
-<%-- 							<td>${vo.attend_id}</td> --%>
-<%-- 							<td>${vo.attend_date}</td> --%>
-<%-- 							<td>${vo.clockin}</td> --%>
-<%-- 							<td>${vo.clockout}</td> --%>
-<%-- 							<td>${vo.total_time}</td> --%>
-<%-- 							<td>${vo.attend_type}</td> --%>
-<%-- 							<td>${vo.use_extra_time}</td> --%>
-<!-- 						</tr> -->
-<%-- 					</c:forEach> --%>
-<!-- 				</tbody> -->
-<!-- 			</table> -->
-
-
-
-
-
-
-
-
-
-
-
 </html>

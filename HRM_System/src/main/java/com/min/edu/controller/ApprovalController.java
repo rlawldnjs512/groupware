@@ -63,13 +63,15 @@ public class ApprovalController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", name);
+		map.put("emp_id", emp_id);
 		
-		// 임시 문서함
 		List<ApprovalDto> lists = service.selectPreviewDoc(map);
 		List<ApprovalDto> approvalList = service.getApprovalList(emp_id); 
-		  
+		List<ApprovalDto> successlists = service.selectSuccessDoc(map);
+
 		model.addAttribute("approvalList", approvalList);
 		model.addAttribute("lists",lists);
+		model.addAttribute("successlists", successlists);
 		
 		return "approval";
 	}
@@ -164,6 +166,9 @@ public class ApprovalController {
 		int level = Integer.parseInt(apprv_level);
 		log.info("레벨레벨레벨레벨레벨레벨 : {}",level);
 		int n = service.updateApprovalStatus(dto);
+		int m = service.updateDocumentStatus(dto);
+		
+		
 		if (n == 1) {
 			if (level == 3) {
 				service.updateDocStatus(doc_id);

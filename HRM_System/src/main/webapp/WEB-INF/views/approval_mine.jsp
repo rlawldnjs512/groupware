@@ -34,6 +34,23 @@
 	outline: none;
 	box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary), 0.5);
 }
+
+thead th {
+	padding: 12px;
+	text-align: center !important; /* text-align에 !important 추가 */
+	vertical-align: middle;
+	border-bottom: 2px solid #ddd;
+}
+
+tbody td {
+	padding: 10px;
+	text-align: center;
+	border-bottom: 1px solid #eee;
+}
+
+tbody tr:hover {
+	background-color: var(--bs-primary-light);
+}
 </style>
 </head>
 <%@ include file="sidebar.jsp" %>
@@ -42,6 +59,7 @@
         <%@ include file="header.jsp" %>
         <div class="main-content">
 			<!-- 결재 완료된 내 문서 -->
+
 			<div class="card list border-light mb-3 shadow p-3 rounded wide-card">
 				<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
 					<li class="nav-item"><a class="nav-link active"
@@ -231,6 +249,7 @@
 				</div><!-- tab-content 끝 -->
 
 			</div>
+
 
         </div>
     </div>
