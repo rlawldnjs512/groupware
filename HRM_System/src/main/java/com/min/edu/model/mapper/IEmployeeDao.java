@@ -26,8 +26,8 @@ public interface IEmployeeDao {
     //이름|부서 별 사원조회
     public List<EmployeeDto> sortDept(Map<String, Object> map);
     public List<EmployeeDto> sortName(Map<String, Object> map);
-    //사원등록-관리자
-    public int insertEmployee(EmployeeDto dto);
+   
+    
     //사원수정-관리자
     public int updateUser(EmployeeDto dto);
     //정보수정-마이페이지
@@ -51,12 +51,20 @@ public interface IEmployeeDao {
     // 사원 1명의 프로필이미지 조회
     public String selectProfileImg(String empId);
     
+    
+
+    //사원등록-관리자
+    public int insertEmployee(EmployeeDto dto);
+    
+    
     //신입 사원 연차 부여
     public int insertVacation(VacationDto dto);
+    
+    
      //마지막 회원 조회
     public String getNotId();    
     
-
+    
 
  
 }

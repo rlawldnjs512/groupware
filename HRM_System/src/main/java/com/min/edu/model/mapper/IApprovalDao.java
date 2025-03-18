@@ -105,7 +105,7 @@ public interface IApprovalDao {
   //파일조회
   public FileUpDto getReportFileById(int doc_id);
 
-
+  public int updateDocStatus(int doc_id);
 
 }
 

@@ -377,6 +377,7 @@ FROM EMPLOYEE
     JOIN EMPLOYEE E ON D.EMP_ID = E.EMP_ID
     WHERE (A.PREV_SIGN = '승인' OR A.PREV_SIGN IS NULL)
         AND A.APPRV_STATUS != '승인'
+        AND A.APPRV_STATUS != '반려'
         AND A.EMP_ID = #{emp_id}
      ORDER BY D.DOC_ID DESC
 </select>
@@ -505,6 +506,13 @@ SELECT d2.DEPT_NAME, e."POSITION", e.NAME , e.EMP_ID, s.SIGN as signSaved
 	(DOC_ID, REJECT_NAME, REJECT_TEXT, REJECT_DATE)
 	VALUES(#{doc_id}, #{reject_name}, #{reject_text}, CURRENT_DATE)
 </insert>
+
+
+<update id="updateDocStatus" parameterType="ApprovalDto">
+	UPDATE DOCUMENT
+		SET DOC_STATUS='Y'
+		WHERE DOC_ID= #{doc_id}
+</update>
 
 
 
