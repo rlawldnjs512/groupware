@@ -192,8 +192,8 @@ public class ApprovalFormController {
 								  HttpServletRequest request,
 								  @RequestParam("title") String title,
 								  @RequestParam("content") String content,
-								  @RequestParam("appLine") List<String> appLine,
-								 // @RequestParam(value = "appLine", required = false) List<String> appLine,  // required=false
+								  //@RequestParam("appLine") List<String> appLine,
+								  @RequestParam(value = "appLine", required = false) List<String> appLine, 
 								  @RequestParam("doc_type") String doc_type,
 								  @RequestParam(value = "file", required = false) MultipartFile file,
 								  HttpServletResponse response) throws IOException {
@@ -210,10 +210,10 @@ public class ApprovalFormController {
 		System.out.println("doc_type : " + doc_type);
 		System.out.println("file : " + fileName);
 		
-//	    if (appLine == null || appLine.isEmpty()) {
-//	    	response.getWriter().print("<script>alert('결재선을 선택해주세요'); window.history.back();</script>");
-//	    	return null;
-//	    }
+	    if (appLine == null || appLine.isEmpty()) {
+	    	response.getWriter().print("<script>alert('결재선을 선택해주세요'); window.history.back();</script>");
+	    	return null;
+	    }
 		
 		
 		
