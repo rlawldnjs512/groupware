@@ -60,6 +60,10 @@ public interface IApprovalService {
 
 	public List<Map<String, Object>> selectTree();
 
+	
+	  
+	  //결재순서의 마지막번호 조회
+	  public int selectApprovalMax(int doc_id);
 
 	// 2025 03 13 기안서 입력 및 결재선 입력
 	public int insertDocument(Map<String, Object> docMap, Map<String, Object> appMap);

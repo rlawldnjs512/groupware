@@ -491,6 +491,13 @@ SELECT DOC_NUM, DOC_TYPE ,TITLE ,DOC_STATUS ,CREATE_DATE
    	WHERE APPRV_ID = #{apprv_id}
 </select>
 
+<!--결재순서의 마지막 번호 조회  -->
+<select id="selectApprovalMax" resultType="Integer">
+ SELECT MAX(APPRV_LEVEL)
+   	FROM APPROVAL a 
+   	WHERE DOC_ID = #{doc_id}
+ </select>
+
     <update id="updateDocumentStatus" parameterType="int">
     UPDATE DOCUMENT d
     SET d.DOC_STATUS = 'Y'

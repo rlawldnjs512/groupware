@@ -167,8 +167,8 @@ public class ApprovalController {
 		int m= Integer.parseInt(service.selectApprovalLast(apprv_id));
 		log.info("{}",m);
 		
-		if(m==3) {
-			service.updateDocumentStatus(doc_id); //3번째 결재자까지 결재가 완료되면 승인상태가 Y로 바뀜 
+		if(m==service.selectApprovalMax(doc_id)) {
+			service.updateDocumentStatus(doc_id); //마지막 결재자까지 결재가 완료되면 승인상태가 Y로 바뀜 
 		}
 		
 		

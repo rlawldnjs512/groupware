@@ -257,6 +257,11 @@ public class ApprovalServiceImpl implements IApprovalService {
 	public List<DocumentDto> selectApprvMine(String emp_id) {
 		return dao.selectApprvMine(emp_id);
 	}
+
+	@Override
+	public int selectApprovalMax(int doc_id) {
+		return dao.selectApprovalMax(doc_id);
+	}
 }
 
 

@@ -89,6 +89,9 @@ public interface IApprovalDao {
   public int updateApprovalStatus (ApprovalDto dto);
   public int updateDocumentStatus(int doc_id);
   
+  //결재순서의 마지막번호 조회
+  public int selectApprovalMax(int doc_id);
+  
   
   
   // 2025 03 14 반려
