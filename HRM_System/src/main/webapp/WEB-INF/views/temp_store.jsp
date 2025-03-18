@@ -34,6 +34,23 @@
 	outline: none;
 	box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary), 0.5);
 }
+
+thead th {
+	padding: 12px;
+	text-align: center !important; /* text-align에 !important 추가 */
+	vertical-align: middle;
+	border-bottom: 2px solid #ddd;
+}
+
+tbody td {
+	padding: 10px;
+	text-align: center;
+	border-bottom: 1px solid #eee;
+}
+
+tbody tr:hover {
+	background-color: var(--bs-primary-light);
+}
 </style>
 </head>
 <%@ include file="sidebar.jsp" %>
@@ -56,25 +73,34 @@
 	        			</tr>
         			</thead>
         			<tbody>
-        				<c:forEach var="vo" items="${lists}">
-	        				<tr>
-	        					<td>${vo.doc_num}</td>
-	        					<td>${vo.doc_type}</td>
-	        					<td>${vo.title}</td>
-	        					<td>${loginVo.name}</td>
-	        					<c:if test="${vo.doc_status eq 'T'}">
-		        					<td>
-		        						임시저장
-		        					</td>
-	        					</c:if>
-	        					<td>
-	        						<input type="button" onclick="continueTemp('${vo.doc_id}', '${vo.doc_type}')" value="보기">
-	        					</td>
-	        					<td>
-	        						<input type="button" onclick="deleteTemp('${vo.doc_id}', '${vo.doc_type}')" value="삭제">
-	        					</td>
-	        				</tr>
-        				</c:forEach>
+        				<c:choose>
+							<c:when test="${empty lists}">
+								<tr>
+									<td colspan="7" class="text-center">문서가 없습니다.</td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+		        				<c:forEach var="vo" items="${lists}">
+			        				<tr>
+			        					<td>${vo.doc_num}</td>
+			        					<td>${vo.doc_type}</td>
+			        					<td>${vo.title}</td>
+			        					<td>${loginVo.name}</td>
+			        					<c:if test="${vo.doc_status eq 'T'}">
+				        					<td>
+				        						임시저장
+				        					</td>
+			        					</c:if>
+			        					<td>
+			        						<input type="button" onclick="continueTemp('${vo.doc_id}', '${vo.doc_type}')" value="보기">
+			        					</td>
+			        					<td>
+			        						<input type="button" onclick="deleteTemp('${vo.doc_id}', '${vo.doc_type}')" value="삭제">
+			        					</td>
+			        				</tr>
+		        				</c:forEach>
+		        			</c:otherwise>
+		        		</c:choose>
         			</tbody>
         		</table>
         	</div>

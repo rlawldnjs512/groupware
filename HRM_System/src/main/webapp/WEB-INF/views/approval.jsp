@@ -109,7 +109,6 @@ th {
 }
 
 .main-content {
-/* 	position: relative; */
 	width: 100%;
 	padding-top: 20px; /* 위쪽 여백 추가 */
 	text-align: center; /* 버튼 가운데 정렬 */
@@ -131,6 +130,62 @@ th {
 	font-size: 18px; /* 글자 크기 */
 	font-weight: bold; /* 글자 굵게 */
 }
+
+.d-flex {
+    display: flex;
+    align-items: stretch;  /* 두 카드의 높이를 일치시킴 */
+    gap: 20px; /* 카드 사이의 간격 */
+}
+
+.card.text-bg-light {
+    padding: 20px;
+}
+
+.card.text-bg-light.w-25 {
+    flex: 1 1 20%; /* 서명 카드의 너비 설정, 필요에 따라 조정 */
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  /* 세로 방향으로 중앙 정렬 */
+    align-items: center;  /* 가로 방향으로 중앙 정렬 */
+    height: 100%;  /* 카드의 전체 높이 사용 */
+}
+
+.card-body img {
+    width: 200px;  /* 이미지 크기 */
+    height: 200px; /* 이미지 크기 */
+}
+
+.card-body button {
+    width: 200px;  /* 버튼 너비 */
+    height: 200px;  /* 버튼 높이 */
+    font-size: 18px;  /* 버튼 글자 크기 */
+    display: flex;  /* 내용 중앙 정렬을 위한 flexbox */
+    justify-content: center;  /* 수평 중앙 정렬 */
+    align-items: center;  /* 수직 중앙 정렬 */
+    border-radius: 10px;  /* 모서리를 둥글게 만들기 */
+    padding: 0;  /* 버튼 내 여백 제거 */
+}
+
+.card-body button:hover {
+    background-color: #e9f3ff;  /* hover 시 배경 색상 */
+    color: var(--bs-primary);  /* hover 시 글자 색상 */
+}
+
+.button-container button {
+	width: 1000px;  /* 버튼 너비 */
+    height: 100px;  /* 버튼 높이 */
+    font-size: 22px;  /* 버튼 글자 크기 */
+    display: flex;  /* 내용 중앙 정렬을 위한 flexbox */
+    justify-content: center;  /* 수평 중앙 정렬 */
+    align-items: center;  /* 수직 중앙 정렬 */
+    border-radius: 10px;  /* 모서리를 둥글게 만들기 */
+    padding: 0;  /* 버튼 내 여백 제거 */
+}
+
+
 </style>
 </head>
 <%@ include file="sidebar.jsp" %>
@@ -149,14 +204,6 @@ th {
 			</div>
 
 			<div class="d-flex align-items-start gap-1">
-				<!-- 내 서명 -->
-				<div class="card text-bg-light mb-3 w-auto">
-					<div class="card-header">내 서명</div>
-					<div class="card-body text-center">
-						<img id="signatureImage" src="${loginVo.signSaved}" width="80"
-							height="75" style="border: 1px solid black;" />
-					</div>
-				</div>
 				<!-- 진행 중인 결재 -->
 				<div class="card text-bg-light mb-3 w-25">
 					<div class="card-header">진행중인 결재 목록</div>
@@ -166,10 +213,10 @@ th {
 							<thead>
 								<tr
 									class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+									<th>문서번호</th>
 									<th>유형</th>
-									<th>제목</th>
-									<th>작성자</th> 
-									<th>날짜</th>
+									<th>제목</th> 
+									<th>작성자</th>
 									<th>결재상태</th>
 								</tr>
 							</thead>
@@ -185,12 +232,13 @@ th {
 			                                <c:forEach var="approval" items="${approvalList}">
 			                                <input type="hidden" name="apprv_id" value="${approval.apprv_id}">
 			                                    <tr>
-			                                        <td>${approval.doc_id}</td>
+			                                        <td>${approval.doc_num}</td>
 			                                        <td>${approval.doc_type}</td>
 			                                        <td>${approval.title}</td>
 			                                        <td>${approval.name}</td>
-			                                        <td>${approval.doc_status}</td>
-			                                        <td>${approval.doc_date}</td>
+			                                        <c:if test="${approval.doc_status eq 'N'}">
+				                                        <td>결재진행중</td>
+			                                        </c:if>
 			                                    </tr>
 			                                </c:forEach>
 			                            </c:otherwise>
@@ -198,6 +246,37 @@ th {
 								</tr>
 							</tbody>
 						</table>
+						<div class="pagination-container text-center">
+							<c:if test="${page.totalPage > 1}">
+								<ul class="pagination pagination-lg">
+									<c:if test="${page.page > 1}">
+										<li><a href="./homeList.do?page=${page.page - 1}">&laquo;</a></li>
+									</c:if>
+		                    
+									<c:forEach var="i" begin="${page.stagePage}"
+										end="${page.endPage}" step="1">
+										<li class="${i == page.page ? 'active' : ''}"><a
+											href="./homeList.do?page=${i}">${i}</a></li>
+									</c:forEach>
+		                    
+									<c:if test="${page.page < page.totalPage}">
+										<li><a href="./homeList.do?page=${page.page + 1}">&raquo;</a></li>
+									</c:if>
+								</ul>
+							</c:if>
+						</div>
+					</div>
+				</div>
+				<!-- 내 서명 -->
+				<div class="card text-bg-light mb-3 w-auto">
+					<div class="card-header">내 서명</div>
+					<div class="card-body text-center">
+						<img id="signatureImage" src="${loginVo.signSaved}" width="80"
+							height="75" style="border: 1px solid black;" />
+					</div>
+					<div class="card-body text-center">
+						<button type="button" class="btn btn-light-secondary"
+							onclick="location.href='./signature_manage.do'">서명관리</button>
 					</div>
 				</div>
 			</div>
@@ -281,18 +360,18 @@ th {
 							</thead>
 							<tbody>
 								<c:choose>
-									<c:when test="${empty freeLists}">
+									<c:when test="${empty successlists}">
 										<tr>
-											<td colspan="4" class="text-center text-muted">등록된 글이 없습니다.</td>
+											<td colspan="4" class="text-center text-muted">등록된 문서가 없습니다.</td>
 										</tr>
 									</c:when>
 									<c:otherwise>
-										<c:forEach var="vo" items="${freeLists}">
+										<c:forEach var="vo" items="${successlists}">
 											<tr>
-												<td>${vo.free_id}</td>
+												<td>${vo.doc_num}</td>
+												<td>${vo.doc_type}</td>
 												<td>${vo.title}</td>
 												<td>${vo.name}</td>
-												<td>${vo.regdate}</td>
 											</tr>
 										</c:forEach>
 									</c:otherwise>
