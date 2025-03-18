@@ -63,13 +63,15 @@ public class ApprovalController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", name);
+		map.put("emp_id", emp_id);
 		
-		// 임시 문서함
 		List<ApprovalDto> lists = service.selectPreviewDoc(map);
 		List<ApprovalDto> approvalList = service.getApprovalList(emp_id); 
-		  
+		List<ApprovalDto> successlists = service.selectSuccessDoc(map);
+
 		model.addAttribute("approvalList", approvalList);
 		model.addAttribute("lists",lists);
+		model.addAttribute("successlists", successlists);
 		
 		return "approval";
 	}
@@ -176,12 +178,15 @@ public class ApprovalController {
 	@PostMapping(value = "/approvalRejection.do")
 	public String approvalRejection(HttpSession session,
 									HttpServletResponse response,
-									@RequestParam int doc_id,
-									ApprovalDto appDto,
+									@RequestParam int apprv_id,
 									RejectionDto rejDto) {
+		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");  
+	    String reject_name = loginVo.getName(); 
+	    rejDto.setReject_name(reject_name);
+		log.info("rejDto : {}", rejDto);
+		log.info("apprv_id : {}", apprv_id);
 		
-		log.info("reject_text : {}", rejDto.getReject_text());
-		
+		service.approvalRejection(apprv_id, rejDto);
 		
 		return "redirect:/approval_receive.do";
 	}

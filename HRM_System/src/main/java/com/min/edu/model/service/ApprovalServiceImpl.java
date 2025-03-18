@@ -130,8 +130,8 @@ public class ApprovalServiceImpl implements IApprovalService {
 	
 	@Override
 	@Transactional
-	public int approvalRejection(ApprovalDto appDto, RejectionDto rejDto) {
-		int n = dao.updateApprovalReject(appDto);
+	public int approvalRejection(int apprv_id, RejectionDto rejDto) {
+		int n = dao.updateApprovalReject(rejDto.getDoc_id(), apprv_id);
 		int m = dao.insertRejection(rejDto);
 		
 		return (n+m)>0 ? 1:0;

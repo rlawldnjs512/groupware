@@ -16,7 +16,6 @@
 	</select>
 
 
-	
 	<!-- 보상시간 조회 -->
 	<select id="selectExtraTime" resultType="Integer">
 		SELECT EXTRA_TIME 

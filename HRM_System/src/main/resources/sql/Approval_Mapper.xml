@@ -212,7 +212,8 @@ WHERE DOC_ID=#{doc_id}
 
 <select id="selectSuccessDoc" resultMap="DocumentDtoMap">
 	SELECT EMP_ID, DOC_ID, DOC_TYPE, TITLE, CONTENT , CREATE_DATE ,
-	   DOC_STATUS , DOC_DATE , DOC_NUM , FILE_EXIST , DEPT_ID, NAME, POSITION
+	   DOC_STATUS , DOC_DATE , DOC_NUM , FILE_EXIST , DEPT_ID, NAME, POSITION,
+	   NAME, (SELECT DEPT_NAME FROM DEPT d WHERE DEPT_ID IN (SELECT DEPT_ID FROM EMPLOYEE e2 WHERE EMP_ID = #{emp_id})) AS DEPT_NAME
 	FROM DOCUMENT d JOIN EMPLOYEE e 
 	USING(EMP_ID)
 	WHERE DOC_STATUS = 'Y'
@@ -331,7 +332,7 @@ FROM EMPLOYEE
 			WHEN #{doc_type} = '휴가' THEN 'VACA'
 			WHEN #{doc_type} = '출장' THEN 'TRIP'
 			WHEN #{doc_type} = '보고서' THEN 'REPORT'
-		END || '_' || TO_CHAR(SYSDATE, 'YYYY') || '_' || DOCUMENT_SEQ.NEXTVAL)
+		END || '_' || TO_CHAR(SYSDATE, 'YYYY') || '_' || #{doc_id})
 </insert>
 
 <!-- 결재 생성 -->

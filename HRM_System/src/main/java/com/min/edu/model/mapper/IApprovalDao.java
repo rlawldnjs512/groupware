@@ -89,7 +89,7 @@ public interface IApprovalDao {
   
   
   // 2025 03 14 반려
-  public int updateApprovalReject(ApprovalDto dto);
+  public int updateApprovalReject(int doc_id, int apprv_id);
   
  
   
