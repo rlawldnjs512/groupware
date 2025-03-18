@@ -242,6 +242,12 @@ public class ApprovalServiceImpl implements IApprovalService {
 		return dao.selectSuccessDoc(map);
 	}
 
+	@Override
+	public int updateDocStatus(int doc_id) {
+		return dao.updateDocStatus(doc_id)
+;
+	}
+
 }
 
 

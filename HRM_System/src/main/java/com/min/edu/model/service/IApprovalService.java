@@ -95,6 +95,7 @@ public interface IApprovalService {
 	 
 	 public FileUpDto getReportFileById(int doc_id);
 
+	 public int updateDocStatus(int doc_id);
 
 
 

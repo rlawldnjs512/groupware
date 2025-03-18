@@ -59,9 +59,7 @@
             	   || currentURI.contains("approval_receive")
             	   || currentURI.contains("temp_store")
             	   || currentURI.contains("dept_store")
-            	   || currentURI.contains("continueLeave")
-            	   || currentURI.contains("continueReport")
-            	   || currentURI.contains("continueTrip")){%>
+            	   || currentURI.contains("continue")){%>
              <ul class="nav flex-wrap border-transparent">
 	            <li class="nav-item my-1">
 	            	<a class="<%= commonClass %>" href="./approval.do">결제 홈</a>
