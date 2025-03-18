@@ -39,7 +39,7 @@ public class ScheduleContoller {
 		EmployeeDto loginVo = (EmployeeDto)session.getAttribute("loginVo");
 		String empId = loginVo.getEmp_id();
 		List<Map<String, Object>> list = reservationService.getReservation(empId);
-		
+		System.out.println(list);
 		return ResponseEntity.ok(list);
 	}
 	
