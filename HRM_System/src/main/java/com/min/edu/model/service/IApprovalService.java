@@ -74,6 +74,8 @@ public interface IApprovalService {
 	
 	public List<ApprovalDto> getApprovalList(String emp_id); 
 
+	 //본인이 결재를 보낸 문서들
+	 public List<DocumentDto> selectApprvMine(String emp_id);
 
 	public DocumentDto getApprovalDetail(String doc_id);
 	public List<ApprovalDto> geteApproval(String doc_id);
@@ -83,7 +85,7 @@ public interface IApprovalService {
 //	public int updateApprovalReject(ApprovalDto dto);
 
 	public int updateApprovalStatus (ApprovalDto dto) ;
-	public int updateDocumentStatus(ApprovalDto dto);
+	  public int updateDocumentStatus(int doc_id);
 	
 //	public int insertRejection(RejectionDto dto);
 	
@@ -95,6 +97,9 @@ public interface IApprovalService {
 	 public List<EmployeeDto> getApproverSignatures(Map<String, Object> map);
 	 
 	 public FileUpDto getReportFileById(int doc_id);
+	 
+	  //승인순서가 마지막인지 확인 - 결재완료표시
+	  public String selectApprovalLast(int apprv_id);
 
 
 

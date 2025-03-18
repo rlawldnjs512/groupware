@@ -162,7 +162,14 @@ public class ApprovalController {
 				          .apprv_id(apprv_id)
 				          .build();
 		int n = service.updateApprovalStatus(dto);
-		int m = service.updateDocumentStatus(dto);
+		
+		
+		int m= Integer.parseInt(service.selectApprovalLast(apprv_id));
+		log.info("{}",m);
+		
+		if(m==3) {
+			service.updateDocumentStatus(doc_id); //3번째 결재자까지 결재가 완료되면 승인상태가 Y로 바뀜 
+		}
 		
 		
 		if (n == 1) {
@@ -174,6 +181,12 @@ public class ApprovalController {
 		}
 		return null;
 	}
+	
+	
+	
+	
+	
+	
 	
 	@PostMapping(value = "/approvalRejection.do")
 	public String approvalRejection(HttpSession session,
@@ -242,9 +255,16 @@ public class ApprovalController {
 	
 	// 결재문서 내 결재함------------------------------------------------------------
 	@GetMapping(value = "/approval_mine.do")
-	public String approval_mine() {
+	public String approval_mine(HttpSession session, Model model) {
+		 EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo"); 
+		  String emp_id = loginVo.getEmp_id(); 
+		  
+		  List<DocumentDto> docList = service.selectApprvMine(emp_id);
+		  model.addAttribute("docList",docList);
 		return "approval_mine";
 	}
+	
+	
 	
 	// 결재문서 임시 저장함------------------------------------------------------------
 	@GetMapping(value = "/temp_store.do")

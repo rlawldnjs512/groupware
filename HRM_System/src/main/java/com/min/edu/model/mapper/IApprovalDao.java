@@ -78,13 +78,16 @@ public interface IApprovalDao {
   
   public int insertDocumentTrip(Map<String, Object> docMap, Map<String, Object> appMap, LeaveDto leaveDto);
   
+  //본인이 결재를 보낸 문서들
+  public List<DocumentDto> selectApprvMine(String emp_id);
+  
   // 2025 03 14 상세보기 된 문서
   public DocumentDto getApprovalDetail(String doc_id);
   
   public List<ApprovalDto> geteApproval(String doc_id);
   // 2025 03 14 승인
   public int updateApprovalStatus (ApprovalDto dto);
-  public int updateDocumentStatus(ApprovalDto dto);
+  public int updateDocumentStatus(int doc_id);
   
   
   
@@ -104,6 +107,9 @@ public interface IApprovalDao {
   
   //파일조회
   public FileUpDto getReportFileById(int doc_id);
+  
+  //승인순서가 마지막인지 확인 - 결재완료표시
+  public String selectApprovalLast(int apprv_id);
 
 
 

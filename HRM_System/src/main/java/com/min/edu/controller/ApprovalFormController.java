@@ -198,6 +198,7 @@ public class ApprovalFormController {
 								  @RequestParam(value = "file", required = false) MultipartFile file,
 								  HttpServletResponse response) throws IOException {
 		System.out.println("-------------------전달되는 보고서 입력 값 -----------------------");
+		 response.setContentType("text/html; charset=UTF-8;");
 		String fileName = "";
 		if(file != null && !file.isEmpty()) {
 			fileName = file.getOriginalFilename();
@@ -285,6 +286,7 @@ public class ApprovalFormController {
 									  ) throws IOException {
 		
 		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
+		 response.setContentType("text/html; charset=UTF-8;");
 		String emp_id = loginVo.getEmp_id();
 		System.out.println("-------------------전달되는 보고서 입력 값 -----------------------");
 		System.out.println("title : "+ title);
@@ -347,6 +349,7 @@ public class ApprovalFormController {
 								  HttpServletResponse response,
 								  TripDto tripDto) throws IOException {
 		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
+		 response.setContentType("text/html; charset=UTF-8;");
 		String emp_id = loginVo.getEmp_id();
 		System.out.println("-------------------전달되는 보고서 입력 값 -----------------------");
 		System.out.println("title : "+ title);
