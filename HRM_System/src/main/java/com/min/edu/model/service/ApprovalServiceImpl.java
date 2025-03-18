@@ -243,6 +243,10 @@ public class ApprovalServiceImpl implements IApprovalService {
 	}
 
 	@Override
+
+	public int updateDocumentStatus(int doc_id) {
+		return dao.updateDocumentStatus(doc_id);
+
 	public int updateDocStatus(int doc_id) {
 		return dao.updateDocStatus(doc_id);
 	}
@@ -250,8 +254,24 @@ public class ApprovalServiceImpl implements IApprovalService {
 	@Override
 	public int updateDocumentStatus(ApprovalDto dto) {
 		return dao.updateDocumentStatus(dto);
+
 	}
 
+	@Override
+	public String selectApprovalLast(int apprv_id) {
+		return dao.selectApprovalLast(apprv_id);
+	}
+
+	
+	@Override
+	public List<DocumentDto> selectApprvMine(String emp_id) {
+		return dao.selectApprvMine(emp_id);
+	}
+
+	@Override
+	public int selectApprovalMax(int doc_id) {
+		return dao.selectApprovalMax(doc_id);
+	}
 }
 
 

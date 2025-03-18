@@ -1,5 +1,6 @@
 package com.min.edu.dto;
 
+import java.util.Date;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ public class DocumentDto {
 	private String doc_type;
 	private String title;
 	private String content;
-	private String create_date;
+	private Date create_date;
 	private String doc_status;
 	private String doc_date;
 	private int file_id;

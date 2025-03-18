@@ -60,6 +60,10 @@ public interface IApprovalService {
 
 	public List<Map<String, Object>> selectTree();
 
+	
+	  
+	  //결재순서의 마지막번호 조회
+	  public int selectApprovalMax(int doc_id);
 
 	// 2025 03 13 기안서 입력 및 결재선 입력
 	public int insertDocument(Map<String, Object> docMap, Map<String, Object> appMap);
@@ -74,6 +78,8 @@ public interface IApprovalService {
 	
 	public List<ApprovalDto> getApprovalList(String emp_id); 
 
+	 //본인이 결재를 보낸 문서들
+	 public List<DocumentDto> selectApprvMine(String emp_id);
 
 	public DocumentDto getApprovalDetail(String doc_id);
 	public List<ApprovalDto> geteApproval(String doc_id);
@@ -83,7 +89,7 @@ public interface IApprovalService {
 //	public int updateApprovalReject(ApprovalDto dto);
 
 	public int updateApprovalStatus (ApprovalDto dto) ;
-	public int updateDocumentStatus(ApprovalDto dto);
+	  public int updateDocumentStatus(int doc_id);
 	
 //	public int insertRejection(RejectionDto dto);
 	
@@ -95,6 +101,9 @@ public interface IApprovalService {
 	 public List<EmployeeDto> getApproverSignatures(Map<String, Object> map);
 	 
 	 public FileUpDto getReportFileById(int doc_id);
+	 
+	  //승인순서가 마지막인지 확인 - 결재완료표시
+	  public String selectApprovalLast(int apprv_id);
 
 	 public int updateDocStatus(int doc_id);
 

@@ -58,7 +58,7 @@ public class LoginController {
 			if(password.equals("a12345678")) {
 				log.info("초기 비밀번호 사용으로 인한 비밀번호 재설정 페이지로 이동");
 				  response.getWriter().print("<script>alert('초기 비밀번호입니다. 비밀번호를 재설정해주세요.'); location.href='./newPw.do';</script>");
-			      return null;  
+			      
 			}
 			
 			if(loginVo.getSignSaved()==null) {
@@ -189,7 +189,7 @@ public class LoginController {
 	    	    int result = service.modifyPw(paramMap);
 	    	    
 	    	    if(result == 1) {
-	    	    	response.getWriter().print("<script>alert('변경완료'); location.href='./homeList.do';</script>");
+	    	    	response.getWriter().print("<script>alert('사인등록은 필수 입니다'); location.href='./signature_manage.do';</script>");
 	    	    }
 	    	return null;
 	    }

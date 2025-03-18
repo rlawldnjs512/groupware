@@ -449,6 +449,13 @@ SELECT d2.DEPT_NAME, e."POSITION", e.NAME , e.EMP_ID, s.SIGN as signSaved
     ORDER BY sub.APPRV_LEVEL
 </select>
 
+<!--내가 결재를 보낸 문서들  -->
+<select id="selectApprvMine" parameterType="String" resultType="DocumentDto" >
+SELECT DOC_NUM, DOC_TYPE ,TITLE ,DOC_STATUS ,CREATE_DATE 
+	FROM DOCUMENT d 
+	WHERE DOC_STATUS IN('Y','N')
+	AND EMP_ID = #{emp_id}
+</select>
 
 
 
@@ -470,7 +477,6 @@ SELECT d2.DEPT_NAME, e."POSITION", e.NAME , e.EMP_ID, s.SIGN as signSaved
 
 <!--승인을 누르면 진행중에서 승인으로  -->
 <update id="updateApprovalStatus" parameterType="ApprovalDto">
-	  <!-- 첫 번째 UPDATE -->
     UPDATE APPROVAL 
     SET SIGN = (SELECT SIGN FROM SIGN s WHERE s.EMP_ID = #{emp_id}),
         APPRV_STATUS = '승인',
@@ -479,16 +485,24 @@ SELECT d2.DEPT_NAME, e."POSITION", e.NAME , e.EMP_ID, s.SIGN as signSaved
       AND APPRV_ID = #{apprv_id}
 </update>
 
-    <update id="updateDocumentStatus" parameterType="ApprovalDto">
+<!--승인 순서가 마지막인지 확인  -->
+<select id="selectApprovalLast" resultType="String">
+  SELECT APPRV_LEVEL
+   	FROM APPROVAL a 
+   	WHERE APPRV_ID = #{apprv_id}
+</select>
+
+<!--결재순서의 마지막 번호 조회  -->
+<select id="selectApprovalMax" resultType="Integer">
+ SELECT MAX(APPRV_LEVEL)
+   	FROM APPROVAL a 
+   	WHERE DOC_ID = #{doc_id}
+ </select>
+
+    <update id="updateDocumentStatus" parameterType="int">
     UPDATE DOCUMENT d
-    SET d.DOCUMENT_STATUS = 'Y'
+    SET d.DOC_STATUS = 'Y'
     WHERE d.DOC_ID = #{doc_id}
-      AND NOT EXISTS (
-          SELECT 1
-          FROM APPROVAL a
-          WHERE a.DOC_ID = d.DOC_ID
-            AND a.APPRV_ID > #{apprv_id} 
-      )
      </update>
 
 <!-- 반려 -->

@@ -261,9 +261,9 @@ public class EmployeeController {
 		// 데이터 목록 가져오기
 		List<EmployeeDto> lists = service.selectAllUser(map);
 		model.addAttribute("empList", lists);
-		model.addAttribute("page", d);  // EmpPageDto 객체 전달
+		model.addAttribute("page", d);  
 
-		return "empList";  // JSP 파일명: empList.jsp
+		return "empList";  
 
 	}
 }
