@@ -469,12 +469,26 @@ SELECT d2.DEPT_NAME, e."POSITION", e.NAME , e.EMP_ID, s.SIGN as signSaved
 
 <!--승인을 누르면 진행중에서 승인으로  -->
 <update id="updateApprovalStatus" parameterType="ApprovalDto">
-	UPDATE APPROVAL 
-	       SET SIGN = (SELECT SIGN FROM SIGN s WHERE EMP_ID = #{emp_id}) ,  
-	APPRV_STATUS  = '승인', 
-	APPRV_DATE = CURRENT_DATE 
-	WHERE DOC_ID =#{doc_id} AND APPRV_ID = #{apprv_id}
+	  <!-- 첫 번째 UPDATE -->
+    UPDATE APPROVAL 
+    SET SIGN = (SELECT SIGN FROM SIGN s WHERE s.EMP_ID = #{emp_id}),
+        APPRV_STATUS = '승인',
+        APPRV_DATE = CURRENT_DATE
+    WHERE DOC_ID = #{doc_id} 
+      AND APPRV_ID = #{apprv_id}
 </update>
+
+    <update id="updateDocumentStatus" parameterType="ApprovalDto">
+    UPDATE DOCUMENT d
+    SET d.DOCUMENT_STATUS = 'Y'
+    WHERE d.DOC_ID = #{doc_id}
+      AND NOT EXISTS (
+          SELECT 1
+          FROM APPROVAL a
+          WHERE a.DOC_ID = d.DOC_ID
+            AND a.APPRV_ID > #{apprv_id} 
+      )
+     </update>
 
 <!-- 반려 -->
 <update id="updateApprovalReject" parameterType="ApprovalDto">

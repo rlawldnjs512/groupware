@@ -182,6 +182,7 @@
 		VALUES (0, #{emp_id}, #{start_date}, #{end_date}, 0, 0, 0, 0)
 	</insert>
 
+
 	<!--관리자는 사원을 수정 updateUserInfo  -->
 	<update id="updateUser" parameterType="EmployeeDto">
 	    UPDATE EMPLOYEE

@@ -162,6 +162,9 @@ public class ApprovalController {
 				          .apprv_id(apprv_id)
 				          .build();
 		int n = service.updateApprovalStatus(dto);
+		int m = service.updateDocumentStatus(dto);
+		
+		
 		if (n == 1) {
 			response.getWriter().print("<script>alert('승인완료'); location.href='./approval_receive.do';</script>");
 
