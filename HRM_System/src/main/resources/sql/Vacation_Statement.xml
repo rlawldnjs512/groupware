@@ -15,10 +15,7 @@
 			WHERE TRIM(EMP_ID) = TRIM(#{empId})
 	</select>
 
-	<insert id="insertVacation" parameterType="Map">
-		INSERT INTO VACATION (LEAVE_ID, EMP_ID, START_DATE, END_DATE, LEAVE_TOTAL, LEAVE_USE, LEAVE_REMAIN)
-			VALUES (#{leaveId}, #{empId}, #{startDate}, #{endDate}, #{leaveTotal}, #{leaveUse}, #{leaveRemain})
-	</insert>
+
 	
 	<!-- 보상시간 조회 -->
 	<select id="selectExtraTime" resultType="Integer">
@@ -43,3 +40,5 @@
 	
 
 </mapper>
+
+

@@ -83,6 +83,7 @@ public interface IApprovalService {
 //	public int updateApprovalReject(ApprovalDto dto);
 
 	public int updateApprovalStatus (ApprovalDto dto) ;
+	public int updateDocumentStatus(ApprovalDto dto);
 	
 //	public int insertRejection(RejectionDto dto);
 	
