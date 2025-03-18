@@ -6,8 +6,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Home</title>
+	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
 	<script type="text/javascript" src="./js/attendance.js"></script>
 	<link rel="stylesheet" href="./css/emplist.css">
+	<link rel="stylesheet" href="./css/calendar.css">
 	<style>
 		img {
  			width: 120px;
@@ -81,6 +83,21 @@
 		    text-align: center;  /* 텍스트 중앙 정렬 */
 		}
 
+		.wide-card.third-card {
+		    flex-basis: 100%;  /* 세 번째 카드는 전체 너비를 차지 */
+		    margin-top: 20px;  /* 세 번째 카드가 위 카드들 아래로 내리도록 설정 */
+		}
+		
+		.main-content {
+		    height: calc(100vh - 100px); 
+		}
+		
+		#calendar {
+		    flex-grow: 1;
+		    width: 100%;
+		    height: 100%;
+		}
+		
 
 	</style>
 </head>
@@ -270,9 +287,6 @@
 			                        <c:if test="${page.page < page.totalPage}">
 			                            <li><a href="./homeList.do?page=${page.page + 1}">&raquo;</a></li>
 			                        </c:if>
-			                        
-			                        
-			                        
 			                    </ul>
 			                </c:if>
 			            </div>
@@ -280,7 +294,10 @@
 			    </div> <!-- tab-content 끝 -->
 			</div> <!-- card 끝 -->
 			
+			
 		</div> <!-- main-content -->
 	</div> <!-- content -->
+	
 </body>
+
 </html>

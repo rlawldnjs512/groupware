@@ -58,23 +58,19 @@ public class ApprovalController {
 		
 		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
 		String name = loginVo.getName();
+		String emp_id = loginVo.getEmp_id(); 
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", name);
 		
 		// 임시 문서함
 		List<ApprovalDto> lists = service.selectPreviewDoc(map);
-		
-		
+		List<ApprovalDto> approvalList = service.getApprovalList(emp_id); 
+		  
+		model.addAttribute("approvalList", approvalList);
 		model.addAttribute("lists",lists);
 		
 		return "approval";
-	}
-	
-	// 결재문서 결재 대기함------------------------------------------------------------
-	@GetMapping(value = "/approval_pending.do")
-	public String approval_pending() {
-		return "approval_pending";
 	}
 	
 	// 결재문서 결재 수신함------------------------------------------------------------
@@ -99,8 +95,6 @@ public class ApprovalController {
 		log.info("{}",apprv_id);
 		model.addAttribute("docId", docId);
 		model.addAttribute("apprv_id", apprv_id);
-		
-		
 		
 
 	   // 문서정보 // 
@@ -263,7 +257,6 @@ public class ApprovalController {
 		map.put("name", name);
 		map.put("doc_id", docId);
 		
-		
 		// 공통 문서 
 		List<ApprovalDto> reportDto = service.continuePreviewDoc(map);
 		System.out.println(reportDto);
@@ -319,8 +312,61 @@ public class ApprovalController {
 	
 	// 결재문서 부서 문서함------------------------------------------------------------
 	@GetMapping(value = "/dept_store.do")
-	public String dept_store() {
+	public String dept_store(Model model,
+							HttpSession session,
+							HttpServletRequest request) {
+
+		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
+		String emp_id = loginVo.getEmp_id();
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("emp_id", emp_id);
+
+		List<ApprovalDto> lists = service.selectSuccessDoc(map);
+
+		model.addAttribute("lists", lists);
 		return "dept_store";
+	}
+	
+	// 결재완료문서 보기
+	@GetMapping(value = "/successDocView.do")
+	public String successDoc_View(@RequestParam("doc_id") int docId, 
+								  @RequestParam("doc_type") String doc_type,
+								  Model model, 
+								  HttpSession session) {
+		
+		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
+		String empId = loginVo.getEmp_id();
+		String name = loginVo.getName();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", name);
+		map.put("doc_id", docId);
+		
+		// 공통 문서 
+		List<ApprovalDto> reportDto = service.continuePreviewDoc(map);
+		System.out.println(reportDto);
+		
+		// 출장
+		TripDto tripDto = service.continuePrviewTrip(docId);
+		System.out.println(tripDto);
+
+		// 휴가
+		LeaveDto leaveDto = service.continuePreviewLeave(docId);
+		System.out.println(leaveDto);
+		
+		model.addAttribute("reportDto",reportDto);
+		model.addAttribute("tripDto",tripDto);
+		model.addAttribute("leaveDto",leaveDto);
+
+		if(doc_type.trim().equals("보고서")) {
+			return "successReport";
+		} else if(doc_type.trim().equals("출장")) {
+			return "successTrip";
+		} else {
+			return "successLeave";
+		}
+		
 	}
 	
 	// 서명------------------------------------------------------------

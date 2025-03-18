@@ -72,7 +72,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>문서ID</th>
+                            <th>문서번호</th>
                             <th>유형</th>
                             <th>제목</th>
                             <th>작성자</th>
@@ -92,7 +92,7 @@
                                 <c:forEach var="approval" items="${approvalList}">
                                 <input type="hidden" name="apprv_id" value="${approval.apprv_id}">
                                     <tr>
-                                        <td>${approval.doc_id}</td>
+                                        <td>${approval.doc_num}</td>
                                         <td>${approval.doc_type}</td>
                                         <td>${approval.title}</td>
                                         <td>${approval.name}</td>

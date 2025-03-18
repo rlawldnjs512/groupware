@@ -7,7 +7,6 @@
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="./js/htp.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	<link rel="stylesheet" href="./css/emplist.css">
     <style>
@@ -82,14 +81,6 @@
 				<div
 					class="d-flex justify-content-end align-items-center gap-2 gap-lg-3">
 					<div class="d-flex align-items-center">
-<%-- 						<c:if test="${sessionScope.loginVo.role eq 'A'}"> --%>
-<!-- 						    <form id="search-form" action="./select.do" method="GET"> -->
-<!-- 						    	<input type="hidden" name="page" value="1"> -->
-<!-- 						        <input type="text" name="emp_id" id="emp_id" placeholder="사원번호 입력">  이름 대신 사원번호로 변경 -->
-<!-- 						        <button type="submit" class="btn btn-light-primary ms-2">검색</button> -->
-<!-- 						    </form> -->
-<%-- 						</c:if> --%>
-						
 						<select id="campaign-type" name="campaign-type"
 							data-control="select2" data-hide-search="true"
 							class="form-select form-select-sm bg-body border-body w-auto select2-hidden-accessible"
@@ -289,32 +280,39 @@
 					}
 					</script>
 				</div>
-				<div class="pagination-container text-center">
-				    <c:if test="${page.totalPage > 1}">
-				        <ul class="pagination pagination-lg">
-				            <!-- 이전 버튼 (왼쪽) -->
-				            <c:if test="${page.page > 1}">
-				                <li>
-				                    <a href="./select.do?page=${page.page - 1}&type=${type}&emp_id=${emp_id}">&laquo;</a>
-				                </li>
-				            </c:if>
-				
-				            <!-- 페이지 번호 (가운데) -->
-				            <c:forEach var="i" begin="${page.stagePage}" end="${page.endPage}" step="1">
-				                <li class="${i == page.page ? 'active' : ''}">
-				                    <a href="./select.do?page=${i}&type=${type}&emp_id=${emp_id}">${i}</a>
-				                </li>
-				            </c:forEach>
-				
-				            <!-- 다음 버튼 (오른쪽) -->
-				            <c:if test="${page.page < page.endPage}">
-				                <li>
-				                    <a href="./select.do?page=${page.page + 1}&type=${param.type}&emp_id=${param.emp_id}">&raquo;</a>
-				                </li>
-				            </c:if>
-				        </ul>
-				    </c:if>
-				</div>
+				<c:if test="${empty lists && empty type && empty emp_id}">
+					<div class="pagination-container text-center">
+						<ul class="pagination pagination-lg">
+							<li>
+								<a>1</a>
+					        </li>
+						</ul>
+					</div>
+				</c:if>
+				<c:if test="${not empty type && not empty emp_id && page.totalPage >= 1}">
+					<div class="pagination-container text-center">
+					        <ul class="pagination pagination-lg">
+					            <!-- 이전 버튼 (왼쪽) -->
+					            <c:if test="${page.page > 1}">
+					            	<li><a href="./select.do?page=1&type=${type}&emp_id=${emp_id}">&laquo;&laquo;</a></li>
+					                <li><a href="./select.do?page=${page.page - 1}&type=${type}&emp_id=${emp_id}">&laquo;</a></li>
+					            </c:if>
+					
+					            <!-- 페이지 번호 (가운데) -->
+					            <c:forEach var="i" begin="${page.stagePage}" end="${page.endPage}" step="1">
+					                <li class="${i == page.page ? 'active' : ''}">
+					                    <a href="./select.do?page=${i}&type=${type}&emp_id=${emp_id}">${i}</a>
+					                </li>
+					            </c:forEach>
+					
+					            <!-- 다음 버튼 (오른쪽) -->
+					            <c:if test="${page.page < page.totalPage}">
+					                <li><a href="./select.do?page=${page.page + 1}&type=${type}&emp_id=${emp_id}">&raquo;</a></li>
+					                <li><a href="./select.do?page=${page.totalPage}&type=${type}&emp_id=${emp_id}">&raquo;&raquo;</a></li>
+					            </c:if>
+					        </ul>
+					</div>
+				</c:if>
 
 
 		<c:if test="${sessionScope.loginVo.role eq 'U'}">

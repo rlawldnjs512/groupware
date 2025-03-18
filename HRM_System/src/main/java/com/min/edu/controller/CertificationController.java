@@ -77,6 +77,7 @@ public class CertificationController {
 	            pageParam = "1";
 	        }
 	        int selectPage = Integer.parseInt(pageParam);
+	        int totalPages = 0;
 
 	        // EmpPageDto 생성하여 페이지 관련 정보 설정
 	        EmpPageDto d = new EmpPageDto();
@@ -86,23 +87,24 @@ public class CertificationController {
 	        if ("A".equals(role)) {
 	        	if (emp_id != null && !emp_id.trim().isEmpty()) {
 	        		d.setTotalCount(service.countCertAdminId(map));
-	        		int totalPageId = service.countCertAdminId(map) == 0 ? 1 : d.getCountPage();
-	        		d.setTotalPage(totalPageId);
+	        		totalPages = service.countCertAdminId(map) == 0 ? 1 : d.getCountPage();
+	        		d.setTotalPage(totalPages);
 	        	} else {
 	        		d.setTotalCount(service.countCertAdminType(map));
-	        		int totalPageType = service.countCertAdminType(map) == 0 ? 1 : d.getCountPage();
-	        		d.setTotalPage(totalPageType);
+	        		totalPages = service.countCertAdminType(map) == 0 ? 1 : d.getCountPage();
+	        		d.setTotalPage(totalPages);
 	        	}
 	        	d.setCountList(10);
 	        	d.setCountPage(5);
 	        } else {
 	        	d.setTotalCount(service.countCert(map)); 
-	        	int totalPage = service.countCert(map) == 0 ? 1 : d.getTotalCount();
-	 	        d.setTotalPage(totalPage);
+	        	totalPages = service.countCert(map) == 0 ? 1 : d.getTotalCount();
+	 	        d.setTotalPage(totalPages);
 	        	d.setCountList(2);  // 한 페이지에 표시될 글 갯수
 	        	d.setCountPage(5);
 	        }
 	        
+		    
 	        d.setPage(selectPage);  // 현재 페이지 설정
 	        d.setStagePage(d.getPage());  // 현재 페이지 그룹의 시작 번호 계산
 
@@ -110,7 +112,7 @@ public class CertificationController {
 
 	        // 페이징 처리를 위한 first, last 값 계산
 	        int first = (d.getPage() - 1) * d.getCountList() + 1;  // 시작 번호
-	        int last = d.getPage() * d.getCountList();             // 끝 번호
+			int last = d.getPage() * d.getCountList();             // 끝 번호
 
 	        // 마지막 페이지 번호는 totalCount를 초과할 수 없으므로, 제한
 	        if ("A".equals(role)) {
@@ -126,11 +128,14 @@ public class CertificationController {
 	        map.put("first", first);
 	        map.put("last", last);
 
-	        List<CertificateDto> lists = new ArrayList<>();
+	        List<CertificateDto> lists = service.selectCertTypeUserPage(map);
 
 	        System.out.println("Lists size: " + (lists == null ? 0 : lists.size()));  // 리스트의 크기 출력
 	        System.out.println("first:" + first);
 	        System.out.println("last:" + last);
+	        System.out.println("totalPage:" + totalPages);
+	        System.out.println("countCert:" + service.countCert(map));
+	        System.out.println("getPage:" + d.getPage());
 
 	        // 모델에 데이터 추가
 	        model.addAttribute("lists", lists);

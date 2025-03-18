@@ -204,6 +204,11 @@ public class ApprovalServiceImpl implements IApprovalService {
 	public FileUpDto getReportFileById(int doc_id) {
 		return dao.getReportFileById(doc_id);
 	}
+
+	@Override
+	public List<ApprovalDto> selectSuccessDoc(Map<String, Object> map) {
+		return dao.selectSuccessDoc(map);
+	}
 }
 
 

@@ -39,4 +39,5 @@ public class ApprovalDto {
     private String doc_date;      
     
     private String dept_name;
+    private String doc_num;
 }
