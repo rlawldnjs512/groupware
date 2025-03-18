@@ -17,7 +17,9 @@ import com.min.edu.dto.ApprovalDto;
 import com.min.edu.dto.DocumentDto;
 import com.min.edu.dto.EmployeeDto;
 import com.min.edu.dto.LeaveDto;
+import com.min.edu.dto.RejectionDto;
 import com.min.edu.dto.RoomDto;
+import com.min.edu.dto.TripDto;
 import com.min.edu.model.mapper.IApprovalDao;
 import com.min.edu.model.mapper.IReservationDao;
 
@@ -161,19 +163,19 @@ class Hoon_JUnitTest {
 		
 	}
 	
+	// 반려
 //	@Test
-//	public void updateApprovalReject() {
-//		Map<String, Object> map = new HashMap<String, Object>(){{
-//			put("doc_id", "209");
-//			put("apprv_id", "");
-//		}};
-//		
-//		int n = apprDao.updateApprovalReject(map);
-//		System.out.println(n);
-//		
-//	}
+	public void updateApprovalReject() {
+		ApprovalDto dto = new ApprovalDto();
+		dto.setApprv_status("반려");
+		dto.setDoc_id(209);
+		dto.setApprv_id(38);
+		int n = apprDao.updateApprovalReject(dto);
+		System.out.println(n);
+		
+	}
 	
-	@Test
+//	@Test
 	public void insertDocumentLeave() {
 		
 		Map<String, Object>  docMap =  new HashMap<String, Object>();
@@ -204,6 +206,32 @@ class Hoon_JUnitTest {
 		
 	}
 	
+//	@Test
+	public void insertSaveTrip() {
+		TripDto dto = new TripDto();
+		dto.setDoc_id(100);
+		dto.setTrip_start("2025-03-17");
+		dto.setTrip_end("2025-03-17");
+		dto.setDestination("서울어딘가");
+		
+		apprDao.insertSaveTrip(dto);
+		
+		System.out.println(dto);
+		
+	}
+	
+//	@Test
+	public void insertRejection() {
+		RejectionDto dto = new RejectionDto();
+		dto.setDoc_id(295);
+		dto.setReject_name("홍길은");
+		dto.setReject_text("어딘가가 어디인가?");
+		dto.setReject_date("");
+		apprDao.insertRejection(dto);
+		
+		System.out.println(dto);
+		
+	}
 	
 	
 	

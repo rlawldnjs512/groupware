@@ -270,7 +270,7 @@ public class ApprovalFormController {
 	
 	
 //	 휴가 상신------------------------------------------------------
-	@PostMapping(value = "/leaveTest.do" )
+	@PostMapping(value = "/leaveReport.do" )
 	public String approvalLeave(Model model,
 									  HttpSession session,
 									  HttpServletRequest request,
@@ -310,7 +310,8 @@ public class ApprovalFormController {
 		appMap.put("approval", appLine);
 		appMap.put("doc_id", "");
 		
-//		int result =  approvalService.insertDocument(docMap, appMap);
+		// 공통문서 입력
+		int result =  approvalService.insertDocumentLeave(docMap, appMap, leaveDto);
 		
 		// 휴가 저장
 //		Map<String, Object> leaMap = new HashMap<String, Object>();
@@ -319,16 +320,16 @@ public class ApprovalFormController {
 //		leaMap.put("leave_end", leave_end);
 //		leaMap.put("type", type);
 		
+		System.out.println(result);
 		
 		
-		
-		return "leaveTest";
+		return "redirect:/approval.do";
 	}
 	
 	
 	
 	// 출장 상신------------------------------------------------------
-	@PostMapping(value = "/tripTest.do" )
+	@PostMapping(value = "/tripReport.do" )
 	public String trip_approval(Model model,
 								  HttpSession session,
 								  HttpServletRequest request,
@@ -336,9 +337,7 @@ public class ApprovalFormController {
 								  @RequestParam("content") String content,
 								  @RequestParam("appLine") List<String> appLine,
 								  @RequestParam("doc_type") String doc_type,
-								  @RequestParam("trip_start") String trip_start,
-								  @RequestParam("trip_end") String trip_end,
-								  @RequestParam("destination") String destination) {
+								  TripDto tripDto) {
 		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
 		String emp_id = loginVo.getEmp_id();
 		System.out.println("-------------------전달되는 보고서 입력 값 -----------------------");
@@ -348,13 +347,29 @@ public class ApprovalFormController {
 		System.out.println("doc_type : " + doc_type);
 		
 		System.out.println("-------------------전달되는 출장 입력 값 -----------------------");
-		System.out.println("trip_start : " + trip_start);
-		System.out.println("trip_end : " + trip_end);
-		System.out.println("destination : " + destination);
+		System.out.println("trip_start : " + tripDto.getTrip_start());
+		System.out.println("trip_end : " + tripDto.getTrip_end());
+		System.out.println("destination : " + tripDto.getDestination());
+		
+		// 문서 저장
+				Map<String, Object>  docMap =  new HashMap<String, Object>();
+		docMap.put("doc_id", "");
+		docMap.put("emp_id", emp_id);
+		docMap.put("doc_type", doc_type);
+		docMap.put("title", title);
+		docMap.put("content", content);
+		
+		// 결재선 저장 
+		Map<String, Object>  appMap =  new HashMap<String, Object>();
+		appMap.put("approval", appLine);
+		appMap.put("doc_id", "");		
 		
 		
+		int result = approvalService.insertDocumentTrip(docMap, appMap, tripDto);
 		
-		return "tripTest";
+		System.out.println(result);
+		
+		return "redirect:/approval.do";
 	}
 	
 	// 결재선------------------------------------------------------

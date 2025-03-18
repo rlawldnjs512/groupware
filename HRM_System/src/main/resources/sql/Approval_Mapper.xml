@@ -463,14 +463,21 @@ SELECT d2.DEPT_NAME, e."POSITION", e.NAME , e.EMP_ID, s.SIGN as signSaved
 	WHERE DOC_ID =#{doc_id} AND APPRV_ID = #{apprv_id}
 </update>
 
-<update id="updateApprovalReject" parameterType="map">
+<!-- 반려 -->
+<update id="updateApprovalReject" parameterType="ApprovalDto">
 
 	UPDATE APPROVAL 
-			APPRV_STATUS  = '승인', 
-			APPRV_DATE = CURRENT_DATE 
+	SET	APPRV_STATUS  = '반려', 
+		APPRV_DATE = CURRENT_DATE 
 	WHERE DOC_ID =#{doc_id} AND APPRV_ID = #{apprv_id}
 
 </update>
+
+<insert id="insertRejection" parameterType="RejectionDto">
+	INSERT INTO REJECTION
+	(DOC_ID, REJECT_NAME, REJECT_TEXT, REJECT_DATE)
+	VALUES(#{doc_id}, #{reject_name}, #{reject_text}, CURRENT_DATE)
+</insert>
 
 
 

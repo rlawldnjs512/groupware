@@ -10,6 +10,7 @@ import com.min.edu.dto.DocumentDto;
 import com.min.edu.dto.EmployeeDto;
 import com.min.edu.dto.FileUpDto;
 import com.min.edu.dto.LeaveDto;
+import com.min.edu.dto.RejectionDto;
 import com.min.edu.dto.SignDto;
 import com.min.edu.dto.TripDto;
 
@@ -29,6 +30,7 @@ public interface IApprovalService {
 	public int updateTempFileExist(int docId);
 	// + 출장 추가
 	public int insertSaveTrip(TripDto dto);
+	public int insertDocumentTrip(Map<String, Object> docMap, Map<String, Object> appMap, TripDto tripDto);
 	// + 휴가 추가
 	public int insertSaveLeave(LeaveDto dto);
 	// 문서형식만 조회하기
@@ -77,9 +79,13 @@ public interface IApprovalService {
 
 
 	// 2025 03 14 반려
-	public int updateApprovalReject(Map<String, Object> map);
+//	public int updateApprovalReject(ApprovalDto dto);
 
 	public int updateApprovalStatus (ApprovalDto dto) ;
+	
+//	public int insertRejection(RejectionDto dto);
+	
+	public int approvalRejection(ApprovalDto appDto, RejectionDto rejDto);
 
 	 public EmployeeDto getApp(int doc_id);
   

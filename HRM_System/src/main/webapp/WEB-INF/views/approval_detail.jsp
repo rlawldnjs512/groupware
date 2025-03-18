@@ -92,7 +92,7 @@
                               </form>
                               
                               
-                                <button type="button" class="approval-btn reject-btn">
+                                <button type="button" class="approval-btn reject-btn" id="rejectBtn" >
                                     <i class="fa-solid fa-xmark"></i> 반려
                                 </button>
                             </div>
@@ -172,10 +172,41 @@
         </div>
     </div>
 
+
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 700px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">반려</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+        <form action="/approvalRejection.do" method="post" >
+        <input type="hidden" value="${documentDto.doc_id}" name="doc_id">
+      <div class="modal-body">
+        	<div class="form-group">
+        <b>반려사유</b>
+        <br>
+        <textarea id="reject_text" name="reject_text" class="form-control" rows="4" style="width: 100%;"></textarea>
+    </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >취소</button>
+        <button type="submit" class="btn btn-primary">확인</button>
+      </div>
+        </form>
+    </div>
+  </div>
+</div>
 	
 		
     
 </body>
-
+<script type="text/javascript">
+		document.getElementById("rejectBtn").addEventListener("click", function () {
+		    let modal = new bootstrap.Modal(document.getElementById("staticBackdrop"));
+		    modal.show();
+		});
+</script>
 
 </html>
