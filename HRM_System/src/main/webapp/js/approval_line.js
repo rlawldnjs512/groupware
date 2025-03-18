@@ -24,10 +24,10 @@ window.onload = function() {
 				frm.action = "./ApprovalReport.do";
 				frm.submit();
 			} else if (reportName == "leaveApproval"){
-				frm.action = "./leaveTest.do";
+				frm.action = "./leaveReport.do";
 				frm.submit();
 			} else {
-				frm.action = "./tripTest.do";
+				frm.action = "./tripReport.do";
 				frm.submit();
 			}
 			console.log("이동주소 : " , frm.action);

@@ -12,6 +12,7 @@ import com.min.edu.dto.DocumentDto;
 import com.min.edu.dto.EmployeeDto;
 import com.min.edu.dto.FileUpDto;
 import com.min.edu.dto.LeaveDto;
+import com.min.edu.dto.RejectionDto;
 import com.min.edu.dto.SignDto;
 import com.min.edu.dto.TripDto;
 import com.min.edu.model.mapper.IApprovalDao;
@@ -107,12 +108,36 @@ public class ApprovalServiceImpl implements IApprovalService {
 	{
 		 int n = dao.insertDocument(docMap);
 		 appMap.put("doc_id", docMap.get("doc_id"));
-		 leaveDto.setDoc_id(Integer.parseInt((String)docMap.get("doc_id")));
+		 leaveDto.setDoc_id((Integer)docMap.get("doc_id"));
 		 int m = dao.insertApproval(appMap);
 		 int o = dao.insertSaveLeave(leaveDto);
 		 
 		 return (n+m+o) >0 ? 1 : 0;
 	}
+	
+	
+	@Override
+	@Transactional
+	public int insertDocumentTrip(Map<String, Object> docMap, Map<String, Object> appMap, TripDto tripDto) {
+		int n = dao.insertDocument(docMap);
+		 appMap.put("doc_id", docMap.get("doc_id"));
+		 tripDto.setDoc_id((Integer)docMap.get("doc_id"));
+		 int m = dao.insertApproval(appMap);
+		 int o = dao.insertSaveTrip(tripDto);
+		 
+		 return (n+m+o) >0 ? 1 : 0;
+	}
+	
+	@Override
+	@Transactional
+	public int approvalRejection(ApprovalDto appDto, RejectionDto rejDto) {
+		int n = dao.updateApprovalReject(appDto);
+		int m = dao.insertRejection(rejDto);
+		
+		return (n+m)>0 ? 1:0;
+	}
+	
+	
 	@Override
 	public int insertApproval(Map<String, Object> map) {
 		return dao.insertApproval(map);
@@ -181,10 +206,16 @@ public class ApprovalServiceImpl implements IApprovalService {
 	 }
 
 
-	@Override
-	public int updateApprovalReject(Map<String, Object> map) {
-		return dao.updateApprovalReject(map);
-	}
+//	@Override
+//	public int updateApprovalReject(ApprovalDto dto) {
+//		return dao.updateApprovalReject(map);
+//	}
+//	
+//	
+//	@Override
+//	public int insertRejection(RejectionDto dto) {
+//		return dao.insertRejection(dto);
+//	}
 	
 	@Override
 	 public EmployeeDto getApp(int doc_id) {
@@ -204,6 +235,11 @@ public class ApprovalServiceImpl implements IApprovalService {
 	public FileUpDto getReportFileById(int doc_id) {
 		return dao.getReportFileById(doc_id);
 	}
+
+
+	
+
+
 }
 
 
