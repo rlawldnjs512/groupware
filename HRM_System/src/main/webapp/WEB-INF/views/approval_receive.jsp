@@ -61,6 +61,7 @@
         tbody tr:hover {
             background-color: var(--bs-primary-light);
         }
+        
     </style>
 </head>
 <%@ include file="sidebar.jsp" %>
@@ -72,13 +73,13 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>문서번호</th>
-                            <th>유형</th>
-                            <th>제목</th>
-                            <th>작성자</th>
-                            <th>결재상태</th>
-                            <th>결재일</th>
-                            <th>상세보기</th>
+                            <th  style="text-align: center;">문서번호</th>
+                            <th  style="text-align: center;">유형</th>
+                            <th  style="text-align: center;">제목</th>
+                            <th  style="text-align: center;">작성자</th>
+                            <th  style="text-align: center;">결재상태</th>
+                            <th  style="text-align: center;">결재일</th>
+                            <th style="text-align: center;">상세보기</th>
                         </tr>
                     </thead>
                     <tbody>
