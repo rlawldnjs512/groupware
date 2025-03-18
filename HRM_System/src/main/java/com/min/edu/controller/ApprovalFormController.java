@@ -1,6 +1,7 @@
 package com.min.edu.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,6 +29,7 @@ import com.min.edu.model.service.IApprovalService;
 import com.min.edu.model.service.IEmployeeService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
@@ -191,8 +193,10 @@ public class ApprovalFormController {
 								  @RequestParam("title") String title,
 								  @RequestParam("content") String content,
 								  @RequestParam("appLine") List<String> appLine,
+								 // @RequestParam(value = "appLine", required = false) List<String> appLine,  // required=false
 								  @RequestParam("doc_type") String doc_type,
-								  @RequestParam(value = "file", required = false) MultipartFile file) {
+								  @RequestParam(value = "file", required = false) MultipartFile file,
+								  HttpServletResponse response) throws IOException {
 		System.out.println("-------------------전달되는 보고서 입력 값 -----------------------");
 		String fileName = "";
 		if(file != null && !file.isEmpty()) {
@@ -205,6 +209,12 @@ public class ApprovalFormController {
 		System.out.println("appLine : " + appLine);
 		System.out.println("doc_type : " + doc_type);
 		System.out.println("file : " + fileName);
+		
+//	    if (appLine == null || appLine.isEmpty()) {
+//	    	response.getWriter().print("<script>alert('결재선을 선택해주세요'); window.history.back();</script>");
+//	    	return null;
+//	    }
+		
 		
 		
 		Map<String, Object>  docMap =  new HashMap<String, Object>();
