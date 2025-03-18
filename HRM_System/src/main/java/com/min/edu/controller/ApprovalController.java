@@ -175,12 +175,15 @@ public class ApprovalController {
 	@PostMapping(value = "/approvalRejection.do")
 	public String approvalRejection(HttpSession session,
 									HttpServletResponse response,
-									@RequestParam int doc_id,
-									ApprovalDto appDto,
+									@RequestParam int apprv_id,
 									RejectionDto rejDto) {
+		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");  
+	    String reject_name = loginVo.getName(); 
+	    rejDto.setReject_name(reject_name);
+		log.info("rejDto : {}", rejDto);
+		log.info("apprv_id : {}", apprv_id);
 		
-		log.info("reject_text : {}", rejDto.getReject_text());
-		
+		service.approvalRejection(apprv_id, rejDto);
 		
 		return "redirect:/approval_receive.do";
 	}
