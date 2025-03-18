@@ -276,13 +276,13 @@ public class ApprovalFormController {
 									  HttpServletRequest request,
 									  @RequestParam("title") String title,
 									  @RequestParam("content") String content,
-									  @RequestParam("appLine") List<String> appLine,
+									  @RequestParam(value = "appLine", required = false) List<String> appLine, 
 									  @RequestParam("doc_type") String doc_type,
 //									  @RequestParam("leave_start") String leave_start,
 //									  @RequestParam("leave_end") String leave_end,
 //									  @RequestParam("type") String type
-									  LeaveDto leaveDto
-									  ) {
+									  LeaveDto leaveDto, HttpServletResponse response
+									  ) throws IOException {
 		
 		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
 		String emp_id = loginVo.getEmp_id();
@@ -295,6 +295,13 @@ public class ApprovalFormController {
 		System.out.println("leave_start : " + leaveDto.getLeave_start());
 		System.out.println("leave_end : " + leaveDto.getLeave_end());
 		System.out.println("type : " + leaveDto.getType());
+		
+		
+		
+		 if (appLine == null || appLine.isEmpty()) {
+		    	response.getWriter().print("<script>alert('결재선을 선택해주세요'); window.history.back();</script>");
+		    	return null;
+		    }
 		
 		
 		// 문서 저장
@@ -335,9 +342,10 @@ public class ApprovalFormController {
 								  HttpServletRequest request,
 								  @RequestParam("title") String title,
 								  @RequestParam("content") String content,
-								  @RequestParam("appLine") List<String> appLine,
+								  @RequestParam(value = "appLine", required = false) List<String> appLine,
 								  @RequestParam("doc_type") String doc_type,
-								  TripDto tripDto) {
+								  HttpServletResponse response,
+								  TripDto tripDto) throws IOException {
 		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
 		String emp_id = loginVo.getEmp_id();
 		System.out.println("-------------------전달되는 보고서 입력 값 -----------------------");
@@ -350,6 +358,11 @@ public class ApprovalFormController {
 		System.out.println("trip_start : " + tripDto.getTrip_start());
 		System.out.println("trip_end : " + tripDto.getTrip_end());
 		System.out.println("destination : " + tripDto.getDestination());
+		
+		 if (appLine == null || appLine.isEmpty()) {
+		    	response.getWriter().print("<script>alert('결재선을 선택해주세요'); window.history.back();</script>");
+		    	return null;
+		    }
 		
 		// 문서 저장
 				Map<String, Object>  docMap =  new HashMap<String, Object>();
