@@ -85,7 +85,7 @@
                             <div class="btn-container">
                              <form action="./updateApprov.do" method="POST">
                               <input type="hidden" name="doc_id" value="${param.doc_id}" />
-                            <input type="hidden" name="apprv_id" value="${appSign.apprv_id}" />
+                              <input type="hidden" name="apprv_id" value="${appSign.apprv_id}" />
                                 <button type="submit" class="approval-btn">
                                     <i class="fa-solid fa-check"></i> 승인
                                 </button>
@@ -181,8 +181,9 @@
         <h1 class="modal-title fs-5" id="staticBackdropLabel">반려</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-        <form action="/approvalRejection.do" method="post" >
-        <input type="hidden" value="${documentDto.doc_id}" name="doc_id">
+        <form action="/approvalRejection.do" method="post" onsubmit="return confirmCancel()">
+        <input type="hidden" value="${param.doc_id}" name="doc_id">
+        <input type="hidden" value="${param.apprv_id}" name="apprv_id">
       <div class="modal-body">
         	<div class="form-group">
         <b>반려사유</b>
@@ -207,6 +208,14 @@
 		    let modal = new bootstrap.Modal(document.getElementById("staticBackdrop"));
 		    modal.show();
 		});
+		
+		function confirmCancel() {
+		    if (confirm("정말 반려하시겠습니까?")) {
+		        alert("반려되었습니다.");
+		        return true;
+		    }
+		    return false;
+		}
 </script>
 
 </html>

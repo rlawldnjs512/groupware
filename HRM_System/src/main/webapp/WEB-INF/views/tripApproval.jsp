@@ -61,7 +61,6 @@ th, td {
 <%@ include file="sidebar.jsp" %>
 <body>
 	<div class="content" id="content">
-        <%@ include file="header.jsp"%>
         <div class="main-content">
         	<form method="post" enctype="multipart/form-data">
 				<div class="card p-4" style="width: 1300px;">

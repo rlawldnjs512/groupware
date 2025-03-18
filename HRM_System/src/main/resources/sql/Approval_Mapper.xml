@@ -212,7 +212,8 @@ WHERE DOC_ID=#{doc_id}
 
 <select id="selectSuccessDoc" resultMap="DocumentDtoMap">
 	SELECT EMP_ID, DOC_ID, DOC_TYPE, TITLE, CONTENT , CREATE_DATE ,
-	   DOC_STATUS , DOC_DATE , DOC_NUM , FILE_EXIST , DEPT_ID, NAME, POSITION
+	   DOC_STATUS , DOC_DATE , DOC_NUM , FILE_EXIST , DEPT_ID, NAME, POSITION,
+	   NAME, (SELECT DEPT_NAME FROM DEPT d WHERE DEPT_ID IN (SELECT DEPT_ID FROM EMPLOYEE e2 WHERE EMP_ID = #{emp_id})) AS DEPT_NAME
 	FROM DOCUMENT d JOIN EMPLOYEE e 
 	USING(EMP_ID)
 	WHERE DOC_STATUS = 'Y'
@@ -331,7 +332,7 @@ FROM EMPLOYEE
 			WHEN #{doc_type} = '휴가' THEN 'VACA'
 			WHEN #{doc_type} = '출장' THEN 'TRIP'
 			WHEN #{doc_type} = '보고서' THEN 'REPORT'
-		END || '_' || TO_CHAR(SYSDATE, 'YYYY') || '_' || DOCUMENT_SEQ.NEXTVAL)
+		END || '_' || TO_CHAR(SYSDATE, 'YYYY') || '_' || #{doc_id})
 </insert>
 
 <!-- 결재 생성 -->
@@ -468,12 +469,26 @@ SELECT d2.DEPT_NAME, e."POSITION", e.NAME , e.EMP_ID, s.SIGN as signSaved
 
 <!--승인을 누르면 진행중에서 승인으로  -->
 <update id="updateApprovalStatus" parameterType="ApprovalDto">
-	UPDATE APPROVAL 
-	       SET SIGN = (SELECT SIGN FROM SIGN s WHERE EMP_ID = #{emp_id}) ,  
-	APPRV_STATUS  = '승인', 
-	APPRV_DATE = CURRENT_DATE 
-	WHERE DOC_ID =#{doc_id} AND APPRV_ID = #{apprv_id}
+	  <!-- 첫 번째 UPDATE -->
+    UPDATE APPROVAL 
+    SET SIGN = (SELECT SIGN FROM SIGN s WHERE s.EMP_ID = #{emp_id}),
+        APPRV_STATUS = '승인',
+        APPRV_DATE = CURRENT_DATE
+    WHERE DOC_ID = #{doc_id} 
+      AND APPRV_ID = #{apprv_id}
 </update>
+
+    <update id="updateDocumentStatus" parameterType="ApprovalDto">
+    UPDATE DOCUMENT d
+    SET d.DOCUMENT_STATUS = 'Y'
+    WHERE d.DOC_ID = #{doc_id}
+      AND NOT EXISTS (
+          SELECT 1
+          FROM APPROVAL a
+          WHERE a.DOC_ID = d.DOC_ID
+            AND a.APPRV_ID > #{apprv_id} 
+      )
+     </update>
 
 <!-- 반려 -->
 <update id="updateApprovalReject" parameterType="ApprovalDto">

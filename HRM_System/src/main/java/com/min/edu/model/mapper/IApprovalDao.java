@@ -83,12 +83,15 @@ public interface IApprovalDao {
   
   public List<ApprovalDto> geteApproval(String doc_id);
   // 2025 03 14 승인
-
+  public int updateApprovalStatus (ApprovalDto dto);
+  public int updateDocumentStatus(ApprovalDto dto);
+  
+  
   
   // 2025 03 14 반려
-  public int updateApprovalReject(ApprovalDto dto);
+  public int updateApprovalReject(int doc_id, int apprv_id);
   
-  public int updateApprovalStatus (ApprovalDto dto);
+ 
   
   public int insertRejection(RejectionDto dto);
   

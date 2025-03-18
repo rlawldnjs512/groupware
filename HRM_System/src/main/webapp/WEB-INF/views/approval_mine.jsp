@@ -34,6 +34,23 @@
 	outline: none;
 	box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary), 0.5);
 }
+
+thead th {
+	padding: 12px;
+	text-align: center !important; /* text-align에 !important 추가 */
+	vertical-align: middle;
+	border-bottom: 2px solid #ddd;
+}
+
+tbody td {
+	padding: 10px;
+	text-align: center;
+	border-bottom: 1px solid #eee;
+}
+
+tbody tr:hover {
+	background-color: var(--bs-primary-light);
+}
 </style>
 </head>
 <%@ include file="sidebar.jsp" %>
@@ -55,14 +72,23 @@
 	        			</tr>
         			</thead>
         			<tbody>
-        				<tr>
-        					<td></td>
-        					<td></td>
-        					<td></td>
-        					<td>${loginVo.name}</td>
-        					<td></td>
-        					<td></td>
-        				</tr>
+        				<c:choose>
+                            <c:when test="${empty approvalList}">
+                                <tr>
+                                    <td colspan="7" class="text-center">결재할 문서가 없습니다.</td>
+                                </tr>
+                            </c:when>
+                            <c:otherwise>
+		        				<tr>
+		        					<td></td>
+		        					<td></td>
+		        					<td></td>
+		        					<td>${loginVo.name}</td>
+		        					<td></td>
+		        					<td></td>
+		        				</tr>
+        					</c:otherwise>
+        				</c:choose>
         			</tbody>
         		</table>
         	</div>

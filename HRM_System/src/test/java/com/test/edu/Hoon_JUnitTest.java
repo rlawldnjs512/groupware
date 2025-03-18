@@ -170,7 +170,7 @@ class Hoon_JUnitTest {
 		dto.setApprv_status("반려");
 		dto.setDoc_id(209);
 		dto.setApprv_id(38);
-		int n = apprDao.updateApprovalReject(dto);
+		int n = apprDao.updateApprovalReject(0, 0);
 		System.out.println(n);
 		
 	}
