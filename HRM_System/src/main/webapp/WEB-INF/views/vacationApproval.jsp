@@ -151,27 +151,27 @@ th, td {
 	<script type="text/javascript">
 	
 	function line(approvalLine) {
-		console.log(approvalLine)
-		let row1 = document.getElementById("approvalLineTd_1");
-		let frm = document.forms[0];
+	    let row1 = document.getElementById("approvalLineTd_1");
+	    let frm = document.forms[0];
 
-//	        이름 목록을 approvalLindTd_1의 td로 추가
-        approvalLine.forEach(person => {
-			console.log(person.name)
-			
-            let td_1 = document.createElement("th");
-            td_1.textContent = person.name;
-            row1.appendChild(td_1);
-            
-            let input_1 = document.createElement("input");
-            input_1.setAttribute("type","hidden")
-            input_1.setAttribute("name","appLine")
-            input_1.value = person.id;
-            let firstChild = frm.firstElementChild;
-            frm.insertBefore(input_1, firstChild);
-        });
-
+	    approvalLine.forEach(person => {
+	        
+	        let td_1 = document.createElement("th");
+	        td_1.textContent = person.name;
+	        row1.appendChild(td_1);
+	        
+	        let input_1 = document.createElement("input");
+	        input_1.setAttribute("type", "hidden");
+	        input_1.setAttribute("name", "appLine");
+	        input_1.value = person.id;
+	        
+	        // 순서 유지하면서 추가하기 위해 appendChild 사용
+	        frm.appendChild(input_1);
+	    });
 	}
+	
+	
+	
 	</script>
 </body>
 </html>

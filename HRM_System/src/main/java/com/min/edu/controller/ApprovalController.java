@@ -30,6 +30,7 @@ import com.min.edu.dto.DocumentDto;
 import com.min.edu.dto.EmployeeDto;
 import com.min.edu.dto.FileUpDto;
 import com.min.edu.dto.LeaveDto;
+import com.min.edu.dto.RejectionDto;
 import com.min.edu.dto.SignDto;
 import com.min.edu.dto.TripDto;
 import com.min.edu.model.service.IApprovalService;
@@ -88,22 +89,22 @@ public class ApprovalController {
 	
 	//전자결재 상세정보
 	@GetMapping("/approval_detail.do")
-	public String approvalDetail(@RequestParam("doc_id") String docId, 
+	public String approvalDetail(@RequestParam("doc_id") String doc_Id, 
 			                      @RequestParam("apprv_id")String apprv_id,
 	                             Model model,HttpSession session) {
-		log.info("{}",docId);
+		log.info("{}",doc_Id);
 		log.info("{}",apprv_id);
-		model.addAttribute("docId", docId);
+		model.addAttribute("docId", doc_Id);
 		model.addAttribute("apprv_id", apprv_id);
 		
 
 	   // 문서정보 // 
-	    DocumentDto document = service.getApprovalDetail(docId);
-	    List<ApprovalDto> approvalList = service.geteApproval(docId);
+	    DocumentDto document = service.getApprovalDetail(doc_Id);
+	    List<ApprovalDto> approvalList = service.geteApproval(doc_Id);
 	    
 	    
 	    //기안자 정보 
-	    int doc_id = Integer.parseInt(docId);
+	    int doc_id = Integer.parseInt(doc_Id);
 		EmployeeDto empdto = service.getApp(doc_id);
 		model.addAttribute("empdto",empdto);
 		
@@ -123,13 +124,13 @@ public class ApprovalController {
 		       
   
 	    if ("휴가".equals(document.getDoc_type())) {
-	        LeaveDto leaveDto = service.continuePreviewLeave(Integer.parseInt(docId)); 
+	        LeaveDto leaveDto = service.continuePreviewLeave(Integer.parseInt(doc_Id)); 
 	        model.addAttribute("leaveDto", leaveDto);
 	        
 	    } else if ("출장".equals(document.getDoc_type())) {
 	    	 log.info(document.getDoc_type());
 	    	
-	        TripDto tripDto = service.continuePrviewTrip(Integer.parseInt(docId)); 
+	        TripDto tripDto = service.continuePrviewTrip(Integer.parseInt(doc_Id)); 
 	        model.addAttribute("tripDto", tripDto);
 	        log.info("{}",tripDto);
 	    }
@@ -168,6 +169,20 @@ public class ApprovalController {
 		}
 		return null;
 	}
+	
+	@PostMapping(value = "/approvalRejection.do")
+	public String approvalRejection(HttpSession session,
+									HttpServletResponse response,
+									@RequestParam int doc_id,
+									ApprovalDto appDto,
+									RejectionDto rejDto) {
+		
+		log.info("reject_text : {}", rejDto.getReject_text());
+		
+		
+		return "redirect:/approval_receive.do";
+	}
+	
 
 	//전자결재 문서의 파일 다운로드 
 	@GetMapping(value = "/downloadFile.do")
