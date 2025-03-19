@@ -128,7 +128,14 @@ public class CertificationController {
 	        map.put("first", first);
 	        map.put("last", last);
 
-	        List<CertificateDto> lists = service.selectCertTypeUserPage(map);
+	        List<CertificateDto> lists = new ArrayList<CertificateDto>();
+	        
+	        if ("A".equals(role)) {
+	        	lists = service.selectCertTypeAdminPage(map);
+	        } else {
+	        	lists = service.selectCertTypeUserPage(map);
+	        }
+	        
 
 	        System.out.println("Lists size: " + (lists == null ? 0 : lists.size()));  // 리스트의 크기 출력
 	        System.out.println("first:" + first);
