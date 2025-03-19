@@ -129,6 +129,15 @@ tbody td {
                         <td><fmt:formatDate value="${doc.create_date}" pattern="yyyy-MM-dd" /></td>
                     </tr>
                 </c:if>
+                <c:if test="${doc.doc_status == 'R'}">
+                    <tr>
+                        <td>${doc.doc_num}</td>
+                        <td>${doc.doc_type}</td>
+                        <td>${doc.title}</td>
+                        <td><span class="badge bg-warning text-dark"><i class="fas fa-ban"></i> 반려</span></td>
+                        <td><fmt:formatDate value="${doc.create_date}" pattern="yyyy-MM-dd" /></td>
+                    </tr>
+                </c:if>
             </c:forEach>
         </c:otherwise>
     </c:choose>
@@ -172,6 +181,11 @@ tbody td {
                                                         <c:when test="${doc.doc_status == 'Y'}">
                                                             <span class="badge bg-success">
                                                                 <i class="fas fa-check-circle"></i> 결재완료
+                                                            </span>
+                                                        </c:when>
+                                                        <c:when test="${doc.doc_status == 'R'}">
+                                                            <span class="badge bg-warning text-dark">
+                                                                <i class="fas fa-ban"></i> 반려
                                                             </span>
                                                         </c:when>
                                                     </c:choose>
