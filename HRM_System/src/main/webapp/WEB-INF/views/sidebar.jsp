@@ -31,6 +31,7 @@
 </script>
 <body>
     <div class="sidebar" id="sidebar">
+    	${loginVo.name}
         <!-- 3점 버튼 -->
         <button class="menu-btn" id="toggleBtn">⋮</button>
 			<br>

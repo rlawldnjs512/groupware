@@ -453,7 +453,7 @@ SELECT d2.DEPT_NAME, e."POSITION", e.NAME , e.EMP_ID, s.SIGN as signSaved
 <select id="selectApprvMine" parameterType="String" resultType="DocumentDto" >
 SELECT DOC_NUM, DOC_TYPE ,TITLE ,DOC_STATUS ,CREATE_DATE 
 	FROM DOCUMENT d 
-	WHERE DOC_STATUS IN('Y','N')
+	WHERE DOC_STATUS IN('Y','N','R')
 	AND EMP_ID = #{emp_id}
 </select>
 
