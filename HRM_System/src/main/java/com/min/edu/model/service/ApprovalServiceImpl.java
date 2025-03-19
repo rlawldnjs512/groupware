@@ -133,8 +133,9 @@ public class ApprovalServiceImpl implements IApprovalService {
 	public int approvalRejection(int apprv_id, RejectionDto rejDto) {
 		int n = dao.updateApprovalReject(rejDto.getDoc_id(), apprv_id);
 		int m = dao.insertRejection(rejDto);
+		int o = dao.updateDocStatusReject(rejDto.getDoc_id());
 		
-		return (n+m)>0 ? 1:0;
+		return (n+m+o)>0 ? 1:0;
 	}
 	
 	
@@ -273,6 +274,7 @@ public class ApprovalServiceImpl implements IApprovalService {
 	public int selectApprovalMax(int doc_id) {
 		return dao.selectApprovalMax(doc_id);
 	}
+
 }
 
 

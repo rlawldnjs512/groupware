@@ -177,9 +177,6 @@ public class ApprovalController {
 		
 		
 		if (n == 1) {
-			if (level == 3) {
-				service.updateDocStatus(doc_id);
-			}
 			response.getWriter().print("<script>alert('승인완료'); location.href='./approval_receive.do';</script>");
 
 		} else {
