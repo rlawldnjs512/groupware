@@ -528,6 +528,11 @@ SELECT DOC_NUM, DOC_TYPE ,TITLE ,DOC_STATUS ,CREATE_DATE
 		WHERE DOC_ID= #{doc_id}
 </update>
 
+<update id="updateDocStatusReject" parameterType="ApprovalDto">
+	UPDATE DOCUMENT
+		SET DOC_STATUS='R'
+		WHERE DOC_ID= #{doc_id}
+</update>	
 
 
 </mapper>
