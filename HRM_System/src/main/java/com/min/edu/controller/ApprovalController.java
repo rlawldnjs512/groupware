@@ -168,14 +168,14 @@ public class ApprovalController {
 		int n = service.updateApprovalStatus(dto);
 		
 		
-		int m= Integer.parseInt(service.selectApprovalLast(apprv_id));
+		int m= Integer.parseInt(service.selectApprovalLast(apprv_id)); //1. 본인의 승인순서가 마지막인지 확인
 		log.info("{}",m);
 		
-		if(m==service.selectApprovalMax(doc_id)) {
-			service.updateDocumentStatus(doc_id); //마지막 결재자까지 결재가 완료되면 승인상태가 Y로 바뀜 
+		if(m==service.selectApprovalMax(doc_id)) {//2. 본인의 순서랑 결재할 문서의 마지막 승인번호 비교
+			service.updateDocumentStatus(doc_id); //3. 마지막 결재자까지 결재가 완료되면 승인상태가 Y로 바뀜 
 		}
 		
-		
+		// 위의 if 문을 먼저 하고 아래 if 문 실행 
 		if (n == 1) {
 			response.getWriter().print("<script>alert('승인완료'); location.href='./approval_receive.do';</script>");
 

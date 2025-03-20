@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Controller
 public class LoginController {
+	
 	  private final IEmployeeService service;
 	    
 	   
@@ -52,7 +53,9 @@ public class LoginController {
 	        log.info("sign 정보 :{}",loginVo.getSignSaved());
 
 	        session.setAttribute("loginVo", loginVo);
-			session.setMaxInactiveInterval(60 * 10 * 8); // session 유효기간 설정 
+	        
+	        
+	        session.setMaxInactiveInterval(60 * 60); // 3600초 = 1시간
 			
 			
 			if(password.equals("a12345678")) {
@@ -112,6 +115,7 @@ public class LoginController {
 	    }
 	    
 
+	    //-------비밀번호를 잊어버렸을 때---------
 	    @GetMapping(value = "/forgot.do")
 	    public String forgotPassword() {
 	    	
@@ -119,7 +123,7 @@ public class LoginController {
 	    	return "forgot";
 	    }
 	    
-	    //비밀번호 재설정(사원조회)
+	    //------비밀번호 재설정(사원조회)---------
 	    @GetMapping("/check.do")
 	    public String checkEmpId(@RequestParam String emp_id, 
 	                             @RequestParam String name, Model model,
