@@ -29,8 +29,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 날짜 입력 필드 탐색
     var dateInput = document.querySelector("#rev_date");
+    // 달력에서 오늘 이전 날짜를 막아놓기 위한 오늘 값
+    var dateMin = document.getElementById("rev_date");
     
-
+    
+	
     if (dateInput) {
         // 처음 로드될 때 한 번 실행
         fetchReservations(dateInput.value);
@@ -53,7 +56,12 @@ document.addEventListener("DOMContentLoaded", function () {
             $("#date-text").text(`${year}년 ${month}월 ${day}일`);
             $("#rev_date").val(`${year}-${month}-${day}`);
             
+            let dateText = `${year}-${month}-${day}`;
+            console.log("변환된 날짜:", dateText);
+            
             fetchReservations($("#rev_date").val());
+            
+            document.getElementById("convertedDate").setAttribute('value',dateText)
         }
 
         updateDateDisplay();
@@ -64,8 +72,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         $("#prev-day").on("click", function() {
+		var convertedDate = document.getElementById("convertedDate").value;
+			if (dateMin.min != convertedDate){
             currentDate.setDate(currentDate.getDate() - 1);
             updateDateDisplay();
+            }
         });
 
         $("#next-day").on("click", function() {
@@ -98,5 +109,5 @@ document.addEventListener("DOMContentLoaded", function () {
     
     document.getElementById('rev_date').setAttribute('min', todayFormatted);
     
-    
+    console.log(typeof(dateMin.min), dateMin.min)
 });

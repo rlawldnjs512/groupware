@@ -59,11 +59,20 @@
 					<li><a href="./schedule">일정관리</a></li>
 				</c:when>
 			</c:choose>
-
-			<li><a href="./reservation.do"> 회의실예약 </a></li>
+			
+			<c:choose>
+				<c:when test="${sessionScope.loginVo.role eq 'U'}">
+			    <li><a href="./reservation.do"> 회의실예약 </a></li>
+        </c:when>
+				<c:otherwise>
+			    <li><a href="./selectRoom.do"> 회의실관리 </a></li>
+				</c:otherwise>
+			</c:choose>
+          
 			<c:if test="${sessionScope.loginVo.role eq 'U'}">
 				<li><a href="./approval.do">전자결재 </a></li>
 			</c:if>
+
 			<li><a href="./notice.do">게시판 </a></li>
 			<li><a href="./logout.do">로그아웃 </a></li>
 		</ul>
