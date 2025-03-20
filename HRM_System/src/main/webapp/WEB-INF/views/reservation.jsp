@@ -29,6 +29,7 @@
 				<span class="date-display" id="date-display"> 
 				<span id="date-text">${nowDate}</span> 
 				<input type="date" id="rev_date">
+				<input type="hidden" id="convertedDate">
 				</span>
 				<button class="date-nav-btn" id="next-day">&gt;</button>
 			</div>

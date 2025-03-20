@@ -9,12 +9,14 @@
 
         <% if (currentURI.contains("servation") || currentURI.contains("Room")) { %>
 	        <ul class="nav flex-wrap border-transparent">
+	        	<c:if test="${sessionScope.loginVo.role eq 'U'}">
 		        <li class="nav-item my-1">
 		            <a class="<%= commonClass %>" href="./reservation.do"> 회의실 예약 </a>
 		        </li>
 		        <li class="nav-item my-1">
 		            <a class="<%= commonClass %>" href="./myReservation.do"> 나의 예약조회 </a>
 		        </li>
+		    	</c:if>
 		        <c:if test="${sessionScope.loginVo.role eq 'A'}">
 	            	<li class="nav-item my-1">
 	            		<a class="<%= commonClass %>" href="./selectRoom.do"> 회의실 관리 </a>
