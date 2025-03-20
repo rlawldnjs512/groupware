@@ -1,5 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
 	
+	var userRole = document.getElementById("role").value;
+	if (userRole === "A") {
+        return;
+    }
+	
     const clockInBtn = document.getElementById("clockIn");
 	const clockOutBtn = document.getElementById("clockOut"); 
 

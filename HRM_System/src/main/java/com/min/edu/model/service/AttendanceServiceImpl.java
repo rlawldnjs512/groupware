@@ -398,6 +398,11 @@ public class AttendanceServiceImpl implements IAttendanceService {
 	public int selectLateToday() {
 		return dao.selectLateToday();
 	}
+	
+	@Override
+	public List<Map<String, Object>> getLateEmpRank(){
+		return dao.getLateEmpRank();
+	}
 
 	@Override
 	public double calProgress(String empId, String ClockIn) {

@@ -50,6 +50,8 @@ public interface IAttendanceDao {
 	
 	public int selectLateToday();
 	
+	public List<Map<String, Object>> getLateEmpRank();
+	
 	public List<Map<String, Object>> getCalendar(String empId);
 	
 }

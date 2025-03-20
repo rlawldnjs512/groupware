@@ -1,5 +1,7 @@
 package com.min.edu.controller;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +9,9 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.min.edu.dto.EmpPageDto;
 import com.min.edu.dto.EmployeeDto;
@@ -35,10 +40,11 @@ public class HomeController {
 	private final IBoardService boardService;
 	
 	@GetMapping(value = "/homeList.do")
-	public String homeList(Model model, HttpServletResponse response, HttpSession session,
-							HttpServletRequest req) {
+	public String homeList(Model model, HttpServletResponse response, HttpSession session, HttpServletRequest req) {
 		log.info("EmployeeController homeList GET 요청");
 
+		////////////////////////// 사원 로그인 시 //////////////////////////
+		
 		// 캐시 삭제 코드 작성
 		response.setHeader("Pragma", "no-cache");
 		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -112,8 +118,81 @@ public class HomeController {
  	    model.addAttribute("freeLists", freeLists);
 
  	    model.addAttribute("page", pageDto);
+ 	    
+ 	    
+ 	    
+ 	    ////////////////////////// 관리자 로그인 시 //////////////////////////
+ 	    
+ 	    String avgClockInTimeAll = attendanceService.avgClockInTimeAll();
+		String avgClockOutTimeAll = attendanceService.avgClockOutTimeAll();
+		String avgWorkTimeAll = attendanceService.avgWorkTimeAll();
+		int lateToday = attendanceService.selectLateToday();
+	    
+		model.addAttribute("avgClockInTimeAll", avgClockInTimeAll);
+		model.addAttribute("avgClockOutTimeAll", avgClockOutTimeAll);
+		model.addAttribute("avgWorkTimeAll", avgWorkTimeAll);
+		model.addAttribute("lateToday", lateToday);
 		
 		return "homeList";
+	}
+	
+	@RequestMapping(value = "/homeList.do/donutChart", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> donutChart(){
+		
+		List<Map<String, Object>> deptWorkTimeData = attendanceService.avgWorkTimeByDept();
+		
+		List<String> labels = new ArrayList<>();
+	    List<Double> data = new ArrayList<>();
+	    List<String> formattedData = new ArrayList<>();
+	    
+	    // 평균 근무 시간을 "HH:mm" 형식으로 받아서 "시간"으로 변환하여 저장
+	    for (Map<String, Object> deptData : deptWorkTimeData) {
+	    	 String deptName = (String) deptData.get("DEPTNAME");
+	         String avgTime = (String) deptData.get("AVERAGETIME");
+	         String[] timeParts = avgTime.split(":");
+	         double hours = Double.parseDouble(timeParts[0]);
+	         double minutes = Double.parseDouble(timeParts[1]);
+	         double totalTimeInHours = hours + (minutes / 60);
+	         
+	         // 숫자 데이터로 저장 (차트에서 사용)
+	         labels.add(deptName);
+	         data.add(totalTimeInHours);
+	         
+	         // "시간:분" 형식으로 저장 (툴팁에서 사용)
+	         int hourPart = (int) totalTimeInHours;
+	         int minutePart = (int) ((totalTimeInHours - hourPart) * 60);
+	         formattedData.add(hourPart + "시간 " + minutePart + "분");
+	    }
+	    
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("departmentLabels", labels);
+	    response.put("departmentData", data);
+	    response.put("formattedData", formattedData);
+		
+		return response;
+	}
+	
+	@RequestMapping(value = "/homeList.do/lateEmpChart", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> lateEmpChart(){
+		
+		List<Map<String, Object>> lateList = attendanceService.getLateEmpRank();
+		
+		List<String> name = new ArrayList<>();
+	    List<Integer> count = new ArrayList<>();
+	    
+	    for (Map<String, Object> latedata : lateList) {
+	    	name.add((String) latedata.get("NAME"));
+	    	BigDecimal Bigcount = (BigDecimal) latedata.get("LATECOUNT");
+	    	count.add(Bigcount.intValue());
+	    }
+	    
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("name", name);
+	    response.put("count", count);
+
+		return response;
 	}
 }
 
