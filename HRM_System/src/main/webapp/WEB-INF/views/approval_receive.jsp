@@ -10,7 +10,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <meta charset="UTF-8">
-    <title>전자결재</title>
+    <title>결재 수신함</title>
 
     <style>
         :root {
@@ -74,7 +74,7 @@
                             <th  style="text-align: center;">제목</th>
                             <th  style="text-align: center;">작성자</th>
                             <th  style="text-align: center;">결재상태</th>
-                            <th  style="text-align: center;">결재일</th>
+                            
                             <th style="text-align: center;">상세보기</th>
                         </tr>
                     </thead>
@@ -93,8 +93,8 @@
                                         <td>${approval.doc_type}</td>
                                         <td>${approval.title}</td>
                                         <td>${approval.name}</td>
-                                        <td>${approval.doc_status}</td>
-                                        <td>${approval.doc_date}</td>
+                                        <td>진행중</td>
+                                     
                                         <td>
 										    <a href="./approval_detail.do?doc_id=${approval.doc_id}&apprv_id=${approval.apprv_id}"
 										       class="btn btn-light-primary">상세보기</a>
