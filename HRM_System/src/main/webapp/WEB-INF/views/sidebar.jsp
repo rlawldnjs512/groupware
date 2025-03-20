@@ -48,7 +48,7 @@
 			</a></li>
 			<c:choose>
 				<c:when test="${sessionScope.loginVo.role eq 'A'}">
-					<li><a href="./attendance_admin">근태관리</a></li>
+					<li><a href="./vacation_admin">휴가관리</a></li>
 				</c:when>
 				<c:otherwise>
 					<li><a href="./attendance">근태관리</a></li>
@@ -62,13 +62,17 @@
 			
 			<c:choose>
 				<c:when test="${sessionScope.loginVo.role eq 'U'}">
-			<li><a href="./reservation.do"> 회의실예약 </a></li>
-				</c:when>
+			    <li><a href="./reservation.do"> 회의실예약 </a></li>
+        </c:when>
 				<c:otherwise>
-			<li><a href="./selectRoom.do"> 회의실관리 </a></li>
+			    <li><a href="./selectRoom.do"> 회의실관리 </a></li>
 				</c:otherwise>
 			</c:choose>
-			<li><a href="./approval.do">전자결재 </a></li>
+          
+			<c:if test="${sessionScope.loginVo.role eq 'U'}">
+				<li><a href="./approval.do">전자결재 </a></li>
+			</c:if>
+
 			<li><a href="./notice.do">게시판 </a></li>
 			<li><a href="./logout.do">로그아웃 </a></li>
 		</ul>

@@ -58,6 +58,8 @@ public interface IAttendanceService {
 	
 	public int selectLateToday();
 	
+	public List<Map<String, Object>> getLateEmpRank();
+	
 	// 근무 진행률 계산 로직
 	public double calProgress(String empId, String ClockIn);
 	

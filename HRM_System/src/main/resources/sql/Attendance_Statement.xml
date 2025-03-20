@@ -169,6 +169,16 @@
 			AND ATTEND_TYPE = '지각'
 	</select>
 	
+	<!-- 이번 달 지각 많이 한 사원 순서대로 -->
+	<select id="getLateEmpRank" resultType="Map">
+		SELECT e.NAME AS NAME, COUNT(*) AS LATECOUNT
+			FROM ATTENDANCE a JOIN EMPLOYEE e 
+			ON a.EMP_ID = e.EMP_ID
+			WHERE a.ATTEND_TYPE = '지각'
+			GROUP BY e.NAME
+			ORDER BY LATECOUNT DESC
+	</select>
+	
 <!-- 	{ -->
 <!-- 		          title: 'Meeting with Team', -->
 <!-- 		          start: '2025-03-12T09:00:00', -->
