@@ -57,19 +57,21 @@ th, td {
 				<div>
 					<div style="float: left; width: 30%">
 						<table class="table table-borderless w-100 mb-3">
-							<tr>
-								<th rowspan="2">기안자</th>
-								<th>소속부서</th>
-								<th>직급</th>
-								<th>성명</th>
-								<th>사원번호</th>
-							</tr>
-							<tr>
-								<td>${loginVo.dept_name}</td>
-								<td>${loginVo.position}</td>
-								<td>${loginVo.name}</td>
-								<td>${loginVo.emp_id}</td>
-							</tr>
+							<c:forEach var="vo" items="${reportDto}" begin="0" end="0">
+								<tr>
+									<th rowspan="2">기안자</th>
+									<th>소속부서</th>
+									<th>직급</th>
+									<th>성명</th>
+									<th>사원번호</th>
+								</tr>
+								<tr>
+									<td>${vo.dept_name}</td>
+									<td>${vo.position}</td>
+									<td>${vo.name}</td>
+									<td>${vo.emp_id}</td>
+								</tr>
+							</c:forEach>
 						</table>
 					</div>
 					<div style="float: right; width: 60%">
@@ -77,45 +79,50 @@ th, td {
 							<tr>
 								<th rowspan="2">결재</th>
 								<th>본인</th>
-								<th>결재자1</th>
-								<th>결재자2</th>
-								<th>결재자3</th>
+								<c:forEach var="vo" items="${reportDto}" varStatus="vs">
+								<th>결재자${vs.index + 1}(${vo.apprv_name})</th>
+								</c:forEach>
 							</tr>
 							<tr id="approvalLineTd_1">
 								<td id="approvalLineTd_2"><img id="signatureImage"
 									src="${loginVo.signSaved}" width="80" height="75"
 									style="border: 1px solid black;" /></td>
+								<c:forEach var="vo" items="${reportDto}">
+									<td id="approvalLineTd_2"><img id="signatureImage"
+										src="${vo.sign}" width="80" height="75"
+										style="border: 1px solid black;" /></td>
+								</c:forEach>
 							</tr>
 						</table>
 					</div>
 				</div>
 
 				<table class="table table-borderless mb-3">
-					<c:forEach var="vo" items="${reportDto}">
+					<c:forEach var="vo" items="${reportDto}" begin="0" end="0">
 						<tr>
 							<th>문서번호</th>
 							<th><input type="text" id="title" name="title"
-								 value="${vo.doc_num}" class="form-control" readonly="readonly"></th>
+								 value="${vo.doc_num}" class="form-control" disabled="disabled"></th>
 						</tr>
 						<tr>
 							<th>제목</th>
 							<th><input type="text" id="title" name="title"
 								value="${vo.title}" class="form-control"
-								placeholder="제목을 입력하세요." readonly="readonly"></th>
+								placeholder="제목을 입력하세요." disabled="disabled"></th>
 						</tr>
 						<tr>
 							<th>종류</th>
 							<th style="text-align: left;"><input type="radio"
 								id="morning" name="type" value="오전반차" class="form-check-input"
-								${leaveDto.type == '오전반차' ? 'checked' : ''} readonly="readonly"> <label
+								${leaveDto.type == '오전반차' ? 'checked' : ''} disabled="disabled"> <label
 								for="morning" class="form-check-label" >오전반차</label> <input
 								type="radio" id="afternoon" name="type" value="오후반차"
 								class="form-check-input ms-2"
-								${leaveDto.type == '오후반차' ? 'checked' : ''} readonly="readonly"> <label
+								${leaveDto.type == '오후반차' ? 'checked' : ''} disabled="disabled"> <label
 								for="afternoon" class="form-check-label">오후반차</label> <input
 								type="radio" id="full" name="type" value="연차"
 								class="form-check-input ms-2"
-								${leaveDto.type == '연차' ? 'checked' : ''} readonly="readonly"> <label
+								${leaveDto.type == '연차' ? 'checked' : ''} disabled="disabled"> <label
 								for="full" class="form-check-label">연차</label></th>
 						</tr>
 						<tr>
@@ -123,22 +130,22 @@ th, td {
 							<th style="text-align: left;"><input type="date"
 								class="form-control" name="leave_start"
 								value="${leaveDto.leave_start}"
-								style="width: 30%; display: inline-block;" readonly="readonly"> ~ <input
+								style="width: 30%; display: inline-block;" disabled="disabled"> ~ <input
 								type="date" class="form-control" name="leave_end"
 								value="${leaveDto.leave_end}"
-								style="width: 30%; display: inline-block;" readonly="readonly"></th>
+								style="width: 30%; display: inline-block;" disabled="disabled"></th>
 						</tr>
 						<tr>
 							<th>사유</th>
 							<th><textarea id="reason" name="content"
-									class="form-control" rows="5" placeholder="사유를 입력하세요." readonly="readonly">${vo.content}</textarea>
+									class="form-control" rows="5" placeholder="사유를 입력하세요." disabled="disabled">${vo.content}</textarea>
 							</th>
 						</tr>
 					</c:forEach>
 				</table>
 				<div class="d-flex justify-content-end mb-3">
 					<button type="button" class="btn btn-light-primary ms-2"
-						onclick="history.back(-1)">나가기</button>
+						onclick="history.back(-1)">뒤로가기</button>
 				</div>
 			</div>
 		</div>

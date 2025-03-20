@@ -60,19 +60,6 @@ tbody tr:hover {
         <%@ include file="header.jsp" %>
         <div class="main-content">
 			<div class="table-responsive">
-				<fieldset class="btn-container">
-					<div class="searchArea">
-						<select name="type" id="type">
-							<option value="title" ${(param.type == "title")?"selected":""}>제목</option>
-							<option value="content" ${(param.type == "content")?"selected":""}>내용</option>
-							<option value="name" ${(param.type == "name")?"selected":""}>작성자</option>
-						</select>
-						<input type="text" name="keyword" value="${param.keyword}" placeholder="검색어를 입력해주세요.">
-						<button type="submit" class="button-common search-btn">
-							<img src="images/search.svg" alt="검색 아이콘" style="width: 30px; height: 30px;">
-						</button>
-					</div>
-				</fieldset>
 				<!-- 부서별 결재 완료된 문서 조회 -->
         		<table>
         			<thead>
@@ -101,12 +88,12 @@ tbody tr:hover {
 										<td><a
 											onclick="successDocView('${vo.doc_id}', '${vo.doc_type}')">
 												${vo.title} </a></td>
-										<td>${loginVo.dept_name}</td>
+										<td>${vo.dept_name}</td>
 										<td>${vo.name}</td>
 										<c:if test="${vo.doc_status eq 'Y'}">
 											<td>승인완료</td>
 										</c:if>
-										<td>${vo.doc_date}</td>
+										<td>${vo.apprv_date}</td>
 									</tr>
 								</c:forEach>
 							</c:otherwise>

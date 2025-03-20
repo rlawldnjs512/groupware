@@ -40,9 +40,13 @@ public class DocumentDto {
 	private String dept_name;
 	
 	private String apprv_level;
+	private String apprv_date;
+	private String sign;
+	private String apprv_name;
 	
 	//상세조회 파일명 조회
 	private String origin_name;
 	private String store_name;
+	private String file_exist;
 
 }
