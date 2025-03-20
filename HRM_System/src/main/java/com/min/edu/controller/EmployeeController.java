@@ -42,7 +42,7 @@ public class EmployeeController {
 	@GetMapping("/searchEmployee.do")
 	public String searchEmployee(@RequestParam(value = "type", required = false) String type, 
 			@RequestParam(value = "keyword", required = false) String keyword, 
-			Model model,HttpServletRequest req, HttpServletResponse resp) {
+			Model model,HttpServletRequest req) {
 		List<EmployeeDto> empList = new ArrayList<>();
 
 		// 페이지 정보 가져오기 (기본값: 1)

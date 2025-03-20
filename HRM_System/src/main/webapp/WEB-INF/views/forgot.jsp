@@ -116,16 +116,16 @@
     
     function submitEmailForm() {
         var emailInput = document.getElementById("emailInput").value.trim(); // 이메일 입력값에서 공백 제거
-        var emailDomain = document.getElementById("emailDomain").value.trim(); // 도메인에서 공백 제거
-        var fullEmail = emailInput + "@" + emailDomain;  // 이메일과 도메인 결합
+        var emailDomain = document.getElementById("emailDomain").value.trim(); 
+        var fullEmail = emailInput + "@" + emailDomain;  
 
-        // 결합된 이메일을 hidden input에 설정하여 서버로 전송
+       
         var emailField = document.createElement("input");
         emailField.type = "hidden";
         emailField.name = "email";  // 서버에서 받을 파라미터 이름을 "email"로 설정
         emailField.value = fullEmail;
 
-        // 이메일 폼에 hidden input 추가
+        // 서버로 보낼 폼에 hidden input 추가
         var form = document.getElementById("emailForm");
         form.appendChild(emailField);
 
@@ -142,7 +142,7 @@
         if (!passwordRegex.test(password)) {
             // 유효성 검사 실패 시 경고 메시지
             Swal.fire({
-                text: "비밀번호는 영문자와 숫자를 포함하여 최소 8자리 이상이어야 합니다.",
+                text: "영문자와 숫자를 포함하여 8자리 이상이어야 합니다.",
                 icon: 'error',
                 confirmButtonColor: '#FF0000'
             });

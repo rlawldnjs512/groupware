@@ -505,6 +505,7 @@ SELECT DOC_NUM, DOC_TYPE ,TITLE ,DOC_STATUS ,CREATE_DATE
     WHERE d.DOC_ID = #{doc_id}
      </update>
 
+
 <!-- 반려 -->
 <update id="updateApprovalReject" parameterType="ApprovalDto">
 
@@ -521,12 +522,6 @@ SELECT DOC_NUM, DOC_TYPE ,TITLE ,DOC_STATUS ,CREATE_DATE
 	VALUES(#{doc_id}, #{reject_name}, #{reject_text}, CURRENT_DATE)
 </insert>
 
-
-<update id="updateDocStatus" parameterType="ApprovalDto">
-	UPDATE DOCUMENT
-		SET DOC_STATUS='Y'
-		WHERE DOC_ID= #{doc_id}
-</update>
 
 <update id="updateDocStatusReject" parameterType="ApprovalDto">
 	UPDATE DOCUMENT

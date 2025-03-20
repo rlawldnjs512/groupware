@@ -6,18 +6,25 @@ import java.security.SecureRandom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.min.edu.model.mapper.IEmployeeDao;
 
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpServletResponse;
 
 
 
 
 @Service
 public class MailSendService {
-    @Autowired   //context-mail에서 빈 등록했기 때문에 주입받을 수 있다. Spring에서 제공하는 MailSender. 
+	
+
+	
+    @Autowired   //Spring 에서 제공하는 MailSender. 
     private JavaMailSenderImpl mailSender;
     
     private String getKey(int size) {
@@ -30,6 +37,7 @@ public class MailSendService {
     }
 
     public String sendAuthMail(String mail)  throws MessagingException{
+    	
         String authKey = getKey(6);
         MimeMessage mailMessage = mailSender.createMimeMessage();
         String mailContent = "인증번호:   "+authKey ;     //보낼 메시지 
@@ -40,6 +48,13 @@ public class MailSendService {
         
           return authKey;
     }
+    
+
+    
+ 
+    
+   
+    
 }
 
 

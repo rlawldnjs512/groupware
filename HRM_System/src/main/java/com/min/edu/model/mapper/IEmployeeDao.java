@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import com.min.edu.dto.EmployeeDto;
 import com.min.edu.dto.VacationDto;
 
 @Mapper
+@Repository
 public interface IEmployeeDao {
 	
 	// 로그인 처리
@@ -17,6 +19,8 @@ public interface IEmployeeDao {
     public EmployeeDto findById(String emp_id);
     //비밀번호 재설정
     public int modifyPw(Map<String, Object>map);
+    //비밀번호 잊었을 때 - 이메일 확인
+    public String checkEmail(String emp_id);
     //관리자 확인
     public String checkAd(String role);
     //전체사원조회

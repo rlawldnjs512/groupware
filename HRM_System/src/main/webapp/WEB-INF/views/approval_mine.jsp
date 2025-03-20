@@ -125,7 +125,8 @@ tbody td {
                         <td>${doc.doc_num}</td>
                         <td>${doc.doc_type}</td>
                         <td>${doc.title}</td>
-                        <td><span class="badge bg-success"><i class="fas fa-check-circle"></i> 결재완료</span></td>
+                        <td>
+                        <span class="badge bg-success"><i class="fas fa-check-circle"></i> 결재완료</span></td>
                         <td><fmt:formatDate value="${doc.create_date}" pattern="yyyy-MM-dd" /></td>
                     </tr>
                 </c:if>

@@ -32,13 +32,15 @@
 	<div id="organizationTree"></div>
 	<hr>
 	<h3>결재순서</h3>
+	<input type="hidden" id="userId" value="${sessionScope.loginVo.emp_id}" />
+
 	<div id="approvalList"></div>
 	<button onclick="ok()">완료</button>
-	<button onclick="saveApprovalLine()">결재선 저장</button>
 	<button onclick="window.close()">취소</button>
 	<script>
      	var approvalLine = [];
         $(document).ready(function () {
+        	 var userId = $('#userId').val();  
             $('#organizationTree').jstree({
             	'plugins' : ["search"],
             	"search":{
@@ -51,8 +53,12 @@
                             type: "GET",
                             dataType: "json",
                             success: function (data) {
+                            	var filteredData = data.filter(function (node) {
+                                    return node.id !== userId;
+                                })
                             	console.log(data);
-                                cb(data);
+                            	console.log(filteredData);
+                                cb(filteredData);
                             }
                         });
                     }
@@ -64,17 +70,29 @@
                 $("#organizationTree").jstree(true).search(searchText);
             }); // search end
 
+            
+            
             // 사원 선택 이벤트 (결재선 추가)
             $('#organizationTree').on("select_node.jstree", function (e, data) {
                 let selectedNode = data.node;
+                var userId = $('#userId').val(); //로그인한 사용자
+                console.log("선택된 노드:", selectedNode);
+                
                 let empNo = selectedNode.id;
                 let empName = selectedNode.text;
+                console.log("empNo:", empNo);
+                console.log("empName:", empName);
 				
-                if (!empNo.startsWith("D") && !empNo.startsWith("HQ")) { // 부서가 아닌 사원만 추가
+               
+                if (selectedNode.parents.length === 3 && userId != empNo) {
                     addToApprovalLine(empNo, empName);
-                	return;
+                }else {
+                    alert("회사나 부서는 선택할 수 없습니다.");  
                 }
+
             }); // organizationTree end
+     
+        
         });
         
      	// 결재선 추가 함수
@@ -117,17 +135,7 @@
             updateApprovalList();
         }
 
-        // 결재선 저장 (JSON 변환)
-        function saveApprovalLine() {
-            if (approvalLine.length === 0) {
-                alert("결재선을 선택하세요.");
-                return;
-            }
-            let approvalJson = JSON.stringify(approvalLine);
-            console.log("결재선 저장:", approvalJson);
-            alert("결재선이 저장되었습니다.");
-           	
-        }
+       
         
         function ok() {
         	if (approvalLine.length === 0) {

@@ -40,6 +40,13 @@
 	</update>
 
 
+	<!--비밀번호 재설정에서 이메일 확인 checkEmail  -->
+	<select id="checkEmail" resultType="String">
+	SELECT EMAIL 
+	FROM EMPLOYEE 
+	WHERE trim(EMP_ID)=trim(#{emp_id})
+	</select>
+
 	<!-- 사용자가 관리자인지 확인하는 쿼리 -->
 	<select id="checkAd" resultType="java.lang.String">
 		SELECT EMP_ID
