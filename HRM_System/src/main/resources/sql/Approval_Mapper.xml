@@ -5,22 +5,27 @@
 <mapper namespace="com.min.edu.model.mapper.IApprovalDao">
 
 <resultMap type="DocumentDto" id="DocumentDtoMap">
-	<result property="emp_id" column="EMP_ID"/>
-	<result property="doc_type" column="DOC_TYPE"/>
-	<result property="title" column="TITLE"/>
-	<result property="content" column="CONTENT"/>
-	<result property="create_date" column="CREATE_DATE"/>
-	<result property="doc_status" column="DOC_STATUS"/>
-	<result property="doc_num" column="DOC_NUM"/>
-	<result property="doc_id" column="DOC_ID"/>
-	
-	<collection property="approvalDtos" ofType="ApprovalDto" column="EMP_ID">
+    <result property="emp_id" column="EMP_ID"/>
+    <result property="doc_id" column="DOC_ID"/>
+    <result property="doc_type" column="DOC_TYPE"/>
+    <result property="title" column="TITLE"/>
+    <result property="content" column="CONTENT"/>
+    <result property="doc_status" column="DOC_STATUS"/>
+    <result property="doc_num" column="DOC_NUM"/>
+    <result property="file_exist" column="FILE_EXIST"/>
+    <result property="name" column="NAME"/>
+    <result property="position" column="POSITION"/>
+    <result property="dept_name" column="DEPT_NAME"/>
+    <result property="apprv_date" column="APPRV_DATE"/>
+    <result property="sign" column="SIGN"/>
+    <result property="apprv_name" column="APPRV_NAME"/>
+
+    <collection property="approvalDtos" ofType="ApprovalDto" column="DOC_ID">
         <result property="apprv_level" column="APPRV_LEVEL"/>
         <result property="apprv_status" column="APPRV_STATUS"/>
-        <result property="sign" column="SIGN"/>
     </collection>
-	
 </resultMap>
+
 
 <!-- 사용자별로 한개의 서명만 등록할 수 있다.	insertSign -->
 <insert id="insertSign" parameterType="SignDto">
@@ -211,13 +216,35 @@ WHERE DOC_ID=#{doc_id}
 </delete>
 
 <select id="selectSuccessDoc" resultMap="DocumentDtoMap">
-	SELECT EMP_ID, DOC_ID, DOC_TYPE, TITLE, CONTENT , CREATE_DATE ,
-	   DOC_STATUS , DOC_DATE , DOC_NUM , FILE_EXIST , DEPT_ID, NAME, POSITION,
-	   NAME, (SELECT DEPT_NAME FROM DEPT d WHERE DEPT_ID IN (SELECT DEPT_ID FROM EMPLOYEE e2 WHERE EMP_ID = #{emp_id})) AS DEPT_NAME
-	FROM DOCUMENT d JOIN EMPLOYEE e 
-	USING(EMP_ID)
-	WHERE DOC_STATUS = 'Y'
-	AND DEPT_ID IN (SELECT DEPT_ID FROM EMPLOYEE e2 WHERE EMP_ID = #{emp_id})
+	SELECT 
+	    d.EMP_ID, 
+	    d.DOC_ID, 
+	    d.DOC_TYPE, 
+	    d.TITLE, 
+	    d.CONTENT, 
+	    d.DOC_STATUS, 
+	    d.DOC_NUM, 
+	    d.FILE_EXIST, 
+	    e.NAME, 
+	    e."POSITION", 
+	    dept.DEPT_NAME,
+	    TO_CHAR(a.APPRV_DATE,'YYYY-MM-DD') AS APPRV_DATE
+	FROM DOCUMENT d
+	JOIN EMPLOYEE e ON d.EMP_ID = e.EMP_ID
+	JOIN DEPT dept ON e.DEPT_ID = dept.DEPT_ID
+	JOIN APPROVAL a ON d.DOC_ID = a.DOC_ID
+	WHERE d.DOC_STATUS = 'Y'
+	AND a.APPRV_DATE = (
+	    SELECT MAX(a2.APPRV_DATE) 
+	    FROM APPROVAL a2 
+	    WHERE a2.DOC_ID = d.DOC_ID
+	)
+	AND dept.DEPT_NAME = (
+		SELECT DEPT_NAME
+		FROM DEPT dept2
+		JOIN EMPLOYEE e2 ON e2.DEPT_ID = dept2.DEPT_ID
+		WHERE e2.EMP_ID = #{emp_id}
+	)
 </select>
 
 
@@ -238,17 +265,25 @@ WHERE DOC_ID=#{doc_id}
 </select>
 
 <select id="continuePreviewDoc" resultMap="DocumentDtoMap">
-	SELECT s.EMP_ID , a.APPRV_LEVEL , a.APPRV_STATUS , a.SIGN , s.DOC_ID ,
-			(SELECT NAME FROM EMPLOYEE e WHERE NAME = #{name}) AS NAME,
-			s.DOC_TYPE , s.TITLE , s.CONTENT, s.CREATE_DATE , s.DOC_STATUS , s.DOC_NUM
-		FROM 
-		    (SELECT *
-		     FROM DOCUMENT d
-		     WHERE EMP_ID IN (SELECT EMP_ID FROM EMPLOYEE e WHERE NAME = #{name})
-		     AND DOC_ID = #{doc_id}
-		     ) s
-		LEFT OUTER JOIN APPROVAL a 
-		    ON s.EMP_ID = a.EMP_ID
+	SELECT a.EMP_ID , 
+		   (SELECT NAME FROM EMPLOYEE e2 WHERE e2.EMP_ID = a.EMP_ID) AS APPRV_NAME,
+		   a.APPRV_STATUS , 
+		   a.SIGN , 
+		   s.DOC_ID ,
+		   (SELECT NAME FROM EMPLOYEE e WHERE NAME = #{name}) AS NAME,
+		   s.DOC_TYPE , 
+		   s.TITLE , 
+		   s.CONTENT, 
+		   s.CREATE_DATE , 
+		   s.DOC_STATUS , 
+		   s.DOC_NUM,
+		   e."POSITION",
+	   	   dept.DEPT_NAME 
+	FROM DOCUMENT s
+	JOIN APPROVAL a ON s.DOC_ID = a.DOC_ID
+	JOIN EMPLOYEE e ON s.EMP_ID = e.EMP_ID
+	JOIN DEPT dept ON e.DEPT_ID = dept.DEPT_ID
+	WHERE s.DOC_ID = #{doc_id}
 </select>
 
 <!-- 출장 조회하기 -->

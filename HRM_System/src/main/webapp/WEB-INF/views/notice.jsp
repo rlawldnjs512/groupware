@@ -5,61 +5,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>게시판</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="./css/emplist.css">
-<style>
-:root {
-	--bs-primary: #1b84ff;
-	--bs-primary-light: #e9f3ff;
-	--bs-primary-white: #fff;
-}
-
-.btn.btn-light-primary {
-	color: var(--bs-primary);
-	border-color: var(--bs-primary-light);
-	background-color: var(--bs-primary-light);
-}
-
-.btn.btn-light-primary:hover {
-	color: var(--bs-primary-white);
-	border-color: var(--bs-primary);
-	background-color: var(--bs-primary);
-}
-
-.btn.btn-light-primary:focus {
-	outline: none;
-	box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary), 0.5);
-}
-
-table {
-	width: 100%;
-	border-collapse: collapse;
-}
-
-th, td {
-	border: 1px solid #ccc;
-	padding: 10px;
-	text-align: left;
-}
-
-th {
-	background-color: #f0f0f0;
-}
-
-.gray {
-	background-color: #ddd;
-}
-
-.hidden-row {
-    display: none;
-}
-
-</style>
+	<link rel="stylesheet" href="./css/board.css">
+    <meta charset="UTF-8">
+    <title>게시판</title>
 </head>
 <%@ include file="sidebar.jsp" %>
 <body>
@@ -69,14 +21,16 @@ th {
 			<form action="./searchNotice.do" method="get" name="searchNotice">
 			   <div class="table-responsive">
 			   		<fieldset class="btn-container">
-			   			<select name="type" id="type">
-				            <option value="title" ${(param.type == "title")?"selected":""}>제목</option>
-				        	<option value="content" ${(param.type == "content")?"selected":""}></option>
-				        </select> 
-						<input type="text" name="keyword" value="${param.keyword}" placeholder="검색어를 입력해주세요.">
-						<button type="submit" class="button-common search-btn">
-							<img src="images/search.svg" alt="검색 아이콘" style="width: 30px; height: 30px;">
-						</button>
+			   			<div class="searchArea">
+				   			<select name="type" id="type">
+					            <option value="title" ${(param.type == "title")?"selected":""}>제목</option>
+					        	<option value="content" ${(param.type == "content")?"selected":""}>내용</option>
+					        </select> 
+							<input type="text" name="keyword" value="${param.keyword}" placeholder="검색어를 입력해주세요.">
+							<button type="submit" class="button-common search-btn">
+								<img src="images/search.svg" alt="검색 아이콘" style="width: 30px; height: 30px;">
+							</button>
+						</div>
 					</fieldset>
 					
 					<table class="table table-hover table-rounded table-striped border gy-7 gs-7">
@@ -100,12 +54,7 @@ th {
 			                       <c:forEach var="vo" items="${lists}" varStatus="status">
 			                           <tr>
 										   <td>
-										   		<c:if test="${empty type && empty keyword}">
-										   			${vo.seq}
-										   		</c:if>
-										   		<c:if test="${not empty type && not empty keyword}">
-										   			${status.index+1}
-										   		</c:if>
+										   		${status.index+1}
 										   </td>
 			                               <td>
 												<div class="panel-heading">
@@ -118,9 +67,6 @@ th {
 			                               		<c:if test="${vo.file_exist eq 'Y'}">
 													<img src="./images/filedown.png" width="25">
 			                               		</c:if>
-<%-- 			                               		<c:if test="${vo.file_exist eq 'N'}"> --%>
-<!-- 													<img src="./images/filenot.png"> -->
-<%-- 			                               		</c:if> --%>
 										   </td>
 			                           </tr>
 									   <tr class="hidden-row">

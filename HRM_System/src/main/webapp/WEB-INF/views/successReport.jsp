@@ -66,19 +66,21 @@ th, td {
 				<div>
 					<div style="float: left; width: 30%">
 						<table class="table table-borderless w-100 mb-3">
-							<tr>
-								<th rowspan="2">기안자</th>
-								<th>소속부서</th>
-								<th>직급</th>
-								<th>성명</th>
-								<th>사원번호</th>
-							</tr>
-							<tr>
-								<td>${loginVo.dept_name}</td>
-								<td>${loginVo.position}</td>
-								<td>${loginVo.name}</td>
-								<td>${loginVo.emp_id}</td>
-							</tr>
+							<c:forEach var="vo" items="${reportDto}" begin="0" end="0">
+								<tr>
+									<th rowspan="2">기안자</th>
+									<th>소속부서</th>
+									<th>직급</th>
+									<th>성명</th>
+									<th>사원번호</th>
+								</tr>
+								<tr>
+									<td>${vo.dept_name}</td>
+									<td>${vo.position}</td>
+									<td>${vo.name}</td>
+									<td>${vo.emp_id}</td>
+								</tr>
+							</c:forEach>
 						</table>
 					</div>
 					<div style="float: right; width: 60%">
@@ -86,55 +88,56 @@ th, td {
 							<tr>
 								<th rowspan="2">결재</th>
 								<th>본인</th>
-								<th>결재자1</th>
-								<th>결재자2</th>
-								<th>결재자3</th>
+								<c:forEach var="vo" items="${reportDto}" varStatus="vs">
+								<th>결재자${vs.index + 1}(${vo.apprv_name})</th>
+								</c:forEach>
 							</tr>
 							<tr id="approvalLineTd_1">
 								<td id="approvalLineTd_2"><img id="signatureImage"
 									src="${loginVo.signSaved}" width="80" height="75"
 									style="border: 1px solid black;" /></td>
+								<c:forEach var="vo" items="${reportDto}">
+									<td id="approvalLineTd_2"><img id="signatureImage"
+										src="${vo.sign}" width="80" height="75"
+										style="border: 1px solid black;" /></td>
+								</c:forEach>
 							</tr>
 						</table>
 					</div>
 				</div>
 
 				<table class="table table-borderless mb-3">
-					<c:forEach var="vo" items="${reportDto}">
+					<c:forEach var="vo" items="${reportDto}" begin="0" end="0">
 						<tr>
 							<th>문서번호</th>
 							<th><input type="text" id="title" name="title"
-								value="${vo.doc_num}" class="form-control" readonly="readonly"></th>
+								value="${vo.doc_num}" class="form-control" disabled="disabled"></th>
 						</tr>
 						<tr>
 							<th>제목</th>
 							<th><input type="text" id="title" name="title"
 								value="${vo.title}" class="form-control"
-								placeholder="제목을 입력하세요." readonly="readonly"></th>
+								placeholder="제목을 입력하세요." disabled="disabled"></th>
 						</tr>
 						<tr>
 							<th>파일</th>
 							<th>
 								<div class="file-container">
 									<input class="form-control form-control-sm" id="formFileSm"
-										type="file" name="file" multiple="multiple" readonly="readonly">
+										type="file" name="file" multiple="multiple" disabled="disabled">
 								</div>
 							</th>
 						</tr>
 						<tr>
 							<th>내용</th>
 							<th><textarea class="ck-editor" id="classic" name="content"
-									placeholder="내용을 입력하세요" readonly="readonly">${vo.content}</textarea></th>
+									placeholder="내용을 입력하세요" readonly="readonly" disabled="disabled">${vo.content}</textarea></th>
 						</tr>
 					</c:forEach>
 				</table>
 				<div class="d-flex justify-content-end mb-3">
-					<button type="button" id="line" onclick="windowOpen()"
-						class="btn btn-light-primary ms-2">결재선 선택</button>
 					<button type="button" class="btn btn-light-primary ms-2"
-						onclick="history.back(-1)">취소</button>
-					<button type="button" class="btn btn-light-primary ms-2">상신
-						하기</button>
+						onclick="history.back(-1)">뒤로가기</button>
 				</div>
 			</div>
 		</div>
@@ -165,17 +168,23 @@ th, td {
 	    .create(document.querySelector('#classic'), {
 	        // 높이 설정
 	        height: 400, // 높이를 400px로 설정
-	        
+	
 	        // 툴바 설정 (옵션에 따라 조정)
 	        toolbar: [
 	            'bold', 'italic', 'link', 'undo', 'redo' // 툴바에 포함될 버튼들
 	        ],
+	
 	        // 기본 글꼴 크기 및 스타일 설정
 	        fontSize: '11px', // 기본 글꼴 크기
+	    })
+	    .then(editor => {
+	        // 에디터를 읽기 전용으로 설정
+	        editor.isReadOnly = true; // 수정 불가 상태로 설정
 	    })
 	    .catch(error => {
 	        console.error(error);
 	    });
+
     </script>
 </body>
 </html>
