@@ -307,8 +307,7 @@ th {
 								<c:choose>
 									<c:when test="${empty lists}">
 										<tr>
-											<td colspan="4" class="text-center text-muted">등록된 공지사항이
-												없습니다.</td>
+											<td colspan="4" class="text-center text-muted">문서가 없습니다.</td>
 										</tr>
 									</c:when>
 									<c:otherwise>

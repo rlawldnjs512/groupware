@@ -277,11 +277,23 @@
 	</select>
 
 	<select id="selectNoticePage" resultType="NoticeboardDto">
-		SELECT SEQ, NOT_ID , TITLE , CONTENT , REGDATE , EXPIRED , NAME , FILE_EXIST
+		SELECT SEQ, 
+		       NOT_ID , 
+		       TITLE , 
+		       CONTENT , 
+		       REGDATE , 
+		       EXPIRED , 
+		       NAME , 
+		       FILE_EXIST
 		FROM (SELECT ROW_NUMBER() OVER (ORDER BY NOT_ID) AS SEQ,
-		NOT_ID , TITLE , CONTENT , REGDATE , EXPIRED , FILE_EXIST ,
-		(SELECT NAME FROM EMPLOYEE e WHERE ROLE = 'A') AS NAME
-		FROM NOTICEBOARD n)
+		             NOT_ID , 
+		             TITLE , 
+		             CONTENT , 
+		             REGDATE , 
+		             EXPIRED , 
+		             FILE_EXIST ,
+		             (SELECT NAME FROM EMPLOYEE e WHERE ROLE = 'A') AS NAME
+		      FROM NOTICEBOARD n)
 		WHERE SEQ BETWEEN #{first} AND #{last}
 		ORDER BY NOT_ID ASC
 	</select>
@@ -292,20 +304,37 @@
 	</select>
 
 	<select id="selectFreePage" resultType="FreeboardDto">
-		SELECT SEQ, FREE_ID, TITLE 
-			 , CONTENT, REGDATE, EMP_ID 
-			 , NAME, REF, STEP 
-			 , DEPTH, DELFLAG, FILE_EXIST
-			FROM (	SELECT ROW_NUMBER() OVER (ORDER BY FREE_ID DESC) AS SEQ 
-					, FREE_ID, TITLE, CONTENT 
-					, REGDATE, EMP_ID, NAME 
-					, REF, STEP, DEPTH
-					, DELFLAG, FILE_EXIST
-						FROM FREEBOARD f
-						JOIN EMPLOYEE e USING(EMP_ID)
-				 )
-			WHERE SEQ BETWEEN #{first} AND #{last}
-			ORDER BY "REF" DESC , STEP
+		WITH OrderedData AS (
+		    SELECT ROW_NUMBER() OVER (ORDER BY "REF" DESC, STEP) AS ROW_NUM,
+		           FREE_ID, 
+		           TITLE, 
+		           CONTENT, 
+		           REGDATE, 
+		           EMP_ID, 
+		           NAME, 
+		           REF, 
+		           STEP, 
+		           DEPTH, 
+		           DELFLAG, 
+		           FILE_EXIST
+		    FROM FREEBOARD f
+		    JOIN EMPLOYEE e USING(EMP_ID)
+		)
+		SELECT ROW_NUM, 
+		       FREE_ID, 
+		       TITLE, 
+		       CONTENT, 
+		       REGDATE, 
+		       EMP_ID, 
+		       NAME, 
+		       REF, 
+		       STEP, 
+		       DEPTH, 
+		       DELFLAG, 
+		       FILE_EXIST
+		FROM OrderedData
+		WHERE ROW_NUM BETWEEN #{first} AND #{last}
+		ORDER BY "REF" DESC, STEP
 	</select>
 
 <!-- 게시글 검색하기 (공지사항/커뮤니티) -->
