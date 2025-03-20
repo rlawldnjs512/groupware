@@ -59,7 +59,7 @@
 	                                    <tr>
 	                                        <td>
 										   		<c:if test="${empty type && empty keyword}">
-										   			${vo.seq}
+										   			${vo.row_num}
 										   		</c:if>
 										   		<c:if test="${not empty type && not empty keyword}">
 										   			${status.index+1}
