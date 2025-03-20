@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdn.ckeditor.com/ckeditor5/29.1.0/classic/ckeditor.js"></script>
+	<script type="text/javascript" src="./js/newNotice.js"></script>
 <style>
 :root {
 	--bs-primary: #1b84ff;
@@ -134,7 +135,9 @@ textarea {
 			        <!-- 기한 -->
 			        <tr>
 			            <td><label for="expired">기한</label></td>
-			            <td><input type="date" id="expired" name="expired"></td>
+			            <td>
+			            	<input type="date" id="expired" name="expired">
+			            </td>
 			        </tr>
 			
 			        <!-- 첨부파일 -->

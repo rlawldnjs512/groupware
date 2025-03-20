@@ -32,5 +32,6 @@ public class FreeboardDto {
 	private String name;
 
 	private int seq;
+	private int row_num;
 	
 }
