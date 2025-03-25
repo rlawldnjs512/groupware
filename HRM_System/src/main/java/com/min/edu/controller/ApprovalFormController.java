@@ -3,12 +3,12 @@ package com.min.edu.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,16 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.min.edu.dto.ApprovalDto;
 import com.min.edu.dto.DocumentDto;
 import com.min.edu.dto.EmployeeDto;
 import com.min.edu.dto.FileUpDto;
 import com.min.edu.dto.LeaveDto;
-import com.min.edu.dto.SignDto;
 import com.min.edu.dto.TripDto;
-import com.min.edu.model.mapper.IEmployeeDao;
 import com.min.edu.model.service.IApprovalService;
-import com.min.edu.model.service.IEmployeeService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -111,27 +107,17 @@ public class ApprovalFormController {
 		         (leave_start != null && !leave_start.isEmpty()) && 
 		         (leave_end != null && !leave_end.isEmpty()) && 
 		         (type != null && !type.isEmpty())) {
-
-			// SimpleDateFormat을 사용하여 문자열을 Date로 변환
-	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	        Date startDate = sdf.parse(leave_start);
-	        Date endDate = sdf.parse(leave_end);
-
-	        // 두 날짜의 차이 계산 (밀리초 기준)
-	        long diffInMillies = endDate.getTime() - startDate.getTime();
-	        int leave_days = (int) TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 			
 			LeaveDto leaveDto = LeaveDto.builder()
 					.doc_id(doc_id)
 					.leave_start(leave_start)
 					.leave_end(leave_end)
 					.type(type)
-					.leave_days(leave_days)
 					.build();
 			
-			int resultLeave = approvalService.insertSaveLeave(leaveDto);
+			approvalService.insertSaveLeave(leaveDto);
 			
-			session.setAttribute("doc_id", doc_id);		
+			session.setAttribute("doc_id", doc_id);
 			
 			return "redirect:/approval.do";
 			
@@ -279,9 +265,9 @@ public class ApprovalFormController {
 									  @RequestParam("content") String content,
 									  @RequestParam(value = "appLine", required = false) List<String> appLine, 
 									  @RequestParam("doc_type") String doc_type,
-//									  @RequestParam("leave_start") String leave_start,
-//									  @RequestParam("leave_end") String leave_end,
-//									  @RequestParam("type") String type
+									  @RequestParam("leave_start") String leave_start,
+									  @RequestParam("leave_end") String leave_end,
+									  @RequestParam("type") String type,
 									  LeaveDto leaveDto, HttpServletResponse response
 									  ) throws IOException {
 		
@@ -294,17 +280,31 @@ public class ApprovalFormController {
 		System.out.println("appLine : " + appLine);
 		System.out.println("doc_type : " + doc_type);
 		System.out.println("-------------------전달되는 휴가 입력 값 -----------------------");
-		System.out.println("leave_start : " + leaveDto.getLeave_start());
-		System.out.println("leave_end : " + leaveDto.getLeave_end());
-		System.out.println("type : " + leaveDto.getType());
-		
-		
+		System.out.println("leave_start : " + leave_start);
+		System.out.println("leave_end : " + leave_end);
+		System.out.println("type : " + type);
 		
 		 if (appLine == null || appLine.isEmpty()) {
 		    	response.getWriter().print("<script>alert('결재선을 선택해주세요'); window.history.back();</script>");
 		    	return null;
 		    }
-		
+		 
+		// 날짜 계산
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	    LocalDate startDate = LocalDate.parse(leave_start, formatter);
+	    LocalDate endDate = LocalDate.parse(leave_end, formatter);
+	    
+	    double leave_days = ChronoUnit.DAYS.between(startDate, endDate) + 1;
+	    if ("오전반차".equals(type) || "오후반차".equals(type)) {
+	        leave_days = leave_days / 2;
+	    }
+	    
+	    leaveDto = LeaveDto.builder()
+	            .leave_start(leave_start)
+	            .leave_end(leave_end)
+	            .type(type)
+	            .leave_days(leave_days)
+	            .build();
 		
 		// 문서 저장
 		Map<String, Object>  docMap =  new HashMap<String, Object>();
@@ -322,6 +322,7 @@ public class ApprovalFormController {
 		// 공통문서 입력
 		int result =  approvalService.insertDocumentLeave(docMap, appMap, leaveDto);
 		
+		
 		// 휴가 저장
 //		Map<String, Object> leaMap = new HashMap<String, Object>();
 //		leaMap.put("doc_id", "");
@@ -329,8 +330,8 @@ public class ApprovalFormController {
 //		leaMap.put("leave_end", leave_end);
 //		leaMap.put("type", type);
 		
-		System.out.println(result);
-		
+		System.out.println("leave_days : " + leave_days);
+		System.out.println("result : " + result);
 		
 		return "redirect:/approval.do";
 	}

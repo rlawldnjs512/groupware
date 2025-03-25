@@ -19,6 +19,6 @@ public class LeaveDto {
 	private String leave_start;
 	private String leave_end;
 	private String type;
-	private int leave_days;
+	private double leave_days;
 
 }

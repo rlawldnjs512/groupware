@@ -33,12 +33,6 @@ class Leave_JUnitTest {
 	}
 	
 	//@Test
-	void leaveList_Test() {
-		List<Map<String, Object>> lists = leaveService.leaveList();
-		System.out.println(lists);
-	}
-	
-	//@Test
 	void leaveListByEmpId_Test() {
 		List<Map<String, Object>> list = leaveService.leaveListByEmpId("20240002", "2025-02-28", "2025-02-28");
 		System.out.println(list);
