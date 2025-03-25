@@ -40,6 +40,7 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -151,7 +152,7 @@ public class ApprovalController {
 	public String updateApproval(HttpSession session,@RequestParam int doc_id,
 			                   @RequestParam int apprv_id,
 			                   @RequestParam String apprv_level,
-			                   HttpServletResponse response) throws IOException {
+			                   HttpServletResponse response) throws IOException, InterruptedException {
 		
 		 response.setContentType("text/html; charset=UTF-8;");
 		EmployeeDto edto = (EmployeeDto)session.getAttribute("loginVo");
@@ -167,12 +168,16 @@ public class ApprovalController {
 		log.info("레벨레벨레벨레벨레벨레벨 : {}",level);
 		int n = service.updateApprovalStatus(dto);
 		
-		
 		int m= Integer.parseInt(service.selectApprovalLast(apprv_id)); //1. 본인의 승인순서가 마지막인지 확인
 		log.info("{}",m);
 		
 		if(m==service.selectApprovalMax(doc_id)) {//2. 본인의 순서랑 결재할 문서의 마지막 승인번호 비교
 			service.updateDocumentStatus(doc_id); //3. 마지막 결재자까지 결재가 완료되면 승인상태가 Y로 바뀜 
+			String docType = service.getDocType(doc_id);
+			System.out.println("docType : " + docType);
+			if("휴가".equals(docType)) {
+				leaveService.updateVacationLeave(doc_id);
+			}
 		}
 		
 		// 위의 if 문을 먼저 하고 아래 if 문 실행 

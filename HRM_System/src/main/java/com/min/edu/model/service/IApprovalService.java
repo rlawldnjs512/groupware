@@ -107,9 +107,6 @@ public interface IApprovalService {
 	  public String selectApprovalLast(int apprv_id);
 
 	 public int updateDocStatus(int doc_id);
-
-
-
-
+	 
 
 }
