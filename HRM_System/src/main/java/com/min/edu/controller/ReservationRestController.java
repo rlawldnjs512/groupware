@@ -38,8 +38,9 @@ public class ReservationRestController {
     }
 	
 	@GetMapping(value = "/reservationapi.do")
-    public ResponseEntity<Map<String, Object>> searchReservation(@RequestParam(required = false) String nowDate) {
-       
+    public ResponseEntity<Map<String, Object>> searchReservation
+    				(@RequestParam(required = false) String nowDate) {
+		
 		System.out.println("Rest 날짜 전달 값 : " + nowDate);
 		if (nowDate == null || nowDate.equals("")) {
             Date date = new Date();
