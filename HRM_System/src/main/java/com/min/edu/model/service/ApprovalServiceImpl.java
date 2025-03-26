@@ -104,7 +104,9 @@ public class ApprovalServiceImpl implements IApprovalService {
 	
 	@Override
 	@Transactional
-	public int insertDocumentLeave(Map<String, Object> docMap, Map<String, Object> appMap, LeaveDto leaveDto)
+	public int insertDocumentLeave(Map<String, Object> docMap, 
+								   Map<String, Object> appMap, 
+								   LeaveDto leaveDto)
 	{
 		 int n = dao.insertDocument(docMap);
 		 appMap.put("doc_id", docMap.get("doc_id"));

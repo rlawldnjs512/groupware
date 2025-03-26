@@ -44,7 +44,6 @@ public class ReservationController {
 			System.out.println(nowDate);
 		}
 
-		
 		List<RoomDto> lists = service.selectReservation(nowDate);
 		model.addAttribute("lists",lists);
 		model.addAttribute("nowDate", nowDate);

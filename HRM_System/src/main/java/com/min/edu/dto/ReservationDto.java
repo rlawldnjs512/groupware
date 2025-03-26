@@ -14,7 +14,6 @@ import lombok.ToString;
 @Setter
 public class ReservationDto {
 
-
 	private String reserv_id;
 	private String room_id;
 	private String emp_id;
@@ -23,5 +22,14 @@ public class ReservationDto {
 	private String range;
 	private String name;
 	
-	
 }
+
+
+
+
+
+
+
+
+
+

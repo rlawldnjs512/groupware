@@ -9,7 +9,6 @@
 	<collection property="reservation" resultMap="ReservationMap"/>
 </resultMap>
 
-
 <resultMap type="ReservationDto" id="ReservationMap">
 	<result property="reserv_id" column="RESERV_ID"/>
 	<result property="range" column="RANGE"/>
@@ -18,7 +17,6 @@
 	<result property="rev_date" column="REV_DATE"/>
 	<result property="name" column="NAME"/>
 </resultMap>
-
 
 <select id="selectReservation" resultMap="RoomMap">
 SELECT r.ROOM_ID , r.ROOM_NAME ,CASE 
@@ -51,7 +49,6 @@ LEFT JOIN
 ON t.SLOT = r2.SLOT
 AND r.ROOM_ID = r2.ROOM_ID
 ORDER BY r.ROOM_ID, t.SLOT
-
 </select>
 
 
