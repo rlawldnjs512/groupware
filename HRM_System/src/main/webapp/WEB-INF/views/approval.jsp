@@ -21,72 +21,10 @@
 	--bs-warning-light: #fff8dd;
 }
 
-.btn.btn-light-success {
-	color: var(--bs-success);
-	border-color: var(--bs-success-light);
-	background-color: var(--bs-success-light);
-}
-
-.btn.btn-light-success:hover {
-	color: var(--bs-white);
-	border-color: var(--bs-success);
-	background-color: var(--bs-success);
-}
-
-.btn.btn-light-success:focus {
-	outline: none;
-	box-shadow: 0 0 0 0.25rem rgba(var(--bs-success), 0.5);
-}
-
-.btn.btn-light-secondary {
-	color: var(--bs-secondary);
-	border-color: var(--bs-secondary-light);
-	background-color: var(--bs-secondary-light);
-}
-
-.btn.btn-light-secondary:hover {
+.btn.btn-light-dark:hover {
 	color: var(--bs-white);
 	border-color: var(--bs-secondary);
 	background-color: var(--bs-secondary);
-}
-
-.btn.btn-light-secondary:focus {
-	outline: none;
-	box-shadow: 0 0 0 0.25rem rgba(var(--bs-secondary), 0.5);
-}
-
-.btn.btn-light-primary {
-	color: var(--bs-primary);
-	border-color: var(--bs-primary-light);
-	background-color: var(--bs-primary-light);
-}
-
-.btn.btn-light-primary:hover {
-	color: var(--bs-primary-white);
-	border-color: var(--bs-primary);
-	background-color: var(--bs-primary);
-}
-
-.btn.btn-light-primary:focus {
-	outline: none;
-	box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary), 0.5);
-}
-
-.btn.btn-light-warning {
-	color: var(--bs-warning);
-	border-color: var(--bs-warning-light);
-	background-color: var(--bs-warning-light);
-}
-
-.btn.btn-light-warning:hover {
-	color: var(--bs-white);
-	border-color: var(--bs-warning);
-	background-color: var(--bs-warning);
-}
-
-.btn.btn-light-warning:focus {
-	outline: none;
-	box-shadow: 0 0 0 0.25rem rgba(var(--bs-warning), 0.5);
 }
 
 table {
@@ -97,7 +35,7 @@ table {
 th, td {
 	border: 1px solid #ccc;
 	padding: 10px;
-	text-align: left;
+	text-align: center;
 }
 
 th {
@@ -126,7 +64,7 @@ th {
 .button-container button {
 	flex: 1; /* 버튼 크기를 동일하게 확장 */
 	max-width: 300px; /* 버튼 최대 너비 설정 */
-	height: 60px; /* 버튼 높이 */
+	height: 40px; /* 버튼 높이 */
 	font-size: 18px; /* 글자 크기 */
 	font-weight: bold; /* 글자 굵게 */
 }
@@ -135,14 +73,6 @@ th {
     display: flex;
     align-items: stretch;  /* 두 카드의 높이를 일치시킴 */
     gap: 20px; /* 카드 사이의 간격 */
-}
-
-.card.text-bg-light {
-    padding: 20px;
-}
-
-.card.text-bg-light.w-25 {
-    flex: 1 1 20%; /* 서명 카드의 너비 설정, 필요에 따라 조정 */
 }
 
 .card-body {
@@ -176,7 +106,7 @@ th {
 
 .button-container button {
 	width: 1000px;  /* 버튼 너비 */
-    height: 100px;  /* 버튼 높이 */
+    height: 50px;  /* 버튼 높이 */
     font-size: 22px;  /* 버튼 글자 크기 */
     display: flex;  /* 내용 중앙 정렬을 위한 flexbox */
     justify-content: center;  /* 수평 중앙 정렬 */
@@ -195,17 +125,17 @@ th {
 		<div class="main-content">
 
 			<div class="button-container">
-				<button type="button" class="btn btn-light-success"
+				<button type="button" class="btn btn-light-dark"
 					onclick="location.href='/vacationForm.do'">휴가 작성하기</button>
-				<button type="button" class="btn btn-light-secondary"
+				<button type="button" class="btn btn-light-dark"
 					onclick="location.href='/tripForm.do'">출장 작성하기</button>
-				<button type="button" class="btn btn-light-warning"
+				<button type="button" class="btn btn-light-dark"
 					onclick="location.href='/reportForm.do'">보고서 작성하기</button>
 			</div>
 
 			<div class="d-flex align-items-start gap-1">
 				<!-- 진행 중인 결재 -->
-				<div class="card text-bg-light mb-3 w-25">
+				<div class="card list border-light mb-3 shadow p-3 rounded wide-card" style="flex: 1 1 20%;">
 					<div class="card-header">진행중인 결재 목록</div>
 					<div class="card-body text-center">
 						<table
@@ -268,7 +198,7 @@ th {
 					</div>
 				</div>
 				<!-- 내 서명 -->
-				<div class="card text-bg-light mb-3 w-auto">
+				<div class="card list border-light mb-3 shadow p-3 rounded wide-card">
 					<div class="card-header">내 서명</div>
 					<div class="card-body text-center">
 						<img id="signatureImage" src="${loginVo.signSaved}" width="80"

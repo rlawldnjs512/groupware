@@ -36,7 +36,7 @@
 						</div>
 					</fieldset>
 	
-					<table class="table table-hover table-rounded table-striped border gy-7 gs-7">
+					<table class="table table-hover">
 						<thead>
 							<tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
 								<th>NO</th>
@@ -92,20 +92,20 @@
 									   					<div class="btn-group btn-group-justified">
 															<c:if test="${vo.emp_id eq loginVo.emp_id}">
 										   						<div class="btn-group">
-										   							<input type="button" class="btn btn-primary" onclick="modify('${vo.free_id}')" value="수정">
+										   							<input type="button" class="btn btn-light-secondary" onclick="modify('${vo.free_id}')" value="수정">
 										   						</div>
 										   						<div class="btn-group">
-										   							<input type="button" class="btn btn-danger" onclick="del('${vo.free_id}')" value="삭제">
+										   							<input type="button" class="btn btn-light-secondary" onclick="del('${vo.free_id}')" value="삭제">
 										   						</div>
 															</c:if>
 									   						<div class="btn-group">
 									   							<c:if test="${vo.file_exist eq 'Y'}">
-									   								<input type="button" class="btn btn-success" onclick="fileDown('${vo.free_id}')" value="첨부파일 다운로드">
+									   								<input type="button" class="btn btn-light-secondary" onclick="fileDown('${vo.free_id}')" value="첨부파일 다운로드">
 									   							</c:if>
 									   						</div>
 									   						<c:if test="${vo.step == 0}">
 										   						<div class="btn-group">
-										   							<input type="button" class="btn btn-info" onclick="reply('${vo.free_id}')" value="답글달기">
+										   							<input type="button" class="btn btn-light-secondary" onclick="reply('${vo.free_id}')" value="답글달기">
 										   						</div>
 									   						</c:if>
 									   					</div>

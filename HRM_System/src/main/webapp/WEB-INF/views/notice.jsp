@@ -20,10 +20,14 @@
 		<div class="main-content">
 			<form action="./searchNotice.do" method="get" name="searchNotice">
 			   <div class="table-responsive">
-			   		<fieldset class="btn-container">
+			   		<fieldset class="btn-container" style="justify-content: flex-end;">
+			   		<c:if test="${sessionScope.loginVo.role eq 'A'}">
+				       <input type="button" class="btn btn-light-primary ms-2" value="등록하기" 
+				       		onclick="location.href='./newNotice.do'">
+					</c:if>
 			   			<div class="searchArea">
 				   			<select name="type" id="type">
-					            <option value="title" ${(param.type == "title")?"selected":""}>제목</option>
+					            <option value="title" ${(param.type == "title")?"selected":""}>제목　</option>
 					        	<option value="content" ${(param.type == "content")?"selected":""}>내용</option>
 					        </select> 
 							<input type="text" name="keyword" value="${param.keyword}" placeholder="검색어를 입력해주세요.">
@@ -33,7 +37,7 @@
 						</div>
 					</fieldset>
 					
-					<table class="table table-hover table-rounded table-striped border gy-7 gs-7">
+					<table class="table table-hover">
 			           <thead>
 			               <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
 							   <th>NO</th>
@@ -80,15 +84,15 @@
 														<c:if test="${sessionScope.loginVo.role eq 'A'}">
 										   					<div class="btn-group btn-group-justified">
 										   						<div class="btn-group">
-										   							<input type="button" class="btn btn-primary" onclick="modify('${vo.not_id}')" value="수정">
+										   							<input type="button" class="btn btn-light-secondary" onclick="modify('${vo.not_id}')" value="수정">
 										   						</div>
 										   						<div class="btn-group">
-										   							<input type="button" class="btn btn-danger" onclick="del('${vo.not_id}')" value="삭제">
+										   							<input type="button" class="btn btn-light-secondary" onclick="del('${vo.not_id}')" value="삭제">
 										   						</div>
 														</c:if>
 															<div class="btn-group">
 																<c:if test="${vo.file_exist eq 'Y'}">
-																	<input type="button" class="btn btn-success" id="saveFile" onclick="fileDown('${vo.not_id}')" value="첨부파일 다운로드">
+																	<input type="button" class="btn btn-light-secondary" id="saveFile" onclick="fileDown('${vo.not_id}')" value="첨부파일 다운로드">
 																</c:if>
 										   					</div>
 										   				</div>
@@ -101,10 +105,7 @@
 			               </c:choose>
 			           </tbody>
 			       </table>
-					<c:if test="${sessionScope.loginVo.role eq 'A'}">
-				       <input type="button" class="btn btn-light-primary ms-2" value="등록하기" 
-				       		onclick="location.href='./newNotice.do'">
-					</c:if>
+					
 			   </div>  
 			</form>          
 		</div>

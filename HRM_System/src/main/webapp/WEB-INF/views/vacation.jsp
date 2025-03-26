@@ -42,7 +42,7 @@
 				</div> <!-- card-body -->
 			</div> <!-- card -->
 			
-			<table class="table table-striped table-hover">
+			<table class="table table-hover">
 				<thead class="table-light">
 					<tr>
 						<td>번호</td>

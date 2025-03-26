@@ -59,7 +59,7 @@ th, td {
 	                <h2 class="text-center mb-4">휴가원</h2>
 	                <div>
 		                <div style="float: left; width: 30%">
-							<table class="table table-borderless w-100 mb-3">
+							<table class="table table-bordered mb-3" style="border: 2px solid black">
 								<tr>
 									<th rowspan="2">기안자</th>
 									<th>소속부서</th>
@@ -76,7 +76,7 @@ th, td {
 							</table>
 						</div>
 						<div style="float: right; width: 60%">
-							<table class="table table-borderless mb-3">
+							<table class="table table-bordered mb-3" style="border: 2px solid black">
 								<tr>
 									<th rowspan="2">결재</th>
 									<th>본인</th>

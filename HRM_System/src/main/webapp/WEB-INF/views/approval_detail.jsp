@@ -28,7 +28,7 @@
 
 					<div class="approval-container">  
 						  <div class="drafter-info">
-							<table class="table table-borderless mb-3">
+							<table class="table table-bordered mb-3" style="border: 2px solid black">
 								<col style="width: 15%;">
 							            <col style="width: 20%;">
 							            <col style="width: 20%;">
@@ -51,12 +51,12 @@
 							</table>
 						</div>
 						 <div class="approver-info">
-    <table class="table table-borderless mb-3">
-        <col width="180px">
-        <col width="180px">
-        <col width="180px">
-        <col width="180px">
-        <col width="180px">
+    <table class="table table-bordered mb-3" style="border: 2px solid black">
+        <col width="70px">
+        <col width="130px">
+        <col width="130px">
+        <col width="130px">
+        <col width="130px">
         
         <!-- 결재자 목록 -->
         <tr id="approvalLineTd_1" style="height: 20px;">

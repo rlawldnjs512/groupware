@@ -19,20 +19,22 @@
             --bs-primary-white: #fff;
         }
 
-        .btn.btn-light-primary {
-            color: var(--bs-primary);
-            border-color: var(--bs-primary-light);
-            background-color: var(--bs-primary-light);
-            padding: 6px 12px;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        .btn.btn-light-primary:hover {
-            color: var(--bs-primary-white);
-            border-color: var(--bs-primary);
-            background-color: var(--bs-primary);
-        }
+		.btn.btn-light-success {
+		   color: var(--bs-success);
+		   border-color: var(--bs-success-light);
+		   background-color: var(--bs-success-light);
+		}
+		
+		.btn.btn-light-success:hover {
+		   color: var(--bs-white);
+		   border-color: var(--bs-success);
+		   background-color: var(--bs-success);
+		}
+		
+		.btn.btn-light-success:focus {
+		   outline: none;
+		   box-shadow: 0 0 0 0.25rem rgba(var(--bs-success), 0.5);
+		}
 
         table {
             width: 100%;
@@ -66,7 +68,7 @@
         <%@ include file="header.jsp" %>
         <div class="main-content">
             <div>
-                <table>
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th  style="text-align: center;">문서번호</th>
@@ -97,7 +99,7 @@
                                      
                                         <td>
 										    <a href="./approval_detail.do?doc_id=${approval.doc_id}&apprv_id=${approval.apprv_id}"
-										       class="btn btn-light-primary">상세보기</a>
+										       class="btn btn-light-success">상세보기</a>
 										</td>
 										</tr>
                                 </c:forEach>
