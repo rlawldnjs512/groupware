@@ -61,7 +61,7 @@ tbody tr:hover {
         <div class="main-content">
 			<div class="table-responsive">
 				<!-- 부서별 결재 완료된 문서 조회 -->
-        		<table>
+        		<table class="table table-hover">
         			<thead>
 	        			<tr>
 	        				<th>발급번호</th>

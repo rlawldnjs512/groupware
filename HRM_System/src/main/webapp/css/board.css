@@ -6,27 +6,78 @@
 	--bs-primary-white: #fff;
 }
 
+.btn.btn-light-success {
+   color: var(--bs-success);
+   border-color: var(--bs-success-light);
+   background-color: var(--bs-success-light);
+}
+
+.btn.btn-light-success:hover {
+   color: var(--bs-white);
+   border-color: var(--bs-success);
+   background-color: var(--bs-success);
+}
+
+.btn.btn-light-success:focus {
+   outline: none;
+   box-shadow: 0 0 0 0.25rem rgba(var(--bs-success), 0.5);
+}
+
+.btn.btn-light-secondary {
+   color: var(--bs-secondary);
+   border-color: var(--bs-secondary-light);
+   background-color: var(--bs-secondary-light);
+}
+
+.btn.btn-light-secondary:hover {
+   color: var(--bs-white);
+   border-color: var(--bs-secondary);
+   background-color: var(--bs-secondary);
+}
+
+.btn.btn-light-secondary:focus {
+   outline: none;
+   box-shadow: 0 0 0 0.25rem rgba(var(--bs-secondary), 0.5);
+}
+
 .btn.btn-light-primary {
-	color: var(--bs-primary);
-	border-color: var(--bs-primary-light);
-	background-color: var(--bs-primary-light);
+   color: var(--bs-primary);
+   border-color: var(--bs-primary-light);
+   background-color: var(--bs-primary-light);
 }
 
 .btn.btn-light-primary:hover {
-	color: var(--bs-primary-white);
-	border-color: var(--bs-primary);
-	background-color: var(--bs-primary);
+   color: var(--bs-primary-white);
+   border-color: var(--bs-primary);
+   background-color: var(--bs-primary);
 }
 
 .btn.btn-light-primary:focus {
-	outline: none;
-	box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary), 0.5);
+   outline: none;
+   box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary), 0.5);
+}
+
+.btn.btn-light-warning {
+   color: var(--bs-warning);
+   border-color: var(--bs-warning-light);
+   background-color: var(--bs-warning-light);
+}
+
+.btn.btn-light-warning:hover {
+   color: var(--bs-white);
+   border-color: var(--bs-warning);
+   background-color: var(--bs-warning);
+}
+
+.btn.btn-light-warning:focus {
+   outline: none;
+   box-shadow: 0 0 0 0.25rem rgba(var(--bs-warning), 0.5);
 }
 
 th, td {
 	border: 1px solid #ccc;
 	padding: 10px;
-	text-align: left;
+	text-align: center;
 }
 
 th {
@@ -84,7 +135,7 @@ th {
 .main-content table thead tr th,
 .main-content table thead tr td {
     padding: 12px;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     font-size: 16px;
 }

@@ -21,7 +21,7 @@
  			margin: 0 auto;
  		}
  		.user .card.border-light.mb-3 {
- 			background-color: #F0F0F0;
+ 			background-color: #FFFFFF;
  			width: 20em;
  			min-height: 30em;
  			text-align: center;
@@ -101,7 +101,7 @@
 /* ------------- 관리자 ------------- */			
 		
 		.admin .card.border-light.mb-3 {
-		    background-color: #F0F0F0;
+		    background-color: #FFFFFF;
 		    width: 18rem;
 		    min-height: 11rem;
 		    margin-left: 10px;
@@ -217,7 +217,7 @@
 
 				    <div class="tab-content" id="myTabContent">
 				        <div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel">
-				            <table class="table table-hover table-rounded table-striped border gy-7 gs-7">
+				            <table class="table table-hover">
 				                <thead>
 				                    <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
 				                        <th>ID</th>
@@ -269,7 +269,7 @@
 				        </div> <!-- 공지사항 탭 끝 -->
 	
 				        <div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel">
-				            <table class="table table-hover table-rounded table-striped border gy-7 gs-7">
+				            <table class="table table-hover table-rounded">
 				                <thead>
 				                    <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
 				                        <th>ID</th>

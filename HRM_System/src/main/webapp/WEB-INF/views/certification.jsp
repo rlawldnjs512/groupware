@@ -142,7 +142,7 @@
 				</div>
 
 				<div class="table-responsive">
-					<table class="table table-hover table-rounded table-striped border gy-7 gs-7">
+					<table class="table table-hover">
 					    <thead>
 					        <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
 					            <th class="text-length">발급번호</th>
