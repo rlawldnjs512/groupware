@@ -564,5 +564,39 @@ SELECT DOC_NUM, DOC_TYPE ,TITLE ,DOC_STATUS ,CREATE_DATE
 		WHERE DOC_ID= #{doc_id}
 </update>	
 
+<!-- 내가 해야할 결재 갯수 -->
+<select id="getMyApprovalCount" resultType="int">
+    SELECT 
+        COUNT(*) OVER() AS MYCNT
+    FROM (
+        SELECT 
+            APPRV_ID, DOC_ID, EMP_ID, APPRV_STATUS, SIGN,  APPRV_LEVEL,
+            LAG(APPRV_STATUS, 1) OVER (PARTITION BY DOC_ID ORDER BY APPRV_LEVEL) AS PREV_SIGN,
+            ROW_NUMBER() OVER (PARTITION BY DOC_ID ORDER BY APPRV_LEVEL ASC) AS rn
+        FROM APPROVAL
+    ) A
+    JOIN DOCUMENT D ON A.DOC_ID = D.DOC_ID
+    JOIN EMPLOYEE E ON D.EMP_ID = E.EMP_ID
+    WHERE (A.PREV_SIGN = '승인' OR A.PREV_SIGN IS NULL)
+        AND A.APPRV_STATUS != '승인'
+        AND A.APPRV_STATUS != '반려'
+        AND A.EMP_ID = #{emp_id}
+     ORDER BY D.DOC_ID DESC
+</select>
+
+<select id="getContinueCount" resultType="int">
+SELECT COUNT(*) AS CONTINUECNT
+	FROM DOCUMENT d 
+	WHERE DOC_STATUS = 'N'
+	AND EMP_ID = #{emp_id}
+</select>
+
+<select id="getTempCount" resultType="int">
+SELECT COUNT(*) 
+	FROM DOCUMENT 
+    WHERE EMP_ID = #{emp_id}
+    AND DOC_STATUS = 'T'
+</select>
+
 
 </mapper>

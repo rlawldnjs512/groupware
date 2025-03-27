@@ -13,8 +13,21 @@
 	<script type="text/javascript" src="./js/chart.js"></script>	
 	<link rel="stylesheet" href="./css/calendar.css">
 	<link rel="stylesheet" href="./css/home.css">
+	
 </head>
 <%@ include file="sidebar.jsp"%>
+<style type="text/css">
+		a {
+		    color: inherit; /* 부모 요소의 색상을 상속 */
+		    text-decoration: none; /* 밑줄 제거 */
+		  }
+		  
+		.btn-light-secondary:hover {
+		    background-color: #e9ecef; /* 약간 어두운 배경색 */
+		    transform: scale(1.05); /* 살짝 확대 */
+		    transition: all 0.3s ease; /* 부드러운 전환 효과 */
+		}
+</style>
 <body>
 	<div class="content" id="content">
 		<div>
@@ -157,8 +170,19 @@
 				
 					<div class="card-container 2">
 						<div class="card border-light mb-3 shadow p-3 rounded approval">
+							<br>
+							<a href="./approval_receive.do">
+								<button class="btn btn-light-secondary" style="font-size: 20px;"><b>결재할 문서</b> <br><br> ${myCnt}개</button>
+							</a>
+							<br><br>	
+							<a href="./approval_mine.do">
+								<button class="btn btn-light-secondary" style="font-size: 20px;"><b>진행중인 결재</b> <br><br> ${continueCnt}개</button>
+							</a>
+							<br><br>			
+							<a href="./temp_store.do">
+								<button class="btn btn-light-secondary" style="font-size: 20px;"><b>임시저장된 결재</b> <br><br> ${tempCnt}개</button>
+							</a>					
 						</div> <!-- approval card -->
-					
 						<div class="card border-light mb-3 shadow p-3 rounded calendar">
 							<div id='calendar'></div>
 						</div> <!-- calendar card -->

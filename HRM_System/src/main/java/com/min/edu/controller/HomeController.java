@@ -18,6 +18,7 @@ import com.min.edu.dto.EmpPageDto;
 import com.min.edu.dto.EmployeeDto;
 import com.min.edu.dto.FreeboardDto;
 import com.min.edu.dto.NoticeboardDto;
+import com.min.edu.model.service.IApprovalService;
 import com.min.edu.model.service.IAttendanceService;
 import com.min.edu.model.service.IBoardService;
 import com.min.edu.model.service.IEmployeeService;
@@ -40,6 +41,7 @@ public class HomeController {
 	private final IVacationService vacationService;
 	private final IReservationService reservationService;
 	private final IBoardService boardService;
+	private final IApprovalService approvalService;
 	
 	@GetMapping(value = "/homeList.do")
 	public String homeList(Model model, HttpServletResponse response, HttpSession session, HttpServletRequest req) {
@@ -93,6 +95,17 @@ public class HomeController {
  		List<FreeboardDto> freeLists = boardService.selectFree();
  		model.addAttribute("noticeLists", noticeLists);
  		model.addAttribute("freeLists", freeLists);
+ 		
+ 		// 내가 결재해야할거
+ 		int myCnt = approvalService.getMyApprovalCount(empId);
+ 		// 진행중인 결재 갯수
+ 		int continueCnt = approvalService.getContinueCount(empId);
+ 		// 임시저장 문서 갯수
+ 		int tempCnt = approvalService.getTempCount(empId);
+ 		model.addAttribute("myCnt",myCnt);
+ 		model.addAttribute("continueCnt",continueCnt);
+ 		model.addAttribute("tempCnt",tempCnt);
+ 		
  	    
  	    ////////////////////////// 관리자 로그인 시 //////////////////////////
  	    

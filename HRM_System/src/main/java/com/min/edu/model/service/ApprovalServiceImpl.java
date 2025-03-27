@@ -277,7 +277,21 @@ public class ApprovalServiceImpl implements IApprovalService {
 		return dao.selectApprovalMax(doc_id);
 	}
 
+	@Override
+	public int getMyApprovalCount(String emp_id) {
+		return dao.getMyApprovalCount(emp_id);
+	}
 
+	@Override
+	public int getContinueCount(String emp_id) {
+		return dao.getContinueCount(emp_id);
+	}
+
+	@Override
+	public int getTempCount(String emp_id) {
+		return dao.getTempCount(emp_id);
+	}
+	
 }
 
 
