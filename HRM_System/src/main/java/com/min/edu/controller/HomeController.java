@@ -88,7 +88,7 @@ public class HomeController {
  		
  		// ----------------- 게시판 시작 -------------------
  		
- 	// 현재 페이지 가져오기 (기본값: 1)
+ 	    // 현재 페이지 가져오기 (기본값: 1)
  	    String pageParam = req.getParameter("page");
  	    int selectPage = (pageParam == null) ? 1 : Integer.parseInt(pageParam);
 

@@ -18,21 +18,38 @@
 	--bs-primary-white: #fff;
 }
 
-.btn.btn-light-primary {
-	color: var(--bs-primary);
-	border-color: var(--bs-primary-light);
-	background-color: var(--bs-primary-light);
+.btn.btn-light-success {
+   color: var(--bs-success);
+   border-color: var(--bs-success-light);
+   background-color: var(--bs-success-light);
 }
 
-.btn.btn-light-primary:hover {
-	color: var(--bs-primary-white);
-	border-color: var(--bs-primary);
-	background-color: var(--bs-primary);
+.btn.btn-light-success:hover {
+   color: var(--bs-white);
+   border-color: var(--bs-success);
+   background-color: var(--bs-success);
 }
 
-.btn.btn-light-primary:focus {
-	outline: none;
-	box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary), 0.5);
+.btn.btn-light-success:focus {
+   outline: none;
+   box-shadow: 0 0 0 0.25rem rgba(var(--bs-success), 0.5);
+}
+
+.btn.btn-light-secondary {
+   color: var(--bs-secondary);
+   border-color: var(--bs-secondary-light);
+   background-color: var(--bs-secondary-light);
+}
+
+.btn.btn-light-secondary:hover {
+   color: var(--bs-white);
+   border-color: var(--bs-secondary);
+   background-color: var(--bs-secondary);
+}
+
+.btn.btn-light-secondary:focus {
+   outline: none;
+   box-shadow: 0 0 0 0.25rem rgba(var(--bs-secondary), 0.5);
 }
 
 thead th {
@@ -60,7 +77,7 @@ tbody tr:hover {
         <div class="main-content">
         	<!-- 결재 상신 전에 문서 임시저장 장소 -->
         	<div>
-        		<table>
+        		<table class="table table-hover">
         			<thead>
 	        			<tr>
 	        				<th>발급번호</th>
@@ -92,10 +109,10 @@ tbody tr:hover {
 				        					</td>
 			        					</c:if>
 			        					<td>
-			        						<input type="button" onclick="continueTemp('${vo.doc_id}', '${vo.doc_type}')" value="보기">
+			        						<input class="btn btn-light-success" type="button" onclick="continueTemp('${vo.doc_id}', '${vo.doc_type}')" value="보기">
 			        					</td>
 			        					<td>
-			        						<input type="button" onclick="deleteTemp('${vo.doc_id}', '${vo.doc_type}')" value="삭제">
+			        						<input class="btn btn-light-secondary"  type="button" onclick="deleteTemp('${vo.doc_id}', '${vo.doc_type}')" value="삭제">
 			        					</td>
 			        				</tr>
 		        				</c:forEach>

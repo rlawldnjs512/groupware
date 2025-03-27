@@ -49,7 +49,7 @@
 					</fieldset>
 				</div> <!-- 검색 영역 -->
 			
-				<table class="table table-striped table-hover">
+				<table class="table table-hover">
 					<thead class="table-light">
 						<tr>
 							<th>번호</th>
@@ -73,7 +73,7 @@
 					            	<fmt:formatDate value="${leave.LEAVE_END}" pattern="yyyy-MM-dd" />
 					            </td>
 					        </tr>
-					    </c:forEach>
+					    </c:forEach>   
 				    </tbody>
 				</table>
 			</form>

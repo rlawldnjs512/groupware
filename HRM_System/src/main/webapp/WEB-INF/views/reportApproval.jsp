@@ -69,7 +69,7 @@ th, td {
 					<h2 class="text-center mb-4">보고서</h2> 
 					<div>
 						<div style="float: left; width: 400px; height: 120px;">
-							<table class="table table-borderless mb-3">
+							<table class="table table-bordered mb-3" style="border: 2px solid black">
 								<col width="80px">
 								<col width="80px">
 								<col width="80px">
@@ -91,7 +91,7 @@ th, td {
 							</table>
 						</div>
 						<div style="float: right; width: 800px">
-							<table class="table table-borderless mb-3">
+							<table class="table table-bordered mb-3" style="border: 2px solid black">
 								<col width="180px">
 								<col width="180px">
 								<col width="180px">

@@ -87,7 +87,7 @@
 				</div>
 			</div>
 			
-			<div id='calendar'></div>
+			<div class="card border-light shadow p-3 rounded" style="width: 100rem;"><div id='calendar'></div></div>
 		
 		</div> <!-- main-content -->
 	</div>	<!-- content -->

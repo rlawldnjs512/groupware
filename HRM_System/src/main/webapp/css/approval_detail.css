@@ -124,7 +124,7 @@ th, td {
     border-radius: 10px;
     box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.15);
     padding: 40px;
-    width: 80%;
+    width: 100%;
     max-width: 1000px;
     margin: auto; /* 가운데 정렬 */
     font-family: 'Arial', sans-serif;
