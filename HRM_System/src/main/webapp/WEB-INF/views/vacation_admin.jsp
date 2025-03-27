@@ -73,8 +73,7 @@
 					            	<fmt:formatDate value="${leave.LEAVE_END}" pattern="yyyy-MM-dd" />
 					            </td>
 					        </tr>
-					        ${first} / ${last}
-					    </c:forEach>   
+					    </c:forEach>
 				    </tbody>
 				</table>
 			</form>
