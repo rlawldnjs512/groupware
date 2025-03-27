@@ -88,12 +88,14 @@
 		CAST(CURRENT_TIMESTAMP AS TIMESTAMP)
 	</delete>
 
-	<!-- 공지사항 게시글을 조회할 수 있다. selectNotice -->
+	<!-- (홈화면)공지사항 게시글을 조회할 수 있다. selectNotice -->
 	<select id="selectNotice" resultType="NoticeboardDto">
-		SELECT NOT_ID , TITLE , CONTENT , REGDATE , TO_CHAR(EXPIRED,'YYYY-MM-DD') AS EXPIRED,
-		(SELECT NAME FROM EMPLOYEE e WHERE ROLE = 'A') AS NAME , FILE_EXIST
+		SELECT NOT_ID , TITLE , 
+			   (SELECT NAME FROM EMPLOYEE e WHERE ROLE = 'A') AS NAME , 
+			   TO_CHAR(REGDATE, 'YYYY-MM-DD') AS REGDATE
 		FROM NOTICEBOARD n
-		ORDER BY NOT_ID ASC
+		ORDER BY REGDATE DESC
+		FETCH FIRST 5 ROWS ONLY
 	</select>
 
 	<!-- 특정 공지사항을 not_id로 조회 -->
@@ -237,11 +239,12 @@
 
 	<!-- 자유게시판을 조회할 수 있다. selectFree-->
 	<select id="selectFree" resultType="FreeboardDto">
-		SELECT FREE_ID , TITLE , CONTENT , REGDATE , EMP_ID , NAME ,
-		REF , STEP , DEPTH , DELFLAG , FILE_EXIST
-		FROM FREEBOARD f
-		JOIN EMPLOYEE e USING(EMP_ID)
-		ORDER BY "REF" DESC , STEP
+		SELECT FREE_ID , TITLE , NAME, TO_CHAR(REGDATE, 'YYYY-MM-DD') AS REGDATE
+			FROM FREEBOARD f
+			JOIN EMPLOYEE e USING(EMP_ID)
+			WHERE DEPTH = 0
+			ORDER BY REGDATE DESC
+			FETCH FIRST 5 ROWS ONLY
 	</select>
 
 	<!-- 특정 공지사항을 free_id로 조회 -->
@@ -285,7 +288,7 @@
 		       EXPIRED , 
 		       NAME , 
 		       FILE_EXIST
-		FROM (SELECT ROW_NUMBER() OVER (ORDER BY NOT_ID) AS SEQ,
+		FROM (SELECT ROW_NUMBER() OVER (ORDER BY REGDATE DESC) AS SEQ,
 		             NOT_ID , 
 		             TITLE , 
 		             CONTENT , 
@@ -295,7 +298,7 @@
 		             (SELECT NAME FROM EMPLOYEE e WHERE ROLE = 'A') AS NAME
 		      FROM NOTICEBOARD n)
 		WHERE SEQ BETWEEN #{first} AND #{last}
-		ORDER BY NOT_ID ASC
+		ORDER BY REGDATE DESC
 	</select>
 
 	<select id="countFreePage" resultType="Integer">
