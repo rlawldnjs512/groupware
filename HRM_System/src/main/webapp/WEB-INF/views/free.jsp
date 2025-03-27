@@ -27,11 +27,10 @@
 								<option value="title" ${(param.type == "title")?"selected":""}>제목</option>
 								<option value="content" ${(param.type == "content")?"selected":""}>내용</option>
 								<option value="name" ${(param.type == "name")?"selected":""}>작성자</option>
-							</select> <input type="text" name="keyword" value="${param.keyword}"
-								placeholder="검색어를 입력해주세요.">
+							</select> 
+							<input type="text" name="keyword" value="${param.keyword}" placeholder="검색어를 입력해주세요.">
 							<button type="submit" class="button-common search-btn">
-								<img src="images/search.svg" alt="검색 아이콘"
-									style="width: 30px; height: 30px;">
+								<img src="images/search.svg" alt="검색 아이콘" style="width: 30px; height: 30px;">
 							</button>
 						</div>
 					</fieldset>
@@ -40,7 +39,7 @@
 						<thead>
 							<tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
 								<th>NO</th>
-								<th>제목</th>
+								<th style="text-align: left;">제목</th>
 								<th>작성자</th>
 								<th>작성일</th>
 								<th>첨부파일</th>
@@ -65,7 +64,7 @@
 										   			${status.index+1}
 										   		</c:if>
 										   </td>
-											<td>
+											<td style="text-align: left;">
 												<a class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse${vo.free_id}"> 
 													${vo.step eq 0 ? "":"&nbsp;<img src='./images/arrow.svg' style='width: 20px; height: 20px;'>&nbsp;"}${vo.title}
 												</a>
@@ -76,16 +75,12 @@
 												<c:if test="${vo.file_exist eq 'Y'}">
 													<img src="./images/filedown.png" width="25">
 			                               		</c:if>
-<%-- 			                               		<c:if test="${vo.file_exist eq 'N'}"> --%>
-<!-- 													<img src="./images/filenot.png"> -->
-<%-- 			                               		</c:if> --%>
 											</td>
 	                                    </tr>
 										<tr class="hidden-row">
 									   		<td colspan="${sessionScope.loginVo.role eq 'A' ? 6:6}">
 									   			<div id="collapse${vo.free_id}" class="panel-collapse collapse">
-									   				<div class="form-group">
-									   					<label>내용</label>
+									   				<div class="form-group" style="text-align: left;">
 														<div class="form-control" style="border: 1px solid #ccc; padding: 10px; background: #f8f9fa;">
 														    <c:out value="${vo.content}" escapeXml="false" />
 														</div>

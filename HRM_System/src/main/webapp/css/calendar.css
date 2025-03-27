@@ -1,5 +1,11 @@
 @charset "UTF-8";
 
+#calendar {
+	flex-grow: 1;
+	width: 100%;
+	height: 100%;
+}
+
 /* 전체 캘린더 스타일 */
 .fc {
   font-family: 'Pretendard', sans-serif;

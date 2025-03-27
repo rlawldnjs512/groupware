@@ -20,10 +20,9 @@
 		<div class="main-content">
 			<form action="./searchNotice.do" method="get" name="searchNotice">
 			   <div class="table-responsive">
-			   		<fieldset class="btn-container" style="justify-content: flex-end;">
+			   		<fieldset class="btn-container">
 			   		<c:if test="${sessionScope.loginVo.role eq 'A'}">
-				       <input type="button" class="btn btn-light-primary ms-2" value="등록하기" 
-				       		onclick="location.href='./newNotice.do'">
+				       <input type="button" class="btn btn-light-primary" value="등록하기" onclick="location.href='./newNotice.do'">
 					</c:if>
 			   			<div class="searchArea">
 				   			<select name="type" id="type">
@@ -41,7 +40,7 @@
 			           <thead>
 			               <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
 							   <th>NO</th>
-			                   <th>제목</th>
+			                   <th style="text-align: left;">제목</th>
 			                   <th>작성자</th>
 			                   <th>작성일</th>
 			                   <th>첨부파일</th>
@@ -61,7 +60,7 @@
 										   		${status.index+1}
 										   </td>
 			                               <td>
-												<div class="panel-heading">
+												<div class="panel-heading" style="text-align: left;">
 													<a class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse${vo.not_id}">${vo.title}</a>
 												</div>
 										   </td>
@@ -78,7 +77,7 @@
 									   			<div id="collapse${vo.not_id}" class="panel-collapse collapse">
 									   				<div class="form-group">
 									   					<label></label>
-														<div class="form-control" style="border: 1px solid #ccc; padding: 10px; background: #f8f9fa;">
+														<div class="form-control" style="border: 1px solid #ccc; padding: 10px; background: #f8f9fa; text-align: left;">
 														    <c:out value="${vo.content}" escapeXml="false" />
 														</div>
 														<c:if test="${sessionScope.loginVo.role eq 'A'}">

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ import com.min.edu.dto.NoticeboardDto;
 import com.min.edu.model.service.IAttendanceService;
 import com.min.edu.model.service.IBoardService;
 import com.min.edu.model.service.IEmployeeService;
+import com.min.edu.model.service.IReservationService;
 import com.min.edu.model.service.IVacationService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,7 +38,7 @@ public class HomeController {
 	private final IEmployeeService employeeService;
 	private final IAttendanceService attendanceService;
 	private final IVacationService vacationService;
-	
+	private final IReservationService reservationService;
 	private final IBoardService boardService;
 	
 	@GetMapping(value = "/homeList.do")
@@ -86,40 +88,11 @@ public class HomeController {
  	 		model.addAttribute("progress", progress);
  		}
  		
- 		// ----------------- 게시판 시작 -------------------
- 		
- 	    // 현재 페이지 가져오기 (기본값: 1)
- 	    String pageParam = req.getParameter("page");
- 	    int selectPage = (pageParam == null) ? 1 : Integer.parseInt(pageParam);
-
- 	    // EmpPageDto 생성 및 설정
- 	    EmpPageDto pageDto = new EmpPageDto();
- 	    pageDto.setTotalCount(boardService.countNoticePage()); // 전체 공지사항 개수
- 	    pageDto.setCountList(5); // 한 페이지에 표시될 글 개수
- 	    pageDto.setCountPage(5); // 한 번에 표시될 페이지 개수
- 	    pageDto.setTotalPage(pageDto.getTotalCount()); // 전체 페이지 수 계산
- 	    pageDto.setPage(selectPage); // 현재 페이지 설정
- 	    pageDto.setStagePage(pageDto.getPage()); // 페이지 그룹 시작 번호 계산
- 	    pageDto.setEndPage(); // 페이지 그룹 끝 번호 계산
-
- 	    // 페이징을 위한 first, last 설정
- 	    int first = (pageDto.getPage() - 1) * pageDto.getCountList() + 1;
- 	    int last = pageDto.getPage() * pageDto.getCountList();
-
- 	    // Map을 사용하여 first, last 값을 담아 전달
- 	    Map<String, Object> map = new HashMap<>();
- 	    map.put("first", first);
- 	    map.put("last", last);
-
- 	    List<NoticeboardDto> noticeLists = boardService.selectNoticePage(map);
- 	    model.addAttribute("noticeLists", noticeLists);
-
- 	    List<FreeboardDto> freeLists = boardService.selectFreePage(map);
- 	    model.addAttribute("freeLists", freeLists);
-
- 	    model.addAttribute("page", pageDto);
- 	    
- 	    
+ 		// 게시판
+ 		List<NoticeboardDto> noticeLists = boardService.selectNotice();
+ 		List<FreeboardDto> freeLists = boardService.selectFree();
+ 		model.addAttribute("noticeLists", noticeLists);
+ 		model.addAttribute("freeLists", freeLists);
  	    
  	    ////////////////////////// 관리자 로그인 시 //////////////////////////
  	    
@@ -134,6 +107,17 @@ public class HomeController {
 		model.addAttribute("lateToday", lateToday);
 		
 		return "homeList";
+	}
+	
+	@RequestMapping(value = "/homeList.do/calendar", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<?> scheduleReservation(HttpSession session) {
+		
+		EmployeeDto loginVo = (EmployeeDto)session.getAttribute("loginVo");
+		String empId = loginVo.getEmp_id();
+		List<Map<String, Object>> list = reservationService.getReservation(empId);
+		System.out.println(list);
+		return ResponseEntity.ok(list);
 	}
 	
 	@RequestMapping(value = "/homeList.do/donutChart", method = RequestMethod.GET)
@@ -194,6 +178,9 @@ public class HomeController {
 
 		return response;
 	}
+	
+	
+	
 }
 
 
