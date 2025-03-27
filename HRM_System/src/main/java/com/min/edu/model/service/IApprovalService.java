@@ -108,5 +108,14 @@ public interface IApprovalService {
 
 	 public int updateDocStatus(int doc_id);
 	 
+	  // 내가 해야할 결재 갯수
+	  public int getMyApprovalCount(String emp_id);
+	  
+	// 내가 상신해서 진행중인 결재 갯수
+	  public int getContinueCount(String emp_id);
+	  
+	  // 내가 임시저장한 문서 갯수
+	  public int getTempCount(String emp_id);
+	 
 
 }

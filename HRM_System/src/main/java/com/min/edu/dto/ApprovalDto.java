@@ -40,4 +40,9 @@ public class ApprovalDto {
     
     private String dept_name;
     private String doc_num;
+    
+    private String myCnt;
+    private String continueCnt;
+    private String tempCnt;
+    
 }
