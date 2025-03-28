@@ -19,7 +19,7 @@
 /* 테이블 header 부분 강화 */
 .main-content table thead {
     background: linear-gradient(to right, #87CEEB, #add8e6);
-    color: #fff;
+    color: black;
     font-weight: bold;
     border-bottom: 2px solid #ccc;
 }
