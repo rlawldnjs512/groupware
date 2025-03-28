@@ -567,7 +567,7 @@ SELECT DOC_NUM, DOC_TYPE ,TITLE ,DOC_STATUS ,CREATE_DATE
 <!-- 내가 해야할 결재 갯수 -->
 <select id="getMyApprovalCount" resultType="int">
     SELECT 
-        COUNT(*) OVER() AS MYCNT
+        COUNT(*) AS MYCNT
     FROM (
         SELECT 
             APPRV_ID, DOC_ID, EMP_ID, APPRV_STATUS, SIGN,  APPRV_LEVEL,
