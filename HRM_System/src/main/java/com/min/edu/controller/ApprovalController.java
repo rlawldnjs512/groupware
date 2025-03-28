@@ -284,10 +284,10 @@ public class ApprovalController {
 								HttpServletRequest request) {
 		
 		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
-		String name = loginVo.getName();
+		String emp_id = loginVo.getEmp_id();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("name", name);
+		map.put("emp_id", emp_id);
 		
 		List<ApprovalDto> lists = service.selectPreviewDoc(map);
 		

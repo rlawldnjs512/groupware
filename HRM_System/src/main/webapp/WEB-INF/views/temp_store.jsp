@@ -83,7 +83,6 @@ tbody tr:hover {
 	        				<th>발급번호</th>
 	        				<th>유형</th>
 	        				<th>제목</th>
-	        				<th>작성자</th>
 	        				<th>승인상태</th>
 	        				<th>이어하기</th>
 	        				<th>삭제</th>
@@ -102,7 +101,6 @@ tbody tr:hover {
 			        					<td>${vo.doc_num}</td>
 			        					<td>${vo.doc_type}</td>
 			        					<td>${vo.title}</td>
-			        					<td>${loginVo.name}</td>
 			        					<c:if test="${vo.doc_status eq 'T'}">
 				        					<td>
 				        						임시저장

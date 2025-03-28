@@ -98,7 +98,7 @@
 		
 						    <div class="tab-content" id="myTabContent">
 						        <div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel">
-						        	<a href="./notice.do">더보기</a>
+						        	
 						            <table class="table table-hover">
 								        <thead>
 								            <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
@@ -128,10 +128,12 @@
 								            </c:choose>
 								        </tbody>
 								    </table>
+								    <div style="display: flex; justify-content: flex-end; padding-right: 30px;">
+									  <a href="./notice.do" style="color: blue;">더보기</a>
+									</div>
 						        </div> <!-- 공지사항 탭 끝 -->
 			
 						        <div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel">
-						        	<a href="./free.do">더보기</a>
 						            <table class="table table-hover">
 									     <thead>
 									         <tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
@@ -161,6 +163,9 @@
 									         </c:choose>
 									     </tbody>
 									 </table>
+									 <div style="display: flex; justify-content: flex-end; padding-right: 30px;">
+									  <a href="./free.do" style="color: blue;">더보기</a>
+									</div>
 						        </div> <!-- 커뮤니티 탭 끝 -->
 						        
 						    </div> <!-- tab-content 끝 -->

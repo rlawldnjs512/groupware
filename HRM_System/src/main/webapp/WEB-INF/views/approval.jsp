@@ -230,7 +230,6 @@ th {
 									<th>발급번호</th>
 			        				<th>유형</th>
 			        				<th>제목</th>
-			        				<th>작성자</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -246,7 +245,6 @@ th {
 												<td>${vo.doc_num}</td>
 												<td>${vo.doc_type}</td>
 												<td>${vo.title}</td>
-												<td>${loginVo.name}</td>
 											</tr>
 										</c:forEach>
 									</c:otherwise>

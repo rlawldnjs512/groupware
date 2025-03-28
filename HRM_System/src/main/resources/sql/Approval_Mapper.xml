@@ -250,18 +250,10 @@ WHERE DOC_ID=#{doc_id}
 
 <!-- 사용자는 임시저장한 문서를 조회할 수 있다.	selectPreviewDoc -->
 <select id="selectPreviewDoc" resultMap="DocumentDtoMap">
-	SELECT s.EMP_ID , a.APPRV_LEVEL , a.APPRV_STATUS , a.SIGN , s.DOC_ID ,
-			(SELECT NAME FROM EMPLOYEE e WHERE NAME = #{name}) AS NAME ,
-			s.DOC_TYPE , s.TITLE , s.CONTENT, s.CREATE_DATE , s.DOC_STATUS , s.DOC_NUM
-		FROM 
-		    (SELECT *
-		     FROM DOCUMENT d
-		     WHERE EMP_ID IN (SELECT EMP_ID FROM EMPLOYEE e WHERE NAME = #{name})
-		     AND DOC_STATUS = 'T'
-		     ) s
-		LEFT OUTER JOIN APPROVAL a 
-		    ON s.EMP_ID = a.EMP_ID
-		ORDER BY s.DOC_ID ASC
+	SELECT DOC_NUM , DOC_TYPE , TITLE , DOC_STATUS
+		FROM DOCUMENT d 
+		WHERE EMP_ID = #{emp_id}
+		AND DOC_STATUS ='T'
 </select>
 
 <select id="continuePreviewDoc" resultMap="DocumentDtoMap">
@@ -567,7 +559,7 @@ SELECT DOC_NUM, DOC_TYPE ,TITLE ,DOC_STATUS ,CREATE_DATE
 <!-- 내가 해야할 결재 갯수 -->
 <select id="getMyApprovalCount" resultType="int">
     SELECT 
-        COUNT(*) OVER() AS MYCNT
+        COUNT(*) AS MYCNT
     FROM (
         SELECT 
             APPRV_ID, DOC_ID, EMP_ID, APPRV_STATUS, SIGN,  APPRV_LEVEL,
@@ -592,7 +584,7 @@ SELECT COUNT(*) AS CONTINUECNT
 </select>
 
 <select id="getTempCount" resultType="int">
-SELECT COUNT(*) 
+SELECT COUNT(*) TEMPCNT
 	FROM DOCUMENT 
     WHERE EMP_ID = #{emp_id}
     AND DOC_STATUS = 'T'
