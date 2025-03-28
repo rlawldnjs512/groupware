@@ -46,7 +46,7 @@
 		    vertical-align: middle;
 		    border-bottom: 2px solid #ddd;
 		}
-
+  
 
         tbody td {
             padding: 10px;

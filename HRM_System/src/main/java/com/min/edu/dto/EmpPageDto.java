@@ -11,15 +11,20 @@ import lombok.ToString;
 @Builder
 public class EmpPageDto {
 
-    private int page;       // 현재 페이지
-    private int countList;  // 한 페이지당 보여줄 글 갯수
-    private int totalCount; // 전체 글의 갯수
-
-    private int countPage;  // 화면에 표시할 페이지 그룹의 페이지 수
-    private int totalPage;  // 전체 페이지 수
-
-    private int stagePage;  // 현재 페이지 그룹의 시작 페이지 번호
-    private int endPage;    // 현재 페이지 그룹의 끝 페이지 번호
+	// 현재 페이지
+    private int page;     
+    // 한 페이지당 보여줄 글 갯수
+    private int countList;  
+    // 전체 글의 갯수
+    private int totalCount; 
+    // 화면에 표시할 페이지 그룹의 페이지 수
+    private int countPage; 
+    // 전체 페이지 수
+    private int totalPage;  
+    // 현재 페이지 그룹의 시작 페이지 번호
+    private int stagePage;  
+    // 현재 페이지 그룹의 끝 페이지 번호
+    private int endPage;    
 
     public int getPage() {
         return page;
