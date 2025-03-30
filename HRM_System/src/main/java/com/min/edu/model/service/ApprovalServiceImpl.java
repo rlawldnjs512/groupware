@@ -291,6 +291,11 @@ public class ApprovalServiceImpl implements IApprovalService {
 	public int getTempCount(String emp_id) {
 		return dao.getTempCount(emp_id);
 	}
+
+	@Override
+	public DocumentDto continuePriview(int doc_id) {
+		return dao.continuePriview(doc_id);
+	}
 	
 }
 

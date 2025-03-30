@@ -123,24 +123,25 @@ tbody tr:hover {
     </div>
 </body>
 <script type="text/javascript">
-	function continueTemp(doc_id,doc_type) {
-	    $.ajax({
-	        type: "GET",
-	        url: "/continueTemp.do",
-	        data: { 
-	            doc_id: doc_id,
-	            doc_type: doc_type
-	        },
-	        success: function(response) {
-	            window.location.href = "/continueTemp.do?doc_id=" + doc_id + "&doc_type=" + doc_type;
-	        },
-	        error: function(xhr, status, error) {
-	            alert("수정 페이지로 이동하는 중 오류 발생: " + error);
-	        }
-	    });
-	}
+function continueTemp(doc_id, doc_type) {
+    $.ajax({
+        type: "GET",
+        url: "/continueTemp.do",
+        data: { 
+            doc_id: doc_id,
+            doc_type: doc_type
+        },
+        success: function(response) { 
+            window.location.href = "/continueTemp.do?doc_id=" + doc_id + "&doc_type=" + doc_type;
+        },
+        error: function(xhr, status, error) {
+            alert("수정 페이지로 이동하는 중 오류 발생: " + error);
+        }
+    });
+}
+
 	
-	function deleteTemp(doc_id,doc_type) {
+	function deleteTemp(doc_id, doc_type) {
 	    $.ajax({
 	        type: "GET",
 	        url: "/deleteTemp.do",
@@ -149,12 +150,13 @@ tbody tr:hover {
 	            doc_type: doc_type
 	        },
 	        success: function(response) {
-	            window.location.href = "/deleteTemp.do?doc_id=" + doc_id + "&doc_type=" + doc_type;
+	            window.location.href = "/temp_store.do"; 
 	        },
 	        error: function(xhr, status, error) {
-	            alert("수정 페이지로 이동하는 중 오류 발생: " + error);
+	            alert("삭제 중 오류 발생: " + error);
 	        }
 	    });
 	}
+
 </script>
 </html>

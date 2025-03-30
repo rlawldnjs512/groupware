@@ -35,6 +35,7 @@ public interface IApprovalService {
 	public int insertSaveLeave(LeaveDto dto);
 	// 문서형식만 조회하기
 	String getDocType(@Param("doc_id") int doc_id);
+	public DocumentDto continuePriview(int doc_id);
 	// 출장 조회하기
 	public TripDto continuePrviewTrip(int doc_id);
 	// 휴가 조회하기

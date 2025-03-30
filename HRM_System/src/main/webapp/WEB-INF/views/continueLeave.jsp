@@ -54,7 +54,7 @@ th, td {
     <div class="content" id="content">
         <%@ include file="header.jsp" %>
         <div class="main-content">
-        	<form action="./TempLeave.do" method="post" enctype="multipart/form-data">
+        	<form method="post" enctype="multipart/form-data">
 	            <div class="card p-4" style="width: 1300px;">
 	                <h2 class="text-center mb-4">휴가원</h2>
 	                <div>
@@ -93,12 +93,13 @@ th, td {
 							</table>
 						</div>
 					</div>
-	
+		<input type="hidden" id="doc_type" name="doc_type"
+								class="form-control" value="휴가">
 					<table class="table table-borderless mb-3">
-						<c:forEach var="vo" items="${reportDto}">
+						
 							<tr>
 								<th>제목</th>
-								<th><input type="text" id="title" name="title" value="${vo.title}"
+								<th><input type="text" id="title" name="title" value="${reportDto.title}"
 									class="form-control" placeholder="제목을 입력하세요."></th>
 							</tr>
 							<tr>
@@ -133,38 +134,39 @@ th, td {
 							<tr>
 								<th>사유</th>
 								<th>
-									<textarea id="reason" name="content" class="form-control" rows="5" placeholder="사유를 입력하세요.">${vo.content}</textarea>
+									<textarea id="reason" name="content" class="form-control" rows="5" placeholder="사유를 입력하세요.">${reportDto.content}</textarea>
 								</th>
 							</tr>
-						</c:forEach>
+						
 					</table>
 	                <div class="d-flex justify-content-end mb-3">
 						<button type="button" id="line" onclick="windowOpen()" class="btn btn-light-primary ms-2">결재선 선택</button>
 						<button type="button" class="btn btn-light-primary ms-2" onclick="history.back(-1)">취소</button>
-						<button type="button" class="btn btn-light-primary ms-2">상신 하기</button>
+						<button type="button" name="leaveApproval" class="report btn btn-light-primary ms-2">상신 하기</button>
 					</div>
 	            </div>
 			</form>
         </div>
     </div>
 	<script type="text/javascript">
-		function line(approvalLine) {
-			console.log(approvalLine)
-			let row1 = document.getElementById("approvalLineTd_1");
-	        let row2 = document.getElementById("approvalLineTd_2");
-	
-	
-// 	        이름 목록을 approvalLindTd_1의 td로 추가
-	        approvalLine.forEach(person => {
-				console.log(person.name)
-	            let td_1 = document.createElement("td");
-	            td_1.textContent = person.name;
-	            row1.appendChild(td_1);
-	            
-	            let td_2 = document.createElement("td");
-	            td_2.setAttribute("rowspan", approvalLine.length);
-		        row2.appendChild(td_2)
-	        });
+	function line(approvalLine) {
+	    let row1 = document.getElementById("approvalLineTd_1");
+	    let frm = document.forms[0];
+
+	    approvalLine.forEach(person => {
+	        
+	        let td_1 = document.createElement("th");
+	        td_1.textContent = person.name;
+	        row1.appendChild(td_1);
+	        
+	        let input_1 = document.createElement("input");
+	        input_1.setAttribute("type", "hidden");
+	        input_1.setAttribute("name", "appLine");
+	        input_1.value = person.id;
+	        
+	        // 순서 유지하면서 추가하기 위해 appendChild 사용
+	        frm.appendChild(input_1);
+	    });
 	
 		}
 		
