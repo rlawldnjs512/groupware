@@ -32,12 +32,17 @@ public interface IApprovalDao {
 	public int insertTempFile(FileUpDto dto);
 	public int getDocId();
 	public int updateTempFileExist(int docId);
+	
+	
+	
 	// + 출장 추가
 	public int insertSaveTrip(TripDto dto);
 	// + 휴가 추가
 	public int insertSaveLeave(LeaveDto dto);
 	
 	// 문서형식만 조회하기
+	public DocumentDto continuePriview(int doc_id);
+
 	String getDocType(@Param("doc_id") int doc_id);
 	// 출장 조회하기
 	public TripDto continuePrviewTrip(int doc_id);

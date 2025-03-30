@@ -268,7 +268,8 @@ public class ApprovalFormController {
 									  @RequestParam("leave_start") String leave_start,
 									  @RequestParam("leave_end") String leave_end,
 									  @RequestParam("type") String type,
-									  LeaveDto leaveDto, HttpServletResponse response
+									  HttpServletResponse response,
+									  LeaveDto leaveDto
 									  ) throws IOException {
 		
 		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");

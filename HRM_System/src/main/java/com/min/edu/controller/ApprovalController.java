@@ -1,6 +1,5 @@
 package com.min.edu.controller;
 
-import java.awt.PageAttributes.MediaType;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -296,13 +295,13 @@ public class ApprovalController {
 		return "temp_store";
 	}
 	
-	// 결재문서 임시저장 이어하기
+	// 결재문서 임시저장 (보기)
 	@GetMapping(value = "/continueTemp.do")
 	public String temp_Reportcontinue(@RequestParam("doc_id") int docId, 
 									  @RequestParam("doc_type") String doc_type,
 									  Model model, 
 									  HttpSession session) {
-		
+		log.info("continueTemp.do GETMapping 호출");
 		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
 		String name = loginVo.getName();
 		String empId = loginVo.getEmp_id();
@@ -312,7 +311,7 @@ public class ApprovalController {
 		map.put("doc_id", docId);
 		
 		// 공통 문서 
-		List<ApprovalDto> reportDto = service.continuePreviewDoc(map);
+		DocumentDto reportDto = service.continuePriview(docId);
 		System.out.println(reportDto);
 		
 		// 출장
@@ -332,9 +331,13 @@ public class ApprovalController {
 		} else if(doc_type.trim().equals("출장")) {
 			return "continueTrip";
 		} else {
+			System.out.println("leaveDto: " + leaveDto); 
 			return "continueLeave";
 		}
 	}
+	
+	
+	
 	
 	// 결재문서 임시저장 삭제하기
 	@GetMapping(value = "/deleteTemp.do")
@@ -342,6 +345,7 @@ public class ApprovalController {
 							  @RequestParam("doc_type") String doc_type,
 							  Model model, 
 							  HttpSession session) {
+		log.info("deleteTemp.do GET매핑");
 		
 		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
 		String name = loginVo.getName();

@@ -250,11 +250,18 @@ WHERE DOC_ID=#{doc_id}
 
 <!-- 사용자는 임시저장한 문서를 조회할 수 있다.	selectPreviewDoc -->
 <select id="selectPreviewDoc" resultMap="DocumentDtoMap">
-	SELECT DOC_NUM , DOC_TYPE , TITLE , DOC_STATUS
+	SELECT DOC_NUM , DOC_TYPE , TITLE , DOC_STATUS,DOC_ID
 		FROM DOCUMENT d 
 		WHERE EMP_ID = #{emp_id}
 		AND DOC_STATUS ='T'
 </select>
+
+<select id="continuePriview" resultType="DocumentDto">
+SELECT DOC_ID, DOC_TYPE , TITLE, CONTENT
+	FROM DOCUMENT d 
+	WHERE DOC_ID = #{doc_id}
+</select>
+
 
 <select id="continuePreviewDoc" resultMap="DocumentDtoMap">
 	SELECT a.EMP_ID , 
