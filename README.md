@@ -26,7 +26,7 @@
 - SignaturePad API
 - FullCalendar API
 - jsTree API
-- SMTP
+- Mail API-SMTP
 - scheduling library
 
 #### 개발 도구
