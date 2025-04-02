@@ -10,7 +10,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="./css/emplist.css">
     <meta charset="UTF-8">
-    <title>전자결재</title>
+    <title>임시문서함</title>
 <style>
 :root {
 	--bs-primary: #1b84ff;

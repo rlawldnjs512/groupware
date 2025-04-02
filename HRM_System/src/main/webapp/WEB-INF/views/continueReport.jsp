@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>보고서 신청</title>
+<title>보고서 임시저장</title>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
@@ -103,6 +103,12 @@ th, td {
 					</div>
 	<input type="hidden" id="doc_type" name="doc_type"
 								class="form-control" value="보고서">
+									<input type="hidden" id="doc_status" name="doc_status"
+								class="form-control" value="T">
+									<input type="hidden" id="docId" name="docId"
+								class="form-control" value="${reportDto.doc_id}">
+								
+							
 					<table class="table table-borderless mb-3">
 						
 						
@@ -112,6 +118,7 @@ th, td {
 									<input type="text" id="title" name="title" value="${reportDto.title}"
 									class="form-control" placeholder="제목을 입력하세요.">
 								</th>
+							
 							</tr>
 							<tr>
 								<th>파일</th>

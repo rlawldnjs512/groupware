@@ -257,7 +257,7 @@ WHERE DOC_ID=#{doc_id}
 </select>
 
 <select id="continuePriview" resultType="DocumentDto">
-SELECT DOC_ID, DOC_TYPE , TITLE, CONTENT
+SELECT DOC_ID, DOC_TYPE , TITLE, CONTENT,DOC_STATUS
 	FROM DOCUMENT d 
 	WHERE DOC_ID = #{doc_id}
 </select>

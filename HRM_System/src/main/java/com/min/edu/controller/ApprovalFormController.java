@@ -28,9 +28,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class ApprovalFormController {
 	
 	private final IApprovalService approvalService;
@@ -182,14 +184,24 @@ public class ApprovalFormController {
 								  @RequestParam(value = "appLine", required = false) List<String> appLine, 
 								  @RequestParam("doc_type") String doc_type,
 								  @RequestParam(value = "file", required = false) MultipartFile file,
+								  @RequestParam(value = "doc_status", required = false) String doc_status,
+							      @RequestParam(value = "docId", required = false) Integer docId,//임시저장함에서 받아온 doc_id
 								  HttpServletResponse response) throws IOException {
 		System.out.println("-------------------전달되는 보고서 입력 값 -----------------------");
 		 response.setContentType("text/html; charset=UTF-8;");
+		 
+		 System.out.println("doc_status : " + doc_status);
+		 System.out.println("docId : " + docId);
+		
 		String fileName = "";
 		if(file != null && !file.isEmpty()) {
 			fileName = file.getOriginalFilename();
 		}
 		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
+		
+
+
+		
 		String emp_id = loginVo.getEmp_id();
 		System.out.println("title : "+ title);
 		System.out.println("content : " + content);
@@ -217,6 +229,21 @@ public class ApprovalFormController {
 		
 		int result =  approvalService.insertDocument(docMap, appMap);
 		System.out.println(result>0 ?"결재성공":"결재실패");
+		
+
+	    if ("T".equals(doc_status)) { //임시문서함에서 삭제를 하면 -> 삭제되고 결재가 상신됨
+			String name = loginVo.getName();
+			
+			DocumentDto dto = DocumentDto.builder()
+								.doc_id(docId)
+								.name(name)
+								.build();
+	    	
+	        int resultDoc = approvalService.deleteSaveDoc(dto); 
+	    }
+		
+	
+		
 		if(result >0  && file != null && !file.isEmpty()) {
 			try {
 				int doc_id=  (Integer)docMap.get("doc_id");
@@ -245,6 +272,8 @@ public class ApprovalFormController {
 					            		.build());
 	            
 	            approvalService.updateTempFileExist(doc_id);
+	       	
+	      
 	            
 			} catch (Exception e) {
 				return "approval";
@@ -268,12 +297,17 @@ public class ApprovalFormController {
 									  @RequestParam("leave_start") String leave_start,
 									  @RequestParam("leave_end") String leave_end,
 									  @RequestParam("type") String type,
+									  @RequestParam(value = "doc_status", required = false) String doc_status,
+								      @RequestParam(value = "docId", required = false) Integer docId,//임시저장함에서 받아온 doc_id
 									  HttpServletResponse response,
 									  LeaveDto leaveDto
 									  ) throws IOException {
 		
 		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
 		 response.setContentType("text/html; charset=UTF-8;");
+		 System.out.println("doc_status : " + doc_status);
+		 System.out.println("docId : " + docId);
+		 
 		String emp_id = loginVo.getEmp_id();
 		System.out.println("-------------------전달되는 보고서 입력 값 -----------------------");
 		System.out.println("title : "+ title);
@@ -322,7 +356,18 @@ public class ApprovalFormController {
 		
 		// 공통문서 입력
 		int result =  approvalService.insertDocumentLeave(docMap, appMap, leaveDto);
-		
+		  
+		if ("T".equals(doc_status)) { //임시문서함에서 삭제를 하면 -> 삭제되고 상신됨
+				String name = loginVo.getName();
+				
+				DocumentDto dto = DocumentDto.builder()
+									.doc_id(docId)
+									.name(name)
+									.build();
+		    	
+				int resultLeave = approvalService.deleteSaveLeave(docId);
+				int resultDoc = approvalService.deleteSaveDoc(dto);
+		    }
 		
 		// 휴가 저장
 //		Map<String, Object> leaMap = new HashMap<String, Object>();
@@ -348,10 +393,15 @@ public class ApprovalFormController {
 								  @RequestParam("content") String content,
 								  @RequestParam(value = "appLine", required = false) List<String> appLine,
 								  @RequestParam("doc_type") String doc_type,
+								  @RequestParam(value = "doc_status", required = false) String doc_status,
+							      @RequestParam(value = "docId", required = false) Integer docId,//임시저장함에서 받아온 doc_id
 								  HttpServletResponse response,
 								  TripDto tripDto) throws IOException {
 		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
 		 response.setContentType("text/html; charset=UTF-8;");
+		 System.out.println("doc_status : " + doc_status);
+		 System.out.println("docId : " + docId);
+		 
 		String emp_id = loginVo.getEmp_id();
 		System.out.println("-------------------전달되는 보고서 입력 값 -----------------------");
 		System.out.println("title : "+ title);
@@ -384,6 +434,19 @@ public class ApprovalFormController {
 		
 		
 		int result = approvalService.insertDocumentTrip(docMap, appMap, tripDto);
+		if ("T".equals(doc_status)) { //임시문서함에서 삭제를 하면 -> 삭제되고 상신됨
+			String name = loginVo.getName();
+			
+			DocumentDto dto = DocumentDto.builder()
+								.doc_id(docId)
+								.name(name)
+								.build();
+	    	
+			int resultTrip = approvalService.deleteSaveTrip(docId);
+			int resultDoc = approvalService.deleteSaveDoc(dto);
+	    }
+		
+		
 		
 		System.out.println(result);
 		
