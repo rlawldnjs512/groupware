@@ -14,8 +14,18 @@
 	<result property="range" column="RANGE"/>
 	<result property="slot" column="SLOT"/>
 	<result property="emp_id" column="EMP_ID"/>
-	<result property="rev_date" column="REV_DATE"/>
+	<result property="rev_date" column="REV_DATE" />
 	<result property="name" column="NAME"/>
+</resultMap>
+
+
+<resultMap type="RoomDto" id="MyRoomMap">
+	<result property="room_id" column="ROOM_ID"/>
+	<result property="room_name" column="ROOM_NAME"/>
+	<result property="myreservation.name" column="NAME"/>
+	<result property="myreservation.emp_id" column="EMP_ID"/>
+	<result property="myreservation.rev_date" column="REV_DATE" />
+	<result property="myreservation.reserv_id" column="RESERV_ID"/>
 </resultMap>
 
 <select id="selectReservation" resultMap="RoomMap">
@@ -52,7 +62,7 @@ ORDER BY r.ROOM_ID, t.SLOT
 </select>
 
 
-<select id="myReservation" resultMap="RoomMap">
+<select id="myReservation" resultMap="MyRoomMap">
 SELECT RESERV_ID                         as RESERV_ID
      , ROOM_ID                           as ROOM_ID
      , ROOM_NAME                         as ROOM_NAME
@@ -77,8 +87,7 @@ SELECT RESERV_ID                         as RESERV_ID
  USING (ROOM_ID)
   JOIN EMPLOYEE e 
  USING (EMP_ID)
- WHERE 1=1 AND 
-EMP_ID = #{emp_id}
+ WHERE EMP_ID = #{emp_id}
 ORDER BY REV_DATE DESC
 
 

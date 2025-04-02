@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var revSpan;
     var modal;
 
-    // ✅ 이벤트 위임 방식으로 클릭 이벤트 적용
+    // 이벤트 위임 방식으로 클릭 이벤트 적용
     document.body.addEventListener("click", function (event) {
         if (event.target.matches(".reservation-container span.nocheck")) {
             handleClick.call(event.target);
