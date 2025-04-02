@@ -136,7 +136,7 @@
 }
 
 #lateEmpChart {
-	max-width: 60%; /* 화면 크기에 맞게 차트 크기 조정 */
+/* 	max-width: 60%; 화면 크기에 맞게 차트 크기 조정 */
 	max-height: 350px; /* 차트의 최대 높이 설정 */
 	width: 100%; /* 차트 너비를 100%로 설정 */
 	height: 350px; /* 차트 높이 설정 */
@@ -146,7 +146,7 @@
 
 .chart-container {
 	display: flex; /* flexbox로 가로 배열 */
-	gap: 5px; /* 요소들 간의 간격을 20px로 설정 */
+	gap: 5px; /* 요소들 간의 간격을 5px로 설정 */
 }
 
 .main-content table thead {

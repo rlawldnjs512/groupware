@@ -257,8 +257,12 @@
 				</div>
 			
 				<div class="chart-container">
+				<div class="card border-light mb-3 shadow p-3 rounded" style="width: 880px;">
 					<canvas id="lateEmpChart" style="margin-right: 100px;"></canvas>
+				</div>
+				<div class="card border-light mb-3 shadow p-3 rounded" style="width: 450px;">
 					<canvas id="departmentWorkChart"></canvas>
+				</div>
 				</div>
 					
 				</div> <!-- admin 끝 -->
