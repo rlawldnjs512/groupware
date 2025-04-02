@@ -368,6 +368,7 @@ public class ApprovalController {
 		return "redirect:/temp_store.do";
 	}
 	
+	
 	// 결재문서 부서 문서함------------------------------------------------------------
 	@GetMapping(value = "/dept_store.do")
 	public String dept_store(Model model,

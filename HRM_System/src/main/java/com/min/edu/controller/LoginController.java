@@ -36,10 +36,10 @@ public class LoginController {
 	@PostMapping(value = "/login.do")
 	public String login(@RequestParam Map<String, Object> map, HttpSession session, HttpServletResponse response)
 			throws IOException {
-		log.info("EmployeeController login 로그인 : {}", map);
+		log.info("EmployeeController login 로그인 : {}", map.get("emp_id"));
+
 
 		String password = (String) map.get("password");
-		log.info(password);
 
 		response.setContentType("text/html; charset=UTF-8;");
 

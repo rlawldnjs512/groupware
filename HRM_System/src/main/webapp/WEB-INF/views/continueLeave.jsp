@@ -5,7 +5,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>휴가원 신청</title>
+<title>휴가원 임시저장</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -95,7 +95,12 @@ th, td {
 					</div>
 		<input type="hidden" id="doc_type" name="doc_type"
 								class="form-control" value="휴가">
+								<input type="hidden" id="doc_status" name="doc_status"
+								class="form-control" value="T">
+									<input type="hidden" id="docId" name="docId"
+								class="form-control" value="${reportDto.doc_id}">
 					<table class="table table-borderless mb-3">
+					
 						
 							<tr>
 								<th>제목</th>
