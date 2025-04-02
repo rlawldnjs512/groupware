@@ -42,27 +42,25 @@
 				<tbody>
 					<c:set var="index" value="1" />
 					<c:forEach var="room" items="${lists}">
-						<c:forEach var="reserv" items="${room.reservation}">
 							<tr>
 								<td>${index}</td>
 								<td>${room.room_name}</td>
-								<td>${reserv.name} (${reserv.emp_id})</td>
-								<td>${reserv.rev_date}</td>
-								<td>${reserv.range}</td>
+								<td>${room.myreservation.name} (${room.myreservation.emp_id})</td>
+								<td>${room.myreservation.rev_date}</td>
+								<td>${room.range}</td>
 								<td>
-									<!-- 오늘 포함 이후의 날짜들만 취소가 가능하도록 함. -->
+<!-- 									오늘 포함 이후의 날짜들만 취소가 가능하도록 함. -->
 									<fmt:formatDate value="<%= new java.util.Date() %>" pattern="yyyy-MM-dd" var="today" />
-									<c:if test="${reserv.rev_date >= today}">
+									<c:if test="${room.myreservation.rev_date >= today}">
 										<form action="./deleteReservation.do" method="post" onsubmit="return confirmCancel()">
-										    <input type="hidden" name="reserv_id" value="${reserv.reserv_id}">
-										    <input type="hidden" name="emp_id" value="${reserv.emp_id}">
+										    <input type="hidden" name="reserv_id" value="${room.myreservation.reserv_id}">
+										    <input type="hidden" name="emp_id" value="${room.myreservation.emp_id}">
 										    <button type="submit" class="btn btn-danger">취소</button>
 										</form>
 									</c:if>
 								</td>
 							</tr>
 							<c:set var="index" value="${index + 1}" />
-						</c:forEach>
 					</c:forEach>
 				</tbody>
 				

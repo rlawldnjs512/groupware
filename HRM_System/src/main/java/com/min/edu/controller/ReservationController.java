@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.min.edu.dto.EmployeeDto;
+import com.min.edu.dto.ReservationDto;
 import com.min.edu.dto.RoomDto;
 import com.min.edu.model.mapper.IReservationDao;
 import com.min.edu.model.service.IReservationService;
@@ -35,18 +36,22 @@ public class ReservationController {
 	private final IReservationService service;
 	
 	@GetMapping(value = "/reservation.do")
-	public String searchReservation(Model model, @RequestParam(required = false) String nowDate) {
-		System.out.println(nowDate);
-		if(nowDate == null) {
-			Date date = new Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			nowDate = sdf.format(date);
-			System.out.println(nowDate);
-		}
-
-		List<RoomDto> lists = service.selectReservation(nowDate);
-		model.addAttribute("lists",lists);
-		model.addAttribute("nowDate", nowDate);
+	public String searchReservation(Model model, 
+			@RequestParam(required = false) String nowDate) {
+		
+//		화면 이동 후 최초에 /reservationapi.do 호출로 사용하지 않음
+//		System.out.println(nowDate);
+//		if(nowDate == null) {
+//			Date date = new Date();
+//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//			nowDate = sdf.format(date);
+//			System.out.println(nowDate);
+//		}
+//
+//		List<RoomDto> lists = service.selectReservation(nowDate);
+//		model.addAttribute("lists",lists);
+//		model.addAttribute("nowDate", nowDate);
+		
 		return "reservation";
 	}
 	
@@ -55,7 +60,6 @@ public class ReservationController {
 		EmployeeDto dto = (EmployeeDto)session.getAttribute("loginVo");
 	    String emp_id = dto.getEmp_id();
 		List<RoomDto> lists = service.myReservation(emp_id);
-		
 		model.addAttribute("lists", lists);
 		
 		return "myReservation";
