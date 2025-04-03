@@ -60,7 +60,8 @@ public class ApprovalFormController {
 	// 결재문서 임시저장------------------------------------------------------
 	@PostMapping(value = "/TempReport.do")
 	public String report_temp(Model model, HttpSession session,
-								@RequestParam("title") String title,
+			@RequestParam(value = "title", required = false) String title,
+
 								@RequestParam("content") String content,
 								@RequestParam("doc_type") String doc_type,
 								@RequestParam(value = "file", required = false) MultipartFile file,
@@ -70,11 +71,17 @@ public class ApprovalFormController {
 								@RequestParam(value = "trip_start", required = false) String trip_start,
 								@RequestParam(value = "trip_end", required = false) String trip_end,
 								@RequestParam(value = "destination", required = false) String destination,
-								HttpServletRequest request) throws ParseException {
+								HttpServletRequest request,HttpServletResponse response) throws ParseException, IOException {
 		
 		// 로그인 세션 불러오기
 		EmployeeDto loginVo = (EmployeeDto) session.getAttribute("loginVo");
 		String name = loginVo.getName();
+		
+		if (title == null || title.trim().isEmpty()) {
+		    response.getWriter().print("<script>alert('제목을 입력하세요.'); window.history.back();</script>");
+		    return null;
+		}
+
 		
 		// 공통 문서양식 저장
 		DocumentDto dto = DocumentDto.builder()
@@ -296,7 +303,7 @@ public class ApprovalFormController {
 									  @RequestParam("doc_type") String doc_type,
 									  @RequestParam("leave_start") String leave_start,
 									  @RequestParam("leave_end") String leave_end,
-									  @RequestParam("type") String type,
+									  @RequestParam("type") String type, 
 									  @RequestParam(value = "doc_status", required = false) String doc_status,
 								      @RequestParam(value = "docId", required = false) Integer docId,//임시저장함에서 받아온 doc_id
 									  HttpServletResponse response,

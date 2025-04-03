@@ -116,7 +116,7 @@ th, td {
 								<th>제목</th>
 								<th>
 									<input type="text" id="title" name="title" value="${reportDto.title}"
-									class="form-control" placeholder="제목을 입력하세요.">
+									class="form-control" placeholder="제목을 입력하세요." required="required">
 								</th>
 							
 							</tr>
