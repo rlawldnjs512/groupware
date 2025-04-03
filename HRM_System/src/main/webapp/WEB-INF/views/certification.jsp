@@ -8,63 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-	<link rel="stylesheet" href="./css/emplist.css">
-    <style>
-        :root {
-            --bs-primary: #1b84ff;
-            --bs-primary-light: #e9f3ff;
-            --bs-primary-white: #fff;
-        }
-
-        .btn.btn-light-primary {
-            color: var(--bs-primary);
-            border-color: var(--bs-primary-light);
-            background-color: var(--bs-primary-light);
-        }
-
-        .btn.btn-light-primary:hover {
-            color: var(--bs-primary-white);
-            border-color: var(--bs-primary);
-            background-color: var(--bs-primary);
-        }
-
-        .btn.btn-light-primary:focus {
-            outline: none;
-            box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary), 0.5);
-        }
-		table {
-			width: 100%;
-			border-collapse: collapse;
-		}
-		th, td {
-			border: 1px solid #ccc;
-			padding: 10px;
-			text-align: left;
-		}
-		th {
-			background-color: #f0f0f0;
-		}
-		.gray {
-			background-color: #ddd;
-		}	
-		.text-length {
-			max-width: 20ch;  /* 최대 10글자 (ch는 글자 단위) */
-			min-width: 20ch;
-		    white-space: nowrap;  /* 줄바꿈 방지 */
-		    overflow: hidden;  /* 넘치는 내용 숨김 */
-		    text-overflow: ellipsis;  /* 넘칠 경우 '...'으로 표시 */
-		}
-		.empty-row {
-		    height: 52px; /* 2개 행 높이만큼 설정 */
-		    background-color: #f8f9fa; /* 연한 색으로 구분 (선택 사항) */
-		}
-		.pagination-container {
-		    display: flex;
-		    justify-content: center;
-		    align-items: center;
-		    height: 50px; /* 최소 높이 지정 */
-		}
-    </style>
+    <link rel="stylesheet" href="./css/board.css">
     <meta charset="UTF-8">
     <title>증명서 신청</title>
 </head>
@@ -168,9 +112,6 @@
 					            <tr class="empty-row">
 					                <td colspan="8" style="text-align: center;">결과가 없습니다.</td>
 					            </tr>
-					            <tr class="empty-row">
-					                <td colspan="8"></td>
-					            </tr>
 					        </c:if>
 					        <c:forEach var="vo" items="${lists}" varStatus="vs">
 					            <tr>
@@ -207,7 +148,7 @@
 								    	<td>
 								    		<c:choose>
 								    			<c:when test="${vo.cert_status == 'N'}">
-											        <form id="status_accept" action="/status.do" method="GET">
+											        <form id="status_accept" action="/status.do" method="GET" onsubmit="return showAlert()">
 											            <input type="hidden" name="emp_id" value="${vo.emp_id}" />
 											            <input type="hidden" name="cert_status" value="${vo.cert_status}" />
 											            <input type="hidden" name="cert_num" value="${vo.cert_num}" />
@@ -278,6 +219,12 @@
 					        }, 1000);
 					    }
 					}
+					</script>
+					<script>
+					    function showAlert() {
+					        alert("승인이 완료되었습니다.");
+					        return true; // 폼이 정상 제출되도록 true 반환
+					    }
 					</script>
 				</div>
 				<c:if test="${empty lists && empty type && empty emp_id}">
