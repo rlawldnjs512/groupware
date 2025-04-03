@@ -19,12 +19,14 @@ public class RoomDto {
 	private String rev_date;
 	private String reserv_id;
 	private String emp_id;
+	
 	private int room_id;
 	private String room_name;
-	private List<ReservationDto> reservation;
-	private ReservationDto myreservation;
 	private String slot;
 	private String range;
+	
+	private List<ReservationDto> reservation;
+	private ReservationDto myreservation;
 }
 
 

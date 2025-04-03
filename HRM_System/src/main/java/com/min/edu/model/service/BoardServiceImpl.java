@@ -5,13 +5,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.min.edu.dto.FileUpDto;
 import com.min.edu.dto.FreeboardDto;
 import com.min.edu.dto.NoticeboardDto;
 import com.min.edu.model.mapper.IBoardDao;
 
-import jakarta.transaction.Transactional;
+
 import lombok.RequiredArgsConstructor;
 
 @Service

@@ -68,7 +68,7 @@ class Hoon_JUnitTest {
 			put("slot", "3");
 		}};
 		
-		int cnt = dao.insertReservation(map);
+		boolean cnt = dao.insertReservation(map);
 		System.out.println(cnt);
 		
 	}

@@ -176,23 +176,17 @@ WHERE DOC_ID=#{doc_id}
 <!-- 휴가 임시저장 추가 // 결재할때에도 -->
 <insert id="insertSaveLeave">
 	INSERT INTO LEAVE
-	(DOC_ID, 
-	 LEAVE_START, 
-	 LEAVE_END, 
-	 "TYPE", 
-	 LEAVE_DAYS)
-	VALUES(#{doc_id}, 
-	       #{leave_start}, 
-	       #{leave_end}, 
-	       #{type}, 
-	       #{leave_days})
+			(DOC_ID, LEAVE_START, LEAVE_END, 
+			 "TYPE", LEAVE_DAYS)
+	VALUES(#{doc_id}, #{leave_start}, #{leave_end}, 
+	       #{type}, #{leave_days})
 </insert>
 
 <!-- 임시저장한 문서를 조회할 수 있다. -->
 <select id="getDocNum" resultType="String">
     SELECT DOC_NUM FROM DOCUMENT 
     WHERE EMP_ID = (SELECT EMP_ID FROM EMPLOYEE WHERE NAME = #{name}) 
-    ORDER BY CREATE_DATE DESC 
+    ORDER BY CREATE_DATE DESC A
     FETCH FIRST 1 ROWS ONLY
 </select>
 

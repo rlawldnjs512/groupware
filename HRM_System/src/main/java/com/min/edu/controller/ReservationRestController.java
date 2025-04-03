@@ -28,12 +28,13 @@ public class ReservationRestController {
 	private IReservationService service;
 	
 	@PostMapping("/insertReserv.do")
-	public ResponseEntity<Map<String, Boolean>> insertReservation(@RequestBody Map<String, Object> requestReq) {
+	public ResponseEntity<Map<String, Boolean>> insertReservation
+						(@RequestBody Map<String, Object> requestReq) {
 		System.out.println(requestReq);
         
-        service.insertReservation(requestReq);
+		boolean isSuccess = service.insertReservation(requestReq);
 		Map<String, Boolean> map = new HashMap<String, Boolean>();
-		map.put("isc", Boolean.TRUE);
+		map.put("isc", isSuccess);
         return ResponseEntity.ok(map);
     }
 	
