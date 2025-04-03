@@ -41,16 +41,16 @@ class QueryTest_JUnitTest {
 	
 // 증명서 관리 쿼리 테스트 ------------------------------------------------
 	
-//	@Test
+	@Test
 	public void selectCertTypeUser_test() {
 	    Map<String, Object> map = new HashMap<String, Object>();
-		map.put("emp_id", "20240002");
+		map.put("emp_id", "20220549");
 		map.put("type", "퇴직");
 		List<CertificateDto> dto = dao.selectCertTypeUser(map);
 		assertNotNull(dto);
 	}
 	
-	@Test
+//	@Test
 	public void insertCert_test() {
 		CertificateDto dto = new CertificateDto().builder()
 							.name("홍길동")
