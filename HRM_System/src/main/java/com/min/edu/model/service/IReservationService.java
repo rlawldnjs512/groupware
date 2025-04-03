@@ -13,7 +13,7 @@ public interface IReservationService {
 	
 	public int deleteReservation(Map<String, Object> map);
 	
-	public int insertReservation(Map<String, Object> map);
+	public boolean insertReservation(Map<String, Object> map);
 	
 	public int insertRoom(Map<String, Object> map);
 	

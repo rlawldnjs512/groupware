@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.min.edu.dto.EmployeeDto;
 import com.min.edu.model.service.IEmployeeService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -27,14 +28,15 @@ public class LoginController {
 
 	// ------ 로그인 폼 -----
 	@GetMapping(value = "/")
-	public String loginForm() {
+	public String loginForm(HttpServletRequest request) {
 		log.info("EmployeeController loginForm 로그인화면 이동");
+		request.getSession().invalidate();
 		return "loginForm";
 	}
 
 	// ------ 로그인 -----
 	@PostMapping(value = "/login.do")
-	public String login(@RequestParam Map<String, Object> map, HttpSession session, HttpServletResponse response)
+	public void login(@RequestParam Map<String, Object> map, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		log.info("EmployeeController login 로그인 : {}", map.get("emp_id"));
 
@@ -45,31 +47,27 @@ public class LoginController {
 
 		EmployeeDto loginVo = service.getLogin(map);
 
-		log.info("로그인 정보 : {}", loginVo);
-		log.info("sign 정보 :{}", loginVo.getSignSaved());
-
-		session.setAttribute("loginVo", loginVo);
-
-		session.setMaxInactiveInterval(60 * 60); // 3600초 = 1시간
-
-		if (password.equals("a12345678")) {
+		if(loginVo == null){
+			response.getWriter()
+			.print("<script>alert('로그인정보 없음'); location.href='./logout.do';</script>");
+		}
+		else if(password.equals("a12345678")) {
 			log.info("초기 비밀번호 사용으로 인한 비밀번호 재설정 페이지로 이동");
 			response.getWriter()
 					.print("<script>alert('초기 비밀번호입니다. 비밀번호를 재설정해주세요.'); location.href='./newPw.do';</script>");
-
 		}
-
-		if (loginVo.getSignSaved() == null) {
+		else if(loginVo.getSignSaved() == null) {
 			log.info("사인 등록 화면으로 이동");
 			response.getWriter()
 					.print("<script>alert('사인등록은 필수 입니다'); location.href='./signature_manage.do';</script>");
-			return null;
+		}else {
+			log.info("로그인 정보 : {}", loginVo);
+			HttpSession session = request.getSession();
+			session.setAttribute("loginVo", loginVo);
+			response.getWriter()
+			.print("<script>alert('" + loginVo.getName() + "님 반갑습니다'); location.href='./homeList.do';</script>");
 		}
-
-		log.info("{} 님 반갑습니다.", loginVo.getName());
-		response.getWriter()
-				.print("<script>alert('" + loginVo.getName() + "님 반갑습니다'); location.href='./homeList.do';</script>");
-		return null;
+		
 	}
 
 	// 비밀번호 재설정 GetMapping
@@ -83,13 +81,13 @@ public class LoginController {
 	public String logout(HttpSession session, Model model) {
 
 		log.info("LoginController logout.do 요청");
-		EmployeeDto sessionVo = (EmployeeDto) session.getAttribute("loginVo");
-
-		if (sessionVo != null) {
-			log.info("HttpSession은 삭제되기 전까지 유지된다. : {}", sessionVo);
-		} else {
-			log.info("세션에서 loginVo를 찾을 수 없습니다.");
-		}
+//		EmployeeDto sessionVo = (EmployeeDto) session.getAttribute("loginVo");
+//
+//		if (sessionVo != null) {
+//			log.info("HttpSession은 삭제되기 전까지 유지된다. : {}", sessionVo);
+//		} else {
+//			log.info("세션에서 loginVo를 찾을 수 없습니다.");
+//		}
 
 		session.invalidate();
 

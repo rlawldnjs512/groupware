@@ -3,7 +3,7 @@ package com.min.edu.model.service;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.min.edu.dto.ApprovalDto;
 import com.min.edu.dto.DocumentDto;
@@ -34,7 +34,7 @@ public interface IApprovalService {
 	// + 휴가 추가
 	public int insertSaveLeave(LeaveDto dto);
 	// 문서형식만 조회하기
-	String getDocType(@Param("doc_id") int doc_id);
+	String getDocType(@RequestParam("doc_id") int doc_id);
 	public DocumentDto continuePriview(int doc_id);
 	// 출장 조회하기
 	public TripDto continuePrviewTrip(int doc_id);
@@ -57,7 +57,7 @@ public interface IApprovalService {
 
 	public List<ApprovalDto> continuePreviewDoc(Map<String, Object> map);
 
-	String getDocNum(@Param("name") String name);
+	String getDocNum(@RequestParam("name") String name);
 
 	public List<Map<String, Object>> selectTree();
 	public int updateDocumentStatus(ApprovalDto dto);

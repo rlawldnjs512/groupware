@@ -50,9 +50,9 @@ public class HomeController {
 		////////////////////////// 사원 로그인 시 //////////////////////////
 		
 		// 캐시 삭제 코드 작성
-		response.setHeader("Pragma", "no-cache");
-		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-		response.setHeader("Expires", "0");
+//		response.setHeader("Pragma", "no-cache");
+//		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+//		response.setHeader("Expires", "0");
 		
 		// 세션에서 로그인 정보 가져오기
 	    EmployeeDto loginVo = (EmployeeDto)session.getAttribute("loginVo");

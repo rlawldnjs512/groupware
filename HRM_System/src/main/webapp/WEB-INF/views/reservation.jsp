@@ -34,6 +34,7 @@
 				<button class="date-nav-btn" id="next-day">&gt;</button>
 			</div>
 			<div id="revContent"></div>
+			
 			<!-- 			<div id="revContent"> -->
 			<%-- 				<c:forEach var="room" items="${lists}"> --%>
 			<%-- 					<div id="${room.room_id}"> --%>
@@ -55,6 +56,7 @@
 			<!-- 					</div> -->
 			<%-- 				</c:forEach> --%>
 			<!-- 			</div> -->
+			
 		</div>
 	</div>
 	

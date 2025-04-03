@@ -76,7 +76,7 @@
 			<li><a href="./logout.do">로그아웃 </a></li>
 		</ul>
 		<div style="display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column;">
-		    <p>${loginVo.name}님 환영합니다.</p>
+		    <p>${sessionScope.loginVo.name}님 환영합니다.</p>
 		</div>
     </div>
 </body>
