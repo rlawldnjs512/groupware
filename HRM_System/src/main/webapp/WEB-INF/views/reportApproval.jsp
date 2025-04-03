@@ -136,8 +136,11 @@ th, td {
 						</tr>
 						<tr>
 							<th>내용</th>
-							<th><textarea class="ck-editor" id="classic" name="content"
-									placeholder="내용을 입력하세요"></textarea></th>
+							<th>
+							<textarea class="ck-editor" id="classic" name="content" placeholder="내용을 입력하세요">
+									<c:out value="${empty param.content ? '' : param.content}" />
+							</textarea>
+							</th>
 						</tr>
 					</table>
 					<div class="d-flex justify-content-end mb-3">
@@ -172,18 +175,7 @@ th, td {
 	}
 		
 		
-		function approvalReport() {
-		    $.ajax({
-		        type: "POST",
-		        url: "/approvalReport.do", 
-		        success: function(response) {
-		            window.location.href = "/approval.do";
-		        },
-		        error: function(xhr, status, error) {
-		            alert("삭제 중 오류 발생: " + error); 
-		        }
-		    });
-		}
+		
 		
 	</script>
 	<script>
