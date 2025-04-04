@@ -136,9 +136,7 @@ th, td {
 						<tr>
 							<th>목적</th>
 							<th>
-								 <textarea id="reason" name="content" class="form-control" rows="5" placeholder="목적을 입력하세요">
-						            <c:out value="${empty param.content ? '' : param.content}" />
-						        </textarea>
+								 <textarea id="reason" name="content" class="form-control" rows="5" placeholder="목적을 입력하세요"><c:out value="${empty param.content ? '' : param.content}" /></textarea>
 							</th>
 						</tr>
 	                </table>
