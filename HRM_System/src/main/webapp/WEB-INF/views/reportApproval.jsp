@@ -136,11 +136,9 @@ th, td {
 						</tr>
 						<tr>
 							<th>내용</th>
-							<th>
-							<textarea class="ck-editor" id="classic" name="content" placeholder="내용을 입력하세요">
-									<c:out value="${empty param.content ? '' : param.content}" />
-							</textarea>
-							</th>
+							<td>
+							<textarea class="ck-editor" id="classic" name="content" placeholder="내용을 입력하세요"><c:out value="${empty param.content ? '' : param.content}" /></textarea>
+							</td>
 						</tr>
 					</table>
 					<div class="d-flex justify-content-end mb-3">
