@@ -36,7 +36,7 @@ public class LoginController {
 
 	// ------ 로그인 -----
 	@PostMapping(value = "/login.do")
-	public void login(@RequestParam Map<String, Object> map, HttpServletRequest request, HttpServletResponse response)
+	public void login(@RequestParam Map<String, Object> map, HttpServletRequest request, HttpServletResponse response,HttpSession session)
 			throws IOException {
 		log.info("EmployeeController login 로그인 : {}", map.get("emp_id"));
 
@@ -46,6 +46,7 @@ public class LoginController {
 		response.setContentType("text/html; charset=UTF-8;");
 
 		EmployeeDto loginVo = service.getLogin(map);
+		session.setMaxInactiveInterval(60 * 60); // 3600초 = 1시간
 
 		if(loginVo == null){
 			response.getWriter()
@@ -53,16 +54,18 @@ public class LoginController {
 		}
 		else if(password.equals("a12345678")) {
 			log.info("초기 비밀번호 사용으로 인한 비밀번호 재설정 페이지로 이동");
+			  session.setAttribute("loginVo", loginVo);
 			response.getWriter()
 					.print("<script>alert('초기 비밀번호입니다. 비밀번호를 재설정해주세요.'); location.href='./newPw.do';</script>");
 		}
 		else if(loginVo.getSignSaved() == null) {
 			log.info("사인 등록 화면으로 이동");
+			  session.setAttribute("loginVo", loginVo);
 			response.getWriter()
 					.print("<script>alert('사인등록은 필수 입니다'); location.href='./signature_manage.do';</script>");
 		}else {
 			log.info("로그인 정보 : {}", loginVo);
-			HttpSession session = request.getSession();
+			 session = request.getSession();
 			session.setAttribute("loginVo", loginVo);
 			response.getWriter()
 			.print("<script>alert('" + loginVo.getName() + "님 반갑습니다'); location.href='./homeList.do';</script>");
