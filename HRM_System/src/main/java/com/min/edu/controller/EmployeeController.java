@@ -195,7 +195,7 @@ public class EmployeeController {
 
 		int n= service.insertEmployee(dto); // 사원정보 입력
 
-		Thread.sleep(1000*3);
+//		Thread.sleep(1000*3);
 
 		if (n == 1) {
 //
