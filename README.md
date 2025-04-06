@@ -71,3 +71,7 @@
 - **서버 배포**: Tomcat
 
 ---
+
+## 🗺 ERD (Entity Relationship Diagram)
+
+![ERD](./HRMsystem.png)
