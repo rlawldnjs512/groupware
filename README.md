@@ -72,5 +72,5 @@
 
 ---
 
-<h2>🗺 ERD (Entity Relationship Diagram)</h2>
+<h2>ERD (Entity Relationship Diagram)</h2>
 <img src="https://drive.google.com/uc?export=view&id=1QaxjiS75WnE2ZikVfCP6MBi8o-KvjhZD" alt="ERD" width="700"/>
