@@ -74,4 +74,4 @@
 
 ## 🗺 ERD (Entity Relationship Diagram)
 
-![ERD](./HRMsystem.png)
+![ERD](https://drive.google.com/file/d/1FXZQFSLh2HDcXohjDFpiFbmjHKsIzDyo/view?usp=drive_link)
