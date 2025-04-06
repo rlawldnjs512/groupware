@@ -72,6 +72,6 @@
 
 ---
 
-## 🗺 ERD (Entity Relationship Diagram)
+## ERD (Entity Relationship Diagram)
 
-![ERD](https://drive.google.com/file/d/1FXZQFSLh2HDcXohjDFpiFbmjHKsIzDyo/view?usp=drive_link)
+![ERD](https://drive.google.com/file/d/1QaxjiS75WnE2ZikVfCP6MBi8o-KvjhZD/view?usp=drive_link)
