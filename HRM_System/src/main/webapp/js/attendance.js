@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	const clockOutBtn = document.getElementById("clockOut"); 
 
 	var clockInTime = document.getElementById("clockInTime").textContent;
-    var clockOutTime =document.getElementById("clockOutTime").textContent;
+    var clockOutTime = document.getElementById("clockOutTime").textContent;
     
     // 출근&퇴근 버튼의 비활성화
     if(clockInTime == "" && clockOutTime == ""){
@@ -29,17 +29,22 @@ document.addEventListener('DOMContentLoaded', function() {
         confirmClockIn();
     });
 
-    clockOut.addEventListener('click', function() {
+    clockOutBtn.addEventListener("click", function() {
+		
+		console.log("퇴근버튼 누름");
 		
 		// 사용자의 보상시간을 가져옴.
 		var extraTime = document.getElementById("extraTime").value;
+		console.log("extraTime : ", extraTime);
 		
 		// 사용자의 지각여부를 가져옴.
 		var attendType = document.getElementById("attendType").value;
+		console.log("attendType : ", attendType);
 		
 		// 현재 시간(퇴근버튼을 누른 시간)
         const currentTime = new Date();
         const exitHour = currentTime.getHours();
+        console.log("퇴근버튼을 누른 시간 : ", exitHour);
 
 		var infoAtten = {
 			exitHour : "Y",
@@ -47,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		}
 
         // 지각이 아니면서 18시 이전 퇴근 시
-        if (attendType == null && exitHour < 18) {
+        if (!attendType && exitHour < 18) {
 			let checkTime = confirm("현재 18시 이전입니다. 퇴근하시겠습니까?");
 			if(checkTime){
 				infoAtten.exitHour="N";
@@ -64,21 +69,20 @@ document.addEventListener('DOMContentLoaded', function() {
 				} else {
 					alert(`현재 보유한 보상시간은 ${extraTime}시간 입니다. 조퇴 처리되었습니다.`);
 				}
+				attendance(infoAtten);
+				alert("퇴근 기록이 정상적으로 저장되었습니다.");
+				clockInBtn.disabled = true;  // 출근 버튼 비활성화
+	    		clockOutBtn.disabled = true; // 퇴근 버튼 비활성화
 			} else { // 취소 클릭 시
 				return;
 			}
         } else {
 			// 지각 or 18시 이후 퇴근
             attendance(infoAtten);
+            alert("퇴근 기록이 정상적으로 저장되었습니다.");
+            clockInBtn.disabled = true;  // 출근 버튼 비활성화
+	    	clockOutBtn.disabled = true; // 퇴근 버튼 비활성화
         }
-		
-        attendance(infoAtten);
-        
-        clockInBtn.disabled = true;  // 출근 버튼 비활성화
-	    clockOutBtn.disabled = true; // 퇴근 버튼 비활성화
-        
-        alert("퇴근 기록이 정상적으로 저장되었습니다.");
-       
     });
 });
 
