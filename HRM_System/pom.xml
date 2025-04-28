@@ -12,7 +12,7 @@
 	<groupId>com.min.edu</groupId>
 	<artifactId>HRM_System</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>HRM_System</name>
 	<description>인사관리(Human Resources Management) 그룹웨어 시스템</description>
 	<url />
